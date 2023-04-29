@@ -1,0 +1,4 @@
+#!/usr/bin/dash
+for files in "$@"; do
+	tar --use-compress-program=unzstd -xvf "$files"
+done

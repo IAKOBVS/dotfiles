@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+ps -eo pcpu --no-headers | sort -n -r | head -n 2

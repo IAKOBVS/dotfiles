@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+slstat=$( pidof dwmblocks )
+while true
+do
+  [[ "$( xdotool getwindowfocus getwindowname )" =~ "Umineko" ]] || [[ "$( xdotool getwindowfocus getwindowname )" =~ "mpv" ]] && kill -STOP "$slstat" || kill -CONT "$slstat"
+  sleep 1
+done

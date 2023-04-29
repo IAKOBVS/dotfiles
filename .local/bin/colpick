@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+colorpicker --short --one-shot | xclip -selection c

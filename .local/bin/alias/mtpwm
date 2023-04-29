@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+echo "scale=2;$1/100*255" | bc

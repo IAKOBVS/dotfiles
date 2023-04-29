@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+pactl list sinks | grep 'Active Port: analog' | awk '{print $3}'

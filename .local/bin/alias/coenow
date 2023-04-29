@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+filename=/tmp/$1-deb.c
+gcc -E -P "$1" > "$filename" && nvim "-c $(grep -n 'int main.*()' "$filename" | cut -d':' -f1)" "$filename"

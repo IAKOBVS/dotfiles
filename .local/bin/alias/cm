@@ -1,0 +1,8 @@
+#!/usr/bin/dash
+filename="$(cleanext "$1")-deb.c"
+getintmain=$(grep -n -m1 'int main()' /tmp/"$filename" | cut -d':' -f1)
+gcc -E -P "$1" > /tmp/$filename
+getlinenum=$(grep -n -m1 'jarray' /tmp/$filename | cut -d':' -f1)
+sed -e "1,$getlinenum d" /tmp/$filename > /tmp/$filename-new.c
+clang-format /tmp/$filename-new.c > /tmp/$filename
+nvim -c "$getintmain" /tmp/$filename

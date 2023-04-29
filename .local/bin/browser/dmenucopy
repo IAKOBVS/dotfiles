@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+grep -v '^#' $HOME/.local/share/alias/clipboard | dmenu -l 30 | cut -d' ' -f1 | xclip -sel c

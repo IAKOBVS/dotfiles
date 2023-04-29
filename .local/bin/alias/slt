@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+killall slstatus
+sleep 0.5 && slstatus

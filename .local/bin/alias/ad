@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+[ -n "$1" ] && animdl download "$1 "-r "$2" || animdl download "$1"

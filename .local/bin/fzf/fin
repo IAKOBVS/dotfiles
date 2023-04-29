@@ -1,0 +1,4 @@
+#!/usr/bin/dash
+cd /usr/include && f_=$(ffzf)
+[ "$f_" ] || return
+/usr/bin/nvim "$f_"

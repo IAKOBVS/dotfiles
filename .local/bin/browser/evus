@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+$BROWSER --new-window 'https://fategrandorder.fandom.com/wiki/Event_List_(US)'

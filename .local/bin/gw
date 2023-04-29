@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+grep "$1" $(find . -type f)

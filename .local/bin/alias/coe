@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+filename=/tmp/$1-deb.c
+gcc -E -P "$1" | clang-format -style="{BasedOnStyle: Google, UseTab: Always}" -assume-filename="*.c" > "$filename" && nvim "-c $(grep -n 'int main.*()' "$filename" | cut -d':' -f1)" "$filename"

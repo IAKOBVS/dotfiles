@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+[ -z "$2" ] && $BROWSER "https://wiktionary.org/wiki/$1#English" && exit 0
+$BROWSER "https://wiktionary.org/wiki/$1#$2"

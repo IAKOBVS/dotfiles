@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+file=$1
+fileName=$(echo $file | rev | cut -d'/' -f1 | rev)
+fileOnly=$(echo $fileName | rev | cut -d'.' -f2- | rev)
+extensionOnly=$(echo $file | rev | cut -d'.' -f1 | rev)
+tmp=/tmp
+tmpFile=$tmp/"$fileOnly-tmp.$extensionOnly"
+pasteClip(){ xclip -out;}
+{ grep "#include\|int*;\|float*;\|double*;\|size_t*;" "$file"; echo 'void func_name(){'; pasteClip; echo '} int main(int argc, char **argv){func_name(); return 0;}';} > $tmpFile
+gcc -S $tmpFile
+lines=$(grep -n "func_name:\|main:" new-tmp.s | cut -d':' -f1)
+lineStart=$(echo $lines | cut -d' ' -f1)
+lineEnd=$(echo $lines | cut -d' ' -f2)
+asmFile="$tmp/$fileOnly-tmp.s"
+sed -i -n "$lineStart, $lineEnd p" $asmFile
+editor(){ nvim "$1";}
+terminal(){ st -e "$@";}
+editor $asmFile

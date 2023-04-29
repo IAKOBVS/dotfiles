@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+if [ $1 ]; then
+	case $1 in
+		$HOME/*)
+			[ -f $1 2> /dev/null ] && 1=$(dirname $1);;
+		*)
+			if [ -f $1 2> /dev/null ]; then
+				1=$(dirname $1)
+			else
+				[ -d $1 ] || 1="$HOME/$1"
+			fi
+	esac
+fi
+builtin cd $1 2> /dev/null; ls -hN --color=auto --group-directories-first

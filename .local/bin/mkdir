@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+if /usr/bin/mkdir -pv $1; then
+	sudo updatedb &
+	__path__=$(realpath $1)
+	case $__path__ in
+		$HOME/*)
+			echo $__path__ >> /tmp/__fzfhome__ &;;
+		*)
+			echo $__path__ >> /tmp/__fzfroot__ &
+	esac
+fi

@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+sudo du -shc .[!.]* * 2> /dev/null | sort -rn | less

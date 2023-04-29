@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+$BROWSER --new-window 'https://docs.google.com/document/u/3/?tgif=d'

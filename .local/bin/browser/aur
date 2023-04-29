@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+$BROWSER 'https://aur.archlinux.org' 2> /dev/null

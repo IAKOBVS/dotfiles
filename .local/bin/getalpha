@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+genalpha "$1" | xclip -sel c

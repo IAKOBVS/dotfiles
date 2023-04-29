@@ -1,0 +1,7 @@
+#!/usr/bin/dash
+touch /tmp/gputemp &&\
+	sudo chown root:root /tmp/gputemp
+while true; do
+	echo "$( nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits -i 0 )000" > /tmp/gputemp
+	sleep 0.2
+done
