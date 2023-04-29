@@ -1,5 +1,2 @@
 #!/usr/bin/dash
 $BROWSER 'chrome-extension://ophjlpahpchlmihnnnihgmmeilfjmjjc/index.html#popout'
-sudo cat $(sudo cat $HOME/.local/bin/.sp) | xclip -sel clip
-sleep 8
-echo "" | xclip -sel clip
