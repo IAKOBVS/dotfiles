@@ -12,31 +12,32 @@ foreach my $old (glob('./*')) {
 	no warnings; # ignores use of \1 over $1 warning for backreference
 	$new = $old;
 
-	$new =~ s/\[[^\]]*\]//g; # rm [.*]
+	# remove brackets
+	$new =~ s/\[[^\]]*\]//g;
 
-	# remove leading
-	$new =~ s/^\.\/[[:space:]]*([^[:space:]])/\1/; # ./  file.mkv -> ./file.mkv
+	# remove leading space
+	$new =~ s/^\.\/[[:space:]]*([^[:space:]])/\1/;
 
 	# remove (str)
 	$new =~ s/\([[:digit:]]*\)//g; # remove (2019)
 	$new =~ s/\([^\)]*1080[^\)]*\)//g; # remove (.*1080.*)
 
-	# remove trailing before .ext
-	$new =~ s/[[:space:]]*(\.[[:alnum:]]*)$/\1/; #  .mkv -> .mkv
-	$new =~ s/-*(\.[[:alnum:]]*)$/\1/; # _.mkv -> .mkv
-	$new =~ s/_*(\.[[:alnum:]]*)$/\1/; # -.mkv -> .mkv
+	# remove trailing symbols before extension
+	$new =~ s/[[:space:]]*(\.[[:alnum:]]*)$/\1/; # space
+	$new =~ s/-*(\.[[:alnum:]]*)$/\1/; # underscore
+	$new =~ s/_*(\.[[:alnum:]]*)$/\1/; # dash
 
 	# remove trailing
 	$new =~ s/\ *$//; # space
-	$new =~ s/_*$//; # _
-	$new =~ s/-*$//; # -
+	$new =~ s/_*$//; # underscore
+	$new =~ s/-*$//; # dash
 
 	# remove weird symbols
-	$new =~ s/__/_/g; # __ -> _
-	$new =~ s/\ \ /\ /g; # two spaces -> _
-	$new =~ s/--/-/g; # -- -> -
-	$new =~ s/_-_/_/g; # _-_ -> _
-	$new =~ s/\.-/_/g; # .- -> _
+	$new =~ s/__/_/g; # underscores
+	$new =~ s/\ \ /\ /g; # spaces
+	$new =~ s/--/-/g; # dashes
+	$new =~ s/_-_/_/g; # _-_
+	$new =~ s/\.-/_/g; # .-
 
 	$new =~ s/eason\([[:digit:]]\)/eason\ \1/g; # season2 -> season 2
 
