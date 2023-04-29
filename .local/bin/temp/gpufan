@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+speed=$(($(nvidia-smi --query-gpu "fan.speed" --format=csv,noheader,nounits -i 0)*255/100))
+echo $speed

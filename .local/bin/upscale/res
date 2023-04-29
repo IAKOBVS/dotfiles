@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+magick -resize "$2" "$1" "$(cleanext "$1")"'-resized.png'

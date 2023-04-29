@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+strangle 60 bash /usr/local/games/Bioshock.Remastered/start.sh

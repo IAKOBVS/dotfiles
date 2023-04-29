@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+pathToFile=$(find $HOME/.local/bin/ $HOME/c \( -name .git \) -prune -o -type f -print | fzf --delimiter / --with-nth -1)
+nvim "$pathToFile" && cd "$(echo "$pathToFile" | rev | cut -d'/' -f2- | rev)" || return

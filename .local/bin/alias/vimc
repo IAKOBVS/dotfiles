@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+printf "#include <stdio.h>\n#include \"/home/james/c/nix.c/nix.h\"\n#include \"/home/james/c/jArray/jarr.h\"\n#include \"/home/james/c/jString/jstr.h\"\n\nint main()\n{\n}" > "$1" && vim "$1"

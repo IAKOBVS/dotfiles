@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+strangle 60 bash /usr/local/games/Metro.Exodus-jc141/start.w.sh

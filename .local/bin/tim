@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+$BROWSER 'https://teams.microsoft.com/_'

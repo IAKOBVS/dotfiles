@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+
+{
+sudo find /home &
+sudo find /etc &
+sudo find /tmp &
+sudo find /usr &
+} > /dev/null 2>&1 &
+
+sudo updatedb &
+
+xrdb $HOME/.Xresources &
+
+sudo nvidia-smi -pl 150 &
+nvoc -a &
+
+xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &

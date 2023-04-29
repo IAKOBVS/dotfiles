@@ -1,0 +1,6 @@
+#!/usr/bin/dash
+if [ -n "$(pgrep 'obs')" ]; then
+	killall picom
+	obs &
+	sleep 1 && picom -b
+fi

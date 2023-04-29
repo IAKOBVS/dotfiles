@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+$HOME/c/gennum/gennum | xclip -sel c

@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+find / \
+	! -path '*cache*' \
+	! -path '*.git*' \
+	! -path '*.gnupg*' \
+	! -path '*.vscode*' \
+	! -path '*.rev*' \
+	! -path '*.key*' \
+	> /tmp/__fzfroot__ 2> /dev/null &
+find $HOME \
+	! -path '*cache*' \
+	! -path '*.git*' \
+	! -path '*.gnupg*' \
+	! -path '*.vscode*' \
+	! -path '*.rev*' \
+	! -path '*.key*' \
+	> /tmp/__fzfhome__ 2> /dev/null &

@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+grep -i upgraded /var/log/pacman.log | less +G

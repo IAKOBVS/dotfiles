@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+pamixer --list-sources | grep -F 'RODE' | cut -d' ' -f1

@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+mkdir "$(cleanext "$1")" && 7z x "$1" -o"$(cleanext "$1")"

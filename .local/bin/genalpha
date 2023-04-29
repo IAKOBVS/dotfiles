@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+$HOME/c/genalpha/genalpha | xclip -sel c

@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+jqq=$HOME/.local/src/jqq/jqq.rb
+$jqq '.[]' "$1"

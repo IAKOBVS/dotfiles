@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+cd ~/.local/games/Steins-Gate-Elite || exit
+__GL_SHARPEN_ENABLE=1 __GL_SHARPEN_VALUE=20 strangle 60 winevn boot.bat
