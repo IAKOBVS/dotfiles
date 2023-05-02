@@ -1,5 +1,8 @@
 #!/usr/bin/dash
-[ -z "$1" ] && echo "Usage: res4thumbnail <image>" && exit 0
+if [ -z "$1" ]; then
+	echo "Usage: res4thumbnail <image>"
+	exit 0
+fi
 upndownscale(){ 
 	waifu2xauto "$1" "$2"
 	res720 "$( cleanext "$1" )"'-hd.png'
@@ -10,10 +13,8 @@ upndownscale(){
 res1080(){
 	res "$1" 1080
 }
-
 img=$1
 scale=$( getres "$img" | awk '{print int(1080/$1 + 0.99)}' )
-
 if [ 2 -gt "$scale" ]
 then
 	echo "'$1' need not be upscaled"
