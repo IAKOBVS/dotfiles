@@ -37,7 +37,8 @@ call plug#end()
 " endfunction
 
 " skeleton
-autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
+
+autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c
 autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
 
 " only use clang-tidy for ALE

@@ -3,9 +3,7 @@ file=$(realpath $(echo $@ | awk '{print $NF}'))
 if [ -f $file ]; then
 	:
 else
-	if touch $file; then
-		echo $file >> /tmp/__fzfhome__ &
-		echo $file >> /tmp/__fzfroot__ &
-	fi
+	echo $file >> /tmp/__fzfhome__ &
+	echo $file >> /tmp/__fzfroot__ &
 fi
 nvim $@
