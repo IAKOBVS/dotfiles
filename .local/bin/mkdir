@@ -1,7 +1,7 @@
 #!/usr/bin/dash
-if /usr/bin/mkdir -pv $1; then
+if /usr/bin/mkdir -pv $@; then
 	sudo updatedb &
-	__path__=$(realpath $1)
+	__path__=$(realpath $(echo $@ | awk '{ print $NF}'))
 	case $__path__ in
 		$HOME/*)
 			echo $__path__ >> /tmp/__fzfhome__ &;;
