@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-nvim $(grep "v .*\.cpp" $HOME/.cache/zsh/history | tail -n1 | awk '{$1= ""; print $0}')
