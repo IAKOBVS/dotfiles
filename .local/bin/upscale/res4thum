@@ -1,7 +1,6 @@
 #!/usr/bin/bash
 case $1 in
-	*.png);;
-	*.jpg);;
+	*.png);; *.jpg);;
 	*)
 		echo 'Not an image file!'
 		exit 1
@@ -13,14 +12,10 @@ if [ -z "$2" ]; then
 	resolution='1280x720'
 elif [ -z "$(echo "$2" | grep 'x')" ]; then
 	case "$2" in
-		'720')
-			height=720;;
-		'1080')
-			height=1080;;
-		'1440')
-			height=1440;;
-		'4k')
-			height=2160;;
+		'720') height=720;;
+		'1080') height=1080;;
+		'1440') height=1440;;
+		'4k') height=2160;;
 	esac
 else
 	resolution=$2
