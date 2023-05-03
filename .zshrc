@@ -76,7 +76,7 @@ rg_() { rgvim }
 
 bindkey -s '^o' 'l_\n'
 bindkey -s '^f' '_\n'
-bindkey -s '^u' 'fzf\n'
+bindkey -s '^u' 'u_\n'
 bindkey -s '^v' 'fv_\n'
 bindkey -s '^r' 'rg_\n'
 bindkey -s '^k' 'clear\n'
