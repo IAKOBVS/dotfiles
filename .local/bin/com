@@ -6,8 +6,7 @@ analyzer='-fanalyzer -Wanalyzer-double-fclose -Wanalyzer-double-free -Wanalyzer-
 case "$2" in
 	's')
 		comp_flags="$comp_flags $analyzer"
-		[ -n "$3" ] && OLevel="-O$3 -flto"
-		;;
+		[ -n "$3" ] && OLevel="-O$3 -flto";;
 	*)
 	if [ -n "$2" ]; then
 		OLevel="-O$3 -flto"
