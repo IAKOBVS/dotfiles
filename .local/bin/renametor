@@ -39,7 +39,7 @@ foreach my $old (glob('./*')) {
 	$new =~ s/_-_/_/g; # _-_
 	$new =~ s/\.-/_/g; # .-
 
-	$new =~ s/eason\([[:digit:]]\)/eason\ \1/g; # season2 -> season 2
+	$new =~ s/eason([[:digit:]])/eason\ \1/g; # season2 -> season 2
 
 	print "$new\n";
 	push @old, $old;
