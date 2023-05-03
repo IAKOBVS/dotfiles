@@ -1,4 +1,3 @@
 #!/usr/bin/dash
 pathToFile=$(find $HOME/.local/bin $HOME/c $HOME/cpp ! -path '*vscode*' ! -path '*git*' -type f -print 2> /dev/null | fzfp --delimiter / --with-nth -1)
-[ $pathToFile ] || return
-nvim "$pathToFile" && cd $(dirname "$pathToFile")
+[ $pathToFile ] && nvim "$pathToFile" && cd $(dirname "$pathToFile")

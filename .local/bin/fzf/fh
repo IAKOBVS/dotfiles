@@ -1,6 +1,3 @@
 #!/usr/bin/dash
-if [ -z "$1" ]; then
-	sudo find /home/james 2> /dev/null | fzf
-else
-	sudo find "$1" 2> /dev/null | fzf
-fi
+[ -z "$1" ] && sudo find /home/james 2> /dev/null | fzf \
+	|| sudo find "$1" 2> /dev/null | fzf
