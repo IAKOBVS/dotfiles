@@ -1,58 +1,59 @@
 #!/usr/bin/dash
 file=$1
 cpp_ver='-std=gnu++17'
-compiler_flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
+comp_flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer -Wanalyzer-double-fclose -Wanalyzer-double-free -Wanalyzer-exposure-through-output-file -Wanalyzer-file-leak -Wanalyzer-free-of-non-heap -Wanalyzer-malloc-leak -Wanalyzer-null-argument -Wanalyzer-null-dereference -Wanalyzer-possible-null-argument -Wanalyzer-possible-null-dereference -Wanalyzer-stale-setjmp-buffer -Wanalyzer-tainted-array-index -Wanalyzer-too-complex -Wanalyzer-unsafe-call-within-signal-handler -Wanalyzer-use-after-free -Wanalyzer-use-of-pointer-in-stale-stack-frame'
 case "$2" in
 	's')
-		compiler_flags="$compiler_flags $analyzer"
-		[ -n "$3" ] && optimizationLevel="-O$3 -flto"
+		comp_flags="$comp_flags $analyzer"
+		[ -n "$3" ] && OLevel="-O$3 -flto"
 		;;
 	*)
 	if [ -n "$2" ]; then
-		optimizationLevel="-O$3 -flto"
-		[ -n "$3" ] && compiler_flags="$compiler_flags $analyzer"
+		OLevel="-O$3 -flto"
+		[ -n "$3" ] && comp_flags="$comp_flags $analyzer"
 	fi
 esac
-[ -n "$2" ] && optimizationLevel="-O$2 -flto"
-curr_dir_files=$(find . -maxdepth 1 -type f)
-get_includes_c(){ grep '#[[:space:]]*include.*//.*\.c' $1 | tr -d '"' | awk '{print $2}' | rev | cut -d'.' -f2- | rev | sed 's/$/.c/g';}
-get_includes_cpp(){ grep '#[[:space:]]*include.*//.*\.cpp' $1 | tr -d '"' | awk '{print $2}' | rev | cut -d'.' -f2- | rev | sed 's/$/.cpp/g';}
-get_includes_precompiled(){ grep '#[[:space:]]*include.*//.*\.gch' $1 | tr -d '"' | awk '{print $2}' | rev | cut -d'.' -f2- | rev | sed 's/$/.gch/g';}
+[ -n "$2" ] && OLevel="-O$2 -flto"
+cwd_files=$(find . -maxdepth 1 -type f)
+get_incl(){ sed -n "s/#[[:space:]]*include[[:space:]]*\"\([^[:space:]]*\).*\".*$1/\1$1/p" $2;}
+get_incl_c(){ get_incl .c $1;}
+get_incl_cpp(){ get_incl .cpp $1;}
+get_incl_gch(){ get_incl .gch $1;}
 case $file in
 	*.cpp);;
 	*.c);;
 	*)
-		if echo $curr_dir_files | grep -q -F "$file.cpp"; then
+		if echo $cwd_files | grep -q -F "$file.cpp"; then
 			file=$file.cpp
-		elif echo $curr_dir_files | grep -q -F "$file.c"; then
+		elif echo $cwd_files | grep -q -F "$file.c"; then
 			file=$file.c
 		else
 			echo 'not a .c or .cpp file'
 			exit
 		fi
 esac
-includes_c=$(get_includes_c $file)
-includes_precompiled=$(get_includes_precompiled $file)
+incl_c=$(get_incl_c $file)
+incl_precomp=$(get_incl_precomp $file)
 case $file in
 	*.cpp)
-		includes_cpp=$(get_includes_cpp $file)
-		if [ -z "$(echo "$includes_cpp $includes_c $includes_precompiled")" ]; then
-			g++ $cpp_ver $compiler_flags "$file" $includes_precompiled -o "$(basename "$file" .cpp)" $optimizationLevel
-			echo g++ $cpp_ver $compiler_flags "$file" $includes_precompiled -o "$(basename "$file" .cpp)" $optimizationLevel
+		incl_cpp=$(get_incl_cpp $file)
+		if [ -z "$(echo "$incl_cpp $incl_c $incl_precomp")" ]; then
+			echo g++ $cpp_ver $comp_flags "$file" $incl_precomp -o "$(basename "$file" .cpp)" $OLevel
+			g++ $cpp_ver $comp_flags "$file" $incl_precomp -o "$(basename "$file" .cpp)" $OLevel || return
 		else
-			if [ -n "$includes_c" ]; then
-				gcc $compiler_flags -c $includes_c $optimizationLevel &
-				echo gcc $compiler_flags -c $includes_c $optimizationLevel &
+			if [ -n "$incl_c" ]; then
+				gcc $comp_flags -c $incl_c $OLevel &
+				echo gcc $comp_flags -c $incl_c $OLevel &
 			fi
 			wait
-			[ -n "$includes_c" ] && includes_c=$(cleanext $includes_c).o
+			[ -n "$incl_c" ] && incl_c=$(cleanext $incl_c).o
 			obj=$(find . -name '*.\.o')
-			g++ $cpp_ver $file $compiler_flags $includes_cpp $obj -o "$(basename "$file" .cpp)" $optimizationLevel
-			echo g++ $cpp_ver $file $compiler_flags $includes_cpp ./*.o -o "$(basename "$file" .cpp)" $optimizationLevel
+			echo g++ $cpp_ver $file $comp_flags $incl_cpp ./*.o -o "$(basename "$file" .cpp)" $OLevel
+			g++ $cpp_ver $file $comp_flags $incl_cpp $obj -o "$(basename "$file" .cpp)" $OLevel || return
 		fi;;
 	*.c)
-		gcc $compiler_flags "$file" $includes_c $includes_precompiled -o "$(basename "$file" .c)" $optimizationLevel
-		echo gcc $compiler_flags "$file" $includes_c $includes_precompiled -o "$(basename "$file" .c)" $optimizationLevel
+		echo gcc $comp_flags "$file" $incl_c $incl_precomp -o "$(basename "$file" .c)" $OLevel
+		gcc $comp_flags "$file" $incl_c $incl_precomp -o "$(basename "$file" .c)" $OLevel || return
 esac
 ./$(cleanext $file)
