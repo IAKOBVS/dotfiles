@@ -15,26 +15,26 @@ case "$2" in
 	fi
 esac
 [ -n "$2" ] && OLevel="-O$2 -flto"
-cwd_files=$(find . -maxdepth 1 -type f)
+cwd_files=$(find . -name '*.c' -o -name '*.cpp' -maxdepth 1 -type f)
 get_incl(){ sed -n "s/#[[:space:]]*include[[:space:]]*\"\([^[:space:]]*\).*\".*$1/\1$1/p" $2;}
 get_incl_c(){ get_incl .c $1;}
 get_incl_cpp(){ get_incl .cpp $1;}
 get_incl_gch(){ get_incl .gch $1;}
 case $file in
-	*.cpp);;
-	*.c);;
+	*.c);; *.cpp);;
 	*)
-		if echo $cwd_files | grep -q -F "$file.cpp"; then
-			file=$file.cpp
-		elif echo $cwd_files | grep -q -F "$file.c"; then
-			file=$file.c
-		else
-			echo 'not a .c or .cpp file'
-			exit
-		fi
+		case $cwd_files in
+			*$file.cpp*)
+				file=$file.cpp;;
+			*$file.c*)
+				file=$file.c;;
+			*)
+				echo 'not a .c or .cpp file!'
+				exit 1
+		esac
 esac
 incl_c=$(get_incl_c $file)
-incl_precomp=$(get_incl_precomp $file)
+incl_precomp=$(get_incl_gch $file)
 case $file in
 	*.cpp)
 		incl_cpp=$(get_incl_cpp $file)
@@ -48,7 +48,7 @@ case $file in
 			fi
 			wait
 			[ -n "$incl_c" ] && incl_c=$(cleanext $incl_c).o
-			obj=$(find . -name '*.\.o')
+			obj=$(find . -name '*.o')
 			echo g++ $cpp_ver $file $comp_flags $incl_cpp ./*.o -o "$(basename "$file" .cpp)" $OLevel
 			g++ $cpp_ver $file $comp_flags $incl_cpp $obj -o "$(basename "$file" .cpp)" $OLevel || return
 		fi;;
