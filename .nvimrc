@@ -17,27 +17,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'dense-analysis/ale'
 call plug#end()
 
-"Plug 'tpope/vim-surround'
-" Plug 'bfrg/vim-cpp-modern'
-" Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
-" Plug 'williamboman/mason.nvim'
-" Plug 'williamboman/mason-lspconfig.nvim'
-" Plug 'bscan/PerlNavigator'
-" Plug 'neovim/nvim-lspconfig'
-
-" let g:ale_linters = { 'perl': [] }
-
-" function! RipgrepFzf(query, fullscreen)
-"   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-"   let initial_command = printf(command_fmt, shellescape(a:query))
-"   let reload_command = printf(command_fmt, '{q}')
-"   let spec = {'options': ['--disabled', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-"   let spec = fzf#vim#with_preview(spec, 'right', 'ctrl-/')
-"   call fzf#vim#grep(initial_command, 1, spec, a:fullscreen)
-" endfunction
-
 " skeleton
-
 autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
 autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
 
@@ -48,7 +28,6 @@ let g:ale_linters = {
 \}
 
 " let g:ale_perl_perlcritic_options = '--stern'
-
 " let g:ale_cpp_options = '-std=gnu++17'
 " let g:ale_clang_cxx_standard = 'c++17'
 
@@ -414,3 +393,22 @@ hi link Function Function
 " endfunction
 
 " set omnifunc=Complete__
+
+"Plug 'tpope/vim-surround'
+" Plug 'bfrg/vim-cpp-modern'
+" Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
+" Plug 'williamboman/mason.nvim'
+" Plug 'williamboman/mason-lspconfig.nvim'
+" Plug 'bscan/PerlNavigator'
+" Plug 'neovim/nvim-lspconfig'
+
+" let g:ale_linters = { 'perl': [] }
+
+" function! RipgrepFzf(query, fullscreen)
+"   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+"   let initial_command = printf(command_fmt, shellescape(a:query))
+"   let reload_command = printf(command_fmt, '{q}')
+"   let spec = {'options': ['--disabled', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+"   let spec = fzf#vim#with_preview(spec, 'right', 'ctrl-/')
+"   call fzf#vim#grep(initial_command, 1, spec, a:fullscreen)
+" endfunction

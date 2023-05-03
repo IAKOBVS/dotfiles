@@ -1,11 +1,2 @@
 #!/usr/bin/dash
-if /usr/bin/mkdir -pv $@; then
-	sudo updatedb &
-	__path__=$(realpath $(echo $@ | awk '{print $NF}'))
-	case $__path__ in
-		$HOME/*)
-			echo $__path__ >> /tmp/__fzfhome__ &;;
-		*)
-			echo $__path__ >> /tmp/__fzfroot__ &
-	esac
-fi
+/usr/bin/mkdir -pv $@ && sudo updatedb &
