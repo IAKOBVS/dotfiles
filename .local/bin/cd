@@ -11,4 +11,4 @@ if [ $1 ]; then
 			fi
 	esac
 fi
-builtin cd $1 2> /dev/null; ls -hN --color=auto --group-directories-first
+builtin cd $1 2> /dev/null
