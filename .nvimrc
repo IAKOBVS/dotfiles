@@ -224,9 +224,9 @@ let g:ale_linters = {
 
 let g:Hexokinase_highlighters = ['backgroundfull']
 let g:ale_c_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wuninitialized'
-let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
+let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
 let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuninitialized'
-let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
+let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
 " let g:ale_clang_cxx_standard = 'c++17'
 " let g:ale_cpp_options = '-std=gnu++17'
 " disable weird pairing behaviour
