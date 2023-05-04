@@ -16,27 +16,13 @@ Plug 'vim-scripts/LargeFile'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dense-analysis/ale'
 Plug 'tpope/vim-surround'
-
-" LSP Support
 Plug 'neovim/nvim-lspconfig'                           " Required
 Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'} " Optional
 Plug 'williamboman/mason-lspconfig.nvim'               " Optional
-
-" Autocompletion
 Plug 'hrsh7th/nvim-cmp'     " Required
 Plug 'hrsh7th/cmp-nvim-lsp' " Required
 Plug 'L3MON4D3/LuaSnip'     " Required
-
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
-
-" Plug 'bfrg/vim-cpp-modern'
-" Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
-" Plug 'williamboman/mason.nvim'
-" Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
-" Plug 'williamboman/mason-lspconfig.nvim'
-" Plug 'bscan/PerlNavigator'
-" Plug 'neovim/nvim-lspconfig'
-
 call plug#end()
 
 " skeleton
@@ -48,6 +34,8 @@ let g:ale_linters = {
 \	'cpp': ['clangtidy'],
 \	'c': ['clangtidy']
 \}
+
+autocmd BufRead *.pl let g:ale_enabled = 0
 
 " let g:ale_perl_perlcritic_options = '--stern'
 " let g:ale_cpp_options = '-std=gnu++17'
@@ -232,9 +220,6 @@ cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " recompile suckless programs
 autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
-" autocmd BufWritePost *.c :!com %:p 2
-" autocmd BufWritePost *.h :!gcc %:p
-" autocmd BufWritePost *.cpp :!com %:p 2
 " reload key bindings 
 autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 
