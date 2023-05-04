@@ -34,6 +34,28 @@ map <C-p> <F1> :set paste "+P :set nopaste <F1>
 map <C-p> <F1> :set paste "+p :set nopaste <F1>
 vnoremap <C-c> "*y :let @+=@*<CR>
 
+" ctrl + s to save
+map <C-s> :w<Return>
+" J and K to jump between paragraphs
+map J }
+map K {
+map <C-j> <C-d>
+map <C-k> <C-u>
+" q to quote; q unquote -- depends on vim-surround
+map q ysiw"hxp
+nmap Q F"xf"x
+
+" tabularize C macros
+nmap <Leader>f VggVG:Tabularize /\\$<CR>
+vmap ff :Tabularize /\\$<CR>
+
+nnoremap <space>o :History<CR>
+nnoremap <space>h :cd ~ \| Files<CR>
+nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
+nnoremap <space>r :Rg<CR>
+" open new terminal with cwd
+nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
+
 " tab j and tab + k for navigating errors
 nmap <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nmap <silent> <tab>j <Plug>(coc-diagnostic-next)
@@ -54,17 +76,6 @@ function! TabularizeMacro()
 	call cursor(lnum, 1)
 endfunction
 
-" tabularize C macros
-nmap <Leader>f VggVG:Tabularize /\\$<CR>
-vmap ff :Tabularize /\\$<CR>
-
-nnoremap <space>o :History<CR>
-nnoremap <space>h :cd ~ \| Files<CR>
-nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
-nnoremap <space>r :Rg<CR>
-" open new terminal with cwd
-nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
-
 " respect camelCase
 map <silent>w <Plug>CamelCaseMotion_w
 map <silent>b <Plug>CamelCaseMotion_b
@@ -74,17 +85,6 @@ sunmap w
 sunmap b
 sunmap e
 sunmap ge
-
-" ctrl + s to save
-map <C-s> :w<Return>
-" J and K to jump between paragraphs
-map J }
-map K {
-map <C-j> <C-d>
-map <C-k> <C-u>
-" q to quote; q unquote -- depends on vim-surround
-map q ysiw"hxp
-nmap Q F"xf"x
 
 " defaults
 filetype plugin indent on
