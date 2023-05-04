@@ -7,7 +7,7 @@ find / \
 	! -path '*.rev*' \
 	! -path '*.key*' \
 	> /tmp/__fzfroot__ 2> /dev/null &
-find $HOME \
+find "$HOME" \
 	! -path '*cache*' \
 	! -path '*.git*' \
 	! -path '*.gnupg*' \
