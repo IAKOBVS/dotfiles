@@ -35,6 +35,10 @@ autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
 autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
+" recompile suckless programs
+autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
+" reload key bindings 
+autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 
 " only let ale use clang-tidy
 let g:ale_linters = {
@@ -60,7 +64,16 @@ set maxmempattern=2000000
 set inccommand=nosplit
 set nohlsearch
 set incsearch
+filetype plugin indent on
 set nocompatible
+set number relativenumber
+set mouse=a
+set modifiable
+set encoding=utf-8
+set nobackup
+set nowritebackup
+set updatetime=300
+set signcolumn=yes
 
 function! TabularizeMacro()
 	let lnum = line('.')
@@ -158,11 +171,6 @@ map C :VimtexCompile<Return>
 " save as sudo
 cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" recompile suckless programs
-autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
-" reload key bindings 
-autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
-
 " transparent vim with st
 if has('nvim')
 	set termguicolors
@@ -175,21 +183,10 @@ if has('nvim')
 	hi Normal ctermbg=none guibg=none
 endif
 
-set number relativenumber
-set mouse=a
-set modifiable
-filetype plugin indent on
-
 " tab spacing
 autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
 " disable autocomment
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
-
-set encoding=utf-8
-set nobackup
-set nowritebackup
-set updatetime=300
-set signcolumn=yes
 
 " enter for accepting completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
