@@ -27,6 +27,8 @@ Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
+autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
+
 " copy paste
 vnoremap <C-c> "+y
 vnoremap <C-d> "+y:delete<Return>
@@ -83,9 +85,21 @@ sunmap b
 sunmap e
 sunmap ge
 
+colorscheme murphy
+" transparent vim with st
+if has('nvim')
+	set termguicolors
+endif
+hi NormalFloat guibg=none
+hi VertSplit guibg=none
+hi FoldColumn guibg=none
+hi SignColumn guibg=none
+hi LineNr guibg=none
+hi CursorLineNr guibg=none
+hi Normal ctermbg=none guibg=none
+
 " defaults
 filetype plugin indent on
-colorscheme murphy
 set number relativenumber
 set linebreak
 set nohlsearch
@@ -148,18 +162,6 @@ map C :VimtexCompile<Return>
 " save as sudo
 cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" transparent vim with st
-if has('nvim')
-	set termguicolors
-	hi NormalFloat guibg=none
-	hi VertSplit guibg=none
-	hi FoldColumn guibg=none
-	hi SignColumn guibg=none
-	hi LineNr guibg=none
-	hi CursorLineNr guibg=none
-	hi Normal ctermbg=none guibg=none
-endif
-
 " enter for accepting completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 	\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -189,7 +191,6 @@ hi link Function Function
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
 
 " automatically edits swap warning
-autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
 autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
 
