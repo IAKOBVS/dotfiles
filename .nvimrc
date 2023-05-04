@@ -101,7 +101,6 @@ vnoremap <C-d> "+y:delete<Return>
 map <C-p> <F1> :set paste "+P :set nopaste <F1>
 map <C-p> <F1> :set paste "+p :set nopaste <F1>
 vnoremap <C-c> "*y :let @+=@*<CR>
-nnoremap <C-y> ggVG
 
 " disable switch case indent
 set cinoptions+=:0
@@ -118,7 +117,6 @@ sunmap ge
 
 " Ctrl + s to save
 map <C-s> :w<Return>
-
 " J and K to jump between paragraphs
 map J }
 map K {
@@ -138,9 +136,10 @@ nmap Q F"xf"x
 " let b:coc_pairs_disabled = ['<','>']
 
 " spellcheck
-noremap <C-n> :set nospell!<Return>
+" noremap <C-n> :set nospell!<Return>
 " set spell spelllang=en_us
 
+" set termguicolors
 if has('nvim')
 	autocmd VimEnter * call timer_start(8, { tid -> execute(':set termguicolors')})
 endif
@@ -234,6 +233,7 @@ inoremap <expr><C-k>
 	\ coc#pum#visible() ? coc#pum#prev(1) :
 	\ "\<C-h>"
 
+" Recolor C macros
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
