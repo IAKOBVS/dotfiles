@@ -17,6 +17,18 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'dense-analysis/ale'
 Plug 'tpope/vim-surround'
 
+" LSP Support
+Plug 'neovim/nvim-lspconfig'                           " Required
+Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'} " Optional
+Plug 'williamboman/mason-lspconfig.nvim'               " Optional
+
+" Autocompletion
+Plug 'hrsh7th/nvim-cmp'     " Required
+Plug 'hrsh7th/cmp-nvim-lsp' " Required
+Plug 'L3MON4D3/LuaSnip'     " Required
+
+Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
+
 " Plug 'bfrg/vim-cpp-modern'
 " Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 " Plug 'williamboman/mason.nvim'
@@ -47,15 +59,16 @@ let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuni
 let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
 let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
 
-let g:coc_max_preview_height = 30
-let g:coc_scroll_accelerated = 1
-let g:coc_scroll_accelerated_chunk_size = 30
-
-set maxmempattern=2000000
+" let g:coc_max_preview_height = 30
+" let g:coc_scroll_accelerated = 1
+" let g:coc_scroll_accelerated_chunk_size = 30
+" set maxmempattern=2000000
 
 let g:AutoPairsMultilineClose = 0
-
 set inccommand=nosplit
+
+set nohlsearch
+set incsearch
 
 nnoremap - :vertical resize -25<CR>
 nnoremap = :vertical resize +25<CR>
@@ -403,3 +416,30 @@ hi link Function Function
 " endfunction
 
 " set omnifunc=Complete__
+
+lua <<EOF
+-- require'lspconfig'.perlpls.setup()
+local lsp = require('lsp-zero').preset({})
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+-- (Optional) Configure lua language server for neovim
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
+lsp.setup()
+
+require'lspconfig'.perlnavigator.setup{
+    settings = {
+      perlnavigator = {
+          perlPath = 'perl',
+          enableWarnings = true,
+          perltidyProfile = '',
+          perlcriticProfile = '',
+          perlcriticEnabled = true,
+      }
+    }
+}
+
+EOF
