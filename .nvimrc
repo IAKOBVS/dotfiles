@@ -33,6 +33,8 @@ autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
 " automatically edits swap warning
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
+autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
+autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
 
 " only let ale use clang-tidy
 let g:ale_linters = {
@@ -40,6 +42,7 @@ let g:ale_linters = {
 \	'c': ['clangtidy']
 \}
 
+let g:Hexokinase_highlighters = ['backgroundfull']
 let g:ale_c_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wuninitialized'
 let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
 let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuninitialized'
@@ -49,10 +52,15 @@ let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.Deprecat
 
 " disable weird pairing behaviour
 let g:AutoPairsMultilineClose = 0
+
+" defaults
+colorscheme murphy
+set linebreak
 set maxmempattern=2000000
 set inccommand=nosplit
 set nohlsearch
 set incsearch
+set nocompatible
 
 function! TabularizeMacro()
 	let lnum = line('.')
@@ -61,6 +69,10 @@ function! TabularizeMacro()
 endfunction
 vnoremap ff :call TabularizeMacro()<CR>
 
+" tabularize C macros
+nmap <Leader>f VggVG:Tabularize /\\$<CR>
+vmap ff :Tabularize /\\$<CR>
+
 nnoremap <space>o :History<CR>
 nnoremap <space>h :cd ~ \| Files<CR>
 nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
@@ -68,15 +80,12 @@ nnoremap <space>r :Rg<CR>
 " open new terminal with cwd
 nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
-" Put plugins and dictionaries in this dir (also on Windows)
+" undodir
 let vimDir = '$HOME/.vim'
-
 if stridx(&runtimepath, expand(vimDir)) == -1
 	" vimDir is not on runtimepath, add it
 	let &runtimepath.=','.vimDir
 endif
-
-" Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
 	let myUndoDir = expand(vimDir . '/undodir')
 	" Create dirs
@@ -85,9 +94,6 @@ if has('persistent_undo')
 	let &undodir = myUndoDir
 	set undofile
 endif
-
-nmap <Leader>f VggVG:Tabularize /\\$<CR>
-vmap ff :Tabularize /\\$<CR>
 
 " st fix
 " set t_8f=^[[38;2;%lu;%lu;%lum	" set foreground color
@@ -122,13 +128,8 @@ map J }
 map K {
 map <C-j> <C-d>
 map <C-k> <C-u>
-" hop to top or bottom
-noremap H b
-noremap L w
-
-" q to quote
+" q to quote; q unquote -- depends on vim-surround
 map q ysiw"hxp
-" Q to unquote
 nmap Q F"xf"x
 
 " disable autoquote
@@ -143,17 +144,6 @@ nmap Q F"xf"x
 if has('nvim')
 	autocmd VimEnter * call timer_start(8, { tid -> execute(':set termguicolors')})
 endif
-
-let g:Hexokinase_highlighters = ['backgroundfull']
-
-autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
-
-" defaults and dash syntax highlighting
-set linebreak
-set nocompatible
-colorscheme murphy
-" syntax on
-autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
 
 " vim insert cursor mode
 let &t_SI = "\e[6 q"
@@ -175,11 +165,7 @@ autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 
 " transparent vim with st
 if has('nvim')
-	" Enable true colors in Neovim
 	set termguicolors
-endif
-
-if has('termguicolors')
 	hi NormalFloat guibg=none
 	hi VertSplit guibg=none
 	hi FoldColumn guibg=none
@@ -195,7 +181,6 @@ set modifiable
 filetype plugin indent on
 
 " tab spacing
-" set autoindent expandtab tabstop=2 shiftwidth=2
 autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
 " disable autocomment
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
@@ -247,7 +232,6 @@ hi link Function Function
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 lua <<EOF
--- require'lspconfig'.perlpls.setup()
 local lsp = require('lsp-zero').preset({})
 
 lsp.on_attach(function(client, bufnr)
@@ -270,7 +254,6 @@ require'lspconfig'.perlnavigator.setup{
 		}
 	}
 }
-
 EOF
 
 " function! Complete__()
