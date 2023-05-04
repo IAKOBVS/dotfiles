@@ -59,18 +59,7 @@ function! TabularizeMacro()
 	execute '/^$\\ze\\n{/;/^}$/normal! vip:substitute/\\zs$/\\\\/ | ' . &tabstop . 'retab'
 	call cursor(lnum, 1)
 endfunction
-
-function! CheckMacrosNow()
-	:silent! execute '!coenow % &' | vsplit | edit /tmp/%:t-deb.c | normal <CR> | normal G
-endfunction
-
-function! CheckMacros()
-	:silent! execute '!coe % &' | vsplit | edit /tmp/%:t-deb.c | normal <CR> | normal G
-endfunction
-
-function! RecheckMacros()
-	:silent! execute '!coe % &' | vsplit | edit /tmp/%:t-deb.c | normal <CR> | normal G
-endfunction
+vnoremap ff :call TabularizeMacro()<CR>
 
 nnoremap <space>o :History<CR>
 nnoremap <space>h :cd ~ \| Files<CR>
@@ -78,11 +67,6 @@ nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
 nnoremap <space>r :Rg<CR>
 " open new terminal with cwd
 nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
-
-vnoremap ff :call TabularizeMacro()<CR>
-nmap <leader>m :call RecheckMacros()<Return>G
-nmap cm :call CheckMacros()<Return>G
-nmap cn :call CheckMacrosNow()<Return>G
 
 " Put plugins and dictionaries in this dir (also on Windows)
 let vimDir = '$HOME/.vim'
