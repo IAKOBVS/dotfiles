@@ -1,14 +1,14 @@
 #!/usr/bin/dash
-if test $1; then
+if test "$1"; then
 	case $1 in
 		$HOME/*)
-			[ -f $1 2> /dev/null ] && 1=$(dirname $1);;
+			test -f "$1" && 1="$(dirname "$1")";;
 		*)
-			if [ -f $1 2> /dev/null ]; then
-				1=$(dirname $1)
+			if test -f $1; then
+				1="$(dirname "$1")"
 			else
 				[ -d $1 ] || 1="$HOME/$1"
 			fi
 	esac
 fi
-builtin cd $1 2> /dev/null
+builtin cd $1 2> /dev/null || return
