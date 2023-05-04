@@ -5,17 +5,17 @@ Plug 'preservim/nerdtree'
 Plug 'tribela/vim-transparent'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'lervag/vimtex'
 Plug 'bkad/CamelCaseMotion'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'mechatroner/rainbow_csv'
 Plug 'godlygeek/tabular'
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'vim-scripts/LargeFile'
 Plug 'jiangmiao/auto-pairs'
-Plug 'dense-analysis/ale'
 Plug 'tpope/vim-surround'
+Plug 'vim-scripts/LargeFile'
+" lsp
+Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
 Plug 'williamboman/mason-lspconfig.nvim'
@@ -23,7 +23,68 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
+" dart
+Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
+
+" copy paste
+vnoremap <C-c> "+y
+vnoremap <C-d> "+y:delete<Return>
+map <C-p> <F1> :set paste "+P :set nopaste <F1>
+map <C-p> <F1> :set paste "+p :set nopaste <F1>
+vnoremap <C-c> "*y :let @+=@*<CR>
+
+" tab j and tab + k for navigating errors
+nmap <silent> <tab>k <Plug>(coc-diagnostic-prev)
+nmap <silent> <tab>j <Plug>(coc-diagnostic-next)
+
+vnoremap ff :call TabularizeMacro()<CR>
+
+" ctrl + j and ctrl + k for navigating completions
+inoremap <silent><expr> <C-j>
+	\ coc#pum#visible() ? coc#pum#next(1) :
+	\ CheckBackspace() ? "\<Tab>" :
+	\ coc#refresh()
+inoremap <expr><C-k>
+	\ coc#pum#visible() ? coc#pum#prev(1) :
+	\ "\<C-h>"
+function! TabularizeMacro()
+	let lnum = line('.')
+	execute '/^$\\ze\\n{/;/^}$/normal! vip:substitute/\\zs$/\\\\/ | ' . &tabstop . 'retab'
+	call cursor(lnum, 1)
+endfunction
+
+" tabularize C macros
+nmap <Leader>f VggVG:Tabularize /\\$<CR>
+vmap ff :Tabularize /\\$<CR>
+
+nnoremap <space>o :History<CR>
+nnoremap <space>h :cd ~ \| Files<CR>
+nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
+nnoremap <space>r :Rg<CR>
+" open new terminal with cwd
+nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
+
+" respect camelCase
+map <silent>w <Plug>CamelCaseMotion_w
+map <silent>b <Plug>CamelCaseMotion_b
+map <silent>e <Plug>CamelCaseMotion_e
+map <silent>ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
+
+" ctrl + s to save
+map <C-s> :w<Return>
+" J and K to jump between paragraphs
+map J }
+map K {
+map <C-j> <C-d>
+map <C-k> <C-u>
+" q to quote; q unquote -- depends on vim-surround
+map q ysiw"hxp
+nmap Q F"xf"x
 
 " defaults
 filetype plugin indent on
@@ -47,30 +108,7 @@ set inccommand=nosplit
 " disable switch case indent
 set cinoptions+=:0
 
-" copy paste
-vnoremap <C-c> "+y
-vnoremap <C-d> "+y:delete<Return>
-map <C-p> <F1> :set paste "+P :set nopaste <F1>
-map <C-p> <F1> :set paste "+p :set nopaste <F1>
-vnoremap <C-c> "*y :let @+=@*<CR>
-
-function! TabularizeMacro()
-	let lnum = line('.')
-	execute '/^$\\ze\\n{/;/^}$/normal! vip:substitute/\\zs$/\\\\/ | ' . &tabstop . 'retab'
-	call cursor(lnum, 1)
-endfunction
-vnoremap ff :call TabularizeMacro()<CR>
-
-" tabularize C macros
-nmap <Leader>f VggVG:Tabularize /\\$<CR>
-vmap ff :Tabularize /\\$<CR>
-
-nnoremap <space>o :History<CR>
-nnoremap <space>h :cd ~ \| Files<CR>
-nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
-nnoremap <space>r :Rg<CR>
-" open new terminal with cwd
-nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " undodir
 let vimDir = '$HOME/.vim'
@@ -92,27 +130,6 @@ endif
 " set t_8b=^[[48;2;%lu;%lu;%lum	" set background color
 " set t_Co=256 " Enable 256 colors
 
-" respect camelCase
-map <silent>w <Plug>CamelCaseMotion_w
-map <silent>b <Plug>CamelCaseMotion_b
-map <silent>e <Plug>CamelCaseMotion_e
-map <silent>ge <Plug>CamelCaseMotion_ge
-sunmap w
-sunmap b
-sunmap e
-sunmap ge
-
-" ctrl + s to save
-map <C-s> :w<Return>
-" J and K to jump between paragraphs
-map J }
-map K {
-map <C-j> <C-d>
-map <C-k> <C-u>
-" q to quote; q unquote -- depends on vim-surround
-map q ysiw"hxp
-nmap Q F"xf"x
-
 " disable autoquote
 " let b:coc_pairs_disabled = ['"',"'",'<','>']
 " let b:coc_pairs_disabled = ['<','>']
@@ -120,11 +137,6 @@ nmap Q F"xf"x
 " spellcheck
 " noremap <C-n> :set nospell!<Return>
 " set spell spelllang=en_us
-
-" set termguicolors
-if has('nvim')
-	autocmd VimEnter * call timer_start(8, { tid -> execute(':set termguicolors')})
-endif
 
 " vim insert cursor mode
 let &t_SI = "\e[6 q"
@@ -151,11 +163,6 @@ if has('nvim')
 	hi Normal ctermbg=none guibg=none
 endif
 
-" tab spacing
-autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
-" disable autocomment
-autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
-
 " enter for accepting completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 	\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -167,21 +174,6 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" tab j and tab + k for navigating errors
-nmap <silent> <tab>k <Plug>(coc-diagnostic-prev)
-nmap <silent> <tab>j <Plug>(coc-diagnostic-next)
-
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" ctrl + j and ctrl + k for navigating completions
-inoremap <silent><expr> <C-j>
-	\ coc#pum#visible() ? coc#pum#next(1) :
-	\ CheckBackspace() ? "\<Tab>" :
-	\ coc#refresh()
-inoremap <expr><C-k>
-	\ coc#pum#visible() ? coc#pum#prev(1) :
-	\ "\<C-h>"
 
 " Recolor C macros
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
@@ -209,6 +201,16 @@ autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 autocmd BufNewFile,BufRead *.h set filetype=c
 autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
 autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
+
+" tab spacing
+autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
+" disable autocomment
+autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
+
+" set termguicolors
+if has('nvim')
+	autocmd VimEnter * call timer_start(8, { tid -> execute(':set termguicolors')})
+endif
 
 " only let ale use clang-tidy
 let g:ale_linters = {
