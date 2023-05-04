@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-/usr/bin/mkdir -pv "$@" && sudo updatedb &
+/usr/bin/mkdir -pv "$@" && ufzf &
