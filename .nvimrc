@@ -15,6 +15,7 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'vim-scripts/LargeFile'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dense-analysis/ale'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 " skeleton
@@ -394,7 +395,6 @@ hi link Function Function
 
 " set omnifunc=Complete__
 
-"Plug 'tpope/vim-surround'
 " Plug 'bfrg/vim-cpp-modern'
 " Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 " Plug 'williamboman/mason.nvim'

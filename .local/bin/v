@@ -1,9 +1,7 @@
 #!/usr/bin/dash
-file=$(realpath $(echo $@ | awk '{print $NF}'))
-if [ -f $file ]; then
-	:
-else
-	echo $file >> /tmp/__fzfhome__ &
-	echo $file >> /tmp/__fzfroot__ &
+file=$(realpath "$(echo "$@" | awk '{print $NF}')")
+if ! [ -f "$file" ]; then
+	echo "$file" >> /tmp/__fzfhome__ &
+	echo "$file" >> /tmp/__fzfroot__ &
 fi
-nvim $@
+nvim "$@"
