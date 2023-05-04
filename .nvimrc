@@ -33,7 +33,6 @@ vnoremap <C-d> "+y:delete<Return>
 map <C-p> <F1> :set paste "+P :set nopaste <F1>
 map <C-p> <F1> :set paste "+p :set nopaste <F1>
 vnoremap <C-c> "*y :let @+=@*<CR>
-
 " ctrl + s to save
 map <C-s> :w<Return>
 " J and K to jump between paragraphs
@@ -44,9 +43,7 @@ map <C-k> <C-u>
 " q to quote; q unquote -- depends on vim-surround
 map q ysiw"hxp
 nmap Q F"xf"x
-
 " tabularize C macros
-nmap <Leader>f VggVG:Tabularize /\\$<CR>
 vmap ff :Tabularize /\\$<CR>
 
 nnoremap <space>o :History<CR>
