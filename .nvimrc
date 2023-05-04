@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
@@ -11,7 +12,6 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'mechatroner/rainbow_csv'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
 Plug 'vim-scripts/LargeFile'
 " lsp
 Plug 'dense-analysis/ale'
@@ -226,8 +226,10 @@ let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.Deprecat
 " let g:ale_clang_cxx_standard = 'c++17'
 " let g:ale_cpp_options = '-std=gnu++17'
 " disable weird pairing behaviour
+
 let g:AutoPairsMultilineClose = 0
 
+" lsp
 lua <<EOF
 local lsp = require('lsp-zero').preset({})
 
