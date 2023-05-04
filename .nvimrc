@@ -155,7 +155,7 @@ nmap Q F"xf"x
 
 " spellcheck
 noremap <C-n> :set nospell!<Return>
-set spell spelllang=en_us
+" set spell spelllang=en_us
 
 if has('nvim')
 	autocmd VimEnter * call timer_start(8, { tid -> execute(':set termguicolors')})
