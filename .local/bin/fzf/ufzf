@@ -1,5 +1,5 @@
 #!/usr/bin/dash
-if ! pgrep 'find'; then
+if ! pgrep 'find' > /dev/null; then
 	find / \
 		! -path '*cache*' \
 		! -path '*.git*' \
