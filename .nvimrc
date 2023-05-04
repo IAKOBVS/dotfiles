@@ -184,16 +184,21 @@ hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 hi MatchParen guifg=white guibg=none
 hi link Function Function
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
+
 " disables ale for perl
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
+
 " automatically edits swap warning
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
 autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
+
 " recompile suckless programs
 autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
+
 " reload key bindings 
 autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
+
 " skeleton
 autocmd BufNewFile,BufRead *.h set filetype=c
 autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
@@ -201,6 +206,7 @@ autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
 
 " tab spacing
 autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
+
 " disable autocomment
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
 
