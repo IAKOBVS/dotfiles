@@ -8,10 +8,10 @@ case "$2" in
 		comp_flags="$comp_flags $analyzer"
 		[ -n "$3" ] && OLevel="-O$3 -flto";;
 	*)
-	if [ -n "$2" ]; then
-		OLevel="-O$3 -flto"
-		[ -n "$3" ] && comp_flags="$comp_flags $analyzer"
-	fi
+		if [ -n "$2" ]; then
+			OLevel="-O$3 -flto"
+			[ -n "$3" ] && comp_flags="$comp_flags $analyzer"
+		fi
 esac
 [ -n "$2" ] && OLevel="-O$2 -flto"
 cwd_files=$(find . -name '*.c' -o -name '*.cpp' -maxdepth 1 -type f)
