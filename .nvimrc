@@ -25,48 +25,15 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 call plug#end()
 
-" skeleton
-autocmd BufNewFile,BufRead *.h set filetype=c
-autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
-autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
-" disables ale for perl
-autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
-" automatically edits swap warning
-autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
-autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
-autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
-" recompile suckless programs
-autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
-" reload key bindings 
-autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
-
-" only let ale use clang-tidy
-let g:ale_linters = {
-\	'cpp': ['clangtidy'],
-\	'c': ['clangtidy']
-\}
-
-let g:Hexokinase_highlighters = ['backgroundfull']
-let g:ale_c_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wuninitialized'
-let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
-let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuninitialized'
-let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
-" let g:ale_clang_cxx_standard = 'c++17'
-" let g:ale_cpp_options = '-std=gnu++17'
-
-" disable weird pairing behaviour
-let g:AutoPairsMultilineClose = 0
-
 " defaults
+filetype plugin indent on
 colorscheme murphy
+set number relativenumber
 set linebreak
-set maxmempattern=2000000
-set inccommand=nosplit
 set nohlsearch
 set incsearch
-filetype plugin indent on
-set nocompatible
-set number relativenumber
+" use as much memory as possible
+set maxmempattern=2000000
 set mouse=a
 set modifiable
 set encoding=utf-8
@@ -74,6 +41,18 @@ set nobackup
 set nowritebackup
 set updatetime=300
 set signcolumn=yes
+set nocompatible
+set pastetoggle=<F1>
+set inccommand=nosplit
+" disable switch case indent
+set cinoptions+=:0
+
+" copy paste
+vnoremap <C-c> "+y
+vnoremap <C-d> "+y:delete<Return>
+map <C-p> <F1> :set paste "+P :set nopaste <F1>
+map <C-p> <F1> :set paste "+p :set nopaste <F1>
+vnoremap <C-c> "*y :let @+=@*<CR>
 
 function! TabularizeMacro()
 	let lnum = line('.')
@@ -113,17 +92,6 @@ endif
 " set t_8b=^[[48;2;%lu;%lu;%lum	" set background color
 " set t_Co=256 " Enable 256 colors
 
-" copy paste
-set pastetoggle=<F1>
-vnoremap <C-c> "+y
-vnoremap <C-d> "+y:delete<Return>
-map <C-p> <F1> :set paste "+P :set nopaste <F1>
-map <C-p> <F1> :set paste "+p :set nopaste <F1>
-vnoremap <C-c> "*y :let @+=@*<CR>
-
-" disable switch case indent
-set cinoptions+=:0
-
 " respect camelCase
 map <silent>w <Plug>CamelCaseMotion_w
 map <silent>b <Plug>CamelCaseMotion_b
@@ -134,7 +102,7 @@ sunmap b
 sunmap e
 sunmap ge
 
-" Ctrl + s to save
+" ctrl + s to save
 map <C-s> :w<Return>
 " J and K to jump between paragraphs
 map J }
@@ -227,6 +195,36 @@ hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 hi MatchParen guifg=white guibg=none
 hi link Function Function
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
+" disables ale for perl
+autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
+" automatically edits swap warning
+autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
+autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
+autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
+" recompile suckless programs
+autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
+" reload key bindings 
+autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
+" skeleton
+autocmd BufNewFile,BufRead *.h set filetype=c
+autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
+autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
+
+" only let ale use clang-tidy
+let g:ale_linters = {
+\	'cpp': ['clangtidy'],
+\	'c': ['clangtidy']
+\}
+
+let g:Hexokinase_highlighters = ['backgroundfull']
+let g:ale_c_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wuninitialized'
+let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
+let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuninitialized'
+let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling']
+" let g:ale_clang_cxx_standard = 'c++17'
+" let g:ale_cpp_options = '-std=gnu++17'
+" disable weird pairing behaviour
+let g:AutoPairsMultilineClose = 0
 
 lua <<EOF
 local lsp = require('lsp-zero').preset({})
