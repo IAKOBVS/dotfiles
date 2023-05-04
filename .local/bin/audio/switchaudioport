@@ -1,10 +1,11 @@
 #!/usr/bin/dash
-if [ -n "$( checkaudioport | grep -F 'headphone')" ]; then
-	pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-lineout
-	$TERMINAL -e pulseaudio-equalizer disable
-	notify-send "🔊 now using speakers!"
-else
-	pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-headphones
-	$TERMINAL -e pulseaudio-equalizer enable
-	notify-send "🎧 now using headphones!"
-fi
+case "$(checkaudioport)" in
+	*headphone*)
+		pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-lineout
+		$TERMINAL -e pulseaudio-equalizer disable
+		notify-send "🔊 now using speakers!";;
+	*)
+		pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-headphones
+		$TERMINAL -e pulseaudio-equalizer enable
+		notify-send "🎧 now using headphones!"
+esac
