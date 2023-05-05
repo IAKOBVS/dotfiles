@@ -74,8 +74,8 @@ u_() { ufzf }
 fv_() { filesvim }
 rg_() { rgvim }
 
-bindkey -s '^o' 'l_\n'
 bindkey -s '^f' '_\n'
+bindkey -s '^o' 'l_\n'
 bindkey -s '^u' 'u_\n'
 bindkey -s '^v' 'fv_\n'
 bindkey -s '^r' 'rg_\n'

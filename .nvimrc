@@ -28,10 +28,9 @@ Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
 " copy paste
-vnoremap <C-c> "+y
 vnoremap <C-d> "+y:delete<Return>
-map <C-p> <F1> :set paste "+P :set nopaste <F1>
 vnoremap <C-c> "*y :let @+=@*<CR>
+map <C-p> "+P
 map <C-s> :w<Return> " ctrl + s (save)
 
 " J and K to jump between paragraphs
@@ -42,8 +41,7 @@ map <C-k> <C-u>
 " q to quote; q unquote -- depends on vim-surround
 map q ysiw"hxp
 nmap Q F"xf"x
-" tabularize C macros
-vmap ff :Tabularize /\\$<CR>
+vmap ff :Tabularize /\\$<CR> " tabularize C macros
 
 nnoremap <space>l :History<CR>
 nnoremap <space>h :cd ~ \| Files<CR>
