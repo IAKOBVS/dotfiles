@@ -21,6 +21,7 @@ foreach my $old (glob('./*')) {
 	# remove (str)
 	$new =~ s/\([[:digit:]]*\)//g; # remove (2019)
 	$new =~ s/\([^\)]*1080[^\)]*\)//g; # remove (.*1080.*)
+	$new =~ s/\([^\)sS]*\)//g;
 
 	# remove trailing symbols before extension
 	$new =~ s/[[:space:]]*(\.[[:alnum:]]*)$/\1/; # space
