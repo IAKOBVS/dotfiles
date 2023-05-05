@@ -32,8 +32,8 @@ vnoremap <C-c> "+y
 vnoremap <C-d> "+y:delete<Return>
 map <C-p> <F1> :set paste "+P :set nopaste <F1>
 vnoremap <C-c> "*y :let @+=@*<CR>
-" ctrl + s to save
-map <C-s> :w<Return>
+map <C-s> :w<Return> " ctrl + s (save)
+
 " J and K to jump between paragraphs
 map J }
 map K {
@@ -45,17 +45,23 @@ nmap Q F"xf"x
 " tabularize C macros
 vmap ff :Tabularize /\\$<CR>
 
-nnoremap <space>o :History<CR>
+nnoremap <space>l :History<CR>
 nnoremap <space>h :cd ~ \| Files<CR>
 nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
 nnoremap <space>r :Rg<CR>
-" open new terminal with cwd
+
+" open cwd in new terminal
 nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
-" tab j and tab + k for navigating errors
+" navigaet errors
 nmap <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nmap <silent> <tab>j <Plug>(coc-diagnostic-next)
 
+function! TabularizeMacro()
+	let lnum = line('.')
+	execute '/^$\\ze\\n{/;/^}$/normal! vip:substitute/\\zs$/\\\\/ | ' . &tabstop . 'retab'
+	call cursor(lnum, 1)
+endfunction
 vnoremap ff :call TabularizeMacro()<CR>
 
 " ctrl + j and ctrl + k for navigating completions
@@ -66,11 +72,6 @@ inoremap <silent><expr> <C-j>
 inoremap <expr><C-k>
 	\ coc#pum#visible() ? coc#pum#prev(1) :
 	\ "\<C-h>"
-function! TabularizeMacro()
-	let lnum = line('.')
-	execute '/^$\\ze\\n{/;/^}$/normal! vip:substitute/\\zs$/\\\\/ | ' . &tabstop . 'retab'
-	call cursor(lnum, 1)
-endfunction
 
 " respect camelCase
 map <silent>w <Plug>CamelCaseMotion_w
@@ -83,7 +84,6 @@ sunmap e
 sunmap ge
 
 colorscheme murphy
-" transparent vim with st
 if has('nvim')
 	set termguicolors
 endif
@@ -95,14 +95,17 @@ hi LineNr guibg=none
 hi CursorLineNr guibg=none
 hi Normal ctermbg=none guibg=none
 
+" vim insert cursor mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
 " defaults
 filetype plugin indent on
 set number relativenumber
 set linebreak
 set nohlsearch
 set incsearch
-" use as much memory as possible
-set maxmempattern=2000000
+set maxmempattern=2000000 " use more ram
 set mouse=a
 set modifiable
 set encoding=utf-8
@@ -113,8 +116,7 @@ set signcolumn=yes
 set nocompatible
 set pastetoggle=<F1>
 set inccommand=nosplit
-" disable switch case indent
-set cinoptions+=:0
+set cinoptions+=:0 " disable switch indent
 
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
@@ -146,10 +148,6 @@ endif
 " noremap <C-n> :set nospell!<Return>
 " set spell spelllang=en_us
 
-" vim insert cursor mode
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
-
 " vimtex
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_method = 'latexmk'
@@ -172,6 +170,10 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 
+" automatically edits swap warning
+autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
+autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
+
 " Recolor C macros
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
@@ -182,19 +184,14 @@ hi CursorLine ctermbg=none guibg=#3c3836
 hi CursorColumn ctermbg=none guibg=#3c3836
 hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 hi MatchParen guifg=white guibg=none
-hi link Function Function
+" hi link Function Function
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " disables ale for perl
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
 
-" automatically edits swap warning
-autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
-autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
-
 " recompile suckless programs
 autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
-
 " reload key bindings 
 autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 
@@ -205,7 +202,6 @@ autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
 
 " tab spacing
 autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
-
 " disable autocomment
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
 
