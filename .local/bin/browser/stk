@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+$BROWSER https://www.stockbit.com/#/symbol/$1/chartbit
