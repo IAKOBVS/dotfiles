@@ -51,14 +51,14 @@ nnoremap <space>r :Rg<CR>
 " open cwd in new terminal
 nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
-" navigaet errors
+" navigate errors
 nmap <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nmap <silent> <tab>j <Plug>(coc-diagnostic-next)
 
 function! TabularizeMacro()
-	let lnum = line('.')
+	let linenum = line('.')
 	execute '/^$\\ze\\n{/;/^}$/normal! vip:substitute/\\zs$/\\\\/ | ' . &tabstop . 'retab'
-	call cursor(lnum, 1)
+	call cursor(linenum, 1)
 endfunction
 vnoremap ff :call TabularizeMacro()<CR>
 
@@ -177,14 +177,6 @@ silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermf
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
 
-" Change the color of completion menu
-hi CursorLine ctermbg=none guibg=#3c3836
-hi CursorColumn ctermbg=none guibg=#3c3836
-hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
-hi MatchParen guifg=white guibg=none
-" hi link Function Function
-" hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
-
 " disables ale for perl
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
 
@@ -203,10 +195,13 @@ autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=
 " disable autocomment
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
 
-" set termguicolors
-if has('nvim')
-	autocmd VimEnter * call timer_start(8, { tid -> execute(':set termguicolors')})
-endif
+" Change the color of completion menu
+hi MatchParen guifg=white guibg=none
+hi CursorLine ctermbg=none guibg=#3c3836
+hi CursorColumn ctermbg=none guibg=#3c3836
+hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
+" hi link Function Function
+" hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " only let ale use clang-tidy
 let g:ale_linters = {
@@ -221,8 +216,8 @@ let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuni
 let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
 " let g:ale_clang_cxx_standard = 'c++17'
 " let g:ale_cpp_options = '-std=gnu++17'
-" disable weird pairing behaviour
 
+" disable weird pairing behaviour
 let g:AutoPairsMultilineClose = 0
 
 " lsp
