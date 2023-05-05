@@ -1,18 +1,19 @@
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
 Plug 'tribela/vim-transparent'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'lervag/vimtex'
 Plug 'bkad/CamelCaseMotion'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'mechatroner/rainbow_csv'
+" Plug 'mechatroner/rainbow_csv'
 Plug 'godlygeek/tabular'
-Plug 'jiangmiao/auto-pairs'
 Plug 'vim-scripts/LargeFile'
+" latex
+Plug 'lervag/vimtex'
 " lsp
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -81,6 +82,10 @@ sunmap b
 sunmap e
 sunmap ge
 
+" latex
+nnoremap cc :VimtexCompile<Return>:VimtexCompile<Return>
+nnoremap C :VimtexCompile<Return>
+
 colorscheme murphy
 if has('nvim')
 	set termguicolors
@@ -119,9 +124,6 @@ let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
-
-nnoremap cc :VimtexCompile<Return>:VimtexCompile<Return>
-nnoremap C :VimtexCompile<Return>
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_method = 'latexmk'
 
