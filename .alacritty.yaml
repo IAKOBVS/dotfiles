@@ -1,0 +1,49 @@
+preload_user_config: true
+shell:
+  program: /usr/bin/zsh
+window:
+  opacity: 0.85
+font:
+  normal:
+    Default:
+    family: monospace
+    style: Regular
+  size: 9.0
+  builtin_box_drawing: true
+colors:
+  primary:
+   background: '#000000'
+   foreground: '#ffffff'
+  normal:
+    black:   '0x1e1e1e'
+    red:     '0xef5350'
+    green:   '0x8bc34a'
+    yellow:  '0xffb900'
+    blue:    '0x42a5f5'
+    magenta: '0xd81b60'
+    cyan:    '0x00acc1'
+    white:   '0xcccccc'
+  bright:
+    black:   '0x4f4f4f'
+    red:     '0xff1744'
+    green:   '0x9ccc65'
+    yellow:  '0xffeb3b'
+    blue:    '0x5c6bc0'
+    magenta: '0xe040fb'
+    cyan:    '0x18ffff'
+    white:   '0xffffff'
+ipc_socket: true
+mouse:
+  hide_when_typing: false
+key_bindings:
+  - { key: Y, mods: Control, action: Copy }
+  - { key: P, mods: Control, action: Paste }
+  - { key: Space, mods: Control, mode: ~Search, action: ToggleViMode }
+  - { key: K, mods: Control|Shift, action: ScrollPageUp }
+  - { key: J, mods: Control|Shift, action: ScrollPageDown }
+  # - { key: K, mods: Control, action: ScrollLineUp }
+  # - { key: J, mods: Control, action: ScrollLineDown }
+
+cursor:
+  style:
+    blinking: Never
