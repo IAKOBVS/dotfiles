@@ -99,23 +99,22 @@ let &t_EI = "\e[2 q"
 
 " defaults
 filetype plugin indent on
+set cinoptions+=:0 " disable switch indent
 set number relativenumber
 set linebreak
 set nohlsearch
 set incsearch
 set maxmempattern=2000000 " use more ram
 set mouse=a
-set modifiable
 set encoding=utf-8
 set nobackup
 set nowritebackup
 set updatetime=300
 set signcolumn=yes
-set nocompatible
 set pastetoggle=<F1>
 set inccommand=nosplit
-set cinoptions+=:0 " disable switch indent
-
+set modifiable
+set nocompatible
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " undodir
@@ -133,13 +132,12 @@ if has('persistent_undo')
 	set undofile
 endif
 
+let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
+
 " st fix
 " set t_8f=^[[38;2;%lu;%lu;%lum	" set foreground color
 " set t_8b=^[[48;2;%lu;%lu;%lum	" set background color
 " set t_Co=256 " Enable 256 colors
-
-" disable weird pairing behaviour
-let g:AutoPairsMultilineClose = 0
 
 " disable autoquote
 " let b:coc_pairs_disabled = ['"',"'",'<','>']
@@ -149,7 +147,6 @@ let g:AutoPairsMultilineClose = 0
 " noremap <C-n> :set nospell!<Return>
 " set spell spelllang=en_us
 
-" vimtex
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_method = 'latexmk'
 nnoremap cc :VimtexCompile<Return>:VimtexCompile<Return>
@@ -167,11 +164,9 @@ function! CheckBackspace() abort
 	return !col || getline('.')[col - 1]	=~# '\s'
 endfunction
 
-" Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent call CocActionAsync('highlight')
-autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
+autocmd CursorHold * silent call CocActionAsync('highlight') " highlight symbol
+autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists" " swap
 
-" automatically edits swap warning
 autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
 autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
 
@@ -179,20 +174,18 @@ autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')}
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
+
 autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out; " reload key bindings
 
-" disables ale for perl
-autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
+autocmd BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
+
+autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4 " tab spacing
+autocmd BufNewFile,BufRead * setlocal formatoptions-=ro " disable autocomment
 
 " skeleton
 autocmd BufNewFile,BufRead *.h set filetype=c
 autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
 autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
-
-" tab spacing
-autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
-" disable autocomment
-autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
 
 " Change the color of completion menu
 hi MatchParen guifg=white guibg=none
@@ -204,8 +197,8 @@ hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 
 " only let ale use clang-tidy
 let g:ale_linters = {
-\	'cpp': ['clangtidy'],
-\	'c': ['clangtidy']
+	\'cpp': ['clangtidy'],
+	\'c': ['clangtidy']
 \}
 
 let g:Hexokinase_highlighters = ['backgroundfull']
