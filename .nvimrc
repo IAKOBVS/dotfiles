@@ -27,13 +27,10 @@ Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
-autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
-
 " copy paste
 vnoremap <C-c> "+y
 vnoremap <C-d> "+y:delete<Return>
 map <C-p> <F1> :set paste "+P :set nopaste <F1>
-map <C-p> <F1> :set paste "+p :set nopaste <F1>
 vnoremap <C-c> "*y :let @+=@*<CR>
 " ctrl + s to save
 map <C-s> :w<Return>
@@ -173,6 +170,7 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 
 " Recolor C macros
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
