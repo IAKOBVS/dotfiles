@@ -30,8 +30,8 @@ call plug#end()
 " copy paste
 vnoremap <C-d> "+y:delete<Return>
 vnoremap <C-c> "*y :let @+=@*<CR>
-map <C-p> "+P
-map <C-s> :w<Return> " ctrl + s (save)
+noremap <C-p> "+P
+noremap <C-s> :w<Return> " ctrl + s (save)
 
 " J and K to jump between paragraphs
 map J }
@@ -39,9 +39,9 @@ map K {
 map <C-j> <C-d>
 map <C-k> <C-u>
 " q to quote; q unquote -- depends on vim-surround
-map q ysiw"hxp
-nmap Q F"xf"x
-vmap ff :Tabularize /\\$<CR> " tabularize C macros
+nnoremap q ysiw"hxp
+nnoremap Q F"xf"x
+vnoremap ff :Tabularize /\\$<CR> " tabularize C macros
 
 nnoremap <space>l :History<CR>
 nnoremap <space>h :cd ~ \| Files<CR>
@@ -138,6 +138,9 @@ endif
 " set t_8b=^[[48;2;%lu;%lu;%lum	" set background color
 " set t_Co=256 " Enable 256 colors
 
+" disable weird pairing behaviour
+let g:AutoPairsMultilineClose = 0
+
 " disable autoquote
 " let b:coc_pairs_disabled = ['"',"'",'<','>']
 " let b:coc_pairs_disabled = ['<','>']
@@ -149,8 +152,8 @@ endif
 " vimtex
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_method = 'latexmk'
-map cc :VimtexCompile<Return>:VimtexCompile<Return>
-map C :VimtexCompile<Return>
+nnoremap cc :VimtexCompile<Return>:VimtexCompile<Return>
+nnoremap C :VimtexCompile<Return>
 
 " save as sudo
 cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
@@ -176,14 +179,10 @@ autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')}
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
+autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out; " reload key bindings
 
 " disables ale for perl
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0
-
-" recompile suckless programs
-autocmd BufWritePost config.h,config.def.h,blocks.h !sudo make install
-" reload key bindings 
-autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 
 " skeleton
 autocmd BufNewFile,BufRead *.h set filetype=c
@@ -217,9 +216,6 @@ let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.Deprecat
 " let g:ale_clang_cxx_standard = 'c++17'
 " let g:ale_cpp_options = '-std=gnu++17'
 
-" disable weird pairing behaviour
-let g:AutoPairsMultilineClose = 0
-
 " lsp
 lua <<EOF
 local lsp = require('lsp-zero').preset({})
@@ -228,7 +224,6 @@ lsp.on_attach(function(client, bufnr)
 	lsp.default_keymaps({buffer = bufnr})
 end)
 
--- (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
