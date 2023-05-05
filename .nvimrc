@@ -33,16 +33,19 @@ vnoremap <C-c> "*y :let @+=@*<CR>
 noremap <C-p> "+P
 noremap <C-s> :w<Return> " ctrl + s (save)
 
-" J and K to jump between paragraphs
+" jump between paragraphs with J and K
 map J }
 map K {
 map <C-j> <C-d>
 map <C-k> <C-u>
-" q to quote; q unquote -- depends on vim-surround
+
+" q to quote; Q unquote -- depends on vim-surround
 nnoremap q ysiw"hxp
 nnoremap Q F"xf"x
+
 vnoremap ff :Tabularize /\\$<CR> " tabularize C macros
 
+" fzf
 nnoremap <space>l :History<CR>
 nnoremap <space>h :cd ~ \| Files<CR>
 nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
@@ -55,13 +58,6 @@ nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & d
 nmap <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nmap <silent> <tab>j <Plug>(coc-diagnostic-next)
 
-function! TabularizeMacro()
-	let linenum = line('.')
-	execute '/^$\\ze\\n{/;/^}$/normal! vip:substitute/\\zs$/\\\\/ | ' . &tabstop . 'retab'
-	call cursor(linenum, 1)
-endfunction
-vnoremap ff :call TabularizeMacro()<CR>
-
 " ctrl + j and ctrl + k for navigating completions
 inoremap <silent><expr> <C-j>
 	\ coc#pum#visible() ? coc#pum#next(1) :
@@ -70,6 +66,10 @@ inoremap <silent><expr> <C-j>
 inoremap <expr><C-k>
 	\ coc#pum#visible() ? coc#pum#prev(1) :
 	\ "\<C-h>"
+
+" enter for accepting completion
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+	\ :"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " respect camelCase
 map <silent>w <Plug>CamelCaseMotion_w
@@ -93,11 +93,6 @@ hi LineNr guibg=none
 hi CursorLineNr guibg=none
 hi Normal ctermbg=none guibg=none
 
-" vim insert cursor mode
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
-
-" defaults
 filetype plugin indent on
 set cinoptions+=:0 " disable switch indent
 set number relativenumber
@@ -112,60 +107,28 @@ set nowritebackup
 set updatetime=300
 set signcolumn=yes
 set pastetoggle=<F1>
-set inccommand=nosplit
 set modifiable
 set nocompatible
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+if has('nvim')
+	set inccommand=nosplit
+endif
 
-" undodir
-let vimDir = '$HOME/.vim'
-if stridx(&runtimepath, expand(vimDir)) == -1
-	" vimDir is not on runtimepath, add it
-	let &runtimepath.=','.vimDir
-endif
-if has('persistent_undo')
-	let myUndoDir = expand(vimDir . '/undodir')
-	" Create dirs
-	call system('mkdir ' . vimDir)
-	call system('mkdir ' . myUndoDir)
-	let &undodir = myUndoDir
-	set undofile
-endif
+" vim insert cursor mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 
-" st fix
-" set t_8f=^[[38;2;%lu;%lu;%lum	" set foreground color
-" set t_8b=^[[48;2;%lu;%lu;%lum	" set background color
-" set t_Co=256 " Enable 256 colors
-
-" disable autoquote
-" let b:coc_pairs_disabled = ['"',"'",'<','>']
-" let b:coc_pairs_disabled = ['<','>']
-
-" spellcheck
-" noremap <C-n> :set nospell!<Return>
-" set spell spelllang=en_us
-
-let g:vimtex_view_method = 'zathura'
-let g:vimtex_compiler_method = 'latexmk'
 nnoremap cc :VimtexCompile<Return>:VimtexCompile<Return>
 nnoremap C :VimtexCompile<Return>
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_compiler_method = 'latexmk'
 
-" save as sudo
-cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
-
-" enter for accepting completion
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-	\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-function! CheckBackspace() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]	=~# '\s'
-endfunction
+cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
 
 autocmd CursorHold * silent call CocActionAsync('highlight') " highlight symbol
-autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists" " swap
+autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 
 autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
 autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
@@ -175,10 +138,8 @@ silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermf
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
 
-autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out; " reload key bindings
-
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
-
+autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out; " reload key bindings
 autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4 " tab spacing
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro " disable autocomment
 
@@ -195,19 +156,52 @@ hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 " hi link Function Function
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
+function! CheckBackspace() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]	=~# '\s'
+endfunction
+
+" undodir
+let vimDir = '$HOME/.vim'
+if stridx(&runtimepath, expand(vimDir)) == -1
+	" vimDir is not on runtimepath, add it
+	let &runtimepath.=','.vimDir
+endif
+if has('persistent_undo')
+	let myUndoDir = expand(vimDir . '/undodir')
+	" Create dirs
+	call system('mkdir ' . vimDir)
+	call system('mkdir ' . myUndoDir)
+	let &undodir = myUndoDir
+	set undofile
+endif
+
 " only let ale use clang-tidy
 let g:ale_linters = {
-	\'cpp': ['clangtidy'],
-	\'c': ['clangtidy']
-\}
+	\ 'cpp': ['clangtidy'],
+	\ 'c': ['clangtidy']
+\ }
 
-let g:Hexokinase_highlighters = ['backgroundfull']
+let g:Hexokinase_highlighters = ['backgroundfull'] " depends on hexokinase
 let g:ale_c_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wuninitialized'
 let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
 let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuninitialized'
 let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
 " let g:ale_clang_cxx_standard = 'c++17'
 " let g:ale_cpp_options = '-std=gnu++17'
+
+" st fix
+" set t_8f=^[[38;2;%lu;%lu;%lum	" set foreground color
+" set t_8b=^[[48;2;%lu;%lu;%lum	" set background color
+" set t_Co=256 " Enable 256 colors
+
+" disable autoquote
+" let b:coc_pairs_disabled = ['"',"'",'<','>']
+" let b:coc_pairs_disabled = ['<','>']
+
+" spellcheck
+" noremap <C-n> :set nospell!<Return>
+" set spell spelllang=en_us
 
 " lsp
 lua <<EOF
