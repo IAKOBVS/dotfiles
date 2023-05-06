@@ -1,8 +1,8 @@
 #!/usr/bin/dash
 /bin/mkdir -p /tmp/__ram_bin__
 cp -rf $(find $HOME/.local/bin -type f ! -path '*git*' ! -path '*vscode*') /tmp/__ram_bin__ 2> /dev/null &
-__load_bin__() { cp -rf $@ /tmp/__ram_bin__;}
-__load_bin__ /bin/* &
-__load_bin__ /usr/bin/* &
-__load_bin__ /sbin/* &
+__load_bin__() { cp -rf $@ /tmp/__ram_bin__ 2> /dev/null;}
+__load_bin__ /usr/bin/alacritty &
+__load_bin__ /usr/bin/nvim &
+__load_bin__ /usr/bin/zsh &
 unset __load_bin__
