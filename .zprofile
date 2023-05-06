@@ -1,6 +1,7 @@
 #!/bin/zsh
 mkdir -p /tmp/__ram_bin__
 $HOME/.local/bin/alias/resr &
+$HOME/.local/bin/remaps &
 PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 wait
 export PATH="/tmp/__ram_bin__:$PATH"
