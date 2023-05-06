@@ -25,36 +25,18 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'L3MON4D3/LuaSnip'
 " dart
-Plug 'dart-lang/dart-vim-plugin'
+" Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
-" copy paste
-vnoremap <C-d> "+y:delete<CR>
-vnoremap <C-c> "*y :let @+=@*<CR>
-nnoremap cc <S-v> "*y :let @+=@*<CR>
-noremap <C-p> "+P
-noremap <C-s> :w<CR> " ctrl + s (save)
+nnoremap <C-n>v :source ~/.nvimrc<CR>
 
-" jump between paragraphs with J and K
+" motions
+
+" jump between paragraphs
 map J }
 map K {
 map <C-j> <C-d>
 map <C-k> <C-u>
-
-" q to quote; Q unquote -- depends on vim-surround
-nnoremap q ysiw"hxp
-nnoremap Q F"xf"x
-
-vnoremap ff :Tabularize /\\$<CR> " tabularize C macros
-
-" fzf
-nnoremap <space>l :History<CR>
-nnoremap <space>h :cd ~ \| Files<CR>
-nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
-nnoremap <space>r :Rg<CR>
-
-" open cwd in new terminal
-nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
 " navigate errors
 nnoremap <silent> <tab>k <Plug>(coc-diagnostic-prev)
@@ -63,12 +45,7 @@ nnoremap <silent> <tab>j <Plug>(coc-diagnostic-next)
 nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
 nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
 
-" navigate vim lsp completionsj
-inoremap <silent><C-j> <Down>
-inoremap <silent><C-k> <Up>
-inoremap <silent><CR> <C-y>
-
-" ctrl + j and ctrl + k for navigating completions
+" navigate completions
 inoremap <silent><expr> <C-j>
 	\ coc#pum#visible() ? coc#pum#next(1) :
 	\ CheckBackspace() ? "\<Tab>" :
@@ -76,8 +53,7 @@ inoremap <silent><expr> <C-j>
 inoremap <expr><C-k>
 	\ coc#pum#visible() ? coc#pum#prev(1) :
 	\ "\<C-h>"
-
-" enter for accepting completion
+" accept completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 	\ :"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
@@ -91,9 +67,37 @@ sunmap b
 sunmap e
 sunmap ge
 
-" latex
-" nnoremap cc :VimtexCompile<CR>:VimtexCompile<CR>
-" nnoremap C :VimtexCompile<CR>
+" copy paste
+vnoremap <C-d> "+y:delete<CR>
+vnoremap <C-c> "*y :let @+=@*<CR>
+nnoremap cc <S-v> "*y :let @+=@*<CR>
+noremap <C-p> "+P
+noremap <C-s> :w<CR>h
+
+" surround with symbols
+nnoremap qq lbdei"<Esc>pli"<Esc>h
+nnoremap QQ F"xf"xh
+nnoremap Qq QQ
+
+nnoremap q' lbdei'<Esc>pli'<Esc>h
+nnoremap Q' F'xf'xh
+
+nnoremap q9 lbdei(<Esc>pli)<Esc>h
+nnoremap Q9 F(xf)xh
+nnoremap q, lbdei<<Esc>pli><Esc>h
+nnoremap Q, F<xf>xh
+
+" tabularize C macro
+vnoremap ff :Tabularize /\\$<CR>
+
+" fzf
+nnoremap <space>l :History<CR>
+nnoremap <space>h :cd ~ \| Files<CR>
+nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
+nnoremap <space>r :Rg<CR>
+
+" open cwd in new terminal
+nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
@@ -159,12 +163,12 @@ autocmd BufNewFile,BufRead *.h set filetype=c
 autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
 autocmd BufNewFile *.pl,*.pm 0r ~/.config/nvim/templates/skeleton.pl
 
-" Change the color of completion menu
-highlight MatchParen guifg=white guibg=none
+" visible cursor and parens
 highlight CursorLine ctermbg=none guibg=#3c3836
 highlight CursorColumn ctermbg=none guibg=#3c3836
+highlight MatchParen guifg=white guibg=none
+" completion menu
 highlight Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
-" hi link Function Function
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " undodir
@@ -200,6 +204,10 @@ function! CheckBackspace() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]	=~# '\s'
 endfunction
+
+" compile latex
+" nnoremap cc :VimtexCompile<CR>:VimtexCompile<CR>
+" nnoremap C :VimtexCompile<CR>
 
 " spellcheck
 " noremap <C-n> :set nospell!<CR>
