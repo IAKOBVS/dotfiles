@@ -1,0 +1,30 @@
+{
+	"clangd.fallbackFlags": [
+		"-Wall",
+		"-Wextra",
+		"-Wuninitialized",
+		"-Wunused-variable",
+		"-Wshadow",
+		"-Warray-bounds",
+		"-Wnull-dereference",
+		"-Wformat"
+	],
+	"clangd.path": "/usr/bin/clangd",
+	"semanticTokens.enable": true,
+
+	"languageserver": {
+		"perlnavigator": {
+			"command": "node",
+			"args": [
+				"/home/james/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server/out/server.js",
+				"--stdio"
+			],
+			"filetypes": ["perl"]
+		},
+		"perlpls": {
+			"enable": true,
+			"command": "/usr/bin/site_perl/pls",
+			"filetypes": ["perl"]
+		}
+	}
+}
