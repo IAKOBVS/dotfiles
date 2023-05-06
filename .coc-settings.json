@@ -16,9 +16,8 @@
 
 	"languageserver": {
 		"perlnavigator": {
-			"command": "node",
+			"command": "perlnavigator",
 			"args": [
-				"/home/james/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server/out/server.js",
 				"--stdio"
 			],
 			"filetypes": ["perl"]
