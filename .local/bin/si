@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-sudo du -shc .[!.]* * 2> /dev/null | grep -F 'G' | sort -rn | less
+sudo du -shc * 2> /dev/null | grep -F 'G' | sort -rn | less
