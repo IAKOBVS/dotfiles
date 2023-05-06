@@ -10,8 +10,7 @@
 		"-Wshadow",
 		"-Warray-bounds",
 		"-Wnull-dereference",
-		"-Wformat",
-		"--analyze"
+		"-Wformat"
 	],
 	"languageserver": {
 		"perlnavigator": {
@@ -26,5 +25,6 @@
 			"filetypes": ["perl"]
 		}
 	},
-	"codeLens.enable": true
+	"codeLens.enable": true,
+    "suggest.snippetsSupport": true
 }
