@@ -72,6 +72,7 @@ endif
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 
 autocmd CursorHold * silent call CocActionAsync('highlight') " highlight symbol
+autocmd BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
 
 " only let ale use clang-tidy
 let g:ale_linters = {
@@ -82,10 +83,9 @@ let g:ale_linters = {
 let g:ale_lint_on_save = 1
 let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
 let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
+let g:Hexokinase_highlighters = ['backgroundfull'] " depends on hexokinase
 " let g:vimtex_view_method = 'zathura'
 " let g:vimtex_compiler_method = 'latexmk'
-let g:Hexokinase_highlighters = ['backgroundfull'] " depends on hexokinase
-
 
 " for coc-nvim autocomplete
 function! CheckBackspace() abort
