@@ -1,6 +1,7 @@
 {
 	"diagnostic.virtualText": true,
 	"diagnostic.virtualTextCurrentLineOnly": false,
+	"clangd.path": "/usr/bin/clangd",
 	"clangd.fallbackFlags": [
 		"-Wall",
 		"-Wextra",
@@ -11,10 +12,6 @@
 		"-Wnull-dereference",
 		"-Wformat",
 		"--analyze"
-	],
-	"clangd.path": "/usr/bin/clangd",
-	"clangd.arguments": [
-		"--clang-tidy"
 	],
 	"languageserver": {
 		"perlnavigator": {

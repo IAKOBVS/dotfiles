@@ -14,7 +14,7 @@ Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
 Plug 'lervag/vimtex'
 " lsp
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " nvim lsp
 " Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
@@ -29,9 +29,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 nnoremap <C-n>v :source ~/.nvimrc<CR>
-if has('nvim')
-	source ~/.nvimrc.lua
-endif
 
 " motions
 
