@@ -17,13 +17,15 @@ Plug 'lervag/vimtex'
 " lsp
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neovim/nvim-lspconfig'
+" nvim lsp
+" Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
+" Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
-Plug 'williamboman/mason-lspconfig.nvim'
+" Plug 'williamboman/mason-lspconfig.nvim'
+"
 " Plug 'hrsh7th/nvim-cmp'
 " Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'L3MON4D3/LuaSnip'
-Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 " dart
 Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
@@ -210,20 +212,6 @@ let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.Deprecat
 " spellcheck
 " noremap <C-n> :set nospell!<Return>
 " set spell spelllang=en_us
-
-" lsp
-lua <<EOF
-local lsp = require('lsp-zero').preset({})
-
-lsp.on_attach(function(client, bufnr)
-	lsp.default_keymaps({buffer = bufnr})
-end)
-
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-
-lsp.setup()
-
-EOF
 
 " function! Complete__()
 " 	let output = system("/home/james/c/cnlp/correct " . expand('<cword>'))
