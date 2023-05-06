@@ -9,11 +9,13 @@
 		"-Wshadow",
 		"-Warray-bounds",
 		"-Wnull-dereference",
-		"-Wformat"
+		"-Wformat",
+		"--analyze"
 	],
 	"clangd.path": "/usr/bin/clangd",
-	"semanticTokens.enable": true,
-
+	"clangd.arguments": [
+		"--clang-tidy"
+	],
 	"languageserver": {
 		"perlnavigator": {
 			"command": "perlnavigator",

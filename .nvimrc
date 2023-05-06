@@ -18,7 +18,7 @@ Plug 'lervag/vimtex'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " nvim lsp
-Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
+" Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
 " Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 " Plug 'neovim/nvim-lspconfig'
 " Plug 'williamboman/mason-lspconfig.nvim'
@@ -91,6 +91,10 @@ sunmap ge
 " latex
 nnoremap cc :VimtexCompile<Return>:VimtexCompile<Return>
 nnoremap C :VimtexCompile<Return>
+
+if has('nvim-0.6')
+	let g:ale_use_neovim_diagnostics_api = 1
+endif
 
 colorscheme murphy
 if has('nvim')
