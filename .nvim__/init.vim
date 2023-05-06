@@ -1,5 +1,4 @@
-source ~/.nvim__/init.vim
-
+source ~/.nvim__/plugins.vim
 nnoremap <C-n>v :source ~/.nvimrc<CR>
 
 " motions
