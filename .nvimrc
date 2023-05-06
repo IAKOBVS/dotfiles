@@ -60,6 +60,9 @@ nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & d
 nnoremap <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nnoremap <silent> <tab>j <Plug>(coc-diagnostic-next)
 
+nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
+nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
+
 " navigate vim lsp completionsj
 inoremap <silent><C-j> <Down>
 inoremap <silent><C-k> <Up>
