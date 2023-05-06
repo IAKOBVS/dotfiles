@@ -90,7 +90,7 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
-{ [ $(pgrep xcape) ] && remaps > /dev/null ;}
+pgrep xcape > /dev/null || remaps > /dev/null
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2> /dev/null
