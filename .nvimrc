@@ -154,7 +154,7 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=ro " disable autocomment
 " skeleton
 autocmd BufNewFile,BufRead *.h set filetype=c
 autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
-autocmd BufNewFile *.pl 0r ~/.config/nvim/templates/skeleton.pl
+autocmd BufNewFile *.pl,*.pm 0r ~/.config/nvim/templates/skeleton.pl
 
 " Change the color of completion menu
 hi MatchParen guifg=white guibg=none
