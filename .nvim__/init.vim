@@ -73,11 +73,10 @@ endif
 cnoreabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
 
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
-
 autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif " fix dash syntax highlighting
 
 " C highlighting
-silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
+autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
 
