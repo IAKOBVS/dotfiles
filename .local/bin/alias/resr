@@ -5,4 +5,7 @@ __load_bin__() { cp -rf $@ /tmp/__ram_bin__ 2> /dev/null;}
 __load_bin__ /usr/bin/alacritty &
 __load_bin__ /usr/bin/nvim &
 __load_bin__ /usr/bin/zsh &
+__load_bin__ /usr/local/bin/dmenu &
+__load_bin__ /usr/local/bin/dmenu_run &
+__load_bin__ /usr/local/bin/dmenu_path &
 unset __load_bin__
