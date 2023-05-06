@@ -1,4 +1,6 @@
 {
+	"diagnostic.virtualText": true,
+	"diagnostic.virtualTextCurrentLineOnly": false,
 	"clangd.fallbackFlags": [
 		"-Wall",
 		"-Wextra",
@@ -22,7 +24,6 @@
 			"filetypes": ["perl"]
 		},
 		"perlpls": {
-			"enable": true,
 			"command": "/usr/bin/site_perl/pls",
 			"filetypes": ["perl"]
 		}
