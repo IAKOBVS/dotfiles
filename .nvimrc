@@ -20,9 +20,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
 Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'L3MON4D3/LuaSnip'
+" Plug 'hrsh7th/nvim-cmp'
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'L3MON4D3/LuaSnip'
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 " dart
 Plug 'dart-lang/dart-vim-plugin'
@@ -56,8 +56,13 @@ nnoremap <space>r :Rg<CR>
 nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
 " navigate errors
-nmap <silent> <tab>k <Plug>(coc-diagnostic-prev)
-nmap <silent> <tab>j <Plug>(coc-diagnostic-next)
+nnoremap <silent> <tab>k <Plug>(coc-diagnostic-prev)
+nnoremap <silent> <tab>j <Plug>(coc-diagnostic-next)
+
+" navigate vim lsp completionsj
+inoremap <silent><C-j> <Down>
+inoremap <silent><C-k> <Up>
+inoremap <silent><CR> <C-y>
 
 " ctrl + j and ctrl + k for navigating completions
 inoremap <silent><expr> <C-j>
@@ -183,6 +188,7 @@ let g:ale_linters = {
 	\ 'cpp': ['clangtidy'],
 	\ 'c': ['clangtidy']
 \ }
+let g:ale_lint_on_save = 1
 
 let g:Hexokinase_highlighters = ['backgroundfull'] " depends on hexokinase
 let g:ale_c_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wuninitialized'
@@ -217,17 +223,6 @@ require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
 
-require'lspconfig'.perlnavigator.setup{
-	settings = {
-		perlnavigator = {
-			perlPath = 'perl',
-			enableWarnings = true,
-			perltidyProfile = '',
-			perlcriticProfile = '',
-			perlcriticEnabled = true,
-		}
-	}
-}
 EOF
 
 " function! Complete__()

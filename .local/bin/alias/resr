@@ -1,7 +1,7 @@
 #!/usr/bin/dash
 /bin/mkdir -p /tmp/local
-cp -rf $(find $HOME/.local/bin -type f ! -path '*git*' ! -path '*vscode*') /tmp/local 2> /dev/null &
-load_() { cp $1 /tmp/local ;}
+cp -rf $(find $HOME/.local/bin -type f ! -path '*git*' ! -path '*vscode*') /tmp/__ram_bin__ 2> /dev/null &
+load_() { cp $1 /tmp/__ram_bin__ ;}
 load_ /bin/alacritty &
 load_ /bin/lf &
 load_ /bin/fzf &
