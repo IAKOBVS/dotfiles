@@ -85,7 +85,6 @@ silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermf
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
 
-autocmd BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
 autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out; " reload key bindings
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro " disable autocomment
 
