@@ -28,5 +28,6 @@
 			"command": "/usr/bin/site_perl/pls",
 			"filetypes": ["perl"]
 		}
-	}
+	},
+	"codeLens.enable": true
 }
