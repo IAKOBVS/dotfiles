@@ -84,8 +84,16 @@ nnoremap Q' F'xf'xh
 
 nnoremap q9 lbdei(<Esc>pli)<Esc>h
 nnoremap Q9 F(xf)xh
+
 nnoremap q, lbdei<<Esc>pli><Esc>h
 nnoremap Q, F<xf>xh
+nnoremap q. q,
+nnoremap Q. Q,
+
+nnoremap q- lbdei_<Esc>pli_<Esc>h
+nnoremap Q- F_xf_xh
+nnoremap q_ q-
+nnoremap Q_ Q-
 
 " tabularize C macro
 vnoremap ff :Tabularize /\\$<CR>
