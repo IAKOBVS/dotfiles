@@ -12,7 +12,6 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 " Plug 'mechatroner/rainbow_csv'
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
-" latex
 Plug 'lervag/vimtex'
 " lsp
 Plug 'dense-analysis/ale'
@@ -30,10 +29,11 @@ Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
 " copy paste
-vnoremap <C-d> "+y:delete<Return>
+vnoremap <C-d> "+y:delete<CR>
 vnoremap <C-c> "*y :let @+=@*<CR>
+nnoremap cc <S-v> "*y :let @+=@*<CR>
 noremap <C-p> "+P
-noremap <C-s> :w<Return> " ctrl + s (save)
+noremap <C-s> :w<CR> " ctrl + s (save)
 
 " jump between paragraphs with J and K
 map J }
@@ -92,8 +92,8 @@ sunmap e
 sunmap ge
 
 " latex
-nnoremap cc :VimtexCompile<Return>:VimtexCompile<Return>
-nnoremap C :VimtexCompile<Return>
+" nnoremap cc :VimtexCompile<CR>:VimtexCompile<CR>
+" nnoremap C :VimtexCompile<CR>
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
@@ -103,13 +103,13 @@ colorscheme murphy
 if has('nvim')
 	set termguicolors
 endif
-hi NormalFloat guibg=none
-hi VertSplit guibg=none
-hi FoldColumn guibg=none
-hi SignColumn guibg=none
-hi LineNr guibg=none
-hi CursorLineNr guibg=none
-hi Normal ctermbg=none guibg=none
+highlight NormalFloat guibg=none
+highlight VertSplit guibg=none
+highlight FoldColumn guibg=none
+highlight SignColumn guibg=none
+highlight LineNr guibg=none
+highlight CursorLineNr guibg=none
+highlight Normal ctermbg=none guibg=none
 
 filetype plugin indent on
 set cinoptions+=:0 " disable switch indent
@@ -118,13 +118,13 @@ set linebreak
 set nohlsearch
 set incsearch
 set maxmempattern=2000000 " use more ram
+set pastetoggle=<F1>
 set mouse=a
 set encoding=utf-8
 set nobackup
 set nowritebackup
 set updatetime=300
 set signcolumn=yes
-set pastetoggle=<F1>
 set modifiable
 set nocompatible
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
@@ -132,31 +132,27 @@ if has('nvim')
 	set inccommand=nosplit
 endif
 
-" vim insert cursor mode
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
-
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
-let g:vimtex_view_method = 'zathura'
-let g:vimtex_compiler_method = 'latexmk'
 
-cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
+cnoreabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
 
 autocmd CursorHold * silent call CocActionAsync('highlight') " highlight symbol
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 
-autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif
-autocmd VimEnter * call timer_start(8, { tid -> execute(':set spelllang=id_id')})
+autocmd BufRead * if getline(1) == '#!/usr/bin/dash' | set filetype=sh | endif " fix dash syntax highlighting
 
-" Recolor C macros
+" C highlighting
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! hi PreProc ctermfg=35 guifg=#8ed5e5
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2match Special /[(){}]/
 
 autocmd BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
 autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out; " reload key bindings
-autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4 " tab spacing
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro " disable autocomment
+
+" tab spacing
+autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
+autocmd BufNewFile,BufRead *.json set autoindent expandtab tabstop=4 shiftwidth=4
 
 " skeleton
 autocmd BufNewFile,BufRead *.h set filetype=c
@@ -164,17 +160,12 @@ autocmd BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
 autocmd BufNewFile *.pl,*.pm 0r ~/.config/nvim/templates/skeleton.pl
 
 " Change the color of completion menu
-hi MatchParen guifg=white guibg=none
-hi CursorLine ctermbg=none guibg=#3c3836
-hi CursorColumn ctermbg=none guibg=#3c3836
-hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
+highlight MatchParen guifg=white guibg=none
+highlight CursorLine ctermbg=none guibg=#3c3836
+highlight CursorColumn ctermbg=none guibg=#3c3836
+highlight Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 " hi link Function Function
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
-
-function! CheckBackspace() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]	=~# '\s'
-endfunction
 
 " undodir
 let vimDir = '$HOME/.vim'
@@ -196,27 +187,22 @@ let g:ale_linters = {
 	\ 'cpp': ['clangtidy'],
 	\ 'c': ['clangtidy']
 \ }
-let g:ale_lint_on_save = 1
 
-let g:Hexokinase_highlighters = ['backgroundfull'] " depends on hexokinase
-let g:ale_c_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wuninitialized'
 let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
-let g:ale_cpp_cc_options = '-Wall -Wextra -Wshadow -Warray-bounds -Wshadow -Wuninitialized'
 let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
-" let g:ale_clang_cxx_standard = 'c++17'
-" let g:ale_cpp_options = '-std=gnu++17'
+let g:ale_lint_on_save = 1
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_compiler_method = 'latexmk'
+let g:Hexokinase_highlighters = ['backgroundfull'] " depends on hexokinase
 
-" st fix
-" set t_8f=^[[38;2;%lu;%lu;%lum	" set foreground color
-" set t_8b=^[[48;2;%lu;%lu;%lum	" set background color
-" set t_Co=256 " Enable 256 colors
-
-" disable autoquote
-" let b:coc_pairs_disabled = ['"',"'",'<','>']
-" let b:coc_pairs_disabled = ['<','>']
+" for coc-nvim autocomplete
+function! CheckBackspace() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]	=~# '\s'
+endfunction
 
 " spellcheck
-" noremap <C-n> :set nospell!<Return>
+" noremap <C-n> :set nospell!<CR>
 " set spell spelllang=en_us
 
 " function! Complete__()
