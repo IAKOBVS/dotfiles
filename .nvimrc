@@ -18,11 +18,10 @@ Plug 'lervag/vimtex'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " nvim lsp
+Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
 " Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 " Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
 " Plug 'williamboman/mason-lspconfig.nvim'
-"
 " Plug 'hrsh7th/nvim-cmp'
 " Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'L3MON4D3/LuaSnip'
