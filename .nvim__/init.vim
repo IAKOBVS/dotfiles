@@ -16,12 +16,12 @@ nn cc <S-v> "*y :let @+=@*<CR>
 no <C-p> "+P
 no <C-s> :w<CR>h
 
-" surround with symbols
-
-" turn off macros
+" turn off vim macros
 map q <Nop>
 
-" quote shell $variable
+" surround word with symbol
+
+" quote $variable
 nn qs lF$dEi""<Esc>hpl
 nn Qs F"xf"xh
 nn QS Qs
@@ -50,7 +50,7 @@ nn Q_ Q-
 colo murphy
 if has('nvim')
 	se termguicolors
-endif
+en
 hi NormalFloat guibg=none
 hi VertSplit guibg=none
 hi FoldColumn guibg=none
@@ -59,28 +59,28 @@ hi LineNr guibg=none
 hi CursorLineNr guibg=none
 hi Normal ctermbg=none guibg=none
 
-filetype plugin indent on
-set cinoptions+=:0 " disable switch indent
-set number relativenumber
-set linebreak
-set nohlsearch
-set incsearch
-set maxmempattern=2000000 " use more ram
-set pastetoggle=<F1>
-set mouse=a
-set encoding=utf-8
-set nobackup
-set nowritebackup
-set updatetime=300
-set signcolumn=yes
-set modifiable
-set nocompatible
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+filet plugin indent on
+se cinoptions+=:0 " disable switch indent
+se number relativenumber
+se linebreak
+se nohlsearch
+se incsearch
+se maxmempattern=2000000 " use more ram
+se pastetoggle=<F1>
+se mouse=a
+se encoding=utf-8
+se nobackup
+se nowritebackup
+se updatetime=300
+se signcolumn=yes
+se modifiable
+se nocompatible
+se statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 if has('nvim')
 	se inccommand=nosplit
-endif
+en
 
-cnoreabbrev w!! execute 'sil! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
+cnorea w!! execute 'sil! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
 
 au SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 au BufRead * if getline(1) == '#!/usr/bin/dash' | se filetype=sh | endif " fix dash syntax highlighting
@@ -103,19 +103,18 @@ au BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.config/nvim/templates/skeleton.pl
 
 " visible cursor and parens
+hi MatchParen guifg=white guibg=none
 hi CursorLine ctermbg=none guibg=#3c3836
 hi CursorColumn ctermbg=none guibg=#3c3836
-hi MatchParen guifg=white guibg=none
 " completion menu
 hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
-" hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
+hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " undodir
 let vimDir = '$HOME/.vim'
 if stridx(&runtimepath, expand(vimDir)) == -1
-	" vimDir is not on runtimepath, add it
-	let &runtimepath.=','.vimDir
-endif
+	let &runtimepath.=','.vimDir " add if !vimDir
+en
 if has('persistent_undo')
 	let myUndoDir = expand(vimDir . '/undodir')
 	" Create dirs
@@ -123,4 +122,4 @@ if has('persistent_undo')
 	cal system('mkdir ' . myUndoDir)
 	let &undodir = myUndoDir
 	se undofile
-endif
+en
