@@ -1,5 +1,5 @@
 source ~/.nvim__/plugins.vim
-nnoremap <C-n>v :source ~/.nvimrc<CR>
+nnoremap nvim :source ~/.nvimrc<CR>
 
 " motions
 
@@ -22,9 +22,9 @@ noremap <C-s> :w<CR>h
 map q <Nop>
 
 " quote shell $variable
-nnoremap qb lF$dEi""<Esc>hpl
-nnoremap Qb F"xf"xh
-nnoremap QB Qb
+nnoremap qs lF$dEi""<Esc>hpl
+nnoremap Qs F"xf"xh
+nnoremap QS Qs
 
 " quote word
 nnoremap qq lbdEi""<Esc>hpl
