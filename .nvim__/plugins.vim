@@ -29,22 +29,22 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " navigate errors
-nnoremap <silent> <tab>k <Plug>(coc-diagnostic-prev)
-nnoremap <silent> <tab>j <Plug>(coc-diagnostic-next)
+nn <silent> <tab>k <Plug>(coc-diagnostic-prev)
+nn <silent> <tab>j <Plug>(coc-diagnostic-next)
 
-nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
-nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
+nn <silent> <tab>k <Plug>(ale_previous_wrap)
+nn <silent> <tab>j <Plug>(ale_next_wrap)
 
 " navigate completions
-inoremap <silent><expr> <C-j>
+ino <silent><expr> <C-j>
 	\ coc#pum#visible() ? coc#pum#next(1) :
 	\ CheckBackspace() ? "\<Tab>" :
 	\ coc#refresh()
-inoremap <expr><C-k>
+ino <expr><C-k>
 	\ coc#pum#visible() ? coc#pum#prev(1) :
 	\ "\<C-h>"
 " accept completion
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+ino <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 	\ :"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " respect camelCase
@@ -52,27 +52,27 @@ map <silent>w <Plug>CamelCaseMotion_w
 map <silent>b <Plug>CamelCaseMotion_b
 map <silent>e <Plug>CamelCaseMotion_e
 map <silent>ge <Plug>CamelCaseMotion_ge
-sunmap w
-sunmap b
-sunmap e
-sunmap ge
+sunm w
+sunm b
+sunm e
+sunm ge
 
 " fzf
-nnoremap <space>l :History<CR>
-nnoremap <space>h :cd ~ \| Files<CR>
-nnoremap <space>f :call fzf#vim#files(expand('%:p:h'))<CR>
-nnoremap <space>r :Rg<CR>
+nn <space>l :History<CR>
+nn <space>h :cd ~ \| Files<CR>
+nn <space>f :cal fzf#vim#files(expand('%:p:h'))<CR>
+nn <space>r :Rg<CR>
 
 " open cwd in new terminal
-nnoremap <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
+nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 endif
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 
-autocmd CursorHold * silent call CocActionAsync('highlight') " highlight symbol
-autocmd BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
+au CursorHold * sil cal CocActionAsync('highlight') " highlight symbol
+au BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
 
 " only let ale use clang-tidy
 let g:ale_linters = {
