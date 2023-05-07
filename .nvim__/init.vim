@@ -121,19 +121,3 @@ if has('persistent_undo')
 	let &undodir = myUndoDir
 	set undofile
 endif
-
-" compile latex
-" nnoremap cc :VimtexCompile<CR>:VimtexCompile<CR>
-" nnoremap C :VimtexCompile<CR>
-
-" spellcheck
-" noremap <C-n> :set nospell!<CR>
-" set spell spelllang=en_us
-
-" function! Complete__()
-" 	let output = system("/home/james/c/cnlp/correct " . expand('<cword>'))
-" 	let completions = split(output, "\n")
-" 	return completions
-" endfunction
-
-" set omnifunc=Complete__
