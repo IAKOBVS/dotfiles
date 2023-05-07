@@ -47,17 +47,17 @@ nn Q- F_xf_xh
 nn q_ q-
 nn Q_ Q-
 
-colorscheme murphy
+colo murphy
 if has('nvim')
 	se termguicolors
 endif
-highlight NormalFloat guibg=none
-highlight VertSplit guibg=none
-highlight FoldColumn guibg=none
-highlight SignColumn guibg=none
-highlight LineNr guibg=none
-highlight CursorLineNr guibg=none
-highlight Normal ctermbg=none guibg=none
+hi NormalFloat guibg=none
+hi VertSplit guibg=none
+hi FoldColumn guibg=none
+hi SignColumn guibg=none
+hi LineNr guibg=none
+hi CursorLineNr guibg=none
+hi Normal ctermbg=none guibg=none
 
 filetype plugin indent on
 set cinoptions+=:0 " disable switch indent
