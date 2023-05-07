@@ -18,27 +18,28 @@ noremap <C-s> :w<CR>h
 
 " surround with symbols
 
-" quote shell variable
-nnoremap qb lF$dEi""<Esc>hp
+" quote shell $variable
+nnoremap qb lF$dEi""<Esc>hpl
 nnoremap Qb F"xf"xh
 nnoremap QB Qb
 
-nnoremap qq lbdei"<Esc>pli"<Esc>h
+" quote word
+nnoremap qq lbdEi""<Esc>hpl
 nnoremap QQ F"xf"xh
 nnoremap Qq QQ
 
-nnoremap q' lbdei'<Esc>pli'<Esc>h
+nnoremap q' lbdEi''<Esc>hpl
 nnoremap Q' F'xf'xh
 
-nnoremap q9 lbdei(<Esc>pli)<Esc>h
+nnoremap q9 lbdEi()<Esc>hpl
 nnoremap Q9 F(xf)xh
 
-nnoremap q, lbdei<<Esc>pli><Esc>h
+nnoremap q, lbdEi<><Esc>hpl
 nnoremap Q, F<xf>xh
 nnoremap q. q,
 nnoremap Q. Q,
 
-nnoremap q- lbdei_<Esc>pli_<Esc>h
+nnoremap q- lbdEi__<Esc>hpl
 nnoremap Q- F_xf_xh
 nnoremap q_ q-
 nnoremap Q_ Q-
