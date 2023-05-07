@@ -1,4 +1,4 @@
-call plug#begin('~/.vim/plugged')
+cal plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
@@ -9,13 +9,14 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-" Plug 'mechatroner/rainbow_csv'
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
-" Plug 'lervag/vimtex'
 " lsp
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'mechatroner/rainbow_csv'
+" Plug 'dart-lang/dart-vim-plugin'
+" Plug 'lervag/vimtex'
 " nvim lsp
 " Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
 " Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
@@ -24,9 +25,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'hrsh7th/nvim-cmp'
 " Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'L3MON4D3/LuaSnip'
-" dart
-" Plug 'dart-lang/dart-vim-plugin'
-call plug#end()
+cal plug#end()
 
 " navigate errors
 nn <silent> <tab>k <Plug>(coc-diagnostic-prev)
@@ -68,7 +67,7 @@ nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown 
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
-endif
+en
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 
 au CursorHold * sil cal CocActionAsync('highlight') " highlight symbol
@@ -78,7 +77,7 @@ au BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
 let g:ale_linters = {
 	\ 'cpp': ['clangtidy'],
 	\ 'c': ['clangtidy']
-\ }
+\}
 
 let g:ale_lint_on_save = 1
 let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
@@ -88,7 +87,7 @@ let g:Hexokinase_highlighters = ['backgroundfull'] " depends on hexokinase
 " let g:vimtex_compiler_method = 'latexmk'
 
 " for coc-nvim autocomplete
-function! CheckBackspace() abort
+fu! CheckBackspace() abort
 	let col = col('.') - 1
-	return !col || getline('.')[col - 1]	=~# '\s'
-endfunction
+	retu !col || getline('.')[col - 1]	=~# '\s'
+endf
