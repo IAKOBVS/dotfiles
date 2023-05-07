@@ -108,7 +108,7 @@ hi CursorLine ctermbg=none guibg=#3c3836
 hi CursorColumn ctermbg=none guibg=#3c3836
 " completion menu
 hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
-hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
+" hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " undodir
 let vimDir = '$HOME/.vim'
