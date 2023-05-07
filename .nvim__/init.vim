@@ -18,6 +18,9 @@ noremap <C-s> :w<CR>h
 
 " surround with symbols
 
+" turn off macros
+map q <Nop>
+
 " quote shell $variable
 nnoremap qb lF$dEi""<Esc>hpl
 nnoremap Qb F"xf"xh
