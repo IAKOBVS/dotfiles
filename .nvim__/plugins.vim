@@ -58,8 +58,8 @@ sunm ge
 
 " fzf
 nn <space>l :History<CR>
-nn <space>h :cd ~ \| Files<CR>
-nn <space>f :cal fzf#vim#files(expand('%:p:h'))<CR>
+nn <space>h :Files ~<CR>
+nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
 
 " open cwd in new terminal
@@ -73,12 +73,12 @@ let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 au CursorHold * sil cal CocActionAsync('highlight') " highlight symbol
 au BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
 
-" only let ale use clang-tidy
+let g:fzf_preview_window = ['right,50%', 'ctrl-/']
+
 let g:ale_linters = {
 	\ 'cpp': ['clangtidy'],
 	\ 'c': ['clangtidy']
 \}
-
 let g:ale_lint_on_save = 1
 let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
 let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
