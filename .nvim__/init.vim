@@ -17,6 +17,12 @@ noremap <C-p> "+P
 noremap <C-s> :w<CR>h
 
 " surround with symbols
+
+" quote shell variable
+nnoremap qb lF$dEi""<Esc>hp
+nnoremap Qb F"xf"xh
+nnoremap QB Qb
+
 nnoremap qq lbdei"<Esc>pli"<Esc>h
 nnoremap QQ F"xf"xh
 nnoremap Qq QQ
