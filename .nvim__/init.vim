@@ -80,7 +80,8 @@ if has('nvim')
 	se inccommand=nosplit
 en
 
-cnorea w!! execute 'sil! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
+" save as sudo
+cnorea w!! execute 'sil! write !sudo tee % >/dev/null' <bar> edit!
 
 au SwapExists * let v:swapchoice = "e" | echom "swap exists"
 au BufRead * if getline(1) == '#!/usr/bin/dash' | se filetype=sh | en
@@ -90,15 +91,11 @@ au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! hi PreProc ctermfg=35 guifg=#8ed5
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! mat Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! 2mat Special /[(){}]/
 
-au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out; " reload key bindings
-au BufNewFile,BufRead * setlocal formatoptions-=ro " disable autocomment
-
-" tab spacing
-au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
+au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
+au BufNewFile,BufRead * setlocal formatoptions-=ro " disable nl autocomment
+au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4 " tab spacing
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
-
-" skeleton
-au BufNewFile,BufRead *.h se filetype=c
+au BufNewFile,BufRead *.h se filetype=c " skeleton
 au BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.config/nvim/templates/skeleton.pl
 
