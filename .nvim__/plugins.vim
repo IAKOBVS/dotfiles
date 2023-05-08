@@ -11,6 +11,8 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
+Plug 'ptzz/lf.vim'
+Plug 'voldikss/vim-floaterm'
 " lsp
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
