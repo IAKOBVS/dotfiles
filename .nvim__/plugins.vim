@@ -1,25 +1,26 @@
 cal plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'tribela/vim-transparent'
+Plug 'bkad/CamelCaseMotion'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'bkad/CamelCaseMotion'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'godlygeek/tabular'
-Plug 'vim-scripts/LargeFile'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
-" lsp
+Plug 'vim-scripts/LargeFile'
+
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " Plug 'preservim/nerdtree'
 " Plug 'mechatroner/rainbow_csv'
 " Plug 'dart-lang/dart-vim-plugin'
 " Plug 'lervag/vimtex'
-" nvim lsp
+
 " Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
 " Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 " Plug 'neovim/nvim-lspconfig'
@@ -63,42 +64,35 @@ nn <space>l :History<CR>
 nn <space>h :Files ~<CR>
 nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
-nn <space>. :cd ..<CR>
 nn <space>o :Lf<CR>
 
 " open cwd in new terminal
 nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
+au CursorHold * sil cal CocActionAsync('highlight')
+let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 en
-let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
-
-au CursorHold * sil cal CocActionAsync('highlight')
-" au BufRead *.pl,*.pm let g:ale_enabled = 0
-" au BufRead * if getline(1) =~ '#!.*/bin/perl' | let g:ale_enabled = 0 | endif
-" au BufRead * if getline(1) =~ '#!.*/bin/[bd]ash' | let g:ale_enabled = 0 | endif
-" au BufRead * if getline(1) =~ '#!.*/bin/sh' | let g:ale_enabled = 0 | endif
-
 let g:NERDTreeHijackNetrw = 0
 let g:lf_replace_netrw = 1
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
-
-let g:ale_c_cc_executable = 'gcc'
-let g:ale_c_cc_options = '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
-let g:ale_cpp_cc_options = '-std=c++17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
-let g:ale_c_clangtidy_checks = [
-	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
-	\ '-clang-analyzer-security.insecureAPI.strcpy',
-	\ '-clang-diagnostic-error']
-let g:ale_cpp_clangtidy_checks = [
-	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
-	\ '-clang-analyzer-security.insecureAPI.strcpy',
-	\ '-clang-diagnostic-error']
 let g:ale_lint_on_text_changed = 1
-let g:Hexokinase_highlighters = ['backgroundfull']
-" let g:vimtex_view_method = 'zathura'
-" let g:vimtex_compiler_method = 'latexmk'
+
+au BufNewFile,BufRead *dwm/config.h let g:ale_enabled = 0
+let g:ale_c_cc_executable = 'gcc'
+let g:ale_c_cc_options =
+	\ '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
+let g:ale_cpp_cc_options =
+	\ '-std=c++17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
+let g:ale_c_clangtidy_checks = [
+	\ '-clang-diagnostic-error',
+	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
+	\ '-clang-analyzer-security.insecureAPI.strcpy']
+let g:ale_cpp_clangtidy_checks = [
+	\ '-clang-diagnostic-error',
+	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
+	\ '-clang-analyzer-security.insecureAPI.strcpy']
 
 " for coc-nvim autocomplete
 fu! CheckBackspace() abort
@@ -107,3 +101,6 @@ fu! CheckBackspace() abort
 endf
 
 se statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" let g:vimtex_view_method = 'zathura'
+" let g:vimtex_compiler_method = 'latexmk'
