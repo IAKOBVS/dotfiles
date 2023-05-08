@@ -2,7 +2,7 @@
 file=$1
 cpp_ver='-std=gnu++17'
 comp_flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
-analyzer='-fanalyzer -Wanalyzer-double-fclose -Wanalyzer-double-free -Wanalyzer-exposure-through-output-file -Wanalyzer-file-leak -Wanalyzer-free-of-non-heap -Wanalyzer-malloc-leak -Wanalyzer-null-argument -Wanalyzer-null-dereference -Wanalyzer-possible-null-argument -Wanalyzer-possible-null-dereference -Wanalyzer-stale-setjmp-buffer -Wanalyzer-tainted-array-index -Wanalyzer-too-complex -Wanalyzer-unsafe-call-within-signal-handler -Wanalyzer-use-after-free -Wanalyzer-use-of-pointer-in-stale-stack-frame'
+analyzer='-fanalyzer'
 case "$2" in
 	's')
 		comp_flags="$comp_flags $analyzer"
