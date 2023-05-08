@@ -1,3 +1,0 @@
-#!/usr/bin/dash
-[ -z "$1" ] && sudo find /home/james 2> /dev/null | fzf \
-	|| sudo find "$1" 2> /dev/null | fzf
