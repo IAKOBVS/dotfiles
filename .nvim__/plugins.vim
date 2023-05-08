@@ -2,8 +2,8 @@ cal plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
-Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
+Plug 'vim-airline/vim-airline'
 Plug 'tribela/vim-transparent'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -58,8 +58,8 @@ sunm ge
 
 " fzf
 nn <space>l :History<CR>
-nn <space>h :cd %:p:h <bar> Files ~<CR>
-nn <space>f :cd %:p:h <bar> Files<CR>
+nn <space>h :Files ~<CR>
+nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
 
 " open cwd in new terminal

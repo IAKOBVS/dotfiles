@@ -1,4 +1,5 @@
 nn nvim :source ~/.nvimrc<CR>
+autocmd BufEnter * silent! lcd %:p:h " autocd
 
 " motions
 
