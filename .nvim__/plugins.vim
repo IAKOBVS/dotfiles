@@ -84,8 +84,8 @@ let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 " \}
 
 let g:ale_c_cc_executable = 'gcc'
-let g:ale_c_cc_options = '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -fanalyzer'
-let g:ale_cpp_cc_options = '-std=c++17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -fanalyzer'
+let g:ale_c_cc_options = '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
+let g:ale_cpp_cc_options = '-std=c++17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
 let g:ale_c_clangtidy_checks = [
 	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
 	\ '-clang-analyzer-security.insecureAPI.strcpy',
