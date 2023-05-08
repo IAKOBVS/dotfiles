@@ -82,8 +82,8 @@ en
 
 cnorea w!! execute 'sil! write !sudo tee % >/dev/null' <bar> edit! " save as sudo
 
-au SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
-au BufRead * if getline(1) == '#!/usr/bin/dash' | se filetype=sh | endif " fix dash syntax highlighting
+au SwapExists * let v:swapchoice = "e" | echom "swap exists"
+au BufRead * if getline(1) == '#!/usr/bin/dash' | se filetype=sh | en
 
 " C highlighting
 au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! hi PreProc ctermfg=35 guifg=#8ed5e5
