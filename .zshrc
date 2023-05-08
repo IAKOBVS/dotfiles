@@ -1,5 +1,8 @@
 # Luke's config for the Zoomer Shell
 
+__NPROC__=$(nproc)
+export FZF_DEFAULT_COMMAND="ag -l --workers $__NPROC__ --ignore '*git*' --ignore '*vscode*' --nocolor --hidden -g ''"
+
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[white]%}[%{$fg[white]%}%n%{$fg[white]%}@%{$fg[white]%}%M %{$fg[white]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
