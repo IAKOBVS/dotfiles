@@ -65,6 +65,7 @@ nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
 nn <space>n :NERDTreeToggle<CR>
 nn <space>. :cd ..<CR>
+nn <space>o :Lf<CR>
 
 " open cwd in new terminal
 nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
@@ -80,12 +81,9 @@ au CursorHold * sil cal CocActionAsync('highlight')
 " au BufRead * if getline(1) =~ '#!.*/bin/[bd]ash' | let g:ale_enabled = 0 | endif
 " au BufRead * if getline(1) =~ '#!.*/bin/sh' | let g:ale_enabled = 0 | endif
 
+let g:NERDTreeHijackNetrw = 0
+let g:lf_replace_netrw = 1
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
-
-" let g:ale_linters = {
-" 	\ 'cpp': ['clangtidy'],
-" 	\ 'c': ['clangtidy']
-" \}
 
 let g:ale_c_cc_executable = 'gcc'
 let g:ale_c_cc_options = '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
