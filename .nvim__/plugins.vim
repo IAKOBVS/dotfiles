@@ -72,6 +72,7 @@ let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 
 au CursorHold * sil cal CocActionAsync('highlight') " highlight symbol
 au BufRead *.pl,*.pm let g:ale_enabled = 0 " disables ale for perl
+au BufRead * if getline(1) == '#!/usr/bin/dash' | se filetype=sh | let g:ale_enabled = 0 | endif " fix dash syntax highlighting
 
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 
