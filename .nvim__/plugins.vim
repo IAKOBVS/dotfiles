@@ -65,6 +65,7 @@ nn <space>h :Files ~<CR>
 nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
 nn <space>o :Lf<CR>
+nn <space>a :ALEToggle<CR>
 
 " open cwd in new terminal
 nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
@@ -79,7 +80,6 @@ let g:lf_replace_netrw = 1
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 let g:ale_lint_on_text_changed = 1
 
-au BufNewFile,BufRead *dwm/config.h let g:ale_enabled = 0
 let g:ale_c_cc_executable = 'gcc'
 let g:ale_c_cc_options =
 	\ '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
