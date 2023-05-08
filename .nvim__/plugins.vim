@@ -2,7 +2,6 @@ cal plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
-Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'tribela/vim-transparent'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -16,6 +15,7 @@ Plug 'voldikss/vim-floaterm'
 " lsp
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'preservim/nerdtree'
 " Plug 'mechatroner/rainbow_csv'
 " Plug 'dart-lang/dart-vim-plugin'
 " Plug 'lervag/vimtex'
@@ -63,7 +63,7 @@ nn <space>l :History<CR>
 nn <space>h :Files ~<CR>
 nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
-nn <space>n :NERDTreeToggle<CR>
+" nn <space>n :NERDTreeToggle<CR>
 nn <space>. :cd ..<CR>
 nn <space>o :Lf<CR>
 
