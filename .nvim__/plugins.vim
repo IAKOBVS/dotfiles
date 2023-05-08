@@ -94,3 +94,5 @@ fu! CheckBackspace() abort
 	let col = col('.') - 1
 	retu !col || getline('.')[col - 1]	=~# '\s'
 endf
+
+se statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}

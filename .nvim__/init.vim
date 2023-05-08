@@ -75,7 +75,6 @@ se updatetime=300
 se signcolumn=yes
 se modifiable
 se nocompatible
-se statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 if has('nvim')
 	se inccommand=nosplit
 en
