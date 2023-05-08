@@ -163,5 +163,6 @@ map O opengimp
 # map t push :cd<space>
 map c push :mv<space>
 map Z $fx
+map v $nvim $f
 # Source Bookmarks
 # source "~/.local/share/alias/aliases"
