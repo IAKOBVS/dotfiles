@@ -26,5 +26,7 @@
 		}
 	},
 	"codeLens.enable": true,
-    "suggest.snippetsSupport": true
+    "suggest.snippetsSupport": true,
+    "bashIde.shellcheckPath": "shellcheck",
+    "bashIde.enableSourceErrorDiagnostics": true
 }
