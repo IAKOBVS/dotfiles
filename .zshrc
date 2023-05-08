@@ -1,7 +1,5 @@
 # Luke's config for the Zoomer Shell
 
-export FZF_DEFAULT_COMMAND="cat /tmp/__fzfhome__ __fzfroot__ | grep "^$PWD""
-
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[white]%}[%{$fg[white]%}%n%{$fg[white]%}@%{$fg[white]%}%M %{$fg[white]%}%~%{$fg[white]%}]%{$reset_color%}$%b "

@@ -58,8 +58,8 @@ sunm ge
 
 " fzf
 nn <space>l :History<CR>
-nn <space>h :Files ~<CR>
-nn <space>f :Files<CR>
+nn <space>h :cd %:p:h <bar> Files ~<CR>
+nn <space>f :cd %:p:h <bar> Files<CR>
 nn <space>r :Rg<CR>
 
 " open cwd in new terminal
