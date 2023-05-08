@@ -71,20 +71,27 @@ en
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 
 au CursorHold * sil cal CocActionAsync('highlight')
-au BufRead *.pl,*.pm let g:ale_enabled = 0
-au BufRead * if getline(1) =~ '#!.*/bin/perl' | let g:ale_enabled = 0 | endif
-au BufRead * if getline(1) =~ '#!.*/bin/[bd]ash' | let g:ale_enabled = 0 | endif
-au BufRead * if getline(1) =~ '#!.*/bin/sh' | let g:ale_enabled = 0 | endif
+" au BufRead *.pl,*.pm let g:ale_enabled = 0
+" au BufRead * if getline(1) =~ '#!.*/bin/perl' | let g:ale_enabled = 0 | endif
+" au BufRead * if getline(1) =~ '#!.*/bin/[bd]ash' | let g:ale_enabled = 0 | endif
+" au BufRead * if getline(1) =~ '#!.*/bin/sh' | let g:ale_enabled = 0 | endif
 
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 
-let g:ale_linters = {
-	\ 'cpp': ['clangtidy'],
-	\ 'c': ['clangtidy']
-\}
-let g:ale_lint_on_save = 1
-let g:ale_c_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
-let g:ale_cpp_clangtidy_checks = ['-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling', 'clang-analyzer-security.insecureAPI.strcpy']
+" let g:ale_linters = {
+" 	\ 'cpp': ['clangtidy'],
+" 	\ 'c': ['clangtidy']
+" \}
+
+let g:ale_lint_on_text_changed = 1
+let g:ale_c_clangtidy_checks = [
+	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
+	\ '-clang-analyzer-security.insecureAPI.strcpy',
+	\ '-clang-diagnostic-error']
+let g:ale_cpp_clangtidy_checks = [
+	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
+	\ '-clang-analyzer-security.insecureAPI.strcpy',
+	\ '-clang-diagnostic-error']
 let g:Hexokinase_highlighters = ['backgroundfull']
 " let g:vimtex_view_method = 'zathura'
 " let g:vimtex_compiler_method = 'latexmk'

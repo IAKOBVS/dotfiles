@@ -1,6 +1,5 @@
 {
-	"diagnostic.virtualText": true,
-	"diagnostic.virtualTextCurrentLineOnly": false,
+    "diagnostic.displayByAle": true,
 	"clangd.path": "/usr/bin/clangd",
 	"clangd.fallbackFlags": [
 		"-Wall",
@@ -12,6 +11,9 @@
 		"-Wnull-dereference",
 		"-Wformat"
 	],
+    "clangd.arguments": [
+        "--clang-tidy"
+    ],
 	"languageserver": {
 		"perlnavigator": {
 			"command": "perlnavigator",
@@ -23,7 +25,11 @@
 		"perlpls": {
 			"command": "/usr/bin/site_perl/pls",
 			"filetypes": ["perl"]
-		}
+		},
+        "awk": {
+            "command": "awk-language-server",
+            "filetypes": ["awk"]
+        }
 	},
 	"codeLens.enable": true,
     "suggest.snippetsSupport": true,
