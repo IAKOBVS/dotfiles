@@ -63,7 +63,6 @@ nn <space>l :History<CR>
 nn <space>h :Files ~<CR>
 nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
-" nn <space>n :NERDTreeToggle<CR>
 nn <space>. :cd ..<CR>
 nn <space>o :Lf<CR>
 
