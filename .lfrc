@@ -153,16 +153,15 @@ map B bulkrename
 map b $setbg $f
 map <c-e> down
 map <c-y> up
-# map V push :!nvim<space>
 map W $setsid -f $TERMINAL >/dev/null 2>&1
 map Y $printf "%s" "$fx" | xclip -selection clipboard
 map m convert2mov
 map u upscale4thumbnail
 map U forceupscale
 map O opengimp
+map v push :!nvim<space>
 # map t push :cd<space>
 map c push :mv<space>
 map Z $fx
-map v $nvim $f
 # Source Bookmarks
 # source "~/.local/share/alias/aliases"

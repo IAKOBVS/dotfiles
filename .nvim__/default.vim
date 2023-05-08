@@ -1,6 +1,9 @@
 nn nvim :source ~/.nvimrc<CR>
 au BufEnter * sil! lcd %:p:h " autocd
 
+se wildmode=longest,list,full
+au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
+
 " motions
 
 " jump between paragraphs
@@ -91,7 +94,6 @@ sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! mat Operator /[\<\>\?\{\}\:\
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! 2mat Special /[(){}]/
 
 au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
-au BufNewFile,BufRead * setlocal formatoptions-=ro " disable nl autocomment
 au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4 " tab spacing
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.h se filetype=c " skeleton
