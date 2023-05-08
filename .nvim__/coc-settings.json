@@ -1,4 +1,8 @@
 {
+	"codeLens.enable": true,
+    "suggest.snippetsSupport": true,
+    "bashIde.shellcheckPath": "shellcheck",
+    "bashIde.enableSourceErrorDiagnostics": true,
     "diagnostic.displayByAle": true,
 	"clangd.path": "/usr/bin/clangd",
 	"clangd.fallbackFlags": [
@@ -11,9 +15,6 @@
 		"-Wnull-dereference",
 		"-Wformat"
 	],
-    "clangd.arguments": [
-        "--clang-tidy"
-    ],
 	"languageserver": {
 		"perlnavigator": {
 			"command": "perlnavigator",
@@ -30,9 +31,5 @@
             "command": "awk-language-server",
             "filetypes": ["awk"]
         }
-	},
-	"codeLens.enable": true,
-    "suggest.snippetsSupport": true,
-    "bashIde.shellcheckPath": "shellcheck",
-    "bashIde.enableSourceErrorDiagnostics": true
+	}
 }
