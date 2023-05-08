@@ -61,6 +61,7 @@ nn <space>l :History<CR>
 nn <space>h :Files ~<CR>
 nn <space>f :Files<CR>
 nn <space>r :Rg<CR>
+nn <space>n :NERDTree<CR>
 
 " open cwd in new terminal
 nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
