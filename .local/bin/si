@@ -1,2 +1,5 @@
 #!/usr/bin/dash
-sudo du -sbc * 2> /dev/null | sort -n | awk '{printf "%.1fG %s\n", $1/1048576, $2}'
+sudo du -sc * 2> /dev/null | sort -n | awk '{printf "%.1fG %s\n", $1/1048576, $2}' | less
+# toB = 1024
+# toMb = 1048576
+# toGb = 1073741824
