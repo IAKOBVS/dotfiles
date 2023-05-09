@@ -17,7 +17,7 @@ SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Load aliases and shortcuts if existent.
-source $HOME/.local/share/alias/aliases
+. $HOME/.local/share/alias/aliases
 export PATH="$PATH:$HOME/.local/bin/upscale"
 
 # Basic auto/tab complete:
@@ -97,6 +97,6 @@ bindkey -M visual '^[[P' vi-delete
 pgrep xcape > /dev/null || remaps > /dev/null
 
 # Load syntax highlighting; should be last.
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2> /dev/null
+. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2> /dev/null
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2> /dev/null
 bindkey '^L' autosuggest-accept
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh 2> /dev/null
