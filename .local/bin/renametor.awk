@@ -1,7 +1,5 @@
 #!/usr/bin/awk -f
-BEGIN {
-	i = 0
-	}
+BEGIN { i = 0 }
 	{ o = $0
 	# brackets
 	gsub(/\[[^\]]*\]/, "")
@@ -12,7 +10,7 @@ BEGIN {
 	gsub(/\([^\)]*720[^\)]*\)/, "")
 	# trailing
 	gsub(/[^0-9A-Za-z]{1,}$/, "")
-	# before extension
+	# trailing before extension
 	gsub(/[^0-9A-Za-z]{1,}\./, ".")
 	# duplicate
 	gsub(/([^0-9A-Za-z]){2,}/, "\1")
