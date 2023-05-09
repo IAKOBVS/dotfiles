@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-$HOME/c/gennum/gennum $1 $2 | xclip -sel c
+seq 1 100 | sed 's/^/case /; s/$/:/' | xclip -sel c

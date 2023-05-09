@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-gennum "$1" "$2" | xclip -sel c
