@@ -22,5 +22,8 @@
             "command": "awk-language-server",
             "filetypes": ["awk"]
         }
-	}
+	},
+    "dart.showTodos": true,
+    "dart.enableSdkFormatter": true,
+    "dart.completeFunctionCalls": true
 }

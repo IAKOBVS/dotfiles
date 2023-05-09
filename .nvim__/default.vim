@@ -2,7 +2,6 @@ nn nvim :source ~/.nvimrc<CR>
 au BufEnter * sil! lcd %:p:h
 se wildmode=longest,full,full
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
-
 map cfm :!cfm %:p<CR>
 
 " motions
