@@ -34,9 +34,9 @@ foreach my $old (glob('./*')) {
 	$new =~ s/-*$//; # dash
 
 	# remove weird symbols
-	$new =~ s/__/_/g; # underscores
-	$new =~ s/\ \ /\ /g; # spaces
-	$new =~ s/--/-/g; # dashes
+	$new =~ s/_*/_/g; # underscores
+	$new =~ s/  */\ /g; # spaces
+	$new =~ s/-*/-/g; # dashes
 	$new =~ s/_-_/_/g; # _-_
 	$new =~ s/\.-/_/g; # .-
 
