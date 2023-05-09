@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-grep "$1" "$(find . -type f)"
+grep --color=auto "$1" $(find . -type f)
