@@ -1,7 +1,11 @@
 nn nvim :source ~/.nvimrc<CR>
+" autocd
 au BufEnter * sil! lcd %:p:h
+" autocompletion
 se wildmode=longest,full,full
+" no autocomment
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
+" clang-format
 map cfm :!cfm %:p<CR>
 
 " motions
@@ -54,22 +58,21 @@ colo murphy
 if has('nvim')
 	se termguicolors
 en
-hi NormalFloat guibg=none
-hi VertSplit guibg=none
-hi FoldColumn guibg=none
-hi SignColumn guibg=none
-hi LineNr guibg=none
-hi CursorLineNr guibg=none
+hi NormalFloat ctermbg=none guibg=none
+hi VertSplit ctermbg=none guibg=none
+hi FoldColumn ctermbg=none guibg=none
+hi SignColumn ctermbg=none guibg=none
+hi LineNr ctermbg=none guibg=none
+hi CursorLineNr ctermbg=none guibg=none
 hi Normal ctermbg=none guibg=none
 
 filet plugin indent on
+se maxmempattern=2000000 " use more ram
 se cinoptions+=:0 " disable switch indent
 se number relativenumber
 se linebreak
 se nohlsearch
 se incsearch
-se maxmempattern=2000000 " use more ram
-se pastetoggle=<F1>
 se mouse=a
 se encoding=utf-8
 se nobackup
@@ -79,7 +82,7 @@ se signcolumn=yes
 se modifiable
 se nocompatible
 if has('nvim')
-	se inccommand=nosplit
+	se inccommand=nosplit " incremental search
 en
 
 " save as sudo
