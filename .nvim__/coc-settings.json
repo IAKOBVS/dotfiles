@@ -3,7 +3,6 @@
     "suggest.snippetsSupport": true,
     "bashIde.shellcheckPath": "shellcheck",
     "bashIde.enableSourceErrorDiagnostics": true,
-    "diagnostic.displayByAle": true,
 	"clangd.path": "/usr/bin/clangd",
     "clangd.disableDiagnostics": true,
 	"languageserver": {
