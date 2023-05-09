@@ -2,13 +2,13 @@
 if test "$1"; then
 	case $1 in
 		$HOME/*)
-			test -f "$1" && 1="$(dirname "$1")";;
+			test -f "$1" && set -- "$(dirname "$1")";;
 		*)
 			if test -f $1; then
-				1="$(dirname "$1")"
+				set -- "$(dirname "$1")"
 			else
-				[ -d $1 ] || 1="$HOME/$1"
+				[ -d $1 ] || set -- "$HOME/$1"
 			fi
 	esac
 fi
-builtin cd $1 2> /dev/null || return
+builtin cd $1 || return

@@ -3,7 +3,7 @@ BEGIN { i = 0 }
 	{ o = $0
 	# brackets
 	gsub(/\[[^\]]*\]/, "")
-	gsub(/([^)Ss]*)/, "")
+	gsub(/\([^)Ss]\)/, "")
 	# (.*)
 	gsub(/\([[0-9]]{1,}\)/, "")
 	gsub(/\([^\)]*1080[^\)]*\)/, "")
@@ -13,10 +13,10 @@ BEGIN { i = 0 }
 	# trailing before extension
 	gsub(/[^0-9A-Za-z]{1,}\./, ".")
 	# duplicate
-	gsub(/\([^0-9A-Za-z]\){2,}/, "\1")
+	gsub(/([^0-9A-Za-z]){2,}/, "\1")
 	# leading
 	gsub(/^\.\/[^0-9A-Za-z]{1,}/, "./")
-	gsub(/eason\([0-9]\)/, "eason\1")
+	gsub(/eason([0-9])/, "eason\1")
 	print $0
 	old[i] = o
 	new[i] = $0
