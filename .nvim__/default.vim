@@ -94,11 +94,12 @@ sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! mat Operator /[\<\>\?\{\}\:\
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! 2mat Special /[(){}]/
 
 au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
-au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4 " tab spacing
+au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
-au BufNewFile,BufRead *.h se filetype=c " skeleton
-au BufNewFile *.c,*.cpp 0r ~/.config/nvim/templates/skeleton.c | $delete _
-au BufNewFile *.pl,*.pm 0r ~/.config/nvim/templates/skeleton.pl
+au BufNewFile,BufRead *.h se filetype=c
+au BufNewFile *.c,*.cpp 0r ~/.nvim__/templates/skeleton.c | $delete _
+au BufNewFile *.pl,*.pm 0r ~/.nvim__/templates/skeleton.pl
+au BufNewFile *.awk 0r ~/.nvim__/templates/skeleton.awk
 
 " visible cursor and parens
 hi MatchParen guifg=white guibg=none
