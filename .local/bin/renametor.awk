@@ -16,7 +16,9 @@ BEGIN { i = 0 }
 	gsub(/([^0-9A-Za-z]){2,}/, "\1")
 	# leading
 	gsub(/^\.\/[^0-9A-Za-z]{1,}/, "./")
-	gsub(/eason([0-9])/, "eason\1")
+	gsub(/eason([0-9])/, "eason \1")
+	if ($0 == o)
+		next
 	print $0
 	old[i] = o
 	new[i] = $0
