@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-seq 1 100 | sed 's/^/case /; s/$/:/' | xclip -sel c
+seq $1 $2 | sed 's/^/case /; s/$/:/' | xclip -sel c
