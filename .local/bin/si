@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-sudo du -shc * 2> /dev/null | grep -F 'G' | sort -rn | less
+sudo du -sbc * 2> /dev/null | sort -n | awk '{printf "%.1fG %s\n", $1/1048576, $2}'
