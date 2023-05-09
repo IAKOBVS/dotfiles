@@ -8,18 +8,18 @@ esac
 [ -z "$2" ] && echo "Usage: waifu2xauto <image> <scale>" && exit 0
 baseScale=4
 upscaler=realesrgan-x4plus-anime
-out="$(cleanext "$1")"'-hd.png'
+out="$(cleanext "$1")-hd.png"
 realesr(){ realesrgan-ncnn-vulkan -f png -i "$1" -o "$2" -s "$3" -n "$4" -v;}
 if [ "$2" -le 4 ]; then
-	it=0
+	max=0
 elif [ "$2" -le 16 ]; then
-	it=1
+	max=1
 else
-	it=2
+	max=2
 fi
 realesr "$1" "$out" "$baseScale" "$upscaler"
 i=0
-while [ $i -lt $it ]; do
+while [ $i -lt $max ]; do
 	realesr "$out" "$out" "$baseScale" "$upscaler"
 	i=$((i=i+1))
 done
