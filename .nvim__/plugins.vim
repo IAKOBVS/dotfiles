@@ -13,7 +13,7 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'vim-scripts/LargeFile'
 
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plug 'preservim/nerdtree'
@@ -31,6 +31,14 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 cal plug#end()
 
+" highlight things
+au CursorHold * sil cal CocActionAsync('highlight')
+" for coc-nvim autocomplete
+fu! CheckBackspace() abort
+	let col = col('.') - 1
+	retu !col || getline('.')[col - 1]	=~# '\s'
+endf
+se statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " navigate errors
 nn <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nn <silent> <tab>j <Plug>(coc-diagnostic-next)
@@ -44,14 +52,10 @@ ino <expr><C-k>
 	\ "\<C-h>"
 ino <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 	\ :"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" highlight things
-au CursorHold * sil cal CocActionAsync('highlight')
-" for coc-nvim autocomplete
-fu! CheckBackspace() abort
-	let col = col('.') - 1
-	retu !col || getline('.')[col - 1]	=~# '\s'
-endf
-se statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " accept completion
 nn <silent> <tab>k <Plug>(ale_previous_wrap)
@@ -62,7 +66,7 @@ if has('nvim-0.6')
 en
 let g:ale_lint_on_text_changed = 1
 let g:ale_c_cc_executable = 'gcc'
-let g:ale_cpp_cc_executable = 'gcc'
+let g:ale_cpp_cc_executable = 'g++'
 let g:ale_c_cc_options =
 	\ '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
 let g:ale_cpp_cc_options =
