@@ -1,7 +1,6 @@
 #!/usr/bin/awk -f
-BEGIN {i = 0}
-{
-	o = $0
+BEGIN { i = 0 }
+	{ o = $0
 	# brackets
 	gsub(/\[[^\]]*\]/, "")
 	# leading space
@@ -25,18 +24,15 @@ BEGIN {i = 0}
 	gsub(/-{2,}/, "-")
 	gsub(/_-_/, "_")
 	gsub(/\.-/, " ")
-
 	print $0
 	old[i] = o
 	new[i] = $0
 	++i
-}
-END {
-	print "Do you want to rename?"
+	}
+END { print "Do you want to rename?"
 	getline input < "/dev/tty";
-	if (input == "y" \
-    	|| input == "Y")
+	if (input == "y" || input == "Y")
 		for (i in new)
 			if (system("mv " "\"" old[i] "\" \"" new[i] "\""))
 				printf "Failed to rename %s to %s", old[i], new[i]
-}
+	}
