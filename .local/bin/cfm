@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+clang-format -i --style=file:$HOME/.clang-format $@
