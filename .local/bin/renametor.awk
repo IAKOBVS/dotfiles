@@ -3,11 +3,11 @@ BEGIN { i = 0 }
 	{ o = $0
 	# brackets
 	gsub(/\[[^\]]*\]/, "")
+	gsub(/([^)Ss]*)/, "")
 	# (.*)
 	gsub(/\([[0-9]]{1,}\)/, "")
 	gsub(/\([^\)]*1080[^\)]*\)/, "")
 	gsub(/\([^\)]*720[^\)]*\)/, "")
-	gsub(/\([^\)sS]*\)/, "")
 	# trailing
 	gsub(/[^0-9A-Za-z]{1,}$/, "")
 	# trailing before extension
