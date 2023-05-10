@@ -1,3 +1,0 @@
-#!/usr/bin/dash
-WINEPREFIX=~/.local/share/winevn-gdi wine "$1"
-# LC_ALL="ja_JP.UTF-8" TZ="Asia/Tokyo" WINEPREFIX=~/.local/share/winevn wine "$1"

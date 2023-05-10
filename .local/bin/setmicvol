@@ -1,4 +1,0 @@
-#!/usr/bin/dash
-mic='alsa_input.usb-RODE_Microphones_RODE_NT-USB-00.analog-stereo'
-vol='60%'
-pactl set-source-volume $mic $vol
