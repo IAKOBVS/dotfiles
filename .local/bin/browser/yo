@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-$BROWSER 'https://www.youtube.com/results?search_query='$2
