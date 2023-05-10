@@ -1,0 +1,9 @@
+#!/bin/sh
+f_=$(ffzf)
+test $f_ || return
+if test -d "$f_"; then
+	lfcd "$f_"
+else
+	$EDITOR "$f_"
+	cd "$f_" || return
+fi

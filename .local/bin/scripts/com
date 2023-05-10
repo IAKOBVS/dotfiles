@@ -29,7 +29,7 @@ case $file in
 				file=$file.c;;
 			*)
 				echo 'not a .c or .cpp file!'
-				exit 1
+				return
 		esac
 esac
 incl_c=$(get_incl_c "$file")

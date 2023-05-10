@@ -3,9 +3,12 @@ case $1 in
 	*.png);; *.jpg);;
 	*)
 		echo 'Not an image file!'
-		exit 1
+		return
 esac
-[ -z "$2" ] && echo "Usage: waifu2xauto <image> <scale>" && exit 0
+if [ -z "$2" ]; then
+	echo "Usage: waifu2xauto <image> <scale>"
+	return
+fi
 baseScale=4
 upscaler=realesrgan-x4plus-anime
 out="$(cleanext "$1")-hd.png"
