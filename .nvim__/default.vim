@@ -113,14 +113,15 @@ hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " undodir
-let vimDir = '$HOME/.vim'
-if stridx(&runtimepath, expand(vimDir)) == -1
-	let &runtimepath.=','.vimDir " add if !vimDir
+let __vimDir__ = '$HOME/.vim'
+if stridx(&runtimepath, expand(__vimDir__)) == -1
+	" add if !__vimDir__
+	let &runtimepath.=','.__vimDir__
 en
 if has('persistent_undo')
-	let myUndoDir = expand(vimDir . '/undodir')
+	let myUndoDir = expand(__vimDir__ . '/undodir')
 	" Create dirs
-	cal system('mkdir ' . vimDir)
+	cal system('mkdir ' . __vimDir__)
 	cal system('mkdir ' . myUndoDir)
 	let &undodir = myUndoDir
 	se undofile
