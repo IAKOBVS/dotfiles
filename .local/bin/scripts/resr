@@ -1,5 +1,5 @@
 #!/bin/sh
-/bin/mkdir -p /tmp/__ram_bin__
+mkdir -p /tmp/__ram_bin__
 cp -rf $(find $HOME/.local/bin -type f \
 	! -path '*git*' \
 	! -path '*vscode*') /tmp/__ram_bin__ 2> /dev/null &

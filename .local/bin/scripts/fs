@@ -3,6 +3,8 @@ pathToFile=$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*cnlp*data*' \
 	! -path '*vscode*' \
 	! -path '*git*' \
+	! -path '*.o' \
+	! -path '*.out' \
 	! -name '.' \
 	-type f 2> /dev/null | fzfp --delimiter / --with-nth -1)
 test "$pathToFile" || return
