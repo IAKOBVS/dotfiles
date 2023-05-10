@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-alacritty -e sxiv ~/Pictures/jadwal-new.png
+$TERMINAL -e sxiv ~/Pictures/jadwal-new.png
