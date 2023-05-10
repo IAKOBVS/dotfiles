@@ -46,7 +46,7 @@ alias \
 	vv='nvim config.h' \
 	vb='nvim blocks.h' \
 	zs='nvim $HOME/.zshrc' \
-	va='nvim $HOME/.local/share/alias/aliases' \
+	va='nvim $HOME/.zsh_aliases' \
 	vap='nvim $HOME/.local/share/alias/aliases-laptop' \
 	al='nvim $HOME/aliases/scripts' \
 	vas='nvim $HOME/.local/share/alias/sites' \
