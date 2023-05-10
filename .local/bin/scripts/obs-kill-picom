@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 if ps -A | grep obs -q; then
 	killall picom
 	obs &

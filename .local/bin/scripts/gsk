@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 $BROWSER 'https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q='"$1"'&btnG='

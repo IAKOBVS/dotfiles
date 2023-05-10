@@ -1,3 +1,3 @@
-#!/usr/bin/dash
+#!/bin/sh
 test $(uname -s) = 'Linux' && col='--color=auto' || col=''
 grep $col "$1" $(find . -type f)

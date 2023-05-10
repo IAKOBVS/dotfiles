@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 paru -Sl | cut -d' ' -f2 > /tmp/__paru_prs__ &

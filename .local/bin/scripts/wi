@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 if test ! "$2"; then
 	set -- $1 '#English'
 fi

@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 pamixer --get-mute

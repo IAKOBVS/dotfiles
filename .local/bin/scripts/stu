@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 $BROWSER --new-window 'https://studio.youtube.com'

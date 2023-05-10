@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 mediainfo "$1" | grep -F 'Audio #' | tail -n 1 | cut -d'#' -f2

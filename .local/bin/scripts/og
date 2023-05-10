@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 gimp $HOME/Pictures/c-thumbnails.xcf

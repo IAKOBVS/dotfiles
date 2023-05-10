@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 identify -ping -format '%w %h' "$1"

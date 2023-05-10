@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 filename="$(cleanext "$1")-deb.c"
 gcc -E -P "$1" > /tmp/$filename
 getintmain=$(grep -n -m1 'int main()' /tmp/"$filename" | cut -d':' -f1)

@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 /bin/mkdir -p /tmp/__ram_bin__
 cp -rf $(find $HOME/.local/bin -type f \
 	! -path '*git*' -o \

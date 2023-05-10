@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 lynx --dump 'https://www.google.com/search?q=jp+servant+emiya+atlas+academy+db+apps&source=lmns&hl=en&sa=X&ved=2ahUKEwjiq7nzy5L8AhUsKbcAHSCqBUgQ_AUoAHoECAEQAA' | awk '/ 5. https/ {print $2}'

@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 case $PWD in
 	/home/*) grep ^$PWD /tmp/__fzfhome__ 2> /dev/null | fzf;;
 	*) grep ^$PWD /tmp/__fzfroot__ 2> /dev/null | fzf
