@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-WINEPREFIX=~/.local/share/winevn wine "$1"

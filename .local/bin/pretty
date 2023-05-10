@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-jq '.' "$1" /tmp/nice_servant_lang_en.json | less
