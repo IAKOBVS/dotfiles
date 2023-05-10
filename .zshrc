@@ -64,13 +64,7 @@ lfcd () {
 }
 
 l_() { lfcd }
-
-_() {
-	local f_=$(ffzf)
-	if [ $f_ ]; then
-		[[ -d "$f_" ]] && lfcd "$f_" || nvim "$f_" && cd "$f_"
-	fi
-}
+_() { . fzfvim }
 
 u_() { ufzf }
 fv_() { filesvim }
