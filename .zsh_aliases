@@ -1,0 +1,114 @@
+#!/usr/bin/dash
+alias \
+	poweroff='systemctl poweroff' \
+	reboot='systemctl reboot'
+
+alias \
+	par='paru --needed --skipreview -S' \
+	pars='paru --needed --skipreview -Syu' \
+	paruq='paru -Q | fzf' \
+	pacman='sudo pacman' \
+	systemctl='sudo systemctl' \
+	sv='sudo nvim' \
+	cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
+	cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
+	cpl='cfg --reset hard && cfg pull'
+
+# cd
+alias \
+	vs='cd $HOME/.local/src/st && nvim config.h' \
+	sr='cd $HOME/.local/bin/scripts' \
+	dw='cd $HOME/.local/src/dwm' \
+	vd='cd $HOME/.local/src/dwm && nvim config.h' \
+	vs='cd $HOME/.local/src/st && nvim config.h' \
+	vdm='cd $HOME/.local/src/dmenu && nvim config.h' \
+	vdw='cd $HOME/.local/src/dwmblocks && nvim blocks.h' \
+	vsl='cd $HOME/.local/src/slstatus && nvim config.h' \
+	dt='cd /tmp' \
+	co='cd $HOME/.config && ls' \
+	sk='cd $HOME/shared-files'\
+	tor='lfcd $HOME/Downloads/torrent' \
+	cl='cd $HOME/.local/src' \
+	cdd='cd $HOME/Downloads' \
+	cs='cd $HOME/.local/share' \
+	cla='cd $HOME/Documents/latex'
+
+# lf
+alias \
+	rec='lfcd ~/Videos/Recordings' \
+	vi='lfcd ~/Videos'
+
+# nvim
+alias \
+	xi='nvim $HOME/.xinitrc' \
+	vp='nvim $HOME/.config/picom.conf' \
+	vvim='cd $HOME/.nvim__; nvim $HOME/.nvim__/default.vim' \
+	vv='nvim config.h' \
+	vb='nvim blocks.h' \
+	zs='nvim $HOME/.zshrc' \
+	va='nvim $HOME/.local/share/alias/aliases' \
+	vap='nvim $HOME/.local/share/alias/aliases-laptop' \
+	al='nvim $HOME/aliases/scripts' \
+	vas='nvim $HOME/.local/share/alias/sites' \
+	vac='nvim $HOME/.local/share/alias/clipboard' \
+	th='nvim $HOME/.local/share/theme/colors.h' \
+	vsr='nvim $HOME/.local/share/alias/scripts' \
+	vlf='nvim $HOME/.lfrc'
+
+# shorten 
+alias \
+	z='zathura' \
+	g='git' \
+	zr='zaread' \
+	pv='pavucontrol' \
+	i='sxiv' \
+	pm='pulsemixer' \
+	ht='htop' \
+	sht='sudo htop' \
+	sme='sudo make install' \
+	ki='killall' \
+	ksl='killall slstatus ; slstatus &' \
+	l='lfcd' \
+	pq='paru -Q | fzf' \
+	sof='du -h'
+
+# github
+alias \
+	fu="git commit -a -m 'newest' && git push origin" \
+	gps='git commit -a && git push origin' \
+	fp='git fetch --all && git reset --hard origin/master' \
+	gr='git reset --hard HEAD && git pull' \
+	gpl='git pull'
+
+# verbosity
+alias \
+	cp='cp -iv' \
+	mv='mv -iv' \
+	rm='rm -vI' \
+	bc='bc -ql' \
+	mkd='mkdir -pv' \
+	yt='yt-dlp --embed-metadata -i' \
+	yta='yt -x -f bestaudio/bestub'
+
+# colorize 
+alias \
+	ls='ls -hN --color=auto --group-directories-first' \
+	grep='grep --color=auto' \
+	diff='diff --color=auto' \
+	ccat='highlight --out-format=ansi' \
+	ip='ip -color=auto'
+
+alias \
+	sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
+	slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
+	dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
+	sf='nvim /etc/fan2go/fan2go.yaml' \
+	nv='nvtop'
+
+alias vmpv='cd $HOME/.config/mpv && v mpv.conf'
+
+alias rs='res4thum'
+alias dfh='df -h | grep -v -e snap -e boot -e udev -e /run/'
+alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+
+alias fs='. fs'

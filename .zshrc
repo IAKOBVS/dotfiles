@@ -16,7 +16,7 @@ SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Load aliases and shortcuts if existent.
-. $HOME/.local/share/alias/aliases
+. $HOME/.zsh_aliases
 export PATH="$PATH:$HOME/.local/bin/upscale"
 
 # Basic auto/tab complete:
