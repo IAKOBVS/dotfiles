@@ -1,7 +1,6 @@
 # Luke's config for the Zoomer Shell
 
 __NPROC__=$(nproc)
-# export FZF_DEFAULT_COMMAND="ag -l --workers $__NPROC__ --ignore '*git*' --ignore '*vscode*' --nocolor --hidden -g ''"
 export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob --exclude '*vscode*' --exclude '*git*'"
 
 # Enable colors and change prompt:
@@ -98,5 +97,5 @@ pgrep xcape > /dev/null || remaps > /dev/null
 
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2> /dev/null
-. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2> /dev/null
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2> /dev/null
 bindkey '^L' autosuggest-accept
