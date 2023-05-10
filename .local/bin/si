@@ -1,5 +1,5 @@
 #!/usr/bin/dash
-sudo du -sc * 2> /dev/null | sort -n | awk '{printf "%.1fG %s\n", $1/1048576, $2}' | less
-# toB = 1024
-# toMb = 1048576
-# toGb = 1073741824
+toGb=1073741824
+toMb=1048576
+toB=1024
+du -s * 2> /dev/null | sort -n | awk -v fmt=$toGb 'BEGIN {total = 0} {total += $1; printf "%.1fG %s\n", $1/fmt, $2} END {printf("%.1fG total", total/fmt)}' | less

@@ -1,4 +1,0 @@
-#!/usr/bin/dash
-[ -s $HOME/.bright ] && \
-brightnessctl get > /tmp/.bright && \
-rsync /tmp/.bright $HOME/.bright

@@ -9,7 +9,7 @@ __find__(){
 	! -path '*.key*' \
 	> $2 2> /dev/null
 }
-if ! pgrep 'find' > /dev/null; then
+if ! ps -A | grep 'find' -q; then
 	__find__ / /tmp/__fzfroot__ &
 	__find__ $HOME /tmp/__fzfhome__ &
 fi

@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+test $(uname -s) = 'Linux' && col='--color=auto' || col=''
+grep $col "$1" $(find . -type f)
