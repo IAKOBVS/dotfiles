@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-printf "\n#include \"/home/james/c/nix.c/nix.h\"\n#include \"/home/james/c/jarray/jarr.h\"\n#include \"/home/james/c/jstring/jstr.h\"\n" | xclip -selection c

@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-split -n $(nproc) $1
