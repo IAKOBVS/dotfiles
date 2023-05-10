@@ -1,2 +1,2 @@
 #!/usr/bin/dash
-convert "$1" -background none -extent 1280x1280 "$( cleanext "$1" )"'-square.png'
+magick "$1" -background none -extent 1280x1280 "$( cleanext "$1" )"'-square.png'

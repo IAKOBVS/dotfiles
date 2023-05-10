@@ -1,3 +1,5 @@
 #!/usr/bin/dash
-[ -z "$2" ] && $BROWSER "https://wiktionary.org/wiki/$1#English" && exit 0
+if test ! "$2"; then
+	set -- $1 '#English'
+fi
 $BROWSER "https://wiktionary.org/wiki/$1#$2"
