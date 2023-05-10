@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 file=$1
 cpp_ver='-std=gnu++17'
 comp_flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'

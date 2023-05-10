@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 $HOME/c/genalpha/genalpha | xclip -sel c

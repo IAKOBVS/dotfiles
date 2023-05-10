@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 magick "$1" "$(cleanext "$1")"'.png'

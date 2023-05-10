@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 toGb=1073741824
 toMb=1048576
 toB=1024

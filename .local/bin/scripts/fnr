@@ -1,9 +1,9 @@
-#!/usr/bin/dash
+#!/bin/sh
 if test ! $3; then
  	echo 'Usage: sed <dir> <find> <replace>'
 	exit 1
 fi
-if test $(uname -A) = 'Linux'; then
+if test $(uname -s) = 'Linux'; then
 	find "$1" -type f -exec sed -i "s|$2|$3|g" {} \;
 else
 	echo 'sed -i is not available!'

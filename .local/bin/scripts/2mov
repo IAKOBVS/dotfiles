@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 case $1 in
 	*mp4);; *mov);;*mkv);;
 	*) exit 1

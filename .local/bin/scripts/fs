@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/bin/sh
 pathToFile=$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*cnlp*data*' \
 	! -path '*vscode*' \
