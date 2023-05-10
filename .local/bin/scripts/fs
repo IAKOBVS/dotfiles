@@ -1,5 +1,5 @@
 #!/usr/bin/dash
-pathToFile=$(find $HOME/.local/bin $HOME/c \
+pathToFile=$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*cnlp*data*' \
 	! -path '*vscode*' \
 	! -path '*git*' \
