@@ -1,2 +1,2 @@
-so plugins.vim
-so default.vim
+so ~/.nvim/plugins.vim
+so ~/.nvim/default.vim
