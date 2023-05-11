@@ -1,4 +1,7 @@
 #!/bin/sh
-until
+i=1
+until man $i\p $1
 do
+	test $i = 9 && return
+	i=$((i+1))
 done
