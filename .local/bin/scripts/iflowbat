@@ -1,9 +1,11 @@
 #!/bin/sh
 bat=$( cat /sys/class/power_supply/BAT0/capacity )
 while true; do
-  if [ "$bat" -gt 50 ]; then
+  if [ "$bat" -gt 50 ]
+  then
     :
-  elif [ "$bat" -gt 40 ]; then
+  elif [ "$bat" -gt 40 ]
+  then
     notify-send --urgency=normal "🔋 ~ 50%"
   else
     notify-send --urgency=critical "🪫 ~ 30%"

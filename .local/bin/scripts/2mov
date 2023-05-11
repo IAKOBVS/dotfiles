@@ -1,7 +1,9 @@
 #!/bin/sh
 case $1 in
 	*mp4);; *mov);;*mkv);;
-	*) return
+	*)
+		echo 'Not a .mp4, .mov, or .mkv file!'
+		return
 esac
 out=$(cleanext "$1")
 ffmpeg -i "$1" -vcodec mjpeg -q:v 2 -c:a pcm_s16le -f mov "$out"'.mov'

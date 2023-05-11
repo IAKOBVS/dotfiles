@@ -1,7 +1,8 @@
 #!/bin/sh
 f_=$(ffzf)
 test $f_ || return
-if test -d "$f_"; then
+if test -d "$f_"
+then
 	lfcd "$f_"
 else
 	$EDITOR "$f_"

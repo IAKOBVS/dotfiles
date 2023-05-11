@@ -1,0 +1,5 @@
+#!/bin/sh
+if man $1 $2 | grep "^[[:space:]]$3[^A-Za-z]"
+then
+fi
+man $1p $2 | grep "^[[:space:]]$3[^A-Za-z]"

@@ -32,13 +32,16 @@ upndownscale(){
 	echo "$1 has been upscaled $2x."
 }
 scale=$(getres "$img" | awk -v h="$height" '{print int(h/$2 + 0.99)}')
-if [ 1 -ge "$scale" ]; then
+if [ 1 -ge "$scale" ]
+then
 	echo "'$1' need not be upscaled"
 	res "$img" "$resolution"
 	return
-elif [ 4 -ge "$scale" ];then
+elif [ 4 -ge "$scale" ]
+then
 	upscale=4
-elif [ 16 -ge "$scale" ]; then
+elif [ 16 -ge "$scale" ]
+then
 	upscale=16
 else
 	upscale=64
