@@ -6,7 +6,7 @@ alias \
 alias \
 	par='paru --needed --skipreview -S' \
 	pars='paru --needed --skipreview -Syu' \
-	paruq='paru -Q | fzf' \
+	prq='paru -Q | fzf' \
 	pacman='sudo pacman' \
 	sctl='sudo systemctl' \
 	sv='sudo $EDITOR' \
