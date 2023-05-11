@@ -1,10 +1,9 @@
-nn sv :source ~/.nvimrc<CR>
+nn sv :source ~/.nvim/init.vim<CR>
 au BufEnter * sil! lcd %:p:h
 se wildmode=longest,full,full
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
 " clang-format
 map cfm :!cfm %:p<CR>
-map to :q<CR>
 
 " motions
 
