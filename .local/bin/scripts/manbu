@@ -1,4 +1,8 @@
 #!/bin/sh
+if test ! $1
+then
+	echo 'Usage: manbu <cmd>'
+fi
 ptn="^[[:space:]]*$1[^A-Za-z]"
 if man dash | grep -q $ptn
 then
