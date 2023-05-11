@@ -8,7 +8,7 @@ alias \
 	pars='paru --needed --skipreview -Syu' \
 	paruq='paru -Q | fzf' \
 	pacman='sudo pacman' \
-	systemctl='sudo systemctl' \
+	sctl='sudo systemctl' \
 	sv='sudo $EDITOR' \
 	cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
 	cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
