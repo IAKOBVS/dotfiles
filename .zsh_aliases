@@ -43,7 +43,7 @@ alias \
 alias \
 	xi='$EDITOR $HOME/.xinitrc' \
 	vp='$EDITOR $HOME/.config/picom.conf' \
-	vvim='cd $HOME/.$EDITOR__; $EDITOR $HOME/.$EDITOR__/default.vim' \
+	vvim='cd $HOME/.nvim__; $EDITOR $HOME/.nvim__/default.vim' \
 	vv='$EDITOR config.h' \
 	vb='$EDITOR blocks.h' \
 	zs='$EDITOR $HOME/.zshrc' \
