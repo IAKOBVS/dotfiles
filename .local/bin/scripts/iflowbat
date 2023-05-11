@@ -1,5 +1,5 @@
 #!/bin/sh
-bat=$( cat /sys/class/power_supply/BAT0/capacity )
+bat=$(cat /sys/class/power_supply/BAT0/capacity)
 while true; do
   if [ "$bat" -gt 50 ]
   then
