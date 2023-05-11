@@ -1,6 +1,6 @@
 #!/bin/sh
 alias \
-	poweroff='systemctl poweroff' \
+	poweroff='sync && systemctl poweroff' \
 	reboot='systemctl reboot'
 
 alias \
