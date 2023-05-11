@@ -1,2 +1,2 @@
 #!/bin/sh
-exec gimp $HOME/Pictures/c-thumbnails.xcf
+gimp $HOME/Pictures/c-thumbnails.xcf

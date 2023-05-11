@@ -1,10 +1,10 @@
 #!/bin/sh
 pamixer --source $(getmicsource) -t
-if [ $(ifmute) = 'true' ]
+if test $(ifmute) = 'true'
 then
-	dunstctl close
-	exec notify-send "🔇 Mic is muted!"
+	notif='🔇 Mic is muted!'
 else
-	dunstctl close
-	exec notify-send "🎤 Mic is on!"
+	notif='🎤 Mic is on!'
 fi
+dunstctl close
+notify-send $notif

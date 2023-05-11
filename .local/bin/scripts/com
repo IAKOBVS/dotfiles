@@ -58,4 +58,4 @@ case $file in
 		echo gcc "$comp_flags" "$file" "$incl_c" "$incl_precomp" -o "$(basename "$file" .c)" "$OLevel"
 		gcc $comp_flags $file $incl_c $incl_precomp -o $(basename $file .c) $OLevel || return
 esac
-exec ./${file%.*}
+./${file%.*}

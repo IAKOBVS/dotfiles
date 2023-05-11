@@ -16,5 +16,5 @@ __find__(){
 if ! ps -A | grep -F 'find' -q
 then
 	__find__ / > /tmp/__fzfroot__ &
-	exec __find__ $HOME > /tmp/__fzfhome__ &
+	__find__ $HOME > /tmp/__fzfhome__ &
 fi

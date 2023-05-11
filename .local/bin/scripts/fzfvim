@@ -3,8 +3,8 @@ f_=$(ffzf)
 test $f_ || return
 if test -d "$f_"
 then
-	exec lfcd "$f_"
+	lfcd "$f_"
 else
 	$EDITOR "$f_"
-	exec cd "$f_" || return
+	cd "$f_" || return
 fi

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec $BROWSER --new-window 'https://docs.google.com/document/u/3/?tgif=d'
+$BROWSER --new-window 'https://docs.google.com/document/u/3/?tgif=d'

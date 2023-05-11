@@ -1,2 +1,2 @@
 #!/bin/sh
-exec magick -resize "$2" "$1" "${1%.*}-resized.png"
+magick -resize "$2" "$1" "${1%.*}-resized.png"

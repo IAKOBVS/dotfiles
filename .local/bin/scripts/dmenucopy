@@ -1,3 +1,3 @@
 #!/bin/sh
 clip=$(cat $HOME/.local/share/alias/clipboard | dmenu -l 30 | cut -d' ' -f1)
-exec test "$clip" && echo $clip | xclip -sel c
+test "$clip" && echo $clip | xclip -sel c

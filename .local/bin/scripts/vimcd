@@ -1,4 +1,4 @@
 #!/bin/sh
 set -- $(realpath $1)
 cd $(dirname $1) || return
-exec $EDITOR $1
+$EDITOR $1

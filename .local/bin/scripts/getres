@@ -1,2 +1,2 @@
 #!/bin/sh
-exec identify -ping -format '%w %h' "$1"
+identify -ping -format '%w %h' "$1"

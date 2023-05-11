@@ -1,4 +1,4 @@
 #!/bin/sh
 mic='alsa_input.usb-RODE_Microphones_RODE_NT-USB-00.analog-stereo'
 vol='60%'
-exec pactl set-source-volume $mic $vol
+pactl set-source-volume $mic $vol
