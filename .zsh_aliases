@@ -112,5 +112,5 @@ alias vmpv='cd $HOME/.config/mpv && v mpv.conf'
 alias dfh='df -h | grep -v -e snap -e boot -e udev -e /run/'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias fs='. fs'
-alias upvim='$EDITOR -c ':PlugUpdate' -c ':CocUpdate''
+alias upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'"
 alias rs='res4thum'
