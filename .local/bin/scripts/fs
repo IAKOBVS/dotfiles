@@ -1,5 +1,5 @@
 #!/bin/sh
-set -- "$(find $HOME/.local/bin/scripts $HOME/c \
+path="$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*cnlp*data*' \
 	! -path '*vscode*' \
 	! -path '*git*' \
@@ -7,5 +7,5 @@ set -- "$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*.out' \
 	! -name '.' \
 	-type f 2> /dev/null | fzfpreview --delimiter / --with-nth -1)"
-test $1 || return 1
-$EDITOR $1 && cd $(dirname $1) || return 1
+test $path || return 1
+$EDITOR $path && cd $(dirname $path) || return 1
