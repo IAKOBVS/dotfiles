@@ -12,7 +12,7 @@ then
 fi
 baseScale=4
 upscaler=realesrgan-x4plus-anime
-out="$(cleanext "$1")-hd.png"
+out="${1%.*}-hd.png"
 realesr(){ realesrgan-ncnn-vulkan -f png -i "$1" -o "$2" -s "$3" -n "$4" -v;}
 if [ "$2" -le 4 ]
 then
