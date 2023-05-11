@@ -16,6 +16,7 @@ __find__(){
 	! -path '*.jpg' \
 	! -path '*.pdf' \
 	! -path '*.xcf' \
+	! -path '*.go' \
 	! -path '?' \
 	2> /dev/null
 }
