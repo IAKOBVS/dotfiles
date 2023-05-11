@@ -3,4 +3,4 @@ if test ! "$2"
 then
 	set -- $1 '#English'
 fi
-$BROWSER "https://wiktionary.org/wiki/$1#$2"
+exec $BROWSER "https://wiktionary.org/wiki/$1#$2"

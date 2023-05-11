@@ -13,4 +13,4 @@ touch "$filenameOnly".s
 		sleep 1
 	done
 } &
-$EDITOR -c ":vsplit $filenameOnly.c" "$filenameOnly".s
+exec $EDITOR -c ":vsplit $filenameOnly.c" "$filenameOnly".s

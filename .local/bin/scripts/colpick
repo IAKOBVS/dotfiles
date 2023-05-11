@@ -1,2 +1,2 @@
 #!/bin/sh
-colorpicker --short --one-shot | xclip -selection c
+exec colorpicker --short --one-shot | xclip -selection c

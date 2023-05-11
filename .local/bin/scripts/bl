@@ -1,2 +1,2 @@
 #!/bin/sh
-brightnessctl set $(($1*1000))
+exec brightnessctl set $(($1*1000))

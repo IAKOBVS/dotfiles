@@ -1,2 +1,2 @@
 #!/bin/sh
-sync && killall dwm
+exec sync && killall dwm

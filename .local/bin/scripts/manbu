@@ -6,7 +6,7 @@ fi
 ptn="^[[:space:]]*$1[^A-Za-z]"
 if man dash | grep -q $ptn
 then
-	man dash | less -p $ptn
+	exec man dash | less -p $ptn
 else
-	man $1
+	exec man $1
 fi

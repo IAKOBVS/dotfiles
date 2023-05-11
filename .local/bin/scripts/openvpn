@@ -1,2 +1,2 @@
 #!/bin/sh
-$BROWSER -tor "$(xclip -o)"
+exec $BROWSER -tor "$(xclip -o)"

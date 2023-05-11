@@ -6,7 +6,7 @@ case $1 in
 		return 1
 esac
 out=${1%.*}
-ffmpeg -i "$1" -vcodec mjpeg -q:v 2 -c:a pcm_s16le -f mov "$out"'.mov'
+exec ffmpeg -i "$1" -vcodec mjpeg -q:v 2 -c:a pcm_s16le -f mov "$out"'.mov'
 
 # num_of_audiotracks=$(audiotracks "$1")
 # i=0

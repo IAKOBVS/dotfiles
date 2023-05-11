@@ -1,2 +1,2 @@
 #!/bin/sh
-pactl list sinks | awk '/Active Port:/ {print $3}'
+exec pactl list sinks | awk '/Active Port:/ {print $3}'
