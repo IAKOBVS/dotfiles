@@ -4,6 +4,7 @@ se wildmode=longest,full,full
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
 " clang-format
 map cfm :!cfm %:p<CR>
+map <space>e :q!<CR>
 
 " motions
 
