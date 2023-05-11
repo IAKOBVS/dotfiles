@@ -6,7 +6,8 @@ touch "$filenameOnly".s
 {
 	gcc -gdwarf -g -w -fverbose-asm -O2 -S $1
 	fileSize=$(stat --printf="%s" "$filenameOnly".c)
-	while :; do
+	while :
+	do
 		tmpSize=$(stat --printf="%s" "$filenameOnly".c)
 		[ "$tmpSize" -ne "$fileSize" ] && gcc -gdwarf -g -w -O2 -S $1
 		sleep 1

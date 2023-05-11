@@ -7,6 +7,10 @@ __find__(){
 	! -path '*.vscode*' \
 	! -path '*.rev*' \
 	! -path '*.key*' \
+	! -path '*.virtualenv*' \
+	! -path '*.cargo*' \
+	! -path '*.o' \
+	! -path '*.pass*' \
 	> $2 2> /dev/null
 }
 if ! ps -A | grep 'find' -q
