@@ -1,2 +1,2 @@
 #!/bin/sh
-exec $EDITOR -c ':Rg'
+$EDITOR -c ':Rg'

@@ -1,3 +1,3 @@
 #!/bin/sh
 [ ! -d /tmp/screenshots ] && mkdir /tmp/screenshots ; {
-exec scrot -e 'xclip -selection clipboard -t image/png -i $f' /tmp/screenshots/%Y-%m-%d-%T-screenshot.png;}
+scrot -e 'xclip -selection clipboard -t image/png -i $f' /tmp/screenshots/%Y-%m-%d-%T-screenshot.png;}

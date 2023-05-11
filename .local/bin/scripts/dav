@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /opt/resolve/bin/resolve
+/opt/resolve/bin/resolve

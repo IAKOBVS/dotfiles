@@ -8,4 +8,4 @@ pathToFile=$(find $HOME/.local/bin/scripts $HOME/c \
 	! -name '.' \
 	-type f 2> /dev/null | fzfp --delimiter / --with-nth -1)
 test "$pathToFile" || return 1
-exec $EDITOR "$pathToFile" && cd "$(dirname "$pathToFile")" || return 1
+$EDITOR "$pathToFile" && cd "$(dirname "$pathToFile")" || return 1

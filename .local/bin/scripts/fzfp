@@ -1,2 +1,2 @@
 #!/bin/sh
-exec fzf "$@" --preview 'bat --style=numbers --color=always --line-range :500 {}'
+fzf "$@" --preview 'bat --style=numbers --color=always --line-range :500 {}'

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec pamixer -t
+pamixer -t

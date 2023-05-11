@@ -1,2 +1,2 @@
 #!/bin/sh
-exec $BROWSER 'https://teams.microsoft.com/_'
+$BROWSER 'https://teams.microsoft.com/_'

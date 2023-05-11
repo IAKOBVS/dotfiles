@@ -10,7 +10,7 @@ then
 	echo "Replace $2 with $3 (y/n)"
 	read -r ok
 	test $ok != 'y' || return
-	exec find "$1" -type f -exec sed -i "s|$2|$3|g" {} \;
+	find "$1" -type f -sed -i "s|$2|$3|g" {} \;
 else
-	exec echo 'sed -i is not available!'
+	echo 'sed -i is not available!'
 fi

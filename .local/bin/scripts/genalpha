@@ -1,2 +1,2 @@
 #!/bin/sh
-exec $HOME/c/genalpha/genalpha | xclip -sel c
+$HOME/c/genalpha/genalpha | xclip -sel c

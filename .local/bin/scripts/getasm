@@ -13,4 +13,4 @@ lineStart=$(echo $lines | cut -d' ' -f1)
 lineEnd=$(echo $lines | cut -d' ' -f2)
 asmFile="$tmp/$fileOnly-tmp.s"
 sed -i -n "$lineStart, $lineEnd p" $asmFile
-exec $EDITOR $asmFile
+$EDITOR $asmFile

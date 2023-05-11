@@ -1,3 +1,3 @@
 #!/bin/sh
 __prs__=$(</tmp/__paru_prs__ fzf -m --preview 'paru -Si {1}')
-exec test $__prs__ && paru -S --skipreview --needed $__prs__
+test $__prs__ && paru -S --skipreview --needed $__prs__
