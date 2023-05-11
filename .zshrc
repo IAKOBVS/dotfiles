@@ -1,7 +1,15 @@
 # Luke's config for the Zoomer Shell
 
 __NPROC__=$(nproc)
-export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob --exclude '*vscode*' --exclude '*git*'"
+export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
+	--exclude '*vscode*' \
+	--exclude '*git*'\
+	--exclude '*.virtualenv*'\
+	--exclude '*.rev*'\
+	--exclude '*.o'\
+	--exclude '*.cargo*'\
+	--exclude '*.pass*'\
+	--exclude '*.key*'"
 
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
