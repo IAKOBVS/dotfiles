@@ -1,2 +1,2 @@
 #!/bin/sh
-nvim -c ':Rg'
+$EDITOR -c ':Rg'

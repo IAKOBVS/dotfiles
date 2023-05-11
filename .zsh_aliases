@@ -53,7 +53,8 @@ alias \
 	vac='nvim $HOME/.local/share/alias/clipboard' \
 	th='nvim $HOME/.local/share/theme/colors.h' \
 	vsr='nvim $HOME/.local/share/alias/scripts' \
-	vlf='nvim $HOME/.lfrc'
+	vlf='nvim $HOME/.lfrc' \
+	fin='. fin'
 
 # shorten 
 alias \

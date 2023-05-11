@@ -7,8 +7,8 @@ fi
 if test $(uname -s) = 'Linux'
 then
 	gw $2 $(find "$1" -type f)
-	echo "Replace $2 with $3 (y/n)"
 	find "$1" -type f -exec sed -i "s|$2|$3|g" {} \;
+	echo "Replaced $2 with $3"
 else
 	echo 'sed -i is not available!'
 fi

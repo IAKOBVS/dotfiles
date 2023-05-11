@@ -5,4 +5,4 @@ then
 	echo "$file" >> /tmp/__fzfhome__ &
 	echo "$file" >> /tmp/__fzfroot__ &
 fi
-nvim "$@"
+$EDITOR "$@"
