@@ -11,6 +11,10 @@ __find__(){
 	! -path '*.cargo*' \
 	! -path '*.o' \
 	! -path '*.pass*' \
+	! -path '*.png' \
+	! -path '*.jpeg' \
+	! -path '*.jpg' \
+	! -path '*.jpg' \
 	2> /dev/null
 }
 if ! ps -A | grep -F 'find' -q

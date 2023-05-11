@@ -1,5 +1,5 @@
 #!/bin/sh
-f_=$(ffzf)
+f_=$(fzfdef)
 test $f_ || return
 if test -d "$f_"
 then
