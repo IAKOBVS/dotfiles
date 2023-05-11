@@ -1,11 +1,11 @@
 #!/bin/sh
-pathToFile=$(find $HOME/.local/bin/scripts $HOME/c \
+set -- "$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*cnlp*data*' \
 	! -path '*vscode*' \
 	! -path '*git*' \
 	! -path '*.o' \
 	! -path '*.out' \
 	! -name '.' \
-	-type f 2> /dev/null | fzfpreview --delimiter / --with-nth -1)
-test "$pathToFile" || return 1
-$EDITOR "$pathToFile" && cd "$(dirname "$pathToFile")" || return 1
+	-type f 2> /dev/null | fzfpreview --delimiter / --with-nth -1)"
+test $1 || return 1
+$EDITOR $1 && cd $(dirname $1) || return 1

@@ -1,0 +1,5 @@
+#!/bin/sh
+case $PWD in
+	/home/*) grep ^$PWD /tmp/__fzfhome__ 2> /dev/null;;
+	*) grep ^$PWD /tmp/__fzfroot__ 2> /dev/null
+esac
