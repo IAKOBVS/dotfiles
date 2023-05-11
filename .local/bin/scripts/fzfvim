@@ -1,16 +1,10 @@
 #!/bin/sh
-f_=$(fzfdef)
+f_=$(ffzf $1)
 test $f_ || return
 if test -d "$f_"
 then
 	lfcd "$f_"
 else
-	case $f_ in
-		*.mov|*.mkv|*.mp4)
-			mpv $f_;;
-		*)
-			$EDITOR $f_
-
-	esac
-	cd $(dirname $f_) || return
+	$EDITOR "$f_"
+	cd "$f_" || return
 fi

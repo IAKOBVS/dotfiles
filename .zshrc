@@ -1,5 +1,4 @@
-# Luke's config for the Zoomer Shell
-
+#!/bin/zsh
 __NPROC__=$(nproc)
 export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
 	--exclude '*vscode*' \
@@ -71,17 +70,16 @@ lfcd () {
     fi
 }
 
-l_() { lfcd }
-_() { . fzfvim }
-
-u_() { ufzf }
-fv_() { filesvim }
-rg_() { rgvim }
+l_() { lfcd;}
+_() { . fzfvim;}
+e_(){ . fzfvim --exact;}
+u_() { ufzf;}
+rg_() { rgvim;}
 
 bindkey -s '^f' '_\n'
+bindkey -s '^e' 'e_\n'
 bindkey -s '^o' 'l_\n'
 bindkey -s '^u' 'u_\n'
-bindkey -s '^v' 'fv_\n'
 bindkey -s '^r' 'rg_\n'
 bindkey -s '^k' 'clear\n'
 
@@ -89,7 +87,7 @@ bindkey '^[[P' delete-char
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
+bindkey '^v' edit-command-line
 bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
