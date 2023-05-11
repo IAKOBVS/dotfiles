@@ -8,7 +8,8 @@ case "$2" in
 		comp_flags="$comp_flags $analyzer"
 		[ -n "$3" ] && OLevel="-O$3 -flto";;
 	*)
-		if [ -n "$2" ]; then
+		if [ -n "$2" ]
+		then
 			OLevel="-O$3 -flto"
 			[ -n "$3" ] && comp_flags="$comp_flags $analyzer"
 		fi
@@ -37,11 +38,13 @@ incl_precomp=$(get_incl_gch "$file")
 case $file in
 	*.cpp)
 		incl_cpp=$(get_incl_cpp "$file")
-		if [ -z "$(echo "$incl_cpp" "$incl_c" "$incl_precomp")" ]; then
+		if [ -z "$(echo "$incl_cpp" "$incl_c" "$incl_precomp")" ]
+		then
 			echo g++ $cpp_ver "$comp_flags" "$file" "$incl_precomp" -o "$(basename "$file" .cpp)" "$OLevel"
 			g++ $cpp_ver $comp_flags $file $incl_precomp -o $(basename $file .cpp) $OLevel || return
 		else
-			if [ -n "$incl_c" ]; then
+			if [ -n "$incl_c" ]
+			then
 				gcc $comp_flags -c $incl_c $OLevel &
 				echo gcc "$comp_flags" -c "$incl_c" "$OLevel" &
 			fi

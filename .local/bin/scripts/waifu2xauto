@@ -5,7 +5,8 @@ case $1 in
 		echo 'Not an image file!'
 		return
 esac
-if [ -z "$2" ]; then
+if [ -z "$2" ]
+then
 	echo "Usage: waifu2xauto <image> <scale>"
 	return
 fi
@@ -13,9 +14,11 @@ baseScale=4
 upscaler=realesrgan-x4plus-anime
 out="$(cleanext "$1")-hd.png"
 realesr(){ realesrgan-ncnn-vulkan -f png -i "$1" -o "$2" -s "$3" -n "$4" -v;}
-if [ "$2" -le 4 ]; then
+if [ "$2" -le 4 ]
+then
 	max=0
-elif [ "$2" -le 16 ]; then
+elif [ "$2" -le 16 ]
+then
 	max=1
 else
 	max=2

@@ -1,4 +1,4 @@
-nn nvim :source ~/.nvimrc<CR>
+nn sv :source ~/.nvimrc<CR>
 " autocd
 au BufEnter * sil! lcd %:p:h
 " autocompletion
