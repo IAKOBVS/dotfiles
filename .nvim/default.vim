@@ -3,7 +3,8 @@ au BufEnter * sil! lcd %:p:h
 se wildmode=longest,full,full
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
 " clang-format
-map cfm :!cfm %:p<CR>
+nmap cfm :!cfm %:p<CR>
+nmap <space>e ZQ
 
 " motions
 

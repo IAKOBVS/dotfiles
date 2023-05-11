@@ -1,4 +1,11 @@
 #!/bin/sh
-set -- $(realpath $1)
-cd $(dirname $1) || return
+if test $1
+then
+	set -- $(realpath $1 2> /dev/null)
+	dir=$(dirname $1)
+	if test -d $dir
+	then
+		cd $dir || return
+	fi
+fi
 $EDITOR $1

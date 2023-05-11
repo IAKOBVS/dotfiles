@@ -1,5 +1,5 @@
 #!/bin/sh
-test $file && file=$(realpath "$(echo "$@" | awk '{print $NF}')")
+test $file && file=$(realpath "$(echo "$@" | awk '{print $NF}')" 2> /dev/null)
 if test ! -f "$file"
 then
 	fzf_update_dir $file
