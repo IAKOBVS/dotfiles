@@ -5,6 +5,6 @@ if test -d "$f_"
 then
 	lfcd "$f_"
 else
-	$EDITOR "$f_"
-	cd "$f_" || return
+	mimeopen "$f_"
+	cd $(dirname $f_) || return
 fi
