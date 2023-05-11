@@ -21,7 +21,7 @@ get_incl_c(){ get_incl .c "$1";}
 get_incl_cpp(){ get_incl .cpp "$1";}
 get_incl_gch(){ get_incl .gch "$1";}
 case $file in
-	*.c);; *.cpp);;
+	*.c|*.cpp);;
 	*)
 		case $cwd_files in
 			*$file.cpp*)
