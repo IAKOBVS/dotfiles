@@ -7,5 +7,5 @@ pathToFile=$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*.out' \
 	! -name '.' \
 	-type f 2> /dev/null | fzfp --delimiter / --with-nth -1)
-test "$pathToFile" || return
-nvim "$pathToFile" && cd "$(dirname "$pathToFile")" || return
+test "$pathToFile" || return 1
+nvim "$pathToFile" && cd "$(dirname "$pathToFile")" || return 1

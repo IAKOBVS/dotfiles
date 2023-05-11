@@ -2,6 +2,6 @@
 i=1
 until man $i\p $1
 do
-	test $i = 9 && return
+	test $i = 9 && return $(echo $?)
 	i=$((i+1))
 done
