@@ -18,6 +18,9 @@ __find__(){
 	! -path '*.xcf' \
 	! -path '*.go' \
 	! -path '?' \
+	! -path '*cnlp/legacy*' \
+	! -path '*cnlp/data-raw*' \
+	! -path '*cnlp/data*' \
 	2> /dev/null
 }
 if ! ps -A | grep -F 'find' -q

@@ -55,6 +55,7 @@ ino <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap CC :CocConfig<CR>
 
 " accept completion
 nn <silent> <tab>k <Plug>(ale_previous_wrap)
