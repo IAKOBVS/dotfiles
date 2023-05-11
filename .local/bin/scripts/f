@@ -1,2 +1,0 @@
-#!/bin/sh
-xdotool key Z Z && sleep 0.05 && xdotool key ctrl+f
