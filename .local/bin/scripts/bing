@@ -1,2 +1,2 @@
 #!/bin/sh
-microsoft-edge-stable
+exec microsoft-edge-stable

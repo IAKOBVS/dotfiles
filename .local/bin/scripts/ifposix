@@ -5,4 +5,4 @@ then
 	return 1
 fi
 man $1 | grep "^[[:space:]]*$2[^A-Za-z]" || echo "System $1 doesn't support $2"
-man $1p | grep "^[[:space:]]*$2[^A-Za-z]" || echo "POSIX $1 doesn't support $2"
+exec man $1p | grep "^[[:space:]]*$2[^A-Za-z]" || echo "POSIX $1 doesn't support $2"

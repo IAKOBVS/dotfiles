@@ -1,2 +1,2 @@
 #!/bin/sh
-pamixer --source $(getmicsource) --get-mute
+exec pamixer --source $(getmicsource) --get-mute

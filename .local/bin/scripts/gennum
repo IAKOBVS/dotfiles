@@ -1,2 +1,2 @@
 #!/bin/sh
-seq $1 $2 | sed 's/^/case /; s/$/:/' | xclip -sel c
+exec seq $1 $2 | sed 's/^/case /; s/$/:/' | xclip -sel c

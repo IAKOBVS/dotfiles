@@ -1,2 +1,2 @@
 #!/bin/sh
-$BROWSER 'chrome-extension://ophjlpahpchlmihnnnihgmmeilfjmjjc/index.html#popout'
+exec $BROWSER 'chrome-extension://ophjlpahpchlmihnnnihgmmeilfjmjjc/index.html#popout'

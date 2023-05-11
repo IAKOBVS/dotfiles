@@ -4,4 +4,4 @@ if test ! -f "$file"
 then
 	fzf_update_dir $file
 fi
-. vimcd $@
+exec . vimcd $@

@@ -1,2 +1,2 @@
 #!/bin/sh
-magick "$1" "${1%.*}.png"
+exec magick "$1" "${1%.*}.png"

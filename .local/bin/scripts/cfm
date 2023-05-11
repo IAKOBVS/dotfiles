@@ -1,2 +1,2 @@
 #!/bin/sh
-clang-format -i --style=file:$HOME/.clang-format $@
+exec clang-format -i --style=file:$HOME/.clang-format $@

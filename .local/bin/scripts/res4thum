@@ -47,4 +47,4 @@ then
 else
 	upscale=64
 fi
-upndownscale "$img" $upscale
+exec upndownscale "$img" $upscale
