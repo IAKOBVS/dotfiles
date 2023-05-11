@@ -1,7 +1,6 @@
 #!/bin/sh
 bat=$(cat /sys/class/power_supply/BAT0/capacity)
-while :
-do
+while :; do
   if [ "$bat" -gt 50 ]
   then
     :

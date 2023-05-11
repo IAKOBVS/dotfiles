@@ -1,7 +1,11 @@
 #!/bin/sh
 i=1
-until man $i\p $1
+while test $i -le 10
 do
-	test $i = 9 && return $(echo $?)
+	if man $i\p $1 > /dev/null 2> /dev/null
+	then
+		man $i\p $1
+		break
+	fi
 	i=$((i+1))
 done
