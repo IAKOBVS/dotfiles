@@ -1,6 +1,6 @@
 #!/bin/sh
 case $1 in
-	*mp4);; *mov);;*mkv);;
+	*.mp4|*.mov|*.mkv);;
 	*)
 		echo 'Not a .mp4, .mov, or .mkv file!'
 		return 1
