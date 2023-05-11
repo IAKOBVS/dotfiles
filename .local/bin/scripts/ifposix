@@ -1,5 +1,8 @@
 #!/bin/sh
-if man $1 $2 | grep "^[[:space:]]$3[^A-Za-z]"
+if test ! $3
 then
+	echo 'Usage: ifposix <num> <cmd> <flag>'
+	return
 fi
-man $1p $2 | grep "^[[:space:]]$3[^A-Za-z]"
+man $1 $2 | grep "^[[:space:]]*$3[^A-Za-z]" || echo "System $2 doesn't support $3"
+man $1p $2 | grep "^[[:space:]]*$3[^A-Za-z]" || echo "POSIX $2 doesn't support $3"

@@ -1,2 +1,2 @@
 #!/bin/sh
-magick "$1" "$(cleanext "$1")"'.png'
+magick "$1" "${1%.*}.png"

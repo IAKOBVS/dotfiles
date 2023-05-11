@@ -1,7 +1,0 @@
-#!/bin/sh
-filename="$(cleanext "$1")-deb.c"
-gcc -E -P "$1" > /tmp/$filename
-getintmain=$(grep -n -m1 'int main()' /tmp/"$filename" | cut -d':' -f1)
-getlinenum=$(grep -n -m1 'jarray' /tmp/$filename | cut -d':' -f1)
-sed -e "1,$getlinenum d" /tmp/$filename | clang-format -style="{BasedOnStyle: Google, UseTab: Always}" -assume-filename="*.c" > /tmp/$filename-new.c
-nvim -c "$getintmain" /tmp/$filename-new.c
