@@ -7,7 +7,7 @@ fi
 if test $(uname -s) = 'Linux'
 then
 	grep --color=always "$2" $(find "$1" -type f) | sed -n "s|$2|$3|gp"
-	echo "Replace $2 with $3 (y/n)"
+	echo "Replace $2 with $3 (Y/n)"
 	read -r ok
 	case $ok in
 		Y*);;

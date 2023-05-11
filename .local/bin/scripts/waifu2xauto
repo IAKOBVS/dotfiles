@@ -1,6 +1,6 @@
 #!/bin/sh
 case $1 in
-	*.png);; *.jpg);;
+	*.png|*.jpg);;
 	*)
 		echo 'Not an image file!'
 		return

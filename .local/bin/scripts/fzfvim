@@ -5,6 +5,12 @@ if test -d "$f_"
 then
 	lfcd "$f_"
 else
-	mimeopen "$f_"
+	case $f_ in
+		*.mov|*.mkv|*.mp4)
+			mpv $f_;;
+		*)
+			$EDITOR $f_
+
+	esac
 	cd $(dirname $f_) || return
 fi
