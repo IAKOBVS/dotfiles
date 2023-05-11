@@ -2,7 +2,6 @@
 test $file && file=$(realpath "$(echo "$@" | awk '{print $NF}')")
 if test ! -f "$file"
 then
-	echo "$file" >> /tmp/__fzfhome__ &
-	echo "$file" >> /tmp/__fzfroot__ &
+	fzf_update_dir $file
 fi
-$EDITOR "$@"
+. vimcd $@

@@ -11,10 +11,10 @@ __find__(){
 	! -path '*.cargo*' \
 	! -path '*.o' \
 	! -path '*.pass*' \
-	> $2 2> /dev/null
+	2> /dev/null
 }
-if ! ps -A | grep 'find' -q
+if ! ps -A | grep -F 'find' -q
 then
-	__find__ / /tmp/__fzfroot__ &
-	__find__ $HOME /tmp/__fzfhome__ &
+	__find__ / > /tmp/__fzfroot__ &
+	__find__ $HOME > /tmp/__fzfhome__ &
 fi
