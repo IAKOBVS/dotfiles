@@ -1,0 +1,6 @@
+#!/bin/sh
+set -- $(realpath $1)
+case $1 in
+	/home/*) grep -q -F "$1" /tmp/__fzfhome__ || echo "$1" >> /tmp/__fzfhome__ &;;
+	*) grep -q -F "$1" /tmp/__fzfroot__ || echo "$1" >> /tmp/__fzfroot__ &
+esac

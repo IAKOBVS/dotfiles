@@ -9,21 +9,22 @@ alias \
 	paruq='paru -Q | fzf' \
 	pacman='sudo pacman' \
 	systemctl='sudo systemctl' \
-	sv='sudo nvim' \
+	sv='sudo $EDITOR' \
 	cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
 	cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
 	cpl='cfg --reset hard && cfg pull'
 
 # cd
 alias \
-	vs='cd $HOME/.local/src/st && nvim config.h' \
+	v='. v' \
+	vs='cd $HOME/.local/src/st && $EDITOR config.h' \
 	sr='cd $HOME/.local/bin/scripts' \
 	dw='cd $HOME/.local/src/dwm' \
-	vd='cd $HOME/.local/src/dwm && nvim config.h' \
-	vs='cd $HOME/.local/src/st && nvim config.h' \
-	vdm='cd $HOME/.local/src/dmenu && nvim config.h' \
-	vdw='cd $HOME/.local/src/dwmblocks && nvim blocks.h' \
-	vsl='cd $HOME/.local/src/slstatus && nvim config.h' \
+	vd='cd $HOME/.local/src/dwm && $EDITOR config.h' \
+	vs='cd $HOME/.local/src/st && $EDITOR config.h' \
+	vdm='cd $HOME/.local/src/dmenu && $EDITOR config.h' \
+	vdw='cd $HOME/.local/src/dwmblocks && $EDITOR blocks.h' \
+	vsl='cd $HOME/.local/src/slstatus && $EDITOR config.h' \
 	dt='cd /tmp' \
 	co='cd $HOME/.config && ls' \
 	sk='cd $HOME/shared-files'\
@@ -38,22 +39,22 @@ alias \
 	rec='lfcd ~/Videos/Recordings' \
 	vi='lfcd ~/Videos'
 
-# nvim
+# vim
 alias \
-	xi='nvim $HOME/.xinitrc' \
-	vp='nvim $HOME/.config/picom.conf' \
-	vvim='cd $HOME/.nvim__; nvim $HOME/.nvim__/default.vim' \
-	vv='nvim config.h' \
-	vb='nvim blocks.h' \
-	zs='nvim $HOME/.zshrc' \
-	va='nvim $HOME/.zsh_aliases' \
-	vap='nvim $HOME/.local/share/alias/aliases-laptop' \
-	al='nvim $HOME/aliases/scripts' \
-	vas='nvim $HOME/.local/share/alias/sites' \
-	vac='nvim $HOME/.local/share/alias/clipboard' \
-	th='nvim $HOME/.local/share/theme/colors.h' \
-	vsr='nvim $HOME/.local/share/alias/scripts' \
-	vlf='nvim $HOME/.lfrc' \
+	xi='$EDITOR $HOME/.xinitrc' \
+	vp='$EDITOR $HOME/.config/picom.conf' \
+	vvim='cd $HOME/.$EDITOR__; $EDITOR $HOME/.$EDITOR__/default.vim' \
+	vv='$EDITOR config.h' \
+	vb='$EDITOR blocks.h' \
+	zs='$EDITOR $HOME/.zshrc' \
+	va='$EDITOR $HOME/.zsh_aliases' \
+	vap='$EDITOR $HOME/.local/share/alias/aliases-laptop' \
+	al='$EDITOR $HOME/aliases/scripts' \
+	vas='$EDITOR $HOME/.local/share/alias/sites' \
+	vac='$EDITOR $HOME/.local/share/alias/clipboard' \
+	th='$EDITOR $HOME/.local/share/theme/colors.h' \
+	vsr='$EDITOR $HOME/.local/share/alias/scripts' \
+	vlf='$EDITOR $HOME/.lfrc' \
 	fin='. fin'
 
 # shorten 
@@ -103,7 +104,7 @@ alias \
 	sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
 	slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
 	dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
-	sf='nvim /etc/fan2go/fan2go.yaml' \
+	sf='$EDITOR /etc/fan2go/fan2go.yaml' \
 	nv='nvtop'
 
 alias vmpv='cd $HOME/.config/mpv && v mpv.conf'

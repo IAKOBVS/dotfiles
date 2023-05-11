@@ -1,2 +1,3 @@
 #!/bin/sh
-mkdir && ufzf
+mkdir $1 || return
+fzf_update_dir $1
