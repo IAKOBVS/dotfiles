@@ -1,2 +1,2 @@
 #!/bin/sh
-cd $HOME/Documents/latex && $EDITOR "$(find . -type f -name '*.tex' | sed 's/^..//' | fzf_preview)"
+cd $HOME/Documents/latex && $EDITOR "$(find . -type f -name '*.tex' | sed 's/^..//' | fzfpreview)"

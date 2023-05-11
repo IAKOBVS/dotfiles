@@ -9,8 +9,14 @@ then
 	grep --color=always "$2" $(find "$1" -type f) | sed -n "s|$2|$3|gp"
 	echo "Replace $2 with $3 (y/n)"
 	read -r ok
-	test $ok != 'y' || return
+	case $ok in
+		Y*);;
+		*)
+			return
+	esac
 	find "$1" -type f -exec sed -i "s|$2|$3|g" {} \;
+	echo "Replaced $2 with $3"
+	gw $3 $(find "$1" -type f)
 else
 	echo 'sed -i is not available!'
 fi

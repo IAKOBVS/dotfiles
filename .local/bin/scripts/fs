@@ -6,6 +6,6 @@ pathToFile=$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*.o' \
 	! -path '*.out' \
 	! -name '.' \
-	-type f 2> /dev/null | fzf_preview --delimiter / --with-nth -1)
+	-type f 2> /dev/null | fzfpreview --delimiter / --with-nth -1)
 test "$pathToFile" || return 1
 $EDITOR "$pathToFile" && cd "$(dirname "$pathToFile")" || return 1
