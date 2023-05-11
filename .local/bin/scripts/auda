@@ -1,3 +1,2 @@
 #!/bin/sh
-setmicvol
-audacity
+setmicvol; audacity
