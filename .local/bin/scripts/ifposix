@@ -1,8 +1,8 @@
 #!/bin/sh
-if test ! $3
+if test ! $2
 then
-	echo 'Usage: ifposix <num> <cmd> <flag>'
-	return
+	echo 'Usage: ifposix <cmd> <flag>'
+	return 1
 fi
-man $1 $2 | grep "^[[:space:]]*$3[^A-Za-z]" || echo "System $2 doesn't support $3"
-man $1p $2 | grep "^[[:space:]]*$3[^A-Za-z]" || echo "POSIX $2 doesn't support $3"
+man $1 | grep "^[[:space:]]*$2[^A-Za-z]" || echo "System $1 doesn't support $2"
+man $1p | grep "^[[:space:]]*$2[^A-Za-z]" || echo "POSIX $1 doesn't support $2"

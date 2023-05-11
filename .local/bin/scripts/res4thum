@@ -5,10 +5,10 @@ case $1 in
 	*.png);; *.jpg);;
 	'')
 		echo "Usage: res4thumbnail <image> <resolution>"
-		return;;
+		return 1;;
 	*)
 		echo 'Not an image file!'
-		return
+		return 1
 esac
 expr "$1" : '.*png' || topng "$1"
 case $2 in
