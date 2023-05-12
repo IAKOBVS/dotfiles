@@ -1,5 +1,4 @@
 #!/bin/sh
-img=$1
 img_clean="${1%.*}"
 for opt in $@
 do
@@ -27,20 +26,20 @@ upndownscale(){
 	echo "$img has been upscaled $2x."
 }
 scale=$(getres "$img" | awk -v h="$h" '{print int(h/$2 + 0.99)}')
-if [ $scale -le 1 ]
+if test $scale -le 1
 then
 	echo "$1 need not be upscaled"
 	return
-elif [ $scale -le 4 ]
+elif test $scale -le 4
 then
 	scale=4
-elif [ $scale -le 16 ]
+elif test $scale -le 16
 then
 	scale=16
-elif [ $scale -le 32 ]
+elif test $scale -le 32
 then
 	scale=32
-elif [ $scale -le 64 ]
+elif test $scale -le 64
 then
 	scale=64
 fi
