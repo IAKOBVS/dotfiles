@@ -1,4 +1,6 @@
 #!/bin/sh
 filename=/tmp/$1-deb.c
-gcc -E -P "$1" | clang-format -style="{BasedOnStyle: Google, UseTab: Always}" -assume-filename="*.c" > "$filename" \
-&& $EDITOR "-c $(grep -n 'int main.*()' "$filename" | cut -d':' -f1)" "$filename"
+gcc -E -P "$1" \
+| clang-format -style="{BasedOnStyle: Google, UseTab: Always}" -assume-filename="*.c" > "$filename" \
+	&& $EDITOR "-c $(grep -n 'int main.*()' "$filename" \
+	| cut -d':' -f1)" "$filename"
