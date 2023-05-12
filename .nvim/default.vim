@@ -1,6 +1,6 @@
 nn sv :source ~/.nvim/init.vim<CR>
-au BufEnter * sil! lcd %:p:h
 se wildmode=longest,full,full
+au BufEnter * sil! lcd %:p:h
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
 " clang-format
 nmap cfm :!cfm %:p<CR>
