@@ -44,7 +44,7 @@ nn <silent> <tab>j <Plug>(coc-diagnostic-next)
 " navigate completions
 ino <silent><expr> <C-j>
 	\ coc#pum#visible() ? coc#pum#next(1) :
-	\ CheckBackspace() ? "\<Tab>" :
+	\ CheckBackspace() ? "\<C-j>" :
 	\ coc#refresh()
 ino <expr><C-k>
 	\ coc#pum#visible() ? coc#pum#prev(1) :
