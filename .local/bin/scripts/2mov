@@ -8,9 +8,9 @@ esac
 out=${1%.*}
 ffmpeg -i "$1" -vcodec mjpeg -q:v 2 -c:a pcm_s16le -f mov "$out"'.mov'
 
-# num_of_audiotracks=$(audiotracks "$1")
+# n=$(audiotracks "$1")
 # i=0
-# while test $i -le "$num_of_audiotracks"
+# while test $i -le "$n"
 # do
 # 	ffmpeg -i "$1" -q:a 0 -map 0:a:$i -f wav "$out"'-audio-'"$i"'.wav' &
 # 	i=$((i+1))
