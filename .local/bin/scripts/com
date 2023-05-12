@@ -4,21 +4,22 @@ cpp_ver='-std=gnu++17'
 comp_flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer'
 case $3 in
-	1|2|3)
+	0|1|2|3)
 		OLevel="-O$3 -flto"
 		comp_flags="$comp_flags $analyzer";;
 	*)
 		case $2 in
-			1|2|3) OLevel="-O$2 -flto";;
-			*) comp_flags="$comp_flags $analyzer"
+			0|1|2|3) OLevel="-O$2 -flto";;
+			s|S) comp_flags="$comp_flags $analyzer";;
+			*) comp_flags=''
 		esac
 esac
-files_in_dir=$(find . -type f -name '*.c' -o -name '*.cpp' 2> /dev/null)
+dirfiles=$(find . -type f -name '*.c' -o -name '*.cpp' 2> /dev/null)
 case $file in
 	*.c) ext=c;;
 	*.cpp) ext=cpp;;
 	*)
-		case $files_in_dir in
+		case $dirfiles in
 			*$file.cpp*) ext=cpp;;
 			*$file.c*) ext=c;;
 			*)
