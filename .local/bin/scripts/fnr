@@ -1,13 +1,14 @@
 #!/bin/sh
+usage='Usage: sed <dir> <find> <replace>'
 if test ! -d $1
 then
+	echo $usage
 	echo '$1 is not a directory'
-	echo 'Usage: sed <dir> <find> <replace>'
 	return 1
 fi
 if test ! $3
 then
- 	echo 'Usage: sed <dir> <find> <replace>'
+ 	echo $usage
 	return 1
 fi
 if test $(uname -s) = 'Linux'
