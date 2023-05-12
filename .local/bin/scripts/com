@@ -4,11 +4,11 @@ cpp_ver='-std=gnu++17'
 comp_flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer'
 case "$2" in
-	's')
+	s|S)
 		comp_flags="$comp_flags $analyzer"
 		[ -n "$3" ] && OLevel="-O$3 -flto";;
 	*)
-		if [ -n "$2" ]
+		if test -n "$2"
 		then
 			OLevel="-O$3 -flto"
 			[ -n "$3" ] && comp_flags="$comp_flags $analyzer"
@@ -38,12 +38,12 @@ incl_precomp=$(get_incl_gch "$file")
 case $file in
 	*.cpp)
 		incl_cpp=$(get_incl_cpp "$file")
-		if [ -z "$(echo "$incl_cpp" "$incl_c" "$incl_precomp")" ]
+		if test -z "$(echo "$incl_cpp" "$incl_c" "$incl_precomp")"
 		then
 			echo g++ $cpp_ver "$comp_flags" "$file" "$incl_precomp" -o "$(basename "$file" .cpp)" "$OLevel"
 			g++ $cpp_ver $comp_flags $file $incl_precomp -o $(basename $file .cpp) $OLevel || return
 		else
-			if [ -n "$incl_c" ]
+			if test -n "$incl_c"
 			then
 				gcc $comp_flags -c $incl_c $OLevel &
 				echo gcc "$comp_flags" -c "$incl_c" "$OLevel" &
