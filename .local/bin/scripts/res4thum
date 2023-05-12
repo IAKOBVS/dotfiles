@@ -23,9 +23,9 @@ upndownscale(){
 	waifu2xauto "$1" "$2"
 	res "$img_clean-hd.png" "$r"
 	sq "$img_clean-hd-resized.png"
-	echo "$img has been upscaled $2x."
+	echo "$1 has been upscaled $2x."
 }
-scale=$(getres "$img" | awk -v h="$h" '{print int(h/$2 + 0.99)}')
+scale=$(getres "$1" | awk -v h="$h" '{print int(h/$2 + 0.99)}')
 if test $scale -le 1
 then
 	echo "$1 need not be upscaled"
@@ -43,4 +43,4 @@ elif test $scale -le 64
 then
 	scale=64
 fi
-upndownscale "$img" $scale
+upndownscale "$1" $scale
