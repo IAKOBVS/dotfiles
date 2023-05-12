@@ -1,8 +1,7 @@
 #!/bin/sh
-file=$1
-cpp_ver='-std=gnu++17'
 flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer'
+file=$1
 shift
 for opt in $@
 do
@@ -34,7 +33,7 @@ case $file in
 		compiler=gcc;;
 	*.cpp)
 		compiler=g++
-		flags="$flags $incl_cpp $cpp_ver"
+		flags="$flags $incl_cpp -std=gnu++17"
 esac
 echo $compiler $flags
 $compiler $flags || rkturn
