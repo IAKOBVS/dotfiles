@@ -23,7 +23,9 @@ case $file in
 				return
 		esac
 esac
-get_incl(){ sed -n "s/#[[:space:]]*include[[:space:]]*\"\([^[:space:]]*\).*\".*$1/\1$1/p" "$2";}
+get_incl(){
+	sed -n "s/#[[:space:]]*include[[:space:]]*\"\([^[:space:]]*\).*\".*$1/\1$1/p" "$2"
+}
 incl_c=$(get_incl .c "$file")
 incl_cpp=$(get_incl .cpp "$file")
 incl_precomp=$(get_incl .gch "$file")
