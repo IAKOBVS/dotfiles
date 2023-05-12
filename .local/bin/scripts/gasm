@@ -8,7 +8,7 @@ touch "$filenameOnly".s
 	fileSize=$(stat --printf="%s" "$filenameOnly".c)
 	while :; do
 		tmpSize=$(stat --printf="%s" "$filenameOnly".c)
-		[ "$tmpSize" -ne "$fileSize" ] && gcc -gdwarf -g -w -O2 -S $1
+		test "$tmpSize" -ne "$fileSize" && gcc -gdwarf -g -w -O2 -S $1
 		sleep 1
 	done
 } &
