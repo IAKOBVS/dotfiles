@@ -111,8 +111,8 @@ hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
 
 " undodir
 let __vimDir__ = '$HOME/.vim'
+" add if !__vimDir__
 if stridx(&runtimepath, expand(__vimDir__)) == -1
-	" add if !__vimDir__
 	let &runtimepath.=','.__vimDir__
 en
 if has('persistent_undo')
