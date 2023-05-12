@@ -16,7 +16,7 @@ alias \
 
 # cd
 alias \
-	v='. vimcd' \
+	v='. v' \
 	vs='cd $HOME/.local/src/st && $EDITOR config.h' \
 	sr='cd $HOME/.local/bin/scripts' \
 	dw='cd $HOME/.local/src/dwm' \
