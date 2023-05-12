@@ -73,15 +73,15 @@ lfcd () {
 l_() { lfcd;}
 _() { . fzfvim;}
 e_(){ . fzfvim --exact;}
-u_() { ufzf;}
 rg_() { rgvim;}
+# u_() { ufzf;}
 
 bindkey -s '^f' '_\n'
 bindkey -s '^e' 'e_\n'
 bindkey -s '^o' 'l_\n'
-bindkey -s '^u' 'u_\n'
 bindkey -s '^r' 'rg_\n'
-bindkey -s '^k' 'clear\n'
+# bindkey -s '^u' 'u_\n'
+# bindkey -s '^k' 'clear\n'
 
 bindkey '^[[P' delete-char
 
