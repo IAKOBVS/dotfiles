@@ -1,16 +1,15 @@
 #!/bin/sh
 file=$1
 cpp_ver='-std=gnu++17'
-comp_flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
+flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer'
 shift
 for opt in $@
 do
 	case $opt in
-		0|1|2|3)
-			OLevel="-O$opt -flto";;
-		s|S)
-			comp_flags="$comp_flags $analyzer"
+		0|1|2|3) OLevel="-O$opt -flto";;
+		s|S) flags="$flags $analyzer";;
+		*) flags="$flags $opt"
 	esac
 done
 dirfiles=$(find . -type f -name '*.c' -o -name '*.cpp' 2> /dev/null)
@@ -29,7 +28,7 @@ get_incl(){ sed -n "s/#[[:space:]]*include[[:space:]]*\"\([^[:space:]]*\).*\".*$
 incl_c=$(get_incl .c "$file")
 incl_cpp=$(get_incl .cpp "$file")
 incl_precomp=$(get_incl .gch "$file")
-flags="$OLevel $comp_flags $file $incl_c $incl_precomp -o $(basename $file .$ext)"
+flags="$OLevel $flags $file $incl_c $incl_precomp -o $(basename $file .$ext)"
 case $file in
 	*.c)
 		compiler=gcc;;
