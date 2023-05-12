@@ -1,32 +1,30 @@
 #!/bin/sh
+usage='usage: ./waifu2xauto <image> <scale>'
 case $1 in
 	*.png|*.jpg);;
 	*)
+		echo $usage
 		echo 'Not an image file!'
-		return
+		return 1
 esac
-if [ -z "$2" ]
-then
-	echo "Usage: waifu2xauto <image> <scale>"
-	return
-fi
-baseScale=4
-upscaler=realesrgan-x4plus-anime
+case $2 in
+	1|2|3|4) n=0;;
+	5|6|7|8|9|10|11|12|13|14|15|16) n=1;;
+	17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32) n=2;;
+	33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55|56|57|58|59|60|61|62|63|64) n=3;;
+	*)
+		echo $usage
+		echo 'Illegal number used! Use 1, 2, 3, 4, 16, 32, or 64 instead.'
+		return 1
+esac
 out="${1%.*}-hd.png"
-realesr(){ realesrgan-ncnn-vulkan -f png -i "$1" -o "$2" -s "$3" -n "$4" -v;}
-if [ "$2" -le 4 ]
-then
-	max=0
-elif [ "$2" -le 16 ]
-then
-	max=1
-else
-	max=2
-fi
-realesr "$1" "$out" "$baseScale" "$upscaler"
+scale=4
+upscaler=realesrgan-x4plus-anime
+realesr(){ realesrgan-ncnn-vulkan -f png -i "$1" -o "$out" -s "$scale" -n "$upscaler" -v;}
+realesr $1
 i=0
-while [ $i -lt $max ]
+while [ $i -lt $n ]
 do
-	realesr "$out" "$out" "$baseScale" "$upscaler"
+	realesr "$out"
 	i=$((i=i+1))
 done

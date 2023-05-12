@@ -1,50 +1,39 @@
-#!/usr/bin/bash
+#!/bin/sh
 img=$1
 img_clean="${1%.*}"
-case $1 in
-	*.png|*.jpg);;
-	'')
-		echo "Usage: res4thumbnail <image> <resolution>"
-		return 1;;
-	*)
-		echo 'Not an image file!'
-		return 1
-esac
-expr "$1" : '.*png' || topng "$1"
-case $2 in
-	'')
-		height=720
-		resolution='1280x720';;
-	*x*)
-		resolution=$2
-		height=$(echo "$resolution" | cut -d'x' -f2);;
-	*)
-	case "$2" in
-		'720') height=720;;
-		'1080') height=1080;;
-		'1440') height=1440;;
-		'4k') height=2160;;
+for opt in $@
+do
+	case $opt in
+		*.png|*.jpg);;
+		*x*)
+			r=$opt
+			h=${r#*x};;
+		*)
+			if aredigit $opt
+			then
+				r=$opt
+				h=$opt
+			else
+				echo 'usage: res4thumbnail <image> <res>'
+				echo 'Not an image file!'
+				return 1
+			fi
 	esac
-esac
+done
 upndownscale(){
 	waifu2xauto "$1" "$2"
-	res "$img_clean-hd.png" "$resolution"
+	res "$img_clean-hd.png" "$r"
 	sq "$img_clean-hd-resized.png"
-	echo "$1 has been upscaled $2x."
+	echo "$img has been upscaled $2x."
 }
-scale=$(getres "$img" | awk -v h="$height" '{print int(h/$2 + 0.99)}')
-if [ 1 -ge "$scale" ]
-then
-	echo "'$1' need not be upscaled"
-	res "$img" "$resolution"
-	return
-elif [ 4 -ge "$scale" ]
-then
-	upscale=4
-elif [ 16 -ge "$scale" ]
-then
-	upscale=16
-else
-	upscale=64
-fi
-upndownscale "$img" $upscale
+scale=$(getres "$img" | awk -v h="$h" '{print int(h/$2 + 0.99)}')
+case $scale in
+	2|3|4) scale=4;;
+	5|6|7|8|9|10|11|12|13|14|15|16) scale=16;;
+	17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32) scale=32;;
+	33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55|56|57|58|59|60|61|62|63|64) scale=64;;
+	0|1)
+		echo "$1 need not be upscaled"
+		return
+esac
+upndownscale "$img" $scale
