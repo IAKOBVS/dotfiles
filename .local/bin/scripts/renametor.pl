@@ -51,7 +51,7 @@ print "\nDo you want to rename the files? (y/n)\n";
 my $in = readline(STDIN);
 chomp($in);
 
-if ($in eq 'y' || $in eq 'Y') {
+if ($in eq 'Y') {
 	for my $i (0..$#old) {
 		rename($old[$i], $new[$i]) or print "Unable to rename $old[$i] to $new[$i]\n";
 	}
