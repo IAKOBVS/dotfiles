@@ -15,7 +15,7 @@ for file in $@; do
 		while [ $i -le 5 ]; do
 			if [ -f $new ]; then
 				sed -i.bak "s|#.*include.*$old.*|#include \"$new\"|" $file
-				echo $file
+				echo "Replaced $old to $new in $file"
 				break
 			fi
 			new="../$new"
