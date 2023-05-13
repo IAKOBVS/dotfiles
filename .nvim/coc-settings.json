@@ -1,8 +1,6 @@
 {
 	"codeLens.enable": true,
-    "suggest.snippetsSupport": true,
-    "bashIde.shellcheckPath": "shellcheck",
-    "bashIde.enableSourceErrorDiagnostics": true,
+    "lua.enable": false,
 	"clangd.path": "/usr/bin/clangd",
     "clangd.disableDiagnostics": true,
 	"languageserver": {
@@ -22,7 +20,6 @@
             "filetypes": ["awk"]
         }
 	},
-    "dart.showTodos": true,
-    "dart.enableSdkFormatter": true,
-    "dart.completeFunctionCalls": true
+    "flutter.enabled": false,
+    "pylsp.enable": false
 }
