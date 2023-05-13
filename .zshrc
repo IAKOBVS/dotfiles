@@ -26,11 +26,11 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 . $HOME/.zsh_aliases
 
 # Basic auto/tab complete:
-autoload -U compinit
+# autoload -U compinit
+# compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
-compinit
-_comp_options+=(globdots)		# Include hidden files.
+_comp_options+=(globdots) # Include hidden files.
 
 # vi mode
 bindkey -v
@@ -56,8 +56,6 @@ zle-line-init() {
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # Use lf to switch directories and bind it to ctrl-o
 lfcd () {
@@ -95,6 +93,6 @@ bindkey -M visual '^[[P' vi-delete
 (pgrep xcape > /dev/null || remaps > /dev/null)
 
 # Load syntax highlighting; should be last.
-. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 bindkey '^L' autosuggest-accept
+. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh

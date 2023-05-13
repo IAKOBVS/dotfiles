@@ -1,10 +1,6 @@
 nn sv :source ~/.nvim/init.vim<CR>
-se wildmode=longest,full,full
-au BufEnter * sil! lcd %:p:h
-au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
 " clang-format
-nmap cfm :!cfm %:p<CR>
-nmap <space>e ZQ
+nm cfm :!cfm %:p<CR>
 
 " motions
 
@@ -65,6 +61,7 @@ hi CursorLineNr ctermbg=none guibg=none
 hi Normal ctermbg=none guibg=none
 
 filet plugin indent on
+se wildmode=longest,full,full
 se maxmempattern=2000000 " use more ram
 se cinoptions+=:0 " disable switch indent
 se number relativenumber
@@ -92,7 +89,8 @@ au SwapExists * let v:swapchoice = "e" | echom "swap exists"
 au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! hi PreProc ctermfg=35 guifg=#8ed5e5
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! mat Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! 2mat Special /[(){}]/
-
+au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
+au BufEnter * sil! lcd %:p:h
 au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
