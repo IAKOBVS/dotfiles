@@ -1,7 +1,7 @@
 #!/bin/sh
 alias \
 	poweroff='sync && systemctl poweroff' \
-	reboot='systemctl reboot'
+	reboot='sync && systemctl reboot'
 
 alias \
 	par='paru --needed --skipreview -S' \
@@ -19,20 +19,13 @@ alias \
 	v='. vimcd' \
 	vs='cd $HOME/.local/src/st && $EDITOR config.h' \
 	sr='cd $HOME/.local/bin/scripts' \
-	dw='cd $HOME/.local/src/dwm' \
 	vd='cd $HOME/.local/src/dwm && $EDITOR config.h' \
 	vs='cd $HOME/.local/src/st && $EDITOR config.h' \
-	vdm='cd $HOME/.local/src/dmenu && $EDITOR config.h' \
 	vdw='cd $HOME/.local/src/dwmblocks && $EDITOR blocks.h' \
 	vsl='cd $HOME/.local/src/slstatus && $EDITOR config.h' \
 	dt='cd /tmp' \
-	co='cd $HOME/.config && ls' \
-	sk='cd $HOME/shared-files'\
 	tor='lfcd $HOME/Downloads/torrent' \
-	cl='cd $HOME/.local/src' \
-	cdd='cd $HOME/Downloads' \
-	cs='cd $HOME/.local/share' \
-	cla='cd $HOME/Documents/latex'
+	cl='cd $HOME/.local/src'
 
 # lf
 alias \
@@ -44,16 +37,9 @@ alias \
 	xi='$EDITOR $HOME/.xinitrc' \
 	vp='$EDITOR $HOME/.config/picom.conf' \
 	vvim='cd $HOME/.nvim; $EDITOR $HOME/.nvim/default.vim' \
-	vv='$EDITOR config.h' \
-	vb='$EDITOR blocks.h' \
 	zs='$EDITOR $HOME/.zshrc' \
 	va='$EDITOR $HOME/.zsh_aliases' \
 	vap='$EDITOR $HOME/.local/share/alias/aliases-laptop' \
-	al='$EDITOR $HOME/aliases/scripts' \
-	vas='$EDITOR $HOME/.local/share/alias/sites' \
-	vac='$EDITOR $HOME/.local/share/alias/clipboard' \
-	th='$EDITOR $HOME/.local/share/theme/colors.h' \
-	vsr='$EDITOR $HOME/.local/share/alias/scripts' \
 	vlf='$EDITOR $HOME/.lfrc' \
 	fin='. fin'
 
@@ -67,12 +53,9 @@ alias \
 	pm='pulsemixer' \
 	ht='htop' \
 	sht='sudo htop' \
-	sme='sudo make install' \
 	ki='killall' \
-	ksl='killall slstatus ; slstatus &' \
 	l='lfcd' \
-	pq='paru -Q | fzf' \
-	sof='du -h'
+	pq='paru -Q | fzf'
 
 # github
 alias \

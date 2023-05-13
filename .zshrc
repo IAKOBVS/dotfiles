@@ -92,7 +92,7 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
-pgrep xcape > /dev/null || remaps > /dev/null
+(pgrep xcape > /dev/null || remaps > /dev/null)
 
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
