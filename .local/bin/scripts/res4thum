@@ -26,20 +26,20 @@ upndownscale(){
 	echo "$1 has been upscaled $2x."
 }
 scale=$(getres "$1" | awk -v h="$h" '{print int(h/$2 + 0.99)}')
-if test $scale -le 1
+if [ $scale -le 1 ]
 then
 	echo "$1 need not be upscaled"
 	return
-elif test $scale -le 4
+elif [ $scale -le 4 ]
 then
 	scale=4
-elif test $scale -le 16
+elif [ $scale -le 16 ]
 then
 	scale=16
-elif test $scale -le 32
+elif [ $scale -le 32 ]
 then
 	scale=32
-elif test $scale -le 64
+elif [ $scale -le 64 ]
 then
 	scale=64
 fi

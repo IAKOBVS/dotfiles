@@ -3,11 +3,11 @@ if test $1
 then
 	file=$(realpath $(echo "$@" | awk '{print $NF}') 2> /dev/null)
 	dir=$(dirname $1)
-	if test -d $dir
+	if [ -d $dir ]
 	then
 		cd $dir || return
 	fi
-	if test ! -f $file
+	if [ ! -f $file ]
 	then
 		fzf_update_dir $file
 	fi

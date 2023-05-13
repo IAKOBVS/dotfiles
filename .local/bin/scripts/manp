@@ -1,6 +1,6 @@
 #!/bin/sh
 i=1
-while test $i -le 9
+while [ $i -le 9 ]
 do
 	if man $i\p $1 > /dev/null 2> /dev/null
 	then
