@@ -7,16 +7,16 @@ case $1 in
 		echo 'Not an image file!'
 		return 1
 esac
-if test $2 -le 4
+if [ $2 -le 4 ]
 then
 	n=0
-elif test $2 -le 16
+elif [ $2 -le 16 ]
 then
 	n=1
-elif test $2 -le 32
+elif [ $2 -le 32 ]
 then
 	n=2
-elif test $2 -le 64
+elif [ $2 -le 64 ]
 then
 	n=3
 else

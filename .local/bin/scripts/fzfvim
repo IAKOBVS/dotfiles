@@ -1,7 +1,7 @@
 #!/bin/sh
 f_=$(fzfdef $1)
 test $f_ || return
-if test -d "$f_"
+if [ -d "$f_" ]
 then
 	lfcd "$f_"
 else
