@@ -1,3 +1,3 @@
 #!/bin/sh
-[ $(uname -s) = 'Linux' ] && col='--color=auto' || col=''
+[ $(uname -s) = 'Linux' ] && col='--color=auto'
 grep $col "$1" $(find . -type f)
