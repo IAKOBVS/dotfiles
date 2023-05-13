@@ -95,6 +95,6 @@ bindkey -M visual '^[[P' vi-delete
 pgrep xcape > /dev/null || remaps > /dev/null
 
 # Load syntax highlighting; should be last.
-. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2> /dev/null
-. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2> /dev/null
+. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 bindkey '^L' autosuggest-accept
