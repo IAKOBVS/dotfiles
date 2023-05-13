@@ -16,9 +16,7 @@ cp -rf $(find $HOME/.local/bin -type f \
 	! -path '*.jpg' \
 	! -path '*.jpg') \
 	/tmp/__ram_bin__ 2> /dev/null &
-__load_bin__() {
-	cp -rf $@ /tmp/__ram_bin__ 2> /dev/null
-}
+__load_bin__() { cp -rf $@ /tmp/__ram_bin__ 2> /dev/null; }
 __load_bin__ /usr/bin/st &
 __load_bin__ /usr/bin/$EDITOR &
 __load_bin__ /usr/bin/zsh &

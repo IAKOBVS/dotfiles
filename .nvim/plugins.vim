@@ -29,6 +29,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'hrsh7th/nvim-cmp'
 " Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'L3MON4D3/LuaSnip'
+
 cal plug#end()
 
 " highlight things
