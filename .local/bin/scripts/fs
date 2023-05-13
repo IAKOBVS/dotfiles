@@ -6,6 +6,6 @@ __path__="$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*.o' \
 	! -path '*.out' \
 	! -name '.' \
-	-type f 2> /dev/null | fzfpreview --delimiter / --with-nth -1)"
+	-type f 2>/dev/null | fzfpreview --delimiter / --with-nth -1)"
 test $__path__ || return 1
 $EDITOR $__path__ && cd $(dirname $__path__) || return 1

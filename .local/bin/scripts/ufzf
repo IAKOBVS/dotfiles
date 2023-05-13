@@ -1,32 +1,30 @@
 #!/bin/sh
-__find__()
-{
+__find__() {
 	find $1 \
-	! -path '*cache*' \
-	! -path '*.git*' \
-	! -path '*.gnupg*' \
-	! -path '*.vscode*' \
-	! -path '*.rev*' \
-	! -path '*.key*' \
-	! -path '*.virtualenv*' \
-	! -path '*.cargo*' \
-	! -path '*.o' \
-	! -path '*.pass*' \
-	! -path '*.png' \
-	! -path '*.jpeg' \
-	! -path '*.jpg' \
-	! -path '*.pdf' \
-	! -path '*.xcf' \
-	! -path '*.go' \
-	! -path '?' \
-	! -path '*cnlp/legacy*' \
-	! -path '*cnlp/data-raw*' \
-	! -path '*cnlp/data*' \
-	! -path '*dart*' \
-	2> /dev/null
+		! -path '*cache*' \
+		! -path '*.git*' \
+		! -path '*.gnupg*' \
+		! -path '*.vscode*' \
+		! -path '*.rev*' \
+		! -path '*.key*' \
+		! -path '*.virtualenv*' \
+		! -path '*.cargo*' \
+		! -path '*.o' \
+		! -path '*.pass*' \
+		! -path '*.png' \
+		! -path '*.jpeg' \
+		! -path '*.jpg' \
+		! -path '*.pdf' \
+		! -path '*.xcf' \
+		! -path '*.go' \
+		! -path '?' \
+		! -path '*cnlp/legacy*' \
+		! -path '*cnlp/data-raw*' \
+		! -path '*cnlp/data*' \
+		! -path '*dart*' \
+		2>/dev/null
 }
-if ! ps -A | grep -F 'find' -q
-then
-	__find__ / > /tmp/__fzfroot__ &
-	__find__ $HOME > /tmp/__fzfhome__ &
+if ! ps -A | grep -F 'find' -q; then
+	__find__ / >/tmp/__fzfroot__ &
+	__find__ $HOME >/tmp/__fzfhome__ &
 fi

@@ -3,34 +3,36 @@ flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -
 analyzer='-fanalyzer'
 file=$1
 shift
-for opt in $@
-do
+for opt in $@; do
 	case $opt in
-		0|1|2|3) OLevel="-O$opt -flto";;
-		s|S) flags="$flags $analyzer";;
-		*) flags="$flags $opt"
+	0 | 1 | 2 | 3) OLevel="-O$opt -flto" ;;
+	s | S) flags="$flags $analyzer" ;;
+	*) flags="$flags $opt" ;;
 	esac
 done
-dirfiles=$(find . -type f -name '*.c' -o -name '*.cpp' 2> /dev/null)
+dirfiles=$(find . -type f -name '*.c' -o -name '*.cpp' 2>/dev/null)
 case $file in
-	*.c|*.cpp);;
-	*) case $dirfiles in
-		*$file.cpp*) file=$file.cpp;;
-		*$file.c*) file=$file.c;;
-		*)
-			echo 'Not a .c or .cpp file!'
-			return
-	esac
+*.c | *.cpp) ;;
+*) case $dirfiles in
+	*$file.cpp*) file=$file.cpp ;;
+	*$file.c*) file=$file.c ;;
+	*)
+		echo 'Not a .c or .cpp file!'
+		return
+		;;
+	esac ;;
 esac
-get_incl(){ sed -n "s/#[[:space:]]*include[[:space:]]*\"\([^[:space:]]*\).*\".*$1/\1$1/p" "$2"; }
+get_incl() { sed -n "s/#[[:space:]]*include[[:space:]]*\"\([^[:space:]]*\).*\".*$1/\1$1/p" "$2"; }
 incl_c=$(get_incl .c "$file")
 incl_cpp=$(get_incl .cpp "$file")
 incl_precomp=$(get_incl .gch "$file")
-flags="$OLevel $flags $file $incl_c $incl_precomp -o $(basename $file .$ext)"
+flags="$OLevel $flags $file $incl_c $incl_precomp -o $(basename $file .${file#*.})"
 case $file in
-	*.c) compiler=gcc;;
-	*.cpp) compiler=g++
-		flags="$flags $incl_cpp -std=gnu++17"
+*.c) compiler=gcc ;;
+*.cpp)
+	compiler=g++
+	flags="$flags $incl_cpp -std=gnu++17"
+	;;
 esac
 echo $compiler $flags
 $compiler $flags || return

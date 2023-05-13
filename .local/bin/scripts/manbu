@@ -1,7 +1,6 @@
 #!/bin/sh
 ptn="^[[:space:]]*$1[^A-Za-z]"
-if man dash | grep -q $ptn
-then
+if man dash | grep -q $ptn; then
 	man dash | less -p $ptn
 else
 	man $1

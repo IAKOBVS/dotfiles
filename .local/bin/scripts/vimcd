@@ -1,14 +1,11 @@
 #!/bin/sh
-if test $1
-then
-	file=$(realpath $(echo "$@" | awk '{print $NF}') 2> /dev/null)
+if test $1; then
+	file=$(realpath $(echo "$@" | awk '{print $NF}') 2>/dev/null)
 	dir=$(dirname $1)
-	if [ -d $dir ]
-	then
+	if [ -d $dir ]; then
 		cd $dir || return
 	fi
-	if [ ! -f $file ]
-	then
+	if [ ! -f $file ]; then
 		fzf_update_dir $file
 	fi
 fi
