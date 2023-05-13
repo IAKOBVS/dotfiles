@@ -1,0 +1,2 @@
+#!/bin/sh
+gennum $1 $2 | xclip -sel c

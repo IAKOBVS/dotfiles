@@ -1,2 +1,6 @@
 #!/bin/sh
-seq $1 $2 | sed 's/^/case /; s/$/:/' | xclip -sel c
+i=$1
+while [ $i -le $2 ]; do
+	echo "case $i:"
+	i=$((i + 1))
+done
