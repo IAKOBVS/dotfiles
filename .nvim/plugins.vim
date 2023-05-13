@@ -12,6 +12,7 @@ Plug 'godlygeek/tabular'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'vim-scripts/LargeFile'
+Plug 'tjdevries/coc-zsh'
 
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -99,6 +100,7 @@ let g:lf_replace_netrw = 1
 " open cwd in new terminal
 nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
+let g:AutoPairsFlyMode = 0
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
 let g:NERDTreeHijackNetrw = 0
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
