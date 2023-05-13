@@ -1,6 +1,2 @@
 #!/bin/sh
-i=$1
-while [ $i -le $2 ]; do
-	echo "case $i:"
-	i=$((i + 1))
-done
+gennum $1 $2 | xclip -sel c
