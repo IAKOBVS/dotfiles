@@ -5,7 +5,7 @@ if [ ! -d $1 ]; then
 	echo '$1 is not a directory'
 	return 1
 fi
-if test ! $3; then
+if test ! $2; then
 	echo $usage
 	return 1
 fi
@@ -17,9 +17,10 @@ if [ $(uname -s) = 'Linux' ]; then
 	Y*) ;;
 	*) return ;;
 	esac
-	find "$1" -type f -exec sed -i "s|$2|$3|g" {} \;
+	find "$1" -type f -exec sed -i.bak "s|$2|$3|g" {} \;
 	echo "Replaced $2 with $3"
 	gw $3 $(find "$1" -type f)
 else
 	echo 'sed -i is not available!'
+	return 1
 fi

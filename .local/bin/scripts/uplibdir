@@ -1,0 +1,25 @@
+#!/bin/sh
+if [ $(uname -s) != 'Linux' ]; then
+	echo 'sed -i is not available!'
+	return 1
+fi
+for file in $@; do
+	case $file in
+		*.c | *.h | *.cpp | *.hpp) ;;
+		*) continue
+	esac
+	olds=$(sed -n 's/^[[:space:]]*#[[:space:]]*include[[:space:]]\{1,\}[^\"]*\"\{1,\}[\.\/]*\([^\"]\{1,\}\)\".*/\1/p' $file)
+	for old in $olds; do
+		new=$old
+		i=0
+		while [ $i -le 5 ]; do
+			if [ -f $new ]; then
+				sed -i.bak "s|#.*include.*$old.*|#include \"$new\"|" $file
+				echo $file
+				break
+			fi
+			new="../$new"
+			i=$((i + 1))
+		done
+	done
+done
