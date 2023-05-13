@@ -1,23 +1,20 @@
 #!/bin/sh
 usage='usage: ./waifu2xauto <image> <scale>'
 case $1 in
-	*.png|*.jpg);;
-	*)
-		echo $usage
-		echo 'Not an image file!'
-		return 1
+*.png | *.jpg) ;;
+*)
+	echo $usage
+	echo 'Not an image file!'
+	return 1
+	;;
 esac
-if [ $2 -le 4 ]
-then
+if [ $2 -le 4 ]; then
 	n=0
-elif [ $2 -le 16 ]
-then
+elif [ $2 -le 16 ]; then
 	n=1
-elif [ $2 -le 32 ]
-then
+elif [ $2 -le 32 ]; then
 	n=2
-elif [ $2 -le 64 ]
-then
+elif [ $2 -le 64 ]; then
 	n=3
 else
 	echo $usage
@@ -30,8 +27,7 @@ upscaler=realesrgan-x4plus-anime
 realesr() { realesrgan-ncnn-vulkan -f png -i "$1" -o "$out" -s "$scale" -n "$upscaler" -v; }
 realesr $1
 i=0
-while test $i -lt $n
-do
+while test $i -lt $n; do
 	realesr "$out"
-	i=$((i=i+1))
+	i=$((i = i + 1))
 done

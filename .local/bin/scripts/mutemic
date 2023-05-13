@@ -1,7 +1,6 @@
 #!/bin/sh
 pamixer --source $(getmicsource) -t
-if [ $(ifmute) = 'true' ]
-then
+if [ $(ifmute) = 'true' ]; then
 	notif='🔇 Mic is muted!'
 else
 	notif='🎤 Mic is on!'

@@ -1,18 +1,15 @@
 #!/bin/sh
 usage='Usage: sed <dir> <find> <replace>'
-if [ ! -d $1 ]
-then
+if [ ! -d $1 ]; then
 	echo $usage
 	echo '$1 is not a directory'
 	return 1
 fi
-if test ! $3
-then
- 	echo $usage
+if test ! $3; then
+	echo $usage
 	return 1
 fi
-if [ $(uname -s) = 'Linux' ]
-then
+if [ $(uname -s) = 'Linux' ]; then
 	gw $2 $(find "$1" -type f)
 	find "$1" -type f -exec sed -i "s|$2|$3|g" {} \;
 	echo "Replaced $2 with $3"

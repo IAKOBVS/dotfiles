@@ -1,6 +1,7 @@
 nn sv :source ~/.nvim/init.vim<CR>
 " clang-format
-nm cfm :!cfm %:p<CR>
+au FileType c,cpp nm cfm :silent exec "!cfm %:p"<CR>
+au FileType sh,bash nm cfm :silent exec "!shfmt -w %:p"<CR>
 
 " motions
 
