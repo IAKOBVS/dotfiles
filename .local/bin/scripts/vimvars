@@ -1,10 +1,8 @@
 #!/bin/sh
-test $__vim_msg__ && return
-__vim_msg__=$(mktemp)
-export __vim_msg__
-trap 'rm -f $__vim_msg__>/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
+if test $__vim_msg__ && $__lf_cd__; then
+	__vim_msg__=$(mktemp)
+	export __vim_msg__
+	__lf_cd__=$(mktemp)
+	export __lf_cd__
+fi
 (touch $__vim_msg__ &)
-__lf_cd__=$(mktemp)
-export __lf_cd__
-trap 'rm -f $__lf_cd__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
-(touch $__lf_cd__ &)
