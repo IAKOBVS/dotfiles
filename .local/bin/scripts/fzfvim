@@ -5,6 +5,6 @@ test $file || return
 if [ -d "$file" ]; then
 	. lfcd
 else
-	. vimcd
+	vimcd
 	cd "$(dirname $file)" || return
 fi

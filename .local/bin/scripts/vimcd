@@ -16,7 +16,7 @@ fi
 $EDITOR $arg &&
 case $(cat $__vim_msg__) in
 *fzf*)
-	. fzfvim
+	fzfvim
 	;;
 *lf*)
 	. lfcd
