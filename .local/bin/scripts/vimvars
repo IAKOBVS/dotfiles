@@ -1,8 +1,9 @@
 #!/bin/sh
-if test $__vim_msg__ && $__lf_cd__; then
+if test ! $__vim_msg__; then
 	__vim_msg__=$(mktemp)
 	export __vim_msg__
 	__lf_cd__=$(mktemp)
 	export __lf_cd__
+	(touch $__lf_cd__ 2>/dev/null &)
 fi
-(touch $__vim_msg__ &)
+(touch $__vim_msg__ 2>/dev/null &)
