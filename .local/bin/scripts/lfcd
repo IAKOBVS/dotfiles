@@ -7,6 +7,6 @@ case $(cat $__vim_msg__) in
 	. fzfvim
 	;;
 *vim*)
-	. vimcd
+	. lfcd
 	;;
 esac

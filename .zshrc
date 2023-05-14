@@ -1,14 +1,14 @@
 #!/bin/zsh
 __NPROC__=$(nproc)
-export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
-	--exclude '*vscode*' \
-	--exclude '*git*'\
-	--exclude '*.virtualenv*'\
-	--exclude '*.rev*'\
-	--exclude '*.o'\
-	--exclude '*.cargo*'\
-	--exclude '*.pass*'\
-	--exclude '*.key*'"
+# export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
+# 	--exclude '*vscode*' \
+# 	--exclude '*git*'\
+# 	--exclude '*.virtualenv*'\
+# 	--exclude '*.rev*'\
+# 	--exclude '*.o'\
+# 	--exclude '*.cargo*'\
+# 	--exclude '*.pass*'\
+# 	--exclude '*.key*'"
 
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
@@ -57,18 +57,10 @@ zle-line-init() {
 }
 zle -N zle-line-init
 
-l_() { lfcd;}
-_() { . fzfvim;}
-e_(){ . fzfvim --exact;}
-rg_() { rgvim;}
-# u_() { ufzf;}
-
-bindkey -s '^f' '_\n'
-bindkey -s '^e' 'e_\n'
-bindkey -s '^o' 'l_\n'
-bindkey -s '^r' 'rg_\n'
-# bindkey -s '^u' 'u_\n'
-# bindkey -s '^k' 'clear\n'
+bindkey -s '^f' '. fzfvim\n'
+bindkey -s '^e' '. fzfvim --exact\n'
+bindkey -s '^o' '. lfcd_\n'
+bindkey -s '^r' '. rgvim_\n'
 
 bindkey '^[[P' delete-char
 

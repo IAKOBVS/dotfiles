@@ -1,6 +1,6 @@
 #!/bin/sh
 . $HOME/.local/bin/scripts/vimvars
-if test $1; then
+if test "$@"; then
 	file=$(realpath $(echo "$@" | awk '{print $NF}') 2>/dev/null)
 	dir=$(dirname $1)
 	if [ -d $dir ]; then
@@ -9,13 +9,18 @@ if test $1; then
 	if [ ! -f $file ]; then
 		(fzf_update_dir $file &)
 	fi
+	arg=$*
+else
+	arg=
 fi
-$EDITOR $@ &&
+$EDITOR $arg &&
 case $(cat $__vim_msg__) in
 *fzf*)
+	echo >$__vim_msg__
 	. fzfvim
 	;;
 *lf*)
+	echo >$__vim_msg__
 	. lfcd
 	;;
 esac
