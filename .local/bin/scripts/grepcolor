@@ -1,0 +1,4 @@
+#!/bin/sh
+col=''
+[ "$(uname -s)" = 'Linux' ] && col='--color=auto'
+grep $col $@

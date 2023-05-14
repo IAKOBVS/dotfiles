@@ -5,5 +5,5 @@ if [ ! -d $1 ] || test ! $2; then
 fi
 for file in $(find "$1" -type f); do
 	printf "%s" $(sed "s|$2|$3|g" $file) > $file
-	gw $3 $(find "$1" -type f)
+	grepcolor $3 $(find "$1" -type f)
 done
