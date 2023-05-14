@@ -23,11 +23,12 @@ set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
+
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
-        text/*|application/json|inode/x-empty|application/x-subrip) vimcd $fx ;;
+        text/*|application/json|inode/x-empty|application/x-subrip) cd $(dirname $fx) && $EDITOR $fx ;;
 	image/x-xcf) gimp $fx ;;
 	image/svg+xml) display -- $f ;;
 	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
@@ -39,10 +40,9 @@ cmd open ${{
 		done &
 		;;
 	audio/*|video/x-ms-asf) mpv --audio-display=no $f ;;
-	video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+	video/*) mpv $fx ;;
 	application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
-	application/pgp-encrypted)
-		vimcd $fx ;;
+	application/pgp-encrypted) cd $(dirname $fx) && $EDITOR $fx ;;
 	application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
 	application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
@@ -127,7 +127,7 @@ cmd forceupscale ${{
 # 	echo fzf >/tmp/__vim_msg__
 # }}
 
-# cmd vimcd ${{
+# cmd $EDITOR ${{
 # 	echo vim >/tmp/__vim_msg__
 # }}
 
@@ -138,8 +138,8 @@ cmd opengimp ${{
 cmd setbg "$1"
 cmd bulkrename $vidir
 # Bindings
-# map <c-f> fzfvim
-# map o vimcd
+map <c-f> $lf -remote "send $id select \"$(fzfdef)\""
+map o $$EDITOR $fx
 # map J $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzfp)"
 # map gh
 map g top
@@ -153,7 +153,7 @@ map . set hidden!
 map <enter> shell
 map x $$f
 map X !$f
-map o &mimeopen $f
+# map o &mimeopen $f
 map O $mimeopen --ask $f
 map A rename # at the very end
 map n push A<c-u> # new rename

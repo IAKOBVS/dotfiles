@@ -3,7 +3,7 @@ alias \
 	poweroff='sync && systemctl poweroff' \
 	reboot='sync && systemctl reboot'
 
-alias v='. vimcd' \
+alias v='vimcd' \
 
 alias \
 	par='paru --needed --skipreview -S' \
@@ -25,7 +25,7 @@ alias \
 	vdw='cd $HOME/.local/src/dwmblocks && v blocks.h' \
 	vsl='cd $HOME/.local/src/slstatus && v config.h' \
 	dt='cd /tmp' \
-	tor='lfcd $HOME/Downloads/torrent' \
+	tor='cd $HOME/Downloads/torrent && lfcd $HOME/Downloads/torrent' \
 	cl='cd $HOME/.local/src'
 
 # lf
@@ -55,7 +55,7 @@ alias \
 	ht='htop' \
 	sht='sudo htop' \
 	ki='killall' \
-	l='. lfcd' \
+	l='lfcd' \
 	pq='paru -Q | fzf' \
 	fs='. fs' \
 	rs='res4thum'
