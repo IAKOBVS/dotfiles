@@ -126,14 +126,10 @@ cmd forceupscale ${{
 
 cmd fzfvim ${{
 	echo fzf >/tmp/__vim_msg__
-	pkill lf
-	echo >/tmp/__vim_msg__
 }}
 
 cmd vimcd ${{
 	echo vim >/tmp/__vim_msg__
-	pkill lf
-	echo >/tmp/__vim_msg__
 }}
 
 cmd opengimp ${{
