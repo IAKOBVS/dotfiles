@@ -1,10 +1,10 @@
 #!/bin/sh
 . $HOME/.local/bin/scripts/vimvars
-f_=$(fzfdef $1)
-test $f_ || return
-if [ -d "$f_" ]; then
-	. lfcd
+file=$(fzfdef $1)
+test $file || return
+if [ -d "$file" ]; then
+	lfcd $file
 else
-	. vimcd
-	cd "$(dirname $f_)" || return
+	vimcd $file
+	cd "$(dirname $file)" || return
 fi

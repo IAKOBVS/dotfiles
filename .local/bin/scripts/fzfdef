@@ -1,2 +1,2 @@
 #!/bin/sh
-fzfdir | fzf $1
+fzfdir | fzfpreview $@

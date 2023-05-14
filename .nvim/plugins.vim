@@ -13,6 +13,7 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'vim-scripts/LargeFile'
 Plug 'tjdevries/coc-zsh'
+Plug 'https://github.com/preservim/nerdtree'
 
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -95,8 +96,10 @@ sunm ge
 " fzf
 nn <space>f :Files<CR>
 nn <space>o :Lfcd<CR>
-nn <C-o> :!echo %:p:h >$__lf_cd__ ; echo lf >$__vim_msg__<CR> ZZ
-nn <C-f> :!echo %p:h >$__lf_cd__; echo fzf >$__vim_msg__<CR> ZZ
+" nn <C-o> :!echo %:p:h >$__lf_cd__ ; echo lf >$__vim_msg__<CR> ZZ
+" nn <C-f> :!echo %p:h >$__lf_cd__; echo fzf >$__vim_msg__<CR> ZZ
+nn <C-o> :!echo $(dirname %:p) >$__lf_cd__ ; echo 'lf' >$__vim_msg__<CR> ZZ
+nn <C-f> :!echo $(dirname %:p) >$__lf_cd__; echo 'fzf' >$__vim_msg__<CR> ZZ
 let g:lf_replace_netrw = 1
 
 " open cwd in new terminal
@@ -104,5 +107,5 @@ nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown 
 
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
-let g:NERDTreeHijackNetrw = 0
+" let g:NERDTreeHijackNetrw = 0
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']

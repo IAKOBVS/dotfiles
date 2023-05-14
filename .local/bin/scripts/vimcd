@@ -17,10 +17,10 @@ $EDITOR $arg &&
 case $(cat $__vim_msg__) in
 *fzf*)
 	echo >$__vim_msg__
-	. fzfvim
+	fzfvim
 	;;
 *lf*)
 	echo >$__vim_msg__
-	. lfcd
+	lfcd
 	;;
 esac

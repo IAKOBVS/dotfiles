@@ -4,9 +4,9 @@
 cd $(cat $__lf_cd__) 2> /dev/null;} &&
 case $(cat $__vim_msg__) in
 *fzf*)
-	. fzfvim
+	fzfvim
 	;;
 *vim*)
-	. lfcd
+	lfcd
 	;;
 esac
