@@ -1,14 +1,18 @@
 #!/bin/zsh
 __NPROC__=$(nproc)
-# export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
-# 	--exclude '*vscode*' \
-# 	--exclude '*git*'\
-# 	--exclude '*.virtualenv*'\
-# 	--exclude '*.rev*'\
-# 	--exclude '*.o'\
-# 	--exclude '*.cargo*'\
-# 	--exclude '*.pass*'\
-# 	--exclude '*.key*'"
+export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
+	--exclude '*png' \
+	--exclude '*jpg' \
+	--exclude '*jpeg' \
+	--exclude '*mov' \
+	--exclude '*vscode*' \
+	--exclude '*git*'\
+	--exclude '*.virtualenv*'\
+	--exclude '*.rev*'\
+	--exclude '*.o'\
+	--exclude '*.cargo*'\
+	--exclude '*.pass*'\
+	--exclude '*.key*'"
 
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
@@ -92,6 +96,16 @@ fzfvim()
 	fi
 }
 
+# fzfvim()
+# {
+# 	file=$(fzfdef $1)
+# 	test $file || return
+# 	if [ ! -d "$file" ]; then
+# 		cd "$(dirname $file)" || return
+# 	fi
+# 	vimcd $file
+# }
+
 lfcd()
 {
 	lf -last-dir-path="$__lf_cd__" "$@" &&
@@ -122,6 +136,29 @@ vimcd()
 	*lf*) lfcd ;;
 	esac
 }
+
+# vimcd()
+# {
+# 	if test "$@"; then
+# 		file=$(echo "${@##*/}")
+# 		if [ -d $file ]; then
+# 			cd $file || return
+# 			$EDITOR &&
+# 				case $(cat $__vim_msg__) in
+# 				*fzf*) fzfvim ;;
+# 				esac
+# 			return
+# 		elif [ -f $file ]; then
+# 			cd $(dirname $file) || return
+# 		else
+# 			(fzf_update_dir $file &)
+# 		fi
+# 	fi
+# 	$EDITOR $@ &&
+# 	case $(cat $__vim_msg__) in
+# 	*fzf*) fzfvim ;;
+# 	esac
+# }
 
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh

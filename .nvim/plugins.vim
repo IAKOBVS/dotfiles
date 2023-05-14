@@ -9,8 +9,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'godlygeek/tabular'
-Plug 'ptzz/lf.vim'
-Plug 'voldikss/vim-floaterm'
+" Plug 'ptzz/lf.vim'
+" Plug 'voldikss/vim-floaterm'
 Plug 'vim-scripts/LargeFile'
 Plug 'tjdevries/coc-zsh'
 Plug 'https://github.com/preservim/nerdtree'
@@ -95,11 +95,9 @@ sunm ge
 
 " fzf
 nn <space>f :Files<CR>
-nn <space>o :Lfcd<CR>
-" nn <C-o> :!echo %:p:h >$__lf_cd__ ; echo lf >$__vim_msg__<CR> ZZ
-" nn <C-f> :!echo %p:h >$__lf_cd__; echo fzf >$__vim_msg__<CR> ZZ
-nn <C-o> :!echo $(dirname %:p) >$__lf_cd__ ; echo 'lf' >$__vim_msg__<CR> ZZ
-nn <C-f> :!echo $(dirname %:p) >$__lf_cd__; echo 'fzf' >$__vim_msg__<CR> ZZ
+nn <space>h :Files ~<CR>
+" nn <C-f> :!echo $(dirname %:p) >$__lf_cd__ ; echo 'fzf' >$__vim_msg__<CR> ZZ
+nn <space>o :NERDTreeToggle<CR>
 let g:lf_replace_netrw = 1
 
 " open cwd in new terminal
