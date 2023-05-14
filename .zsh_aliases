@@ -3,26 +3,27 @@ alias \
 	poweroff='sync && systemctl poweroff' \
 	reboot='sync && systemctl reboot'
 
+alias v='. vimcd' \
+
 alias \
 	par='paru --needed --skipreview -S' \
 	pars='paru --needed --skipreview -Syu' \
 	prq='paru -Q | fzf' \
 	pacman='sudo pacman' \
 	sctl='sudo systemctl' \
-	sv='sudo $EDITOR' \
+	sv='sudo v' \
 	cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
 	cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
 	cpl='cfg --reset hard && cfg pull'
 
 # cd
 alias \
-	v='. vimcd' \
-	vs='cd $HOME/.local/src/st && $EDITOR config.h' \
+	vs='cd $HOME/.local/src/st && v config.h' \
 	sr='cd $HOME/.local/bin/scripts' \
-	vd='cd $HOME/.local/src/dwm && $EDITOR config.h' \
-	vs='cd $HOME/.local/src/st && $EDITOR config.h' \
-	vdw='cd $HOME/.local/src/dwmblocks && $EDITOR blocks.h' \
-	vsl='cd $HOME/.local/src/slstatus && $EDITOR config.h' \
+	vd='cd $HOME/.local/src/dwm && v config.h' \
+	vs='cd $HOME/.local/src/st && v config.h' \
+	vdw='cd $HOME/.local/src/dwmblocks && v blocks.h' \
+	vsl='cd $HOME/.local/src/slstatus && v config.h' \
 	dt='cd /tmp' \
 	tor='lfcd $HOME/Downloads/torrent' \
 	cl='cd $HOME/.local/src'
@@ -34,13 +35,13 @@ alias \
 
 # vim
 alias \
-	xi='$EDITOR $HOME/.xinitrc' \
-	vp='$EDITOR $HOME/.config/picom.conf' \
-	vvim='cd $HOME/.nvim; $EDITOR $HOME/.nvim/default.vim' \
-	zs='$EDITOR $HOME/.zshrc' \
-	va='$EDITOR $HOME/.zsh_aliases' \
-	vap='$EDITOR $HOME/.local/share/alias/aliases-laptop' \
-	vlf='$EDITOR $HOME/.lfrc' \
+	xi='v $HOME/.xinitrc' \
+	vp='v $HOME/.config/picom.conf' \
+	vvim='cd $HOME/.nvim; v $HOME/.nvim/default.vim' \
+	zs='v $HOME/.zshrc' \
+	va='v $HOME/.zsh_aliases' \
+	vap='v $HOME/.local/share/alias/aliases-laptop' \
+	vlf='v $HOME/.lfrc' \
 	fin='. fin'
 
 # shorten 
@@ -54,7 +55,7 @@ alias \
 	ht='htop' \
 	sht='sudo htop' \
 	ki='killall' \
-	l='lfcd' \
+	l='. lfcd' \
 	pq='paru -Q | fzf' \
 	fs='. fs' \
 	rs='res4thum'
@@ -89,11 +90,11 @@ alias \
 	sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
 	slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
 	dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
-	sf='$EDITOR /etc/fan2go/fan2go.yaml' \
+	sf='v /etc/fan2go/fan2go.yaml' \
 	nv='nvtop'
 
 alias vmpv='cd $HOME/.config/mpv && v mpv.conf'
 
 alias dfh='df -h | grep -v -e snap -e boot -e udev -e /run/'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'"
+alias upvim="v -c ':PlugUpdate' -c ':CocUpdate'"

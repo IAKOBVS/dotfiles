@@ -27,7 +27,10 @@ cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
-        text/*|application/json|inode/x-empty|application/x-subrip) $EDITOR $fx;;
+        text/*|application/json|inode/x-empty|application/x-subrip)
+		vimcd $fx
+		(sleep 1 && pkill lf &)
+		;;
 	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
 	image/svg+xml) display -- $f ;;
 	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
@@ -121,6 +124,16 @@ cmd forceupscale ${{
 	[ $ans = "y" ] && alacritty -e waifu2xauto $fx 4 &
 }}
 
+cmd fzfvim ${{
+	echo fzf >/tmp/__vim_msg__
+	(sleep 1 && echo >/tmp/__vim_msg__ && pkill lf &) &
+}}
+
+cmd vimcd ${{
+	echo vim >/tmp/__vim_msg__
+	(sleep 1 && echo >/tmp/__vim_msg__ && pkill lf &)
+}}
+
 cmd opengimp ${{
 	gimp $fx &
 }}
@@ -128,7 +141,8 @@ cmd opengimp ${{
 cmd setbg "$1"
 cmd bulkrename $vidir
 # Bindings
-map <c-f> $lf -remote "send $id select \"$(fzfdef)\""
+map <c-f> fzfvim
+# map o vimcd
 # map J $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzfp)"
 # map gh
 map g top
