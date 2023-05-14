@@ -1,5 +1,5 @@
 #!/bin/sh
-export __vim_msg__=/tmp/__vim_msg__
-export __lf_cd__=/tmp/__lf_cd__
+test $__vim_msg__ || export __vim_msg__=/tmp/__vim_msg__
+test $__lf_cd__ || export __lf_cd__=/tmp/__lf_cd__
 (touch /tmp/__vim_msg__ 2> /dev/null &)
 (touch /tmp/__vim_tmp__ 2> /dev/null &)
