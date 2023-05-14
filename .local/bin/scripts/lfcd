@@ -1,14 +1,4 @@
 #!/bin/sh
 . $HOME/.local/bin/scripts/vimvars
-{ lf -last-dir-path="$__lf_cd__" "$@" &&
-cd $(cat $__lf_cd__) 2> /dev/null;} &&
-case $(cat $__vim_msg__) in
-*fzf*)
-	(/bin/rm -f $__vim_msg__ &)
-	fzfvim
-	;;
-*vim*)
-	(/bin/rm -f $__vim_msg__ &)
-	lfcd
-	;;
-esac
+lf -last-dir-path="$__lf_cd__" "$@" &&
+cd $(cat $__lf_cd__) 2> /dev/null

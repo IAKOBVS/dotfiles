@@ -3,8 +3,8 @@
 file=$(fzfdef $1)
 test $file || return
 if [ -d "$file" ]; then
-	lfcd $file
+	. lfcd
 else
-	vimcd $file
+	. vimcd
 	cd "$(dirname $file)" || return
 fi
