@@ -1,24 +1,22 @@
 #!/bin/sh
-if [ $(uname -s) != 'Linux' ]; then
-	echo 'sed -i is not available!'
-	return 1
-fi
-for file in $@; do
-	case $file in
-		*.c | *.h | *.cpp | *.hpp) ;;
-		*) continue
-	esac
-	olds=$(sed -n 's/^[[:space:]]*#[[:space:]]*include[[:space:]]\{1,\}[^\"]*\"\{1,\}[\.\/]*\([^\"]\{1,\}\)\".*/\1/p' $file)
+for file in $(find "$1" -type f -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.hpp'); do
+	olds=$(awk -F'"' '/^[ \t]*#[ \t]*include[ \t/]{1,}"[^"]{1,}"/ {print $2}' $file)
 	for old in $olds; do
+		[ -f $old ] && continue
+		old=$(echo $old | sed 's/[\.\/]*//')
 		new=$old
 		i=0
-		while [ $i -le 5 ]; do
+		while :; do
 			if [ -f $new ]; then
-				sed -i.bak "s|#.*include.*$old.*|#include \"$new\"|" $file
+				printf '%s' "$(sed "s|#.*include.*$old.*|#include \"$new\"|" $file)" > $file
 				echo "Replaced $old to $new in $file"
 				break
 			fi
 			new="../$new"
+			if [ $i -ge 5 ]; then
+				echo "Can't find correct path for $old"
+				return
+			fi
 			i=$((i + 1))
 		done
 	done

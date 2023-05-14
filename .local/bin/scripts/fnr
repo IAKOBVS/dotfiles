@@ -1,26 +1,11 @@
 #!/bin/sh
-usage='Usage: sed <dir> <find> <replace>'
-if [ ! -d $1 ]; then
-	echo $usage
-	echo '$1 is not a directory'
+if ! gw $2 $(find "$1" -type f); then
+	echo "No $2 found in $1"
 	return 1
 fi
-if test ! $2; then
-	echo $usage
-	return 1
-fi
-if [ $(uname -s) = 'Linux' ]; then
-	grep --color=always "$2" $(find "$1" -type f) | sed -n "s|$2|$3|gp"
-	echo "Replace $2 with $3 (Y/N)"
-	read -r ok
-	case $ok in
-	Y*) ;;
-	*) return ;;
-	esac
-	find "$1" -type f -exec sed -i.bak "s|$2|$3|g" {} \;
-	echo "Replaced $2 with $3"
-	gw $3 $(find "$1" -type f)
-else
-	echo 'sed -i is not available!'
-	return 1
-fi
+read -r ok
+case $ok in
+Y*) ;;
+*) return 1 ;;
+esac
+fnrforce $@
