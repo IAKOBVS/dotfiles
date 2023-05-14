@@ -90,12 +90,8 @@ sunm e
 sunm ge
 
 " fzf
-nn <space>l :History<CR>
-nn <space>h :Files ~<CR>
-nn <space>f :Files<CR>
-nn <space>r :Rg<CR>
-
-nn <space>o :Lf<CR>
+nn <C-o> :!echo lf >/tmp/__vim_msg__<CR> ZZ
+nn <C-f> :!echo fzf >/tmp/__vim_msg__<CR> ZZ
 let g:lf_replace_netrw = 1
 
 " open cwd in new terminal

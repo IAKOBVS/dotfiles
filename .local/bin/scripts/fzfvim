@@ -2,8 +2,8 @@
 f_=$(fzfdef $1)
 test $f_ || return
 if [ -d "$f_" ]; then
-	lfcd "$f_"
+	. lfcd "$f_"
 else
-	$EDITOR "$f_"
+	. vimcd "$f_"
 	cd "$(dirname $f_)" || return
 fi
