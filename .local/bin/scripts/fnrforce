@@ -4,6 +4,6 @@ if [ ! -d $1 ] || test ! $2; then
 	return 1
 fi
 for file in $(find "$1" -type f); do
-	printf "%s" $(sed "s|$2|$3|g" $file) > $file
+	printf "%s" $(sed "s|$2|$3|g" $file) >$file
 	grepcolor $3 $(find "$1" -type f)
 done

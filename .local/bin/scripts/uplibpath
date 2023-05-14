@@ -8,7 +8,7 @@ for file in $(find "$1" -type f -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -
 		i=0
 		while :; do
 			if [ -f $new ]; then
-				printf '%s' "$(sed "s|#.*include.*$old.*|#include \"$new\"|" $file)" > $file
+				printf '%s' "$(sed "s|#.*include.*$old.*|#include \"$new\"|" $file)" >$file
 				echo "Replaced $old to $new in $file"
 				break
 			fi
