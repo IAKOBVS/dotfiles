@@ -16,11 +16,11 @@ fi
 $EDITOR $arg &&
 case $(cat $__vim_msg__) in
 *fzf*)
-	rm >$__vim_msg__
+	# (/bin/rm -f $__vim_msg__ &)
 	fzfvim
 	;;
 *lf*)
-	rm >$__vim_msg__
+	# (/bin/rm -f $__vim_msg__ &)
 	lfcd
 	;;
 esac
