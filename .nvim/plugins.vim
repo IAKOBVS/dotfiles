@@ -63,6 +63,9 @@ nmap CC :CocConfig<CR>
 nn <silent> <tab>k <Plug>(ale_previous_wrap)
 nn <silent> <tab>j <Plug>(ale_next_wrap)
 nn <space>a :ALEToggle<CR>
+
+au FileType sh ALEDisable
+au FileType vim ALEDisable
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 en
@@ -92,8 +95,8 @@ sunm ge
 " fzf
 nn <space>f :Files<CR>
 nn <space>o :Lfcd<CR>
-nn <C-o> :!echo lf >/tmp/__vim_msg__<CR> ZZ
-nn <C-f> :!echo fzf >/tmp/__vim_msg__<CR> ZZ
+nn <C-o> :!echo %:p:h >$__lf_cd__ ; echo lf >$__vim_msg__<CR> ZZ
+nn <C-f> :!echo %p:h >$__lf_cd__; echo fzf >$__vim_msg__<CR> ZZ
 let g:lf_replace_netrw = 1
 
 " open cwd in new terminal
