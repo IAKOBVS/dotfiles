@@ -1,5 +1,5 @@
 #!/bin/sh
-__path__="$(find $HOME/.local/bin/scripts $HOME/c \
+__fs_path__="$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*cnlp*data*' \
 	! -path '*vscode*' \
 	! -path '*git*' \
@@ -7,5 +7,5 @@ __path__="$(find $HOME/.local/bin/scripts $HOME/c \
 	! -path '*.out' \
 	! -name '.' \
 	-type f 2>/dev/null | fzfpreview --delimiter / --with-nth -1)"
-test $__path__ || return 1
-$EDITOR $__path__ && cd $(dirname $__path__) || return 1
+test $__fs_path__ || return 1
+$EDITOR $__fs_path__ && cd $(dirname $__fs_path__) || return 1

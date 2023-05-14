@@ -90,6 +90,8 @@ sunm e
 sunm ge
 
 " fzf
+nn <space>f :Files<CR>
+nn <space>o :Lfcd<CR>
 nn <C-o> :!echo lf >/tmp/__vim_msg__<CR> ZZ
 nn <C-f> :!echo fzf >/tmp/__vim_msg__<CR> ZZ
 let g:lf_replace_netrw = 1
