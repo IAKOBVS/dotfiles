@@ -1,4 +1,5 @@
 #!/bin/sh
+. $HOME/.local/bin/scripts/vimvars
 f_=$(fzfdef $1)
 test $f_ || return
 if [ -d "$f_" ]; then

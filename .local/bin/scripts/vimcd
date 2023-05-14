@@ -11,7 +11,7 @@ if test "$@"; then
 	fi
 	arg=$*
 else
-	arg=
+	arg=''
 fi
 $EDITOR $arg &&
 case $(cat $__vim_msg__) in

@@ -31,7 +31,7 @@ alias \
 # lf
 alias \
 	rec='lfcd ~/Videos/Recordings' \
-	vi='lfcd ~/Videos'
+	vid='lfcd ~/Videos'
 
 # vim
 alias \
