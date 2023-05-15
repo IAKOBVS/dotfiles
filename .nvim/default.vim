@@ -29,6 +29,7 @@ nn <space>e :!sil echo $HOME >$__lf_cd__ &
 nn <C-o> :!sil echo %:p:h >$__lf_cd__ &
 	\ echo 'lfcd' >$__vim_prog__ ;
 	\ echo %:p >$__vim_arg__<CR> ZZ
+
 " open cwd in new terminal
 nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
