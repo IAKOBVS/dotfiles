@@ -40,8 +40,6 @@ no <C-s> :w<CR>h
 " turn off vim macros
 map q <Nop>
 
-" surround word with symbol
-
 " quote $variable
 nn qs lF$dEi""<Esc>hpl
 nn Qs F"xf"xh
