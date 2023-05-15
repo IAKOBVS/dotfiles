@@ -1,4 +1,9 @@
 #!/bin/sh
+__vim_prog__="$(mktemp -uq)__vim_prog__"
+__vim_arg__="$(mktemp -uq)__vim_arg__"
+export __vim_prog__
+export __vim_arg__
+
 lfcd()
 {
 	clear
@@ -11,11 +16,6 @@ lfcd()
 		[ -d "$__lf_dir__" ] && [ "$__lf_dir__" != "$(pwd)" ] && cd "$__lf_dir__"
 	fi
 }
-
-__vim_prog__=$(mktemp -uq)
-__vim_arg__=$(mktemp -uq)
-export __vim_prog__
-export __vim_arg__
 
 fzfvim()
 {
