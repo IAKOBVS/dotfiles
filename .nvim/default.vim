@@ -2,31 +2,31 @@ nn ;nv :source ~/.nvim/init.vim<CR>
 nn ;ua :! $HOME/.zsh/upalias<CR>
 
 " open fzf
-nn <C-f> :!sil echo %:p:h >$__lf_cd__ &
+nn <C-f> :!sil echo %:p:h >$__LF_DIR__ &
 	\ echo $__FZF__ >$__VIM_PROG__ ;
 	\ echo %:p >$__VIM_ARG__<CR> ZZ
 " open fzf $HOME
-nn <C-h> :!sil echo $HOME >$__lf_cd__ &
+nn <C-h> :!sil echo $HOME >$__LF_DIR__ &
 	\ echo $__FZF__ >$__VIM_PROG__ ;
 	\ echo $HOME >$__VIM_ARG__<CR> ZZ
 " open FZFEXACT
-nn <C-e> :!sil echo $HOME >$__lf_cd__ &
+nn <C-e> :!sil echo $HOME >$__LF_DIR__ &
 	\ echo $__FZFEXACT__ >$__VIM_PROG__ ;
 	\ echo $HOME >$__VIM_ARG__<CR> ZZ
 " open fzflive
-nn <space>f :!sil echo %:p:h >$__lf_cd__ &
+nn <space>f :!sil echo %:p:h >$__LF_DIR__ &
 	\ echo $__FZFLIVE__ >$__VIM_PROG__ ;
 	\ echo %:p >$__VIM_ARG__<CR> ZZ
 " open fzflive $HOME
-nn <space>h :!sil echo $HOME >$__lf_cd__ &
+nn <space>h :!sil echo $HOME >$__LF_DIR__ &
 	\ echo $__FZFLIVE__ >$__VIM_PROG__ ;
 	\ echo $HOME >$__VIM_ARG__<CR> ZZ
 " open FZFEXACTlive
-nn <space>e :!sil echo $HOME >$__lf_cd__ &
+nn <space>e :!sil echo $HOME >$__LF_DIR__ &
 	\ echo $__FZFEXACTLIVE__ >$__VIM_PROG__ ;
 	\ echo $HOME >$__VIM_ARG__<CR> ZZ
 " open lf
-nn <C-o> :!sil echo %:p:h >$__lf_cd__ &
+nn <C-o> :!sil echo %:p:h >$__LF_DIR__ &
 	\ echo $__LFCD__ >$__VIM_PROG__ ;
 	\ echo %:p >$__VIM_ARG__<CR> ZZ
 
