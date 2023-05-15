@@ -119,7 +119,7 @@ vimcd()
 		__vim_cmd__=$EDITOR
 		;;
 	*)
-		file=$(echo "${@##* }")
+		file=$(realpath "${@##* }")
 		if [ -f $file ]; then
 			cd ${file%/?*}
 			__vim_cmd__=$EDITOR
