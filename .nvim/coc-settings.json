@@ -22,5 +22,5 @@
 	},
     "sh.commandPath": "bash-language-server",
     "flutter.enabled": false,
-    "pylsp.enable": false,
+    "pylsp.enable": false
 }

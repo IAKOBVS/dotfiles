@@ -76,7 +76,7 @@ bindkey -M visual '^[[P' vi-delete
 
 # Load aliases and shortcuts if existent.
 . $HOME/.zsh/.zsh_aliases
-. $HOME/.zsh/.zsh_functions
+. $HOME/.zsh/.shell_functions
 
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
