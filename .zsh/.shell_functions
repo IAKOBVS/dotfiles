@@ -9,7 +9,7 @@ export __LF_DIR__
 lfcd()
 {
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
-		__vim_sel__
+	__vim_sel__
 	if [ -f "$__LF_DIR__" ]; then
 		local __lf_dir__="$(cat "$__LF_DIR__")"
 		[ -d "$__lf_dir__" ] && [ "$__lf_dir__" != "$(pwd)" ] && cd "$__lf_dir__"
@@ -18,7 +18,6 @@ lfcd()
 
 __FZF__()
 {
-	echo $@
 	file=$($@)
 	[ ! $file ] && return
 	if [ -f "$file" ]; then
@@ -28,7 +27,7 @@ __FZF__()
 	fi
 }
 
-fzf() { __FZF__ fzfdef $@; }
+fzfvim() { __FZF__ fzfdef $@; }
 fzfexact() { __FZF__ fzfdef -e $@; }
 fzflive() { __FZF__ fzfpreview; }
 fzfexactlive() { __FZF__ fzfpreview -e; }
