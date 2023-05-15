@@ -3,32 +3,32 @@ nn ;ua :! $HOME/.zsh/upalias<CR>
 
 " open fzf
 nn <C-f> :!sil echo %:p:h >$__lf_cd__ &
-	\ echo 'fzfvim' >$__vim_prog__ ;
-	\ echo %:p >$__vim_arg__<CR> ZZ
+	\ echo $__FZF__ >$__VIM_PROG__ ;
+	\ echo %:p >$__VIM_ARG__<CR> ZZ
 " open fzf $HOME
 nn <C-h> :!sil echo $HOME >$__lf_cd__ &
-	\ echo 'fzfvim' >$__vim_prog__ ;
-	\ echo $HOME >$__vim_arg__<CR> ZZ
-" open fzfexact
+	\ echo $__FZF__ >$__VIM_PROG__ ;
+	\ echo $HOME >$__VIM_ARG__<CR> ZZ
+" open FZFEXACT
 nn <C-e> :!sil echo $HOME >$__lf_cd__ &
-	\ echo 'fzfexact' >$__vim_prog__ ;
-	\ echo $HOME >$__vim_arg__<CR> ZZ
+	\ echo $__FZFEXACT__ >$__VIM_PROG__ ;
+	\ echo $HOME >$__VIM_ARG__<CR> ZZ
 " open fzflive
 nn <space>f :!sil echo %:p:h >$__lf_cd__ &
-	\ echo 'fzflive' >$__vim_prog__ ;
-	\ echo %:p >$__vim_arg__<CR> ZZ
+	\ echo $__FZFLIVE__ >$__VIM_PROG__ ;
+	\ echo %:p >$__VIM_ARG__<CR> ZZ
 " open fzflive $HOME
 nn <space>h :!sil echo $HOME >$__lf_cd__ &
-	\ echo 'fzflive' >$__vim_prog__ ;
-	\ echo $HOME >$__vim_arg__<CR> ZZ
-" open fzfexactlive
+	\ echo $__FZFLIVE__ >$__VIM_PROG__ ;
+	\ echo $HOME >$__VIM_ARG__<CR> ZZ
+" open FZFEXACTlive
 nn <space>e :!sil echo $HOME >$__lf_cd__ &
-	\ echo 'fzfexactlive' >$__vim_prog__ ;
-	\ echo $HOME >$__vim_arg__<CR> ZZ
+	\ echo $__FZFEXACTLIVE__ >$__VIM_PROG__ ;
+	\ echo $HOME >$__VIM_ARG__<CR> ZZ
 " open lf
 nn <C-o> :!sil echo %:p:h >$__lf_cd__ &
-	\ echo 'lfcd' >$__vim_prog__ ;
-	\ echo %:p >$__vim_arg__<CR> ZZ
+	\ echo $__LFCD__ >$__VIM_PROG__ ;
+	\ echo %:p >$__VIM_ARG__<CR> ZZ
 
 " open cwd in new terminal
 nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
@@ -128,7 +128,7 @@ au FileType sh,bash,zsh nm cfm :silent exec "!shfmt -w -fn %:p"<CR>
 " autocd
 au BufEnter * sil! lcd %:p:h
 " exit normally
-au BufEnter * sil! !echo :%p:h >$__vim_arg__
+au BufEnter * sil! !echo :%p:h >$__VIM_ARG__
 
 au BufNewFile *.c,*.cpp 0r ~/.nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.nvim/templates/skeleton.pl

@@ -1,8 +1,8 @@
 #!/bin/sh
-__vim_prog__="$(mktemp -uq)__vim_prog__"
-__vim_arg__="$(mktemp -uq)__vim_arg__"
-export __vim_prog__
-export __vim_arg__
+__VIM_PROG__="$(mktemp -uq)__VIM_PROG__"
+__VIM_ARG__="$(mktemp -uq)__VIM_ARG__"
+export __VIM_PROG__
+export __VIM_ARG__
 
 lfcd()
 {
@@ -17,8 +17,9 @@ lfcd()
 	fi
 }
 
-__fzfvim__()
+__FZF__()
 {
+	echo $@
 	file=$($@)
 	[ ! $file ] && return
 	if [ -f "$file" ]; then
@@ -28,10 +29,10 @@ __fzfvim__()
 	fi
 }
 
-fzfvim() { __fzfvim__ fzfdef $@; }
-fzflive() { __fzfvim__ fzfpreview $@; }
-fzfexact() { __fzfvim__ fzfdef --exact $@; }
-fzfexactlive() { __fzfvim__ fzfpreview --exact $@; }
+fzf() { __FZF__ fzfdef $@; }
+fzfexact() { __FZF__ fzfdef -e $@; }
+fzflive() { __FZF__ fzfpreview; }
+fzfexactlive() { __FZF__ fzfpreview -e; }
 
 vimcd()
 {
@@ -59,24 +60,31 @@ vimcd()
 		__select_action__
 }
 
+export __VIMCD__=1
+export __LFCD__=2
+export __FZF__=3
+export __FZFLIVE__=4
+export __FZFEXACT__=5
+export __FZFEXACTLIVE__=6
+export __FZFLIVEEXACT__=6
 __select_action__()
 {
-	[ ! -f $__vim_prog__ ] 2>/dev/null && return
-	__local_vim_prog__=$(<$__vim_prog__)
-	if [ ! -f $__vim_arg__ ] 2>/dev/null; then
+	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
+	__local_vim_prog__=$(<$__VIM_PROG__)
+	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
 		__local_vim_arg__=''
 	else
-		__local_vim_arg__=$(<$__vim_arg__)
+		__local_vim_arg__=$(<$__VIM_ARG__)
 	fi
-	(/bin/rm -f $__vim_prog__ &)
-	(/bin/rm -f $__vim_arg__ &)
+	(/bin/rm -f $__VIM_PROG__ &)
+	(/bin/rm -f $__VIM_ARG__ &)
 	case $__local_vim_prog__ in
-	fzfvim) fzfvim "$__local_vim_arg__" ;;
-	fzflive) fzflive "$__local_vim_arg__" ;;
-	fzfexact) fzfexact "$__local_vim_arg__" ;;
-	fzfexactlive) fzfexactlive "$__local_vim_arg__" ;;
-	vimcd) vimcd "$__local_vim_arg__" ;;
-	lfcd) lfcd "$__local_vim_arg__" ;;
+	$__VIMCD__) vimcd "$__local_vim_arg__" ;;
+	$__LFCD__) lfcd "$__local_vim_arg__" ;;
+	$__FZF__) fzf "$__local_vim_arg__" ;;
+	$__FZFLIVE__) fzflive "$__local_vim_arg__" ;;
+	$__FZFEXACT__) fzfexact "$__local_vim_arg__" ;;
+	$__FZFEXACTLIVE__) fzfexactlive "$__local_vim_arg__" ;;
 	esac
 }
 
