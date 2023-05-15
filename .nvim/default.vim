@@ -106,7 +106,7 @@ au BufNewFile *.c,*.cpp 0r ~/.nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.nvim/templates/skeleton.pl
 au BufNewFile *.awk 0r ~/.nvim/templates/skeleton.awk
 au FileType c,cpp nm cfm :silent exec "!cfm %:p"<CR>
-au FileType sh,bash nm cfm :silent exec "!shfmt -w %:p"<CR>
+au FileType sh,bash,zsh nm cfm :silent exec "!shfmt -w %:p"<CR>
 au BufEnter * sil! lcd %:p:h
 au BufEnter * sil! !echo :%p:h >$__vim_arg__
 
