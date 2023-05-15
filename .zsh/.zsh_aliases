@@ -26,7 +26,8 @@ alias \
 	vsl='cd $HOME/.local/src/slstatus && v config.h' \
 	dt='cd /tmp' \
 	tor='cd $HOME/Downloads/torrent && lfcd $HOME/Downloads/torrent' \
-	cl='cd $HOME/.local/src'
+	cl='cd $HOME/.local/src' \
+	cs='cd $HOME/.zsh'
 
 # lf
 alias \
