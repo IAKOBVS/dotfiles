@@ -3,19 +3,35 @@
 . $HOME/.zsh/.zsh_aliases
 . $HOME/.zsh/.shell_functions
 
-export FZF_DEFAULT_COMMAND="fd -j $(nproc) --hidden --glob \
-	--exclude '*png' \
-	--exclude '*jpg' \
-	--exclude '*jpeg' \
-	--exclude '*mov' \
-	--exclude '*vscode*' \
-	--exclude '*git*'\
-	--exclude '*.virtualenv*'\
-	--exclude '*.rev*'\
-	--exclude '*.o'\
-	--exclude '*.cargo*'\
-	--exclude '*.pass*'\
-	--exclude '*.key*'"
+if [ -f /bin/fd ]; then
+	export FZF_DEFAULT_COMMAND="fd -j $(nproc) --hidden --glob \
+		--exclude '*png' \
+		--exclude '*jpg' \
+		--exclude '*jpeg' \
+		--exclude '*mov' \
+		--exclude '*vscode*' \
+		--exclude '*git*'\
+		--exclude '*.virtualenv*'\
+		--exclude '*.rev*'\
+		--exclude '*.o'\
+		--exclude '*.cargo*'\
+		--exclude '*.pass*'\
+		--exclude '*.key*'"
+else
+	export FZF_DEFAULT_COMMAND="find \
+		! -path '*png' \
+		! -path '*jpg' \
+		! -path '*jpeg' \
+		! -path '*mov' \
+		! -path '*vscode*' \
+		! -path '*git*'\
+		! -path '*.virtualenv*'\
+		! -path '*.rev*'\
+		! -path '*.o'\
+		! -path '*.cargo*'\
+		! -path '*.pass*'\
+		! -path '*.key*'"
+fi
 
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
