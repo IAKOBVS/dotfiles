@@ -9,6 +9,10 @@ nn <C-f> :!sil echo %:p:h >$__lf_cd__ &
 nn <C-h> :!sil echo $HOME >$__lf_cd__ &
 	\ echo 'fzfvim' >$__vim_prog__ ;
 	\ echo $HOME >$__vim_arg__<CR> ZZ
+" open fzfexact
+nn <C-e> :!sil echo $HOME >$__lf_cd__ &
+	\ echo 'fzfexact' >$__vim_prog__ ;
+	\ echo $HOME >$__vim_arg__<CR> ZZ
 " open fzflive
 nn <space>f :!sil echo %:p:h >$__lf_cd__ &
 	\ echo 'fzflive' >$__vim_prog__ ;
@@ -16,6 +20,10 @@ nn <space>f :!sil echo %:p:h >$__lf_cd__ &
 " open fzflive $HOME
 nn <space>h :!sil echo $HOME >$__lf_cd__ &
 	\ echo 'fzflive' >$__vim_prog__ ;
+	\ echo $HOME >$__vim_arg__<CR> ZZ
+" open fzfexactlive
+nn <space>e :!sil echo $HOME >$__lf_cd__ &
+	\ echo 'fzfexactlive' >$__vim_prog__ ;
 	\ echo $HOME >$__vim_arg__<CR> ZZ
 " open lf
 nn <C-o> :!sil echo %:p:h >$__lf_cd__ &

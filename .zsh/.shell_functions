@@ -17,10 +17,10 @@ lfcd()
 	fi
 }
 
-fzfvim()
+__fzfvim__()
 {
-	file=$(fzfdef $1)
-	test $file || return
+	file=$($@)
+	[ ! $file ] && return
 	if [ -f "$file" ]; then
 		vimcd $file
 	else
@@ -28,16 +28,10 @@ fzfvim()
 	fi
 }
 
-fzflive()
-{
-	file=$(fzfpreview $1)
-	test $file || return
-	if [ -f "$file" ]; then
-		vimcd $file
-	else
-		lfcd $file
-	fi
-}
+fzfvim() { __fzfvim__ fzfdef $@; }
+fzflive() { __fzfvim__ fzfpreview $@; }
+fzfexact() { __fzfvim__ fzfdef --exact $@; }
+fzfexactlive() { __fzfvim__ fzfpreview --exact $@; }
 
 vimcd()
 {
@@ -68,19 +62,21 @@ vimcd()
 __select_action__()
 {
 	[ ! -f $__vim_prog__ ] 2>/dev/null && return
-	__local_vim_prog__=$(cat $__vim_prog__)
+	__local_vim_prog__=$(<$__vim_prog__)
 	if [ ! -f $__vim_arg__ ] 2>/dev/null; then
 		__local_vim_arg__=''
 	else
-		__local_vim_arg__=$(cat $__vim_arg__)
+		__local_vim_arg__=$(<$__vim_arg__)
 	fi
 	(/bin/rm -f $__vim_prog__ &)
 	(/bin/rm -f $__vim_arg__ &)
 	case $__local_vim_prog__ in
-	*fzfvim*) fzfvim "$__local_vim_arg__" ;;
-	*fzflive*) fzfvim "$__local_vim_arg__" ;;
-	*vimcd*) vimcd "$__local_vim_arg__" ;;
-	*lfcd*) lfcd "$__local_vim_arg__" ;;
+	fzfvim) fzfvim "$__local_vim_arg__" ;;
+	fzflive) fzflive "$__local_vim_arg__" ;;
+	fzfexact) fzfexact "$__local_vim_arg__" ;;
+	fzfexactlive) fzfexactlive "$__local_vim_arg__" ;;
+	vimcd) vimcd "$__local_vim_arg__" ;;
+	lfcd) lfcd "$__local_vim_arg__" ;;
 	esac
 }
 
