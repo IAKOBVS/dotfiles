@@ -79,16 +79,8 @@ bindkey -M visual '^[[P' vi-delete
 
 __vim_prog__=$(mktemp -uq)
 __vim_arg__=$(mktemp -uq)
-__lf_cd__=$(mktemp -uq)
 export __vim_prog__
 export __vim_arg__
-export __lf_cd__
-(touch $__vim_prog__ &)
-(touch $__vim_arg__ &)
-(touch $__lf_cd__ &)
-trap 'rm -f $__lf_cd__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
-trap 'rm -f $__vim_prog__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
-trap 'rm -f $__vim_arg__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
 
 fzfvim()
 {
@@ -103,6 +95,9 @@ fzfvim()
 }
 
 lfcd () {
+	__lf_cd__=$(mktemp -uq)
+	export __lf_cd__
+	trap 'rm -f $__lf_cd__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
 	lf -last-dir-path="$__lf_cd__" "$@"
 	if [ -f "$__lf_cd__" ]; then
 		__lf_dir__="$(cat "$__lf_cd__")"
@@ -127,12 +122,14 @@ vimcd()
 			__vim_cmd__=lfcd
 		fi
 	esac
+	(touch $__vim_prog__ &)
+	(touch $__vim_arg__ &)
 	$__vim_cmd__ $@ &&
 	{
 		__local_vim_prog__=$(<$__vim_prog__)
 		__local_vim_arg__=$(<$__vim_arg__)
-		(echo >$__vim_prog__ &)
-		(echo >$__vim_arg__ &)
+		(rm -f $__vim_prog__ &)
+		(rm -f $__vim_arg__ &)
 		clear
 		$__local_vim_prog__ "$__local_vim_arg__"
 	}
