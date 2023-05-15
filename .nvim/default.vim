@@ -2,8 +2,12 @@ nn sv :source ~/.nvim/init.vim<CR>
 
 " clang-format
 
-nn <C-f> :!echo %:p:h >$__lf_cd__; echo 'fzfvim' >$__vim_prog__; echo %:p >$__vim_arg__<CR> ZZ
-nn <C-o> :!echo %:p:h >$__lf_cd__; echo 'lfcd' >$__vim_prog__; echo %:p >$__vim_arg__<CR> ZZ
+nn <C-f> :!echo %:p:h >$__lf_cd__;
+	\ echo 'fzfvim' >$__vim_prog__;
+	\ echo %:p >$__vim_arg__<CR> ZZ
+nn <C-o> :!echo %:p:h >$__lf_cd__;
+	\ echo 'lfcd' >$__vim_prog__;
+	\ echo %:p >$__vim_arg__<CR> ZZ
 
 " motions
 

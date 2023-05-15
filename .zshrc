@@ -83,13 +83,14 @@ __vim_arg__=$(mktemp)
 export __vim_arg__
 __lf_cd__=$(mktemp)
 export __lf_cd__
-(touch $__vim_prog__ 2>/dev/null &)
-(touch $__vim_arg__ 2>/dev/null &)
-(touch $__lf_cd__ 2>/dev/null &)
+(touch $__vim_prog__ &)
+(touch $__vim_arg__ &)
+(touch $__lf_cd__ &)
 
 fzfvim()
 {
 	file=$(fzfdef $1)
+	echo $file
 	test $file || return
 	if [ -f "$file" ]; then
 		vimcd $file
@@ -107,7 +108,7 @@ lfcd()
 		__local_vim_arg__=$(<$__vim_arg__)
 		(echo >$__vim_prog__ &)
 		(echo >$__vim_arg__ &)
-		$__local_vim_prog__ "$__local_vim_arg__" 2>/dev/null
+		$__local_vim_prog__ "$__local_vim_arg__"
 	}
 }
 
@@ -127,15 +128,14 @@ vimcd()
 			cd $file
 			__vim_cmd__=lfcd
 		fi
-		;;
 	esac
 	$__vim_cmd__ $@ &&
 	{
 		__local_vim_prog__=$(<$__vim_prog__)
 		__local_vim_arg__=$(<$__vim_arg__)
-		(echo >$__vim_arg__ &)
 		(echo >$__vim_prog__ &)
-		$__local_vim_prog__ "$__local_vim_arg__" 2>/dev/null
+		(echo >$__vim_arg__ &)
+		$__local_vim_prog__ "$__local_vim_arg__"
 	}
 }
 
