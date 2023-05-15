@@ -1,0 +1,6 @@
+#!/bin/sh
+cd /tmp/
+while :; do
+	/bin/du *__vim_arg__ *__vim_prog__ | awk '{system("rm " $2)}'
+	sleep 60
+done
