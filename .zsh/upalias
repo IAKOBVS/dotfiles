@@ -1,2 +1,2 @@
 #!/bin/sh
-sed -n 's/alias \(.*\)=..*v .*\(\$[/_.A-Za-z]*\).*./nmap <leader>\1 :edit \2<CR>/p' .zsh_aliases > .zsh_vim_aliases
+sed -n 's/\t\(.*\)=..*v .*\(\$[/_.A-Za-z]*\).*./nn ;\1 :edit \2<CR>/p' .zsh_aliases > .vim_aliases.vim

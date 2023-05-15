@@ -1,4 +1,5 @@
-nn sv :source ~/.nvim/init.vim<CR>
+nn ;nv :source ~/.nvim/init.vim<CR>
+nn ;ua :! $HOME/.zsh/upalias<CR>
 
 " open fzf
 nn <C-f> :!sil echo %:p:h >$__lf_cd__ &
@@ -12,9 +13,6 @@ nn <C-h> :!sil echo $HOME >$__lf_cd__ &
 nn <C-o> :!sil echo %:p:h >$__lf_cd__ &
 	\ echo 'lfcd' >$__vim_prog__ ;
 	\ echo %:p >$__vim_arg__<CR> ZZ
-
-nmap <leader>vv :edit $HOME/.nvim/default.vim<CR>
-nmap <leader>zs :edit $HOME/.zsh/.zshrc<CR>
 
 " jump between paragraphs
 map J }

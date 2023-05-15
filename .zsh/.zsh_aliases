@@ -14,10 +14,10 @@ alias \
 	cpl='cfg --reset hard && cfg pull' \
 	vs='cd $HOME/.local/src/st && v config.h' \
 	sr='cd $HOME/.local/bin/scripts' \
-	vd='cd $HOME/.local/src/dwm && v config.h' \
-	vs='cd $HOME/.local/src/st && v config.h' \
-	vdw='cd $HOME/.local/src/dwmblocks && v blocks.h' \
-	vsl='cd $HOME/.local/src/slstatus && v config.h' \
+	vd='v $HOME/.local/src/dwm/config.h' \
+	vs='v $HOME/.local/src/st/config.h' \
+	vdw='v $HOME/.local/src/dwmblocks/blocks.h' \
+	vsl='v $HOME/.local/src/slstatus/config.h' \
 	dt='cd /tmp' \
 	tor='lfcd $HOME/Downloads/torrent' \
 	cl='cd $HOME/.local/src' \
