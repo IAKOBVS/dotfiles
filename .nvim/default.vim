@@ -13,6 +13,9 @@ nn <C-o> :!sil echo %:p:h >$__lf_cd__ &
 	\ echo 'lfcd' >$__vim_prog__ ;
 	\ echo %:p >$__vim_arg__<CR> ZZ
 
+nmap <leader>vv :edit $HOME/.nvim/default.vim<CR>
+nmap <leader>zs :edit $HOME/.zsh/.zshrc<CR>
+
 " jump between paragraphs
 map J }
 map K {
