@@ -19,7 +19,8 @@ for opt in $@; do
 		;;
 	esac
 done
-upndownscale() {
+upndownscale()
+{
 	waifu2xauto "$1" "$2"
 	res "$img_clean-hd.png" "$r"
 	sq "$img_clean-hd-resized.png"

@@ -9,28 +9,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'godlygeek/tabular'
-" Plug 'ptzz/lf.vim'
-" Plug 'voldikss/vim-floaterm'
 Plug 'vim-scripts/LargeFile'
-Plug 'tjdevries/coc-zsh'
-Plug 'https://github.com/preservim/nerdtree'
-
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Plug 'preservim/nerdtree'
-" Plug 'mechatroner/rainbow_csv'
-" Plug 'dart-lang/dart-vim-plugin'
-" Plug 'lervag/vimtex'
-
-" Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
-" Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
-" Plug 'neovim/nvim-lspconfig'
-" Plug 'williamboman/mason-lspconfig.nvim'
-" Plug 'hrsh7th/nvim-cmp'
-" Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'L3MON4D3/LuaSnip'
-
 cal plug#end()
 
 " highlight things
