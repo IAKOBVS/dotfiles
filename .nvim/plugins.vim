@@ -96,7 +96,6 @@ sunm ge
 " fzf
 nn <space>f :Files<CR>
 nn <space>h :Files ~<CR>
-" nn <C-f> :!echo $(dirname %:p) >$__lf_cd__ ; echo 'fzf' >$__vim_msg__<CR> ZZ
 nn <space>o :NERDTreeToggle<CR>
 let g:lf_replace_netrw = 1
 
