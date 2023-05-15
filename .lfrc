@@ -35,7 +35,7 @@ cmd open ${{
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
         text/*|application/json|inode/x-empty|application/x-subrip)
-		echo 'vimcd' >$__vim_prog__
+		echo $__VIMCD__ >$__vim_prog__
 		echo "$fx" >$__vim_arg__
 		lf -remote "send $id quit"
 		;;
@@ -53,7 +53,7 @@ cmd open ${{
 	video/*) mpv $fx ;;
 	application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
 	application/pgp-encrypted)
-		echo 'vimcd' >$__vim_prog__
+		echo $__VIMCD__ >$__vim_prog__
 		echo "$fx" >$__vim_arg__
 		lf -remote "send $id quit"
 		;;
