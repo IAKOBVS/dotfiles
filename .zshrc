@@ -77,88 +77,67 @@ bindkey -M visual '^[[P' vi-delete
 
 (pgrep xcape > /dev/null || remaps > /dev/null)
 
-__vim_msg__=$(mktemp)
+__vim_prog__=$(mktemp)
+export __vim_prog__
+__vim_arg__=$(mktemp)
+export __vim_arg__
 __lf_cd__=$(mktemp)
-export __vim_msg__
 export __lf_cd__
-(touch $__vim_msg__ 2>/dev/null &)
+(touch $__vim_prog__ 2>/dev/null &)
+(touch $__vim_arg__ 2>/dev/null &)
 (touch $__lf_cd__ 2>/dev/null &)
 
 fzfvim()
 {
 	file=$(fzfdef $1)
 	test $file || return
-	if [ -d "$file" ]; then
-		lfcd $file
-	else
-		cd "$(dirname $file)" || return
+	if [ -f "$file" ]; then
 		vimcd $file
+	else
+		lfcd $file
 	fi
 }
-
-# fzfvim()
-# {
-# 	file=$(fzfdef $1)
-# 	test $file || return
-# 	if [ ! -d "$file" ]; then
-# 		cd "$(dirname $file)" || return
-# 	fi
-# 	vimcd $file
-# }
 
 lfcd()
 {
 	lf -last-dir-path="$__lf_cd__" "$@" &&
-		cd $(cat $__lf_cd__)
+	cd <$__lf_cd__ &&
+	{
+		__local_vim_prog__=$(<$__vim_prog__)
+		__local_vim_arg__=$(<$__vim_arg__)
+		(echo >$__vim_prog__ &)
+		(echo >$__vim_arg__ &)
+		$__local_vim_prog__ "$__local_vim_arg__" 2>/dev/null
+	}
 }
 
 vimcd()
 {
-	if test "$@"; then
-		file=$(echo "${@##*/}")
-		if [ -d $file ]; then
-			cd $file || return
-			$EDITOR $arg &&
-				case $(cat $__vim_msg__) in
-				*fzf*) fzfvim ;;
-				*lf*) lfcd ;;
-				esac
-			return
-		elif [ -f $file ]; then
-			cd $(dirname $file) || return
-		else
-			(fzf_update_dir $file &)
+	case $1 in
+	'')
+		(fzf_update_dir $file &)
+		__vim_cmd__=$EDITOR
+		;;
+	*)
+		file=$(echo "${@##* }")
+		if [ -f $file ]; then
+			cd ${file%/?*}
+			__vim_cmd__=$EDITOR
+		elif [ -d $file ]; then
+			cd $file
+			__vim_cmd__=lfcd
 		fi
-	fi
-	$EDITOR $@ &&
-	case $(cat $__vim_msg__) in
-	*fzf*) fzfvim ;;
-	*lf*) lfcd ;;
+		;;
 	esac
+	$__vim_cmd__ $@ &&
+	{
+		__local_vim_prog__=$(<$__vim_prog__)
+		__local_vim_arg__=$(<$__vim_arg__)
+		(echo >$__vim_arg__ &)
+		(echo >$__vim_prog__ &)
+		$__local_vim_prog__ "$__local_vim_arg__" 2>/dev/null
+	}
 }
-
-# vimcd()
-# {
-# 	if test "$@"; then
-# 		file=$(echo "${@##*/}")
-# 		if [ -d $file ]; then
-# 			cd $file || return
-# 			$EDITOR &&
-# 				case $(cat $__vim_msg__) in
-# 				*fzf*) fzfvim ;;
-# 				esac
-# 			return
-# 		elif [ -f $file ]; then
-# 			cd $(dirname $file) || return
-# 		else
-# 			(fzf_update_dir $file &)
-# 		fi
-# 	fi
-# 	$EDITOR $@ &&
-# 	case $(cat $__vim_msg__) in
-# 	*fzf*) fzfvim ;;
-# 	esac
-# }
 
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh

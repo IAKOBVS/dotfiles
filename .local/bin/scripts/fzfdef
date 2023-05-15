@@ -1,2 +1,3 @@
 #!/bin/sh
+[ -f $1 ] && PWD=${1%/?*}
 fzfdir | fzfpreview $@

@@ -1,7 +1,9 @@
 nn sv :source ~/.nvim/init.vim<CR>
+
 " clang-format
-au FileType c,cpp nm cfm :silent exec "!cfm %:p"<CR>
-au FileType sh,bash nm cfm :silent exec "!shfmt -w %:p"<CR>
+
+nn <C-f> :!echo %:p:h >$__lf_cd__; echo 'fzfvim' >$__vim_prog__; echo %:p >$__vim_arg__<CR> ZZ
+nn <C-o> :!echo %:p:h >$__lf_cd__; echo 'lfcd' >$__vim_prog__; echo %:p >$__vim_arg__<CR> ZZ
 
 " motions
 
@@ -91,7 +93,6 @@ au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! hi PreProc ctermfg=35 guifg=#8ed5
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! mat Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! 2mat Special /[(){}]/
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
-au BufEnter * sil! lcd %:p:h
 au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
@@ -99,6 +100,10 @@ au BufNewFile,BufRead *.h se filetype=c
 au BufNewFile *.c,*.cpp 0r ~/.nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.nvim/templates/skeleton.pl
 au BufNewFile *.awk 0r ~/.nvim/templates/skeleton.awk
+au FileType c,cpp nm cfm :silent exec "!cfm %:p"<CR>
+au FileType sh,bash nm cfm :silent exec "!shfmt -w %:p"<CR>
+au BufEnter * sil! lcd %:p:h
+au BufEnter * sil! !echo :%p:h >$__vim_arg__
 
 " visible cursor and parens
 hi MatchParen guifg=white guibg=none
