@@ -25,8 +25,8 @@ set cleaner ctpvclear
 &ctpvquit $id
 
 cmd quitclear ${{
-	(rm -f $__vim_prog__ 2>/dev/null >/dev/null &)
-	(rm -f $__vim_arg__ 2>/dev/null >/dev/null &)
+	/bin/rm -f $__vim_prog__ &
+	/bin/rm -f $__vim_arg__ &
 	lf -remote "send $id quit"
 }}
 
@@ -34,10 +34,10 @@ cmd vimcd ${{
 	cd ${fx%/?*}
 	$EDITOR $fx &&
 	{
-		__local_vim_prog__=$(<$__vim_prog__)
-		__local_vim_arg__=$(<$__vim_arg__)
-		(rm $__vim_prog__ &)
-		(rm $__vim_arg__ &)
+		test -f $__vim_prog__ 2>/dev/null && __local_vim_prog__=$(<$__vim_prog__)
+		test -f $__vim_arg__ 2>/dev/null && __local_vim_arg__=$(<$__vim_arg__)
+		/bin/rm -f $__vim_prog__ &
+		/bin/rm -f $__vim_arg__ &
 		$__local_vim_prog__ "$__local_vim_arg__"
 	}
 }}
