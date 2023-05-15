@@ -1,7 +1,7 @@
 #!/bin/sh
 __VIM_PROG__="$(mktemp -uq)__VIM_PROG__"
 __VIM_ARG__="$(mktemp -uq)__VIM_ARG__"
-__LF_DIR__=$(mktemp -uq)
+__LF_DIR__="$(mktemp -uq)__LF_DIR__"
 export __VIM_PROG__
 export __VIM_ARG__
 export __LF_DIR__

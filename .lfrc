@@ -25,8 +25,8 @@ set cleaner ctpvclear
 &ctpvquit $id
 
 cmd quitclear ${{
-	(/bin/rm -f $__vim_prog__ &)
-	(/bin/rm -f $__vim_arg__ &)
+	(/bin/rm -f $__VIM_PROG__ &)
+	(/bin/rm -f $__VIM_ARG__ &)
 	lf -remote "send $id quit"
 }}
 
@@ -35,8 +35,8 @@ cmd open ${{
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
         text/*|application/json|inode/x-empty|application/x-subrip)
-		echo $__VIMCD__ >$__vim_prog__
-		echo "$fx" >$__vim_arg__
+		echo $__VIMCD__ >$__VIM_PROG__
+		echo "$fx" >$__VIM_ARG__
 		lf -remote "send $id quit"
 		;;
 	image/x-xcf) gimp $fx ;;
@@ -53,8 +53,8 @@ cmd open ${{
 	video/*) mpv $fx ;;
 	application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
 	application/pgp-encrypted)
-		echo $__VIMCD__ >$__vim_prog__
-		echo "$fx" >$__vim_arg__
+		echo $__VIMCD__ >$__VIM_PROG__
+		echo "$fx" >$__VIM_ARG__
 		lf -remote "send $id quit"
 		;;
 	application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
