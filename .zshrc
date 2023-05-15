@@ -81,6 +81,8 @@ __vim_prog__=$(mktemp -uq)
 __vim_arg__=$(mktemp -uq)
 export __vim_prog__
 export __vim_arg__
+(touch $__vim_prog__ &)
+(touch $__vim_arg__ &)
 
 fzfvim()
 {
@@ -97,8 +99,10 @@ fzfvim()
 lfcd () {
 	__lf_cd__=$(mktemp -uq)
 	export __lf_cd__
+	lf -last-dir-path="$__lf_cd__" "$@" &&
 	trap 'rm -f $__lf_cd__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
-	lf -last-dir-path="$__lf_cd__" "$@"
+	test -f $__vim_prog__ &&
+	$__vim_prog__ "$__vim_arg__"
 	if [ -f "$__lf_cd__" ]; then
 		__lf_dir__="$(cat "$__lf_cd__")"
 		[ -d "$__lf_dir__" ] && [ "$__lf_dir__" != "$(pwd)" ] && cd "$__lf_dir__"
@@ -107,6 +111,7 @@ lfcd () {
 
 vimcd()
 {
+	clear
 	case $1 in
 	'')
 		(fzf_update_dir $file &)
@@ -122,15 +127,13 @@ vimcd()
 			__vim_cmd__=lfcd
 		fi
 	esac
-	(touch $__vim_prog__ &)
-	(touch $__vim_arg__ &)
 	$__vim_cmd__ $@ &&
 	{
 		__local_vim_prog__=$(<$__vim_prog__)
 		__local_vim_arg__=$(<$__vim_arg__)
 		(rm -f $__vim_prog__ &)
 		(rm -f $__vim_arg__ &)
-		clear
+		test -f $__local_vim_prog__ &&
 		$__local_vim_prog__ "$__local_vim_arg__"
 	}
 }
