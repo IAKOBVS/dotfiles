@@ -1,73 +1,70 @@
 #!/bin/sh
 alias \
-	poweroff='sync && systemctl poweroff' \
-	reboot='sync && systemctl reboot' \
-	v='vimcd' \
-	par='paru --needed --skipreview -S' \
-	pars='paru --needed --skipreview -Syu' \
-	prq='paru -Q | fzf' \
-	pacman='sudo pacman' \
-	sctl='sudo systemctl' \
-	sv='sudo v' \
-	cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
-	cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
-	cpl='cfg --reset hard && cfg pull' \
-	vs='cd $HOME/.local/src/st && v config.h' \
-	sr='cd $HOME/.local/bin/scripts' \
-	vd='v $HOME/.local/src/dwm/config.h' \
-	vs='v $HOME/.local/src/st/config.h' \
-	vdw='v $HOME/.local/src/dwmblocks/blocks.h' \
-	vsl='v $HOME/.local/src/slstatus/config.h' \
-	dt='cd /tmp' \
-	tor='lfcd $HOME/Downloads/torrent' \
-	cl='cd $HOME/.local/src' \
-	cs='cd $HOME/.zsh' \
-	rec='lfcd ~/Videos/Recordings' \
-	vid='lfcd ~/Videos' \
-	xi='v $HOME/.xinitrc' \
-	vp='v $HOME/.config/picom.conf' \
-	vvim='cd $HOME/.nvim; v $HOME/.nvim/default.vim' \
-	zs='v $HOME/.zsh/.zshrc' \
-	va='v $HOME/.zsh/.zsh_aliases' \
-	vap='v $HOME/.local/share/alias/aliases-laptop' \
-	vlf='v $HOME/.lfrc' \
-	fin='. fin' \
-	z='zathura' \
-	g='git' \
-	zr='zaread' \
-	pv='pavucontrol' \
-	i='sxiv' \
-	pm='pulsemixer' \
-	ht='htop' \
-	sht='sudo htop' \
-	ki='killall' \
-	l='lfcd' \
-	pq='paru -Q | fzf' \
-	fs='. fs' \
-	rs='res4thum' \
-	fu="git commit -a -m 'newest' && git push origin" \
-	gps='git commit -a && git push origin' \
-	fp='git fetch --all && git reset --hard origin/master' \
-	gr='git reset --hard HEAD && git pull' \
-	gpl='git pull' \
-	cp='cp -iv' \
-	mv='mv -iv' \
-	rm='rm -vI' \
-	bc='bc -ql' \
-	mkd='mkdir -pv' \
-	yt='yt-dlp --embed-metadata -i' \
-	yta='yt -x -f bestaudio/bestub' \
-	ls='ls -hN --color=auto --group-directories-first' \
-	grep='grep --color=auto' \
-	diff='diff --color=auto' \
-	hi='highlight --out-format=ansi' \
-	ip='ip -color=auto' \
-	sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
-	slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
-	dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
-	sf='v /etc/fan2go/fan2go.yaml' \
-	nv='nvtop' \
-	vmpv='cd $HOME/.config/mpv && v mpv.conf' \
-	dfh='df -h | grep -v -e snap -e boot -e udev -e /run/' \
-	update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg' \
-	upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'" \
+mkd='mkdir -pv' \
+v='vimcd' \
+cp='cp -iv' \
+mv='mv -iv' \
+rm='rm -vI' \
+bc='bc -ql' \
+z='zathura' \
+g='git' \
+zr='zaread' \
+pv='pavucontrol' \
+i='sxiv' \
+pm='pulsemixer' \
+ht='htop' \
+sht='sudo htop' \
+ki='killall' \
+l='lfcd' \
+pq='paru -Q | fzf' \
+poweroff='sync && systemctl poweroff' \
+reboot='sync && systemctl reboot' \
+par='paru --needed --skipreview -S' \
+pars='paru --needed --skipreview -Syu' \
+prq='paru -Q | fzf' \
+pacman='sudo pacman' \
+systl='sudo systemctl' \
+sv='sudo v' \
+cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
+cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
+cpl='cfg --reset hard && cfg pull' \
+vs='cd $HOME/.local/src/st && v config.h' \
+sr='cd $HOME/.local/bin/scripts' \
+vd='v $HOME/.local/src/dwm/config.h' \
+vs='v $HOME/.local/src/st/config.h' \
+vdw='v $HOME/.local/src/dwmblocks/blocks.h' \
+vsl='v $HOME/.local/src/slstatus/config.h' \
+dt='cd /tmp' \
+tor='lfcd $HOME/Downloads/torrent' \
+cl='cd $HOME/.local/src' \
+cs='cd $HOME/.zsh' \
+rec='lfcd ~/Videos/Recordings' \
+vid='lfcd ~/Videos' \
+xi='v $HOME/.xinitrc' \
+vp='v $HOME/.config/picom.conf' \
+vvim='cd $HOME/.nvim; v $HOME/.nvim/default.vim' \
+zs='v $HOME/.zsh/.zshrc' \
+va='v $HOME/.zsh/.zsh_aliases' \
+vap='v $HOME/.local/share/alias/aliases-laptop' \
+vlf='v $HOME/.lfrc' \
+fin='. fin' \
+fs='. fs' \
+rs='res4thum' \
+fu="git commit -a -m 'newest' && git push origin" \
+gps='git commit -a && git push origin' \
+yt='yt-dlp --embed-metadata -i' \
+yta='yt -x -f bestaudio/bestub' \
+ls='ls -hN --color=auto --group-directories-first' \
+grep='grep --color=auto' \
+diff='diff --color=auto' \
+hi='highlight --out-format=ansi' \
+ip='ip -color=auto' \
+sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
+slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
+dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
+sf='v /etc/fan2go/fan2go.yaml' \
+nv='nvtop' \
+vmpv='cd $HOME/.config/mpv && v mpv.conf' \
+dfh="df -h | head -n1; df -h | /bin/grep -e /$ -e /home" \
+update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg' \
+upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'" \
