@@ -1,6 +1,9 @@
 #!/bin/zsh
-__NPROC__=$(nproc)
-export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
+
+. $HOME/.zsh/.zsh_aliases
+. $HOME/.zsh/.shell_functions
+
+export FZF_DEFAULT_COMMAND="fd -j $(nproc) --hidden --glob \
 	--exclude '*png' \
 	--exclude '*jpg' \
 	--exclude '*jpeg' \
@@ -73,10 +76,6 @@ bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 (pgrep xcape > /dev/null || remaps > /dev/null)
-
-# Load aliases and shortcuts if existent.
-. $HOME/.zsh/.zsh_aliases
-. $HOME/.zsh/.shell_functions
 
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh

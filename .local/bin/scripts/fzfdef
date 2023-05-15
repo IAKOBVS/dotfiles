@@ -1,6 +1,9 @@
 #!/bin/sh
 case $1 in
 '') fzfdir | fzfpreview $@ ;;
+--exact)
+	shift
+	fzfdir --exact | fzfpreview $@ ;;
 *)
 	__fzfdef_dir__=${1%/?*}
 	shift
