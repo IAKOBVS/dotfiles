@@ -131,8 +131,8 @@ __select_action__()
 {
 	test -f $__vim_prog__ 2>/dev/null && __local_vim_prog__=$(<$__vim_prog__)
 	test -f $__vim_arg__ 2>/dev/null && __local_vim_arg__=$(<$__vim_arg__)
-	/bin/rm -f $__vim_prog__ &
-	/bin/rm -f $__vim_arg__ &
+	(/bin/rm -f $__vim_prog__ &)
+	(/bin/rm -f $__vim_arg__ &)
 	case $__local_vim_prog__ in
 	*fzf*) fzfvim "$__local_vim_arg__" ;;
 	*vim*) vimcd "$__local_vim_arg__" ;;

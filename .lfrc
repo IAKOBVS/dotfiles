@@ -30,18 +30,6 @@ cmd quitclear ${{
 	lf -remote "send $id quit"
 }}
 
-cmd vimcd ${{
-	cd ${fx%/?*}
-	$EDITOR $fx &&
-	{
-		test -f $__vim_prog__ 2>/dev/null && __local_vim_prog__=$(<$__vim_prog__)
-		test -f $__vim_arg__ 2>/dev/null && __local_vim_arg__=$(<$__vim_arg__)
-		/bin/rm -f $__vim_prog__ &
-		/bin/rm -f $__vim_arg__ &
-		$__local_vim_prog__ "$__local_vim_arg__"
-	}
-}}
-
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
