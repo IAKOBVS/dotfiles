@@ -1,101 +1,72 @@
 #!/bin/sh
-alias \
-	poweroff='sync && systemctl poweroff' \
-	reboot='sync && systemctl reboot'
-
-alias v='vimcd' \
-
-alias \
-	par='paru --needed --skipreview -S' \
-	pars='paru --needed --skipreview -Syu' \
-	prq='paru -Q | fzf' \
-	pacman='sudo pacman' \
-	sctl='sudo systemctl' \
-	sv='sudo v' \
-	cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
-	cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
-	cpl='cfg --reset hard && cfg pull'
-
-# cd
-alias \
-	vs='cd $HOME/.local/src/st && v config.h' \
-	sr='cd $HOME/.local/bin/scripts' \
-	vd='cd $HOME/.local/src/dwm && v config.h' \
-	vs='cd $HOME/.local/src/st && v config.h' \
-	vdw='cd $HOME/.local/src/dwmblocks && v blocks.h' \
-	vsl='cd $HOME/.local/src/slstatus && v config.h' \
-	dt='cd /tmp' \
-	tor='cd $HOME/Downloads/torrent && lfcd $HOME/Downloads/torrent' \
-	cl='cd $HOME/.local/src' \
-	cs='cd $HOME/.zsh'
-
-# lf
-alias \
-	rec='lfcd ~/Videos/Recordings' \
-	vid='lfcd ~/Videos'
-
-# vim
-alias \
-	xi='v $HOME/.xinitrc' \
-	vp='v $HOME/.config/picom.conf' \
-	vvim='cd $HOME/.nvim; v $HOME/.nvim/default.vim' \
-	zs='v $HOME/.zsh/.zshrc' \
-	va='v $HOME/.zsh/.zsh_aliases' \
-	vap='v $HOME/.local/share/alias/aliases-laptop' \
-	vlf='v $HOME/.lfrc' \
-	fin='. fin'
-
-# shorten 
-alias \
-	z='zathura' \
-	g='git' \
-	zr='zaread' \
-	pv='pavucontrol' \
-	i='sxiv' \
-	pm='pulsemixer' \
-	ht='htop' \
-	sht='sudo htop' \
-	ki='killall' \
-	l='lfcd' \
-	pq='paru -Q | fzf' \
-	fs='. fs' \
-	rs='res4thum'
-
-# github
-alias \
-	fu="git commit -a -m 'newest' && git push origin" \
-	gps='git commit -a && git push origin' \
-	fp='git fetch --all && git reset --hard origin/master' \
-	gr='git reset --hard HEAD && git pull' \
-	gpl='git pull'
-
-# verbosity
-alias \
-	cp='cp -iv' \
-	mv='mv -iv' \
-	rm='rm -vI' \
-	bc='bc -ql' \
-	mkd='mkdir -pv' \
-	yt='yt-dlp --embed-metadata -i' \
-	yta='yt -x -f bestaudio/bestub'
-
-# colorize 
-alias \
-	ls='ls -hN --color=auto --group-directories-first' \
-	grep='grep --color=auto' \
-	diff='diff --color=auto' \
-	hi='highlight --out-format=ansi' \
-	ip='ip -color=auto'
-
-alias \
-	sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
-	slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
-	dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
-	sf='v /etc/fan2go/fan2go.yaml' \
-	nv='nvtop'
-
+alias poweroff='sync && systemctl poweroff'
+alias reboot='sync && systemctl reboot'
+alias v='vimcd'
+alias par='paru --needed --skipreview -S'
+alias pars='paru --needed --skipreview -Syu'
+alias prq='paru -Q | fzf'
+alias pacman='sudo pacman'
+alias sctl='sudo systemctl'
+alias sv='sudo v'
+alias cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force'
+alias cpl='cfg --reset hard && cfg pull'
+alias vs='cd $HOME/.local/src/st && v config.h'
+alias sr='cd $HOME/.local/bin/scripts'
+alias vd='cd $HOME/.local/src/dwm && v config.h'
+alias vs='cd $HOME/.local/src/st && v config.h'
+alias vdw='cd $HOME/.local/src/dwmblocks && v blocks.h'
+alias vsl='cd $HOME/.local/src/slstatus && v config.h'
+alias dt='cd /tmp'
+alias tor='cd $HOME/Downloads/torrent && lfcd $HOME/Downloads/torrent'
+alias cl='cd $HOME/.local/src'
+alias cs='cd $HOME/.zsh'
+alias rec='lfcd ~/Videos/Recordings'
+alias vid='lfcd ~/Videos'
+alias xi='v $HOME/.xinitrc'
+alias vp='v $HOME/.config/picom.conf'
+alias vvim='cd $HOME/.nvim; v $HOME/.nvim/default.vim'
+alias zs='v $HOME/.zsh/.zshrc'
+alias va='v $HOME/.zsh/.zsh_aliases'
+alias vap='v $HOME/.local/share/alias/aliases-laptop'
+alias vlf='v $HOME/.lfrc'
+alias fin='. fin'
+alias z='zathura'
+alias g='git'
+alias zr='zaread'
+alias pv='pavucontrol'
+alias i='sxiv'
+alias pm='pulsemixer'
+alias ht='htop'
+alias sht='sudo htop'
+alias ki='killall'
+alias l='lfcd'
+alias pq='paru -Q | fzf'
+alias fs='. fs'
+alias rs='res4thum'
+alias fu="git commit -a -m 'newest' && git push origin"
+alias gps='git commit -a && git push origin'
+alias fp='git fetch --all && git reset --hard origin/master'
+alias gr='git reset --hard HEAD && git pull'
+alias gpl='git pull'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -vI'
+alias bc='bc -ql'
+alias mkd='mkdir -pv'
+alias yt='yt-dlp --embed-metadata -i'
+alias yta='yt -x -f bestaudio/bestub'
+alias ls='ls -hN --color=auto --group-directories-first'
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias hi='highlight --out-format=ansi'
+alias ip='ip -color=auto'
+alias sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"'
+alias slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &'
+alias dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &'
+alias sf='v /etc/fan2go/fan2go.yaml'
+alias nv='nvtop'
 alias vmpv='cd $HOME/.config/mpv && v mpv.conf'
-
 alias dfh='df -h | grep -v -e snap -e boot -e udev -e /run/'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias upvim="v -c ':PlugUpdate' -c ':CocUpdate'"
