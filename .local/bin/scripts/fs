@@ -1,11 +1,11 @@
 #!/bin/sh
-__fs_path__="$(find $HOME/.local/bin/scripts $HOME/c \
+__fs_path__="$(find $HOME/.local/bin/scripts $HOME/c -type f \
 	! -path '*cnlp*data*' \
 	! -path '*vscode*' \
 	! -path '*git*' \
 	! -path '*.o' \
 	! -path '*.out' \
 	! -name '.' \
-	-type f 2>/dev/null | fzfpreview --delimiter / --with-nth -1)"
+	2>/dev/null | fzfpreview --delimiter / --with-nth -1)"
 test $__fs_path__ || return 1
 $EDITOR $__fs_path__ && cd $(dirname $__fs_path__) || return 1
