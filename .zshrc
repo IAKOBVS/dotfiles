@@ -85,7 +85,6 @@ export __vim_arg__
 fzfvim()
 {
 	file=$(fzfdef $1)
-	echo $file
 	test $file || return
 	if [ -f "$file" ]; then
 		vimcd $file
@@ -129,8 +128,10 @@ vimcd()
 
 __select_action__()
 {
-	test -f $__vim_prog__ 2>/dev/null && __local_vim_prog__=$(<$__vim_prog__)
-	test -f $__vim_arg__ 2>/dev/null && __local_vim_arg__=$(<$__vim_arg__)
+	test -f $__vim_prog__ 2>/dev/null || return
+	__local_vim_prog__=$(<$__vim_prog__)
+	test -f $__vim_arg__ 2>/dev/null &&
+		__local_vim_arg__=$(<$__vim_arg__)
 	(/bin/rm -f $__vim_prog__ &)
 	(/bin/rm -f $__vim_arg__ &)
 	case $__local_vim_prog__ in

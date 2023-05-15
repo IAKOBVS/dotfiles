@@ -1,7 +1,5 @@
 nn sv :source ~/.nvim/init.vim<CR>
 
-" clang-format
-
 nn <C-f> :!echo %:p:h >$__lf_cd__;
 	\ echo 'fzfvim' >$__vim_prog__;
 	\ echo %:p >$__vim_arg__<CR> ZZ
