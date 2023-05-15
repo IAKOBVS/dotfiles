@@ -28,6 +28,17 @@ fzfvim()
 	fi
 }
 
+fzflive()
+{
+	file=$(fzfpreview $1)
+	test $file || return
+	if [ -f "$file" ]; then
+		vimcd $file
+	else
+		lfcd $file
+	fi
+}
+
 vimcd()
 {
 	case $1 in
@@ -66,9 +77,10 @@ __select_action__()
 	(/bin/rm -f $__vim_prog__ &)
 	(/bin/rm -f $__vim_arg__ &)
 	case $__local_vim_prog__ in
-	*fzf*) fzfvim "$__local_vim_arg__" ;;
-	*vim*) vimcd "$__local_vim_arg__" ;;
-	*lf*) lfcd "$__local_vim_arg__" ;;
+	*fzfvim*) fzfvim "$__local_vim_arg__" ;;
+	*fzflive*) fzfvim "$__local_vim_arg__" ;;
+	*vimcd*) vimcd "$__local_vim_arg__" ;;
+	*lfcd*) lfcd "$__local_vim_arg__" ;;
 	esac
 }
 

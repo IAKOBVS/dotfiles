@@ -9,10 +9,20 @@ nn <C-f> :!sil echo %:p:h >$__lf_cd__ &
 nn <C-h> :!sil echo $HOME >$__lf_cd__ &
 	\ echo 'fzfvim' >$__vim_prog__ ;
 	\ echo $HOME >$__vim_arg__<CR> ZZ
+" open fzflive
+nn <space>f :!sil echo %:p:h >$__lf_cd__ &
+	\ echo 'fzflive' >$__vim_prog__ ;
+	\ echo %:p >$__vim_arg__<CR> ZZ
+" open fzflive $HOME
+nn <space>h :!sil echo $HOME >$__lf_cd__ &
+	\ echo 'fzflive' >$__vim_prog__ ;
+	\ echo $HOME >$__vim_arg__<CR> ZZ
 " open lf
 nn <C-o> :!sil echo %:p:h >$__lf_cd__ &
 	\ echo 'lfcd' >$__vim_prog__ ;
 	\ echo %:p >$__vim_arg__<CR> ZZ
+" open cwd in new terminal
+nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
 " jump between paragraphs
 map J }

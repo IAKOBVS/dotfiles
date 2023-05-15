@@ -5,8 +5,6 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'tribela/vim-transparent'
 Plug 'bkad/CamelCaseMotion'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
@@ -73,15 +71,6 @@ sunm w
 sunm b
 sunm e
 sunm ge
-
-" fzf
-nn <space>f :Files<CR>
-nn <space>h :Files ~<CR>
-nn <space>o :NERDTreeToggle<CR>
-let g:lf_replace_netrw = 1
-
-" open cwd in new terminal
-nn <space>s :w<CR>:let @a=expand('%')<CR>:silent !sd % >/dev/null 2>&1 & disown &<CR>:e!<CR>:let &modified=0<CR>:let @" = @a<CR>
 
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
