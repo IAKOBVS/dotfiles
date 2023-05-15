@@ -1,16 +1,17 @@
 nn sv :source ~/.nvim/init.vim<CR>
 
-nn <C-f> :!echo %:p:h >$__lf_cd__;
-	\ echo 'fzfvim' >$__vim_prog__;
+" open fzf
+nn <C-f> :!sil echo %:p:h >$__lf_cd__ &
+	\ echo 'fzfvim' >$__vim_prog__ ;
 	\ echo %:p >$__vim_arg__<CR> ZZ
-nn <C-o> :!echo %:p:h >$__lf_cd__;
-	\ echo 'lfcd' >$__vim_prog__;
+" open fzf $HOME
+nn <C-h> :!sil echo $HOME >$__lf_cd__ &
+	\ echo 'fzfvim' >$__vim_prog__ ;
+	\ echo $HOME >$__vim_arg__<CR> ZZ
+" open lf
+nn <C-o> :!sil echo %:p:h >$__lf_cd__ &
+	\ echo 'lfcd' >$__vim_prog__ ;
 	\ echo %:p >$__vim_arg__<CR> ZZ
-nn <C-h> :!echo ~ >$__lf_cd__;
-	\ echo 'fzfvim' >$__vim_prog__;
-	\ echo ~ >$__vim_arg__<CR> ZZ
-
-" motions
 
 " jump between paragraphs
 map J }
@@ -90,25 +91,32 @@ en
 
 " save as sudo
 cnorea w!! execute 'sil! write !sudo tee % >/dev/null' <bar> edit!
-
+" disable swap startup warning
 au SwapExists * let v:swapchoice = "e" | echom "swap exists"
 
 " C highlighting
 au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! hi PreProc ctermfg=35 guifg=#8ed5e5
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! mat Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
 sil! au BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp sil! 2mat Special /[(){}]/
+" disable autocomment
 au FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
-au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
+au BufNewFile,BufRead *.h se filetype=c
+" 4-space tabs
 au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
-au BufNewFile,BufRead *.h se filetype=c
+" format current file
+au FileType c,cpp nm cfm :silent exec "!cfm %:p"<CR>
+au FileType sh,bash,zsh nm cfm :silent exec "!shfmt -w -fn %:p"<CR>
+" autocd
+au BufEnter * sil! lcd %:p:h
+" exit normally
+au BufEnter * sil! !echo :%p:h >$__vim_arg__
+
 au BufNewFile *.c,*.cpp 0r ~/.nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.nvim/templates/skeleton.pl
 au BufNewFile *.awk 0r ~/.nvim/templates/skeleton.awk
-au FileType c,cpp nm cfm :silent exec "!cfm %:p"<CR>
-au FileType sh,bash,zsh nm cfm :silent exec "!shfmt -w %:p"<CR>
-au BufEnter * sil! lcd %:p:h
-au BufEnter * sil! !echo :%p:h >$__vim_arg__
+
+au BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;
 
 " visible cursor and parens
 hi MatchParen guifg=white guibg=none

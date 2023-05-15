@@ -1,5 +1,6 @@
 #!/bin/sh
-__find__() {
+__find__()
+{
 	find $1 \
 		! -path '*cache*' \
 		! -path '*.git*' \
