@@ -81,8 +81,6 @@ __vim_prog__=$(mktemp -uq)
 __vim_arg__=$(mktemp -uq)
 export __vim_prog__
 export __vim_arg__
-(touch $__vim_prog__ &)
-(touch $__vim_arg__ &)
 
 fzfvim()
 {
@@ -101,8 +99,7 @@ lfcd () {
 	export __lf_cd__
 	lf -last-dir-path="$__lf_cd__" "$@" &&
 	trap 'rm -f $__lf_cd__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
-	test -f $__vim_prog__ &&
-	$__vim_prog__ "$__vim_arg__"
+	__select_action__
 	if [ -f "$__lf_cd__" ]; then
 		__lf_dir__="$(cat "$__lf_cd__")"
 		[ -d "$__lf_dir__" ] && [ "$__lf_dir__" != "$(pwd)" ] && cd "$__lf_dir__"
@@ -111,7 +108,6 @@ lfcd () {
 
 vimcd()
 {
-	clear
 	case $1 in
 	'')
 		(fzf_update_dir $file &)
@@ -128,14 +124,20 @@ vimcd()
 		fi
 	esac
 	$__vim_cmd__ $@ &&
-	{
-		__local_vim_prog__=$(<$__vim_prog__)
-		__local_vim_arg__=$(<$__vim_arg__)
-		(rm -f $__vim_prog__ &)
-		(rm -f $__vim_arg__ &)
-		test -f $__local_vim_prog__ &&
-		$__local_vim_prog__ "$__local_vim_arg__"
-	}
+	__select_action__
+}
+
+__select_action__()
+{
+	test -f $__vim_prog__ 2>/dev/null && __local_vim_prog__=$(<$__vim_prog__)
+	test -f $__vim_arg__ 2>/dev/null && __local_vim_arg__=$(<$__vim_arg__)
+	(/bin/rm -f $__vim_prog__ &)
+	(/bin/rm -f $__vim_arg__ &)
+	case $__local_vim_prog__ in
+	*fzf*) fzfvim "$__local_vim_arg__" ;;
+	*vim*) vimcd "$__local_vim_arg__" ;;
+	*lf*) lfcd "$__local_vim_arg__" ;;
+	esac
 }
 
 # Load syntax highlighting; should be last.
