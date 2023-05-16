@@ -11,6 +11,7 @@ __find__()
 		! -path '*.virtualenv*' \
 		! -path '*.cargo*' \
 		! -path '*.o' \
+		! -path '*.out' \
 		! -path '*.pass*' \
 		! -path '*.png' \
 		! -path '*.jpeg' \
