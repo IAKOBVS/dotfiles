@@ -1,11 +1,21 @@
 #!/bin/sh
 alias \
+yt='yt-dlp --embed-metadata -i' \
+yta='yt -x -f bestaudio/bestub' \
+ls='ls -hN --color=auto --group-directories-first' \
+grep='grep --color=auto' \
+diff='diff --color=auto' \
+hi='highlight --out-format=ansi' \
+ip='ip -color=auto' \
 mkd='mkdir -pv' \
-v='vimcd' \
 cp='cp -iv' \
 mv='mv -iv' \
 rm='rm -vI' \
 bc='bc -ql' \
+fin='. fin' \
+fs='. fs' \
+v='vimcd' \
+rs='res4thum' \
 z='zathura' \
 g='git' \
 zr='zaread' \
@@ -16,6 +26,7 @@ ht='htop' \
 sht='sudo htop' \
 ki='killall' \
 l='lfcd' \
+nv='nvtop' \
 pq='paru -Q | fzf' \
 poweroff='sync && systemctl poweroff' \
 reboot='sync && systemctl reboot' \
@@ -37,33 +48,21 @@ vmpv='v $HOME/.config/mpv/mpv.conf' \
 xi='v $HOME/.xinitrc' \
 zs='v $HOME/.zsh/.zshrc' \
 va='v $HOME/.zsh/.zsh_aliases' \
-vap='v $HOME/.local/share/alias/aliases-laptop' \
 vp='v $HOME/.config/picom.conf' \
 vvim='v $HOME/.nvim/default.vim' \
 vlf='v $HOME/.lfrc' \
-dt='cd /tmp' \
 tor='lfcd $HOME/Downloads/torrent' \
-cl='cd $HOME/.local/src' \
-cs='cd $HOME/.zsh' \
 rec='lfcd ~/Videos/Recordings' \
 vid='lfcd ~/Videos' \
-fin='. fin' \
-fs='. fs' \
-rs='res4thum' \
+dt='cd /tmp' \
+cl='cd $HOME/.local/src' \
+cs='cd $HOME/.zsh' \
 fu="git commit -a -m 'newest' && git push origin" \
 gps='git commit -a && git push origin' \
-yt='yt-dlp --embed-metadata -i' \
-yta='yt -x -f bestaudio/bestub' \
-ls='ls -hN --color=auto --group-directories-first' \
-grep='grep --color=auto' \
-diff='diff --color=auto' \
-hi='highlight --out-format=ansi' \
-ip='ip -color=auto' \
 sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
 slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
 dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
 sf='v /etc/fan2go/fan2go.yaml' \
-nv='nvtop' \
 dfh="df -h | head -n1; df -h | /bin/grep -e /$ -e /home" \
 update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg' \
 upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'" \
