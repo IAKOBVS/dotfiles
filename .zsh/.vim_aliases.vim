@@ -6,7 +6,6 @@ nn ;vmpv :edit $HOME/.config/mpv/mpv.conf<CR>\
 nn ;xi :edit $HOME/.xinitrc<CR>\
 nn ;zs :edit $HOME/.zsh/.zshrc<CR>\
 nn ;va :edit $HOME/.zsh/.zsh_aliases<CR>\
-nn ;vap :edit $HOME/.local/share/alias/aliases-laptop<CR>\
 nn ;vp :edit $HOME/.config/picom.conf<CR>\
 nn ;vvim :edit $HOME/.nvim/default.vim<CR>\
 nn ;vlf :edit $HOME/.lfrc<CR>\
