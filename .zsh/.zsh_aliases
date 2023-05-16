@@ -6,6 +6,7 @@ rm='rm -vI' \
 bc='bc -ql' \
 fin='. fin' \
 fs='. fs' \
+st='stu' \
 v='vimcd' \
 rs='res4thum' \
 z='zathura' \
