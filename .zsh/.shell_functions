@@ -9,12 +9,12 @@ lfcd()
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	if [ -f "$__LF_DIR__" ]; then
-		local __lf_dir__=$(<$__LF_DIR__)
-		[ -d "$__lf_dir__" ] && [ "$__lf_dir__" != "$(pwd)" ] && cd "$__lf_dir__"
+		local dir=$(<$__LF_DIR__)
+		[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
 	fi
 }
 
-__FZF__()
+fzfbase()
 {
 	file=$($@)
 	[ ! $file ] && return
@@ -27,47 +27,47 @@ __FZF__()
 
 fzfvim()
 {
-	__FZF__ fzfdef $@
+	fzfbase fzfdef $@
 }
 fzfexact()
 {
-	__FZF__ fzfdef -e $@
+	fzfbase fzfdef -e $@
 }
 fzflive()
 {
-	__FZF__ fzfpreview
+	fzfbase fzfpreview
 }
 fzfexactlive()
 {
-	__FZF__ fzfpreview -e
+	fzfbase fzfpreview -e
 }
 
 vimcd()
 {
-	local __vim_cmd__
-	local __vim_file__
+	local cmd
+	local file
 	case $1 in
 	'')
-		__vim_cmd__=$EDITOR
-		__vim_file__=
+		cmd=$EDITOR
+		file=
 		;;
 	*)
-		__vim_file__=$(realpath ${@##* })
-		if [ -f $__vim_file__ ]; then
-			cd ${__vim_file__%/?*}
-			__vim_cmd__=$EDITOR
-		elif [ -d $__vim_file__ ]; then
-			cd $__vim_file__
-			__vim_cmd__=lfcd
+		file=$(realpath ${@##* })
+		if [ -f $file ]; then
+			cd ${file%/?*}
+			cmd=$EDITOR
+		elif [ -d $file ]; then
+			cd $file
+			cmd=lfcd
 		else
-			cd $(dirname $__vim_file__)
-			touch $__vim_file__
-			__vim_cmd__=$EDITOR
+			cd $(dirname $file)
+			touch $file
+			cmd=$EDITOR
 		fi
 		shift
 		;;
 	esac
-	$__vim_cmd__ $__vim_file__ $@ &&
+	$cmd $file $@ &&
 		__vim_sel__
 }
 
@@ -83,22 +83,22 @@ export __FZFLIVEHOME__=7
 __vim_sel__()
 {
 	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
-	local __local_vim_prog__=$(<$__VIM_PROG__)
+	local prog=$(<$__VIM_PROG__)
 	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
-		local __local_vim_arg__=''
+		local arg=''
 	else
-		local __local_vim_arg__=$(<$__VIM_ARG__)
+		local arg=$(<$__VIM_ARG__)
 	fi
 	(/bin/rm -f $__VIM_PROG__ &)
 	(/bin/rm -f $__VIM_ARG__ &)
-	case $__local_vim_prog__ in
-	$__VIMCD__) vimcd $__local_vim_arg__ ;;
-	$__LFCD__) lfcd $__local_vim_arg__ ;;
-	$__FZF__) fzfvim $__local_vim_arg__ ;;
-	$__FZFLIVE__) fzflive $__local_vim_arg__ ;;
-	$__FZFEXACT__) fzfexact $__local_vim_arg__ ;;
-	$__FZFEXACTLIVE__) fzfexactlive $__local_vim_arg__ ;;
-	$__FZFLIVEHOME__) cd $HOME; fzflive $__local_vim_arg__ ;;
+	case $prog in
+	$__VIMCD__) vimcd $arg ;;
+	$__LFCD__) lfcd $arg ;;
+	$__FZF__) fzfvim $arg ;;
+	$__FZFLIVE__) fzflive $arg ;;
+	$__FZFEXACT__) fzfexact $arg ;;
+	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
+	$__FZFLIVEHOME__) cd $HOME; fzflive $arg ;;
 	esac
 }
 
