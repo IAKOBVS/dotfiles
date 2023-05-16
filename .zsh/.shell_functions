@@ -98,7 +98,7 @@ __vim_sel__()
 	$__FZFLIVE__) fzflive $arg ;;
 	$__FZFEXACT__) fzfexact $arg ;;
 	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
-	$__FZFLIVEHOME__) cd $HOME; fzflive $arg ;;
+	$__FZFLIVEHOME__) cd $HOME && fzflive $arg ;;
 	esac
 }
 
