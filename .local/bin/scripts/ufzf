@@ -25,7 +25,5 @@ __find__()
 		! -path '*dart*' \
 		2>/dev/null
 }
-if ! ps -A | grep -F 'find' -q; then
-	__find__ / >/tmp/__fzfroot__ &
-	__find__ $HOME >/tmp/__fzfhome__ &
-fi
+__find__ / >/tmp/__fzfroot__ &
+__find__ $HOME >/tmp/__fzfhome__ &

@@ -11,7 +11,7 @@ lfcd()
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	if [ -f "$__LF_DIR__" ]; then
-		local __lf_dir__="$(cat "$__LF_DIR__")"
+		local __lf_dir__=$(<$__LF_DIR__)
 		[ -d "$__lf_dir__" ] && [ "$__lf_dir__" != "$(pwd)" ] && cd "$__lf_dir__"
 	fi
 }
