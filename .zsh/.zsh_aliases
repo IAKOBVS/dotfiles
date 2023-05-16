@@ -29,9 +29,9 @@ prq='paru -Q | fzf' \
 pacman='sudo pacman' \
 systl='sudo systemctl' \
 sv='sudo v' \
-cfg='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
-cu='cfg add $HOME/.local/bin/scripts && cfg commit -a -m new && cfg push --force' \
-cpl='cfg --reset hard && cfg pull' \
+c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
+cu='c add $HOME/.local/bin/scripts && c commit -a -m new && cfg push --force' \
+cpl='c --reset hard && c pull' \
 sr='cd $HOME/.local/bin/scripts' \
 vd='v $HOME/.local/src/dwm/config.h' \
 vdw='v $HOME/.local/src/dwmblocks/blocks.h' \
