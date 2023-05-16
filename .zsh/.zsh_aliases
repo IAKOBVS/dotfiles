@@ -1,13 +1,5 @@
 #!/bin/sh
 alias \
-yt='yt-dlp --embed-metadata -i' \
-yta='yt -x -f bestaudio/bestub' \
-ls='ls -hN --color=auto --group-directories-first' \
-grep='grep --color=auto' \
-diff='diff --color=auto' \
-hi='highlight --out-format=ansi' \
-ip='ip -color=auto' \
-mkd='mkdir -pv' \
 cp='cp -iv' \
 mv='mv -iv' \
 rm='rm -vI' \
@@ -66,3 +58,11 @@ sf='v /etc/fan2go/fan2go.yaml' \
 dfh="df -h | head -n1; df -h | /bin/grep -e /$ -e /home" \
 update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg' \
 upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'" \
+yt='yt-dlp --embed-metadata -i' \
+yta='yt -x -f bestaudio/bestub' \
+ls='ls -hN --color=auto --group-directories-first' \
+grep='grep --color=auto' \
+diff='diff --color=auto' \
+hi='highlight --out-format=ansi' \
+ip='ip -color=auto' \
+mkd='mkdir -pv' \
