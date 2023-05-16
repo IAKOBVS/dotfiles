@@ -123,8 +123,8 @@ au BufNewFile,BufRead *.h se filetype=c
 au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
 " format current file
-au FileType c,cpp nm cfm :silent exec "!cfm %:p"<CR>
-au FileType sh,bash,zsh nm cfm :silent exec "!shfmt -w -fn %:p"<CR>
+au FileType c,cpp nm ;cfm :silent exec "!cfm %:p"<CR>
+au FileType sh,bash,zsh nm ;cfm :silent exec "!shfmt -w -fn %:p"<CR>
 " autocd
 au BufEnter * sil! lcd %:p:h
 " exit normally
