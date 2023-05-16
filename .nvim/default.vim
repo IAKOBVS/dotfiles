@@ -19,7 +19,7 @@ nn <space>f :!sil echo %:p:h >$__LF_DIR__ &
 	\ echo %:p >$__VIM_ARG__<CR> ZZ
 " open fzflive $HOME
 nn <space>h :!sil echo $HOME >$__LF_DIR__ &
-	\ echo $__FZFLIVE__ >$__VIM_PROG__ ;
+	\ echo $__FZFLIVEHOME__ >$__VIM_PROG__ ;
 	\ echo $HOME >$__VIM_ARG__<CR> ZZ
 " open FZFEXACTlive
 nn <space>e :!sil echo %:p:h >$__LF_DIR__ &

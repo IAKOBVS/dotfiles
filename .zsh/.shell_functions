@@ -78,6 +78,7 @@ export __FZFLIVE__=4
 export __FZFEXACT__=5
 export __FZFEXACTLIVE__=6
 export __FZFLIVEEXACT__=6
+export __FZFLIVEHOME__=7
 
 __vim_sel__()
 {
@@ -97,6 +98,7 @@ __vim_sel__()
 	$__FZFLIVE__) fzflive $__local_vim_arg__ ;;
 	$__FZFEXACT__) fzfexact $__local_vim_arg__ ;;
 	$__FZFEXACTLIVE__) fzfexactlive $__local_vim_arg__ ;;
+	$__FZFLIVEHOME__) cd $HOME; fzflive $__local_vim_arg__ ;;
 	esac
 }
 
