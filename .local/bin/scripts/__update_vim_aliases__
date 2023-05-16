@@ -1,0 +1,5 @@
+#!/bin/sh
+while :; do
+	test .zsh_aliases -nt .vim_aliases.vim && sed -n "s/\([0-9A-Za-z]\{1,\}\)=[\"'].*v .*\([\$~][/_.A-Za-z]\{1,\}\)[\"']*./nn ;\1 :edit \2<CR>/p" $HOME/.zsh/.zsh_aliases > $HOME/.zsh/.vim_aliases.vim &
+	sleep 60
+done
