@@ -1,6 +1,0 @@
-#!/bin/sh
-cd /tmp/ || return
-while :; do
-	/bin/du *__VIM_ARG__ *__VIM_PROG__ *__LF_DIR__ | awk '{system("rm " $2)}'
-	sleep 60
-done
