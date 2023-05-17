@@ -1,13 +1,15 @@
 #!/bin/sh
 case $1 in
-'') fzfdir | fzfpreview $@ ;;
---exact) fzfdir | fzfpreview $@ ;;
+'') fzfdir | fzfpreview ;;
+-e)
+	shift
+	fzfdir | fzfpreview $@ ;;
 $HOME)
 	shift
 	grep $HOME/ /tmp/__fzfhome__ 2>/dev/null | fzfpreview $@
 	;;
 *)
-	__fzfdef_dir__=${1%/?*}
+	__fzfdef_dir__=${@%*/?*}
 	shift
 	fzfdir | grep $__fzfdef_dir__/ | fzfpreview $@
 	;;
