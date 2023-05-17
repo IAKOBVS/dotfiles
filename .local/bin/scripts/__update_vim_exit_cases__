@@ -1,2 +1,0 @@
-#!/bin/sh
-awk '/^<[^>]\{1,\}>/ && NF == 3 {printf "nn %s :!sil echo %%:p:h >$__LF_DIR__ &\n\t\\ echo %s > $__VIM_PROG__ ;\n\t\\ echo %s > $__VIM_ARG__<CR> ZZ\n", $1, $2, $3}' $HOME/.nvim/cases.vim > $HOME/.nvim/exit_cases.vim
