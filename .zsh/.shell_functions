@@ -105,13 +105,13 @@ __vim_sel__()
 mkdir()
 {
 	local file=$(realpath $1 2>/dev/null)
-	[ -d $1 ] || fzf_update_dir $1
+	[ -d $1 ] || (fzf_update_dir $1 &)
 	/bin/mkdir $1
 }
 
 touch()
 {
 	local file=$(realpath $1 2>/dev/null)
-	[ -f $1 ] || fzf_update_dir $1
+	[ -f $1 ] || (fzf_update_dir $1 &)
 	/bin/touch $1
 }
