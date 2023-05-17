@@ -16,7 +16,7 @@ lfcd()
 
 fzfbase()
 {
-	file=$($@)
+	file=$(${@##* })
 	[ ! $file ] && return
 	if [ -f "$file" ]; then
 		vimcd $file
@@ -31,7 +31,7 @@ fzfvim()
 }
 fzfexact()
 {
-	fzfbase fzfdef -e $@
+	cd $HOME; fzfbase fzfdef -e
 }
 fzflive()
 {
@@ -39,7 +39,7 @@ fzflive()
 }
 fzfexactlive()
 {
-	fzfbase fzfpreview -e
+	cd $HOME; fzfbase fzfpreview -e
 }
 
 vimcd()
