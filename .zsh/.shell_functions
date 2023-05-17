@@ -1,10 +1,11 @@
 #!/bin/sh
-export __VIM_PROG__="__VIM_PROG__$$"
-export __VIM_ARG__="__VIM_ARG__$$"
-export __LF_DIR__="__LF_DIR__$$"
+export __VIM_PROG__=/tmp/__VIM_PROG__$$
+export __VIM_ARG__=/tmp/__VIM_ARG__$$
+export __LF_DIR__=/tmp/__LF_DIR__$$
 
 lfcd()
 {
+	touch $__LF_DIR__
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	local dir=$(<$__LF_DIR__)
