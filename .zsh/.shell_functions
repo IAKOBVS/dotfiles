@@ -81,6 +81,7 @@ export __FZFEXACT__=5
 export __FZFEXACTLIVE__=6
 export __FZFLIVEEXACT__=6
 export __FZFLIVEHOME__=7
+export __FZFHOMELIVE__=7
 
 __vim_sel__()
 {
