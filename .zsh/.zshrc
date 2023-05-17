@@ -1,9 +1,4 @@
 #!/bin/zsh
-
-if [ ! $__ZSHRC_SOURCED__ ]; then
-
-export __ZSHRC_SOURCED__=1
-
 export __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
@@ -103,5 +98,3 @@ bindkey -M visual '^[[P' vi-delete
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
 bindkey '^L' autosuggest-accept
 . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
-fi
