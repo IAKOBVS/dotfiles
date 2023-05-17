@@ -4,6 +4,8 @@ nn ;ua :!$HOME/.zsh/upalias<CR>
 au BufEnter * sil! !rm -f $__VIM_ARG__ &
 	\ rm -f $__VIM_PROG__ &
 au BufEnter * sil! lcd %:p:h
+au BufWritePost *zsh*alias* !__update_vim_aliases__ &<CR>
+au BufWritePost cases.vim !__update_vim_exit_cases__ &<CR>
 
 " open cwd in new terminal
 nn <space>s :!exec $TERMINAL &<CR><CR>
@@ -113,7 +115,7 @@ hi CursorLine ctermbg=none guibg=#3c3836
 hi CursorColumn ctermbg=none guibg=#3c3836
 " completion menu
 hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
-hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
+" hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " undodir
 let myVimDir = '$HOME/.vim'
