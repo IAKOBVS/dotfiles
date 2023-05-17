@@ -25,13 +25,10 @@ en
 nn <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nn <silent> <tab>j <Plug>(coc-diagnostic-next)
 " navigate completions
-ino <silent><expr> <C-j>
-	\ coc#pum#visible() ? coc#pum#next(1) :
+ino <silent><expr> <C-j> coc#pum#visible() ? coc#pum#next(1) :
 	\ CheckBackspace() ? "\<C-j>" :
 	\ coc#refresh()
-ino <expr><C-k>
-	\ coc#pum#visible() ? coc#pum#prev(1) :
-	\ "\<C-h>"
+ino <expr><C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 ino <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 	\ :"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " GoTo code navigation
