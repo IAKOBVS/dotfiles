@@ -3,9 +3,8 @@ Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
-Plug 'tribela/vim-transparent'
-Plug 'bkad/CamelCaseMotion'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'bkad/CamelCaseMotion'
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
 Plug 'dense-analysis/ale'
@@ -52,10 +51,9 @@ en
 let g:ale_lint_on_text_changed = 1
 let g:ale_c_cc_executable = 'gcc'
 let g:ale_cpp_cc_executable = 'g++'
-let g:ale_c_cc_options =
-	\ '-std=c17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
-let g:ale_cpp_cc_options =
-	\ '-std=c++17 -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
+let g:__my_gcc_flags__ = '-Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
+let g:ale_c_cc_options = '-std=c17 ' . g:__my_gcc_flags__
+let g:ale_cpp_cc_options = '-std=c++17 ' . g:__my_gcc_flags__
 let g:ale_c_clangtidy_checks = [
 	\ '-clang-diagnostic-error',
 	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
