@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export __VIM_PROG__=/tmp/__VIM_PROG__$$
 export __VIM_ARG__=/tmp/__VIM_ARG__$$
 export __LF_DIR__=/tmp/__LF_DIR__$$
@@ -9,7 +9,7 @@ lfcd()
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	local dir=$(<$__LF_DIR__)
-	(/bin/rm -f $__LF_DIR__ &)
+	(/bin/rm -f $__LF_DIR__ 2>/dev/null &)
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
 }
 

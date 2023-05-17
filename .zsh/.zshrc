@@ -1,5 +1,9 @@
 #!/bin/zsh
 
+if [ ! $__ZSHRC_SOURCED__ ]; then
+
+export __ZSHRC_SOURCED__=1
+
 . $HOME/.zsh/.zsh_aliases
 . $HOME/.zsh/.shell_functions
 
@@ -48,7 +52,7 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 # Basic auto/tab complete:
 # autoload -U compinit
 # compinit
-zstyle ':completion:*' menu select
+# zstyle ':completion:*' menu select
 zmodload zsh/complist
 _comp_options+=(globdots) # Include hidden files.
 
@@ -79,8 +83,8 @@ zle -N zle-line-init
 
 bindkey -s '^f' 'fzfvim\n'
 bindkey -s '^e' 'fzfvim --exact\n'
-bindkey -s '^o' 'lfcd_\n'
-bindkey -s '^r' 'rgvim_\n'
+bindkey -s '^o' 'lfcd\n'
+bindkey -s '^r' 'rgvim\n'
 
 bindkey '^[[P' delete-char
 
@@ -97,3 +101,5 @@ bindkey -M visual '^[[P' vi-delete
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 bindkey '^L' autosuggest-accept
 . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+fi

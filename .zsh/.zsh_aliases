@@ -7,6 +7,7 @@ bc='bc -ql' \
 fin='. fin' \
 fs='. fs' \
 v='vimcd' \
+gvim='. grepvim' \
 rs='res4thum' \
 z='zathura' \
 g='git' \

@@ -1,0 +1,8 @@
+#!/bin/bash
+p=$1
+max=$(nproc)
+vimcd $(for file in $(find . -type f); do
+	rg $1 -j $max --vimgrep $file
+done | fzf | cut -d' ' -f1) -c "/$p"
+
+# file -- "$1" | grep -q ':.*executable' && shift
