@@ -128,7 +128,7 @@ au FileType sh,bash,zsh nm ;cfm :silent exec "!shfmt -w -fn %:p"<CR>
 " autocd
 au BufEnter * sil! lcd %:p:h
 " exit normally
-au BufEnter * sil! !echo :%p:h >$__VIM_ARG__
+au BufEnter * sil! !rm -f $__VIM_ARG__; rm -f $__VIM_PROG__
 
 au BufNewFile *.c,*.cpp 0r ~/.nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.nvim/templates/skeleton.pl
