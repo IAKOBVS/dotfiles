@@ -1,7 +1,8 @@
 nn ;nv :source $HOME/.nvim/init.vim<CR>
 nn ;ua :!$HOME/.zsh/upalias<CR>
 
-au BufEnter * sil! !rm -f $__VIM_ARG__; rm -f $__VIM_PROG__
+au BufEnter * sil! !rm -f $__VIM_ARG__ &
+	\ rm -f $__VIM_PROG__ &
 au BufEnter * sil! lcd %:p:h
 
 " open cwd in new terminal
