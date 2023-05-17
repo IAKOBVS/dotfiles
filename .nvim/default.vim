@@ -5,7 +5,20 @@ au BufEnter * sil! !rm -f $__VIM_ARG__ &
 	\ rm -f $__VIM_PROG__ &
 au BufEnter * sil! lcd %:p:h
 au BufWritePost *zsh*alias* !__update_vim_aliases__ &<CR>
-au BufWritePost cases.vim !__update_vim_exit_cases__ &<CR>
+
+fu UpdateOnExit(dir, prog, arg)
+	sil exe '!echo ' . a:dir . ' >$__LF_DIR__ &
+	\ echo ' . a:prog . '> $__VIM_PROG__ ;
+	\ echo ' . a:arg . ' > $__VIM_ARG__'
+endf
+
+nn <C-o> :call UpdateOnExit('%:p:h', '$__LFCD__', '%:p')<CR>ZZ
+nn <C-f> :call UpdateOnExit('%:p:h', '$__FZF__', '%:p')<CR>ZZ
+nn <C-h> :call UpdateOnExit('$HOME', '$__FZF__', '$HOME')<CR>ZZ
+nn <C-e> :call UpdateOnExit('$HOME', '$__FZFEXACT__', '$HOME')<CR>ZZ
+nn <space>f :call UpdateOnExit('%:p:h', '$__FZFLIVE__', '%:p')<CR>ZZ
+nn <space>h :call UpdateOnExit('$HOME', '$__FZFLIVE__', '$HOME')<CR>ZZ
+nn <space>e :call UpdateOnExit('$HOME', '$__FZFEXACTLIVE__', '$HOME')<CR>ZZ
 
 " open cwd in new terminal
 nn <space>s :!exec $TERMINAL &<CR><CR>
