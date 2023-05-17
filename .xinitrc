@@ -2,20 +2,19 @@
 test "$SSH_CLIENT" && return
 xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
 picom -b --config $HOME/.config/picom.conf &
-$TERMINAL &
-(cd /tmp; nohup $HOME/.local/bin/remaps &)
-sudo "$HOME"/c/nvtemp/nvtemp &
-unclutter &
 dwmblocks &
-dunst &
-sudo updatedb &
-xrdb $HOME/.Xresources &
-sudo nvidia-smi -pl 150 &
-checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
-ufzf &
+$TERMINAL &
+__update_fzf__ &
 __update_paru_list__ &
-__fzfvim_cleanup__ &
-__update_vim_aliases__ &
+__cleanup_fzfvim__ &
+(cd /tmp; nohup $HOME/.local/bin/remaps &)
+sudo $HOME/c/nvtemp/nvtemp &
+sudo nvidia-smi -pl 150 &
+unclutter &
+dunst &
+xrdb $HOME/.Xresources &
+checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
+sudo updatedb &
 # qbittorrent &
 while :; do
 	ssh-agent dwm
