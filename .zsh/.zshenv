@@ -1,4 +1,4 @@
-export PATH="$PATH:/tmp/__ram_bin__:$HOME/.local/bin/scripts"
+export PATH="$PATH:/tmp/__ram_bin__:$HOME/.local/bin/scripts:$HOME/.local/bin"
 export TERM=alacritty
 export TERMINAL=alacritty
 export TERMINAL_PROG=alacritty
