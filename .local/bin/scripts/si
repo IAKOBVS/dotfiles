@@ -1,4 +1,8 @@
 #!/bin/sh
+if [ $(uname -s) = Linux ]; then
+	du -shc -- * | sort -h | less
+	return
+fi
 toGb=$((1024 * 1024))
 du -s -- * |
 	sort -n |
