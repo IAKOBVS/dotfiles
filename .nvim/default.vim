@@ -1,34 +1,8 @@
 nn ;nv :source $HOME/.nvim/init.vim<CR>
-nn ;ua :! $HOME/.zsh/upalias<CR>
+nn ;ua :!$HOME/.zsh/upalias<CR>
 
-" open fzf
-nn <C-f> :!sil echo %:p:h >$__LF_DIR__ &
-	\ echo $__FZF__ >$__VIM_PROG__ ;
-	\ echo %:p >$__VIM_ARG__<CR> ZZ
-" open fzf $HOME
-nn <C-h> :!sil echo $HOME >$__LF_DIR__ &
-	\ echo $__FZF__ >$__VIM_PROG__ ;
-	\ echo $HOME >$__VIM_ARG__<CR> ZZ
-" open FZFEXACT
-nn <C-e> :!sil echo %:p:h >$__LF_DIR__ &
-	\ echo $__FZFEXACT__ >$__VIM_PROG__ ;
-	\ echo $HOME >$__VIM_ARG__<CR> ZZ
-" open fzflive
-nn <space>f :!sil echo %:p:h >$__LF_DIR__ &
-	\ echo $__FZFLIVE__ >$__VIM_PROG__ ;
-	\ echo %:p >$__VIM_ARG__<CR> ZZ
-" open fzflive $HOME
-nn <space>h :!sil echo $HOME >$__LF_DIR__ &
-	\ echo $__FZFLIVEHOME__ >$__VIM_PROG__ ;
-	\ echo $HOME >$__VIM_ARG__<CR> ZZ
-" open FZFEXACTlive
-nn <space>e :!sil echo %:p:h >$__LF_DIR__ &
-	\ echo $__FZFEXACTLIVE__ >$__VIM_PROG__ ;
-	\ echo $HOME >$__VIM_ARG__<CR> ZZ
-" open lf
-nn <C-o> :!sil echo %:p:h >$__LF_DIR__ &
-	\ echo $__LFCD__ >$__VIM_PROG__ ;
-	\ echo %:p >$__VIM_ARG__<CR> ZZ
+au BufEnter * sil! !rm -f $__VIM_ARG__; rm -f $__VIM_PROG__
+au BufEnter * sil! lcd %:p:h
 
 " open cwd in new terminal
 nn <space>s :!exec $TERMINAL &<CR><CR>
@@ -125,10 +99,6 @@ au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
 " format current file
 au FileType c,cpp nm ;cfm :silent exec "!cfm %:p"<CR>
 au FileType sh,bash,zsh nm ;cfm :silent exec "!shfmt -w -fn %:p"<CR>
-" autocd
-au BufEnter * sil! lcd %:p:h
-" exit normally
-au BufEnter * sil! !rm -f $__VIM_ARG__; rm -f $__VIM_PROG__
 
 au BufNewFile *.c,*.cpp 0r ~/.nvim/templates/skeleton.c | $delete _
 au BufNewFile *.pl,*.pm 0r ~/.nvim/templates/skeleton.pl
@@ -142,18 +112,18 @@ hi CursorLine ctermbg=none guibg=#3c3836
 hi CursorColumn ctermbg=none guibg=#3c3836
 " completion menu
 hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
-" hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
+hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
 
 " undodir
-let __vimDir__ = '$HOME/.vim'
-" add if !__vimDir__
-if stridx(&runtimepath, expand(__vimDir__)) == -1
-	let &runtimepath.=','.__vimDir__
+let myVimDir = '$HOME/.vim'
+" add if !myVimDir
+if stridx(&runtimepath, expand(myVimDir)) == -1
+	let &runtimepath.=','.myVimDir
 en
 if has('persistent_undo')
-	let myUndoDir = expand(__vimDir__ . '/undodir')
+	let myUndoDir = expand(myVimDir . '/undodir')
 	" Create dirs
-	cal system('mkdir ' . __vimDir__)
+	cal system('mkdir ' . myVimDir)
 	cal system('mkdir ' . myUndoDir)
 	let &undodir = myUndoDir
 	se undofile

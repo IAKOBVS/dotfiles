@@ -1,6 +1,5 @@
 {
 	"codeLens.enable": true,
-    "lua.enable": false,
 	"clangd.path": "/usr/bin/clangd",
     "clangd.disableDiagnostics": true,
 	"languageserver": {
@@ -22,5 +21,6 @@
 	},
     "sh.commandPath": "bash-language-server",
     "flutter.enabled": false,
-    "pylsp.enable": false
+    "pylsp.enable": false,
+    "lua.enable": false
 }

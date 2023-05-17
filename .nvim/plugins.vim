@@ -74,5 +74,5 @@ sunm ge
 
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
-" let g:NERDTreeHijackNetrw = 0
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
+" let g:NERDTreeHijackNetrw = 0
