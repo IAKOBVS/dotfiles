@@ -4,11 +4,12 @@ if [ ! $__ZSHRC_SOURCED__ ]; then
 
 export __ZSHRC_SOURCED__=1
 
+export __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
+
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
 . $HOME/.zsh/.shell_functions 2>/dev/null
 
 if [ -f /bin/fd ]; then
-	local __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 	export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
 		--exclude '*png' \
 		--exclude '*jpg' \
@@ -22,7 +23,6 @@ if [ -f /bin/fd ]; then
 		--exclude '*.cargo*'\
 		--exclude '*.pass*'\
 		--exclude '*.key*'"
-	unset __NPROC__
 else
 	export FZF_DEFAULT_COMMAND="find \
 		! -path '*png' \
@@ -86,6 +86,7 @@ zle -N zle-line-init
 bindkey -s '^f' 'fzfvim\n'
 bindkey -s '^e' 'fzfexact\n'
 bindkey -s '^o' 'lfcd\n'
+bindkey -s '^r' 'vimgrep\n'
 
 bindkey '^[[P' delete-char
 

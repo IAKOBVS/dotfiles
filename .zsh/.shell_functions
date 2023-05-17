@@ -15,7 +15,7 @@ lfcd()
 
 fzfbase()
 {
-	file=$(${@##* })
+	local file=$(${@##* })
 	[ ! $file ] && return
 	if [ -f "$file" ]; then
 		vimcd $file
@@ -28,19 +28,29 @@ fzfvim()
 {
 	fzfbase fzfdef $@
 }
+
 fzfexact()
 {
 	cd $HOME
 	fzfbase fzfdef -e
 }
+
 fzflive()
 {
 	fzfbase fzfpreview
 }
+
 fzfexactlive()
 {
 	cd $HOME
 	fzfbase fzfpreview -e
+}
+
+grepvim()
+{
+	local out=$(rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case "$@" | fzf -d ':' -n 2.. --ansi --no-sort --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	[ $out ] || return
+	vimcd -c ":$(echo $out | cut -d':' -f2)" ${file%%:*}
 }
 
 vimcd()
@@ -51,6 +61,13 @@ vimcd()
 	'')
 		cmd=$EDITOR
 		file=
+		;;
+	'-c')
+		file=$(realpath $3)
+		[ -f $file ] || return
+		cd ${file%/?*}
+		cmd=$EDITOR
+		set -- -c $2
 		;;
 	*)
 		file=$(realpath ${@##* })
@@ -81,6 +98,7 @@ export __FZFEXACTLIVE__=6
 export __FZFLIVEEXACT__=6
 export __FZFLIVEHOME__=7
 export __FZFHOMELIVE__=7
+export __GREPVIM__=8
 
 __vim_sel__()
 {
@@ -101,6 +119,7 @@ __vim_sel__()
 	$__FZFEXACT__) fzfexact $arg ;;
 	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
 	$__FZFLIVEHOME__) cd $HOME && fzflive $arg ;;
+	$__GREPVIM__) grepvim '' ;;
 	esac
 }
 
