@@ -8,7 +8,7 @@ lfcd()
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	local dir=$(<$__LF_DIR__)
-	(rm -f $__LF_DIR__ &)
+	(/bin/rm -f $__LF_DIR__ &)
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
 }
 
