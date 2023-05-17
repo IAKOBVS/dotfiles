@@ -8,4 +8,5 @@ nn ;xi :edit $HOME/.xinitrc<CR>
 nn ;zs :edit $HOME/.zsh/.zshrc<CR>
 nn ;va :edit $HOME/.zsh/.zsh_aliases<CR>
 nn ;vp :edit $HOME/.config/picom.conf<CR>
-nn ;vvim :edit $HOME/.nvim/default.vim<CR>
+nn ;vvim :edit $HOME/.nvim/defaults.vim<CR>
+nn ;zf :edit $HOME/.zsh/.shell_functions<CR>
