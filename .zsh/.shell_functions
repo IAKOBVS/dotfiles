@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 export __VIM_PROG__="$(mktemp -uq)__VIM_PROG__"
 export __VIM_ARG__="$(mktemp -uq)__VIM_ARG__"
 export __LF_DIR__="$(mktemp -uq)__LF_DIR__"
@@ -104,14 +104,14 @@ __vim_sel__()
 
 mkdir()
 {
-	file=$(realpath $1 2>/dev/null)
+	local file=$(realpath $1 2>/dev/null)
 	[ -d $1 ] || fzf_update_dir $1
 	/bin/mkdir $1
 }
 
 touch()
 {
-	file=$(realpath $1 2>/dev/null)
+	local file=$(realpath $1 2>/dev/null)
 	[ -f $1 ] || fzf_update_dir $1
 	/bin/touch $1
 }
