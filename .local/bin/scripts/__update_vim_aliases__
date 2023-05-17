@@ -1,2 +1,2 @@
 #!/bin/sh
-sed -n "s/\([0-9A-Za-z]\{1,\}\)[ \t]*=[\"'].*v [ \t]*\([\$~][-\/_.0-9A-Za-z]\{1,\}\)[\"']*./nn ;\1 :edit \2<CR>/p" $HOME/.zsh/.zsh_aliases > $HOME/.nvim/.vim_aliases.vim &
+sed -n "s/\([0-9A-Za-z]\{1,\}\)[ \t]*=[\"'].*v [ \t]*\([\$~][-\/_.0-9A-Za-z]\{1,\}\)[\"'].*/nn ;\1 :edit \2<CR>/p" $HOME/.zsh/.zsh_aliases > $HOME/.nvim/vim_aliases.vim &
