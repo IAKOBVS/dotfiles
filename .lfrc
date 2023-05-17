@@ -49,8 +49,8 @@ cmd open ${{
 			sxiv $fx
 		done &
 		;;
-	audio/*|video/x-ms-asf) mpv --audio-display=no $f ;;
-	video/*) mpv $fx ;;
+	audio/*|video/x-ms-asf) mpv --really-quiet --audio-display=no $f ;;
+	video/*) mpv --really-quiet $fx ;;
 	application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
 	application/pgp-encrypted)
 		echo $__VIMCD__ >$__VIM_PROG__
