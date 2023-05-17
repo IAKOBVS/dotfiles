@@ -1,10 +1,11 @@
 nn ;nv :source $HOME/.nvim/init.vim<CR>
 nn ;ua :!$HOME/.zsh/upalias<CR>
 
+au BufWritePost *zsh*alias* !__update_vim_aliases__ &<CR>
+au BufEnter * sil! lcd %:p:h
+
 au BufEnter * sil! !rm -f $__VIM_ARG__ &
 	\ rm -f $__VIM_PROG__ &
-au BufEnter * sil! lcd %:p:h
-au BufWritePost *zsh*alias* !__update_vim_aliases__ &<CR>
 
 fu CmdOnExit(dir, prog, arg)
 	sil exe '!echo ' . a:dir . ' >$__LF_DIR__ &
@@ -13,6 +14,7 @@ fu CmdOnExit(dir, prog, arg)
 	x
 endf
 
+" open fzf/lf on exit
 nn <C-o> :call CmdOnExit('%:p:h', '$__LFCD__', '%:p')<CR>
 nn <C-f> :call CmdOnExit('%:p:h', '$__FZF__', '%:p')<CR>
 nn <C-h> :call CmdOnExit('$HOME', '$__FZF__', '$HOME')<CR>
