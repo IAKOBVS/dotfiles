@@ -1,7 +1,7 @@
 #!/bin/sh
-export __VIM_PROG__="$(mktemp -uq)__VIM_PROG__"
-export __VIM_ARG__="$(mktemp -uq)__VIM_ARG__"
-export __LF_DIR__="$(mktemp -uq)__LF_DIR__"
+export __VIM_PROG__="__VIM_PROG__$$"
+export __VIM_ARG__="__VIM_ARG__$$"
+export __LF_DIR__="__LF_DIR__$$"
 
 lfcd()
 {
@@ -105,14 +105,14 @@ __vim_sel__()
 
 mkdir()
 {
-	local file=$(realpath $1 2>/dev/null)
-	[ -d $1 ] || (fzf_update_dir $1 &)
-	/bin/mkdir $1
+	local file=$(realpath ${@##* } 2>/dev/null)
+	[ -d $file ] || (fzf_update_dir $file &)
+	/bin/mkdir $@
 }
 
 touch()
 {
-	local file=$(realpath $1 2>/dev/null)
-	[ -f $1 ] || (fzf_update_dir $1 &)
-	/bin/touch $1
+	local file=$(realpath ${@##* } 2>/dev/null)
+	[ -f $file ] || (fzf_update_dir $file &)
+	/bin/touch $@
 }

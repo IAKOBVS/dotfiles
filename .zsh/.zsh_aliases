@@ -67,4 +67,3 @@ grep='grep --color=auto' \
 diff='diff --color=auto' \
 hi='highlight --out-format=ansi' \
 ip='ip -color=auto' \
-mkd='mkdir -pv' \
