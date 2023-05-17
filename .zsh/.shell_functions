@@ -31,7 +31,8 @@ fzfvim()
 }
 fzfexact()
 {
-	cd $HOME; fzfbase fzfdef -e
+	cd $HOME
+	fzfbase fzfdef -e
 }
 fzflive()
 {
@@ -39,7 +40,8 @@ fzflive()
 }
 fzfexactlive()
 {
-	cd $HOME; fzfbase fzfpreview -e
+	cd $HOME
+	fzfbase fzfpreview -e
 }
 
 vimcd()
