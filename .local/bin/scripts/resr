@@ -22,5 +22,4 @@ __load_bin__()
 }
 __load_bin__ /usr/bin/$TERMINAL &
 __load_bin__ /usr/bin/$EDITOR &
-__load_bin__ /usr/bin/zsh &
 unset __load_bin__

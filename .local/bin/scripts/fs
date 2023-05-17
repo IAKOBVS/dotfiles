@@ -8,4 +8,4 @@ __fs_path__="$(find $HOME/.local/bin/scripts $HOME/c -type f \
 	! -path '?' \
 	2>/dev/null | fzfpreview --delimiter / --with-nth -1)"
 test $__fs_path__ || return 1
-$EDITOR $__fs_path__ && cd $(dirname $__fs_path__) || return 1
+v $__fs_path__
