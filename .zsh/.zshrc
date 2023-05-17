@@ -4,11 +4,12 @@ if [ ! $__ZSHRC_SOURCED__ ]; then
 
 export __ZSHRC_SOURCED__=1
 
-. $HOME/.zsh/.zsh_aliases
-. $HOME/.zsh/.shell_functions
+. $HOME/.zsh/.zsh_aliases 2>/dev/null
+. $HOME/.zsh/.shell_functions 2>/dev/null
 
 if [ -f /bin/fd ]; then
-	export FZF_DEFAULT_COMMAND="fd -j $(nproc) --hidden --glob \
+	local __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
+	export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
 		--exclude '*png' \
 		--exclude '*jpg' \
 		--exclude '*jpeg' \
@@ -21,6 +22,7 @@ if [ -f /bin/fd ]; then
 		--exclude '*.cargo*'\
 		--exclude '*.pass*'\
 		--exclude '*.key*'"
+	unset __NPROC__
 else
 	export FZF_DEFAULT_COMMAND="find \
 		! -path '*png' \
@@ -38,7 +40,7 @@ else
 fi
 
 # Enable colors and change prompt:
-autoload -U colors && colors	# Load colors
+# autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[white]%}[%{$fg[white]%}%n%{$fg[white]%}@%{$fg[white]%}%M %{$fg[white]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
@@ -82,9 +84,8 @@ zle-line-init() {
 zle -N zle-line-init
 
 bindkey -s '^f' 'fzfvim\n'
-bindkey -s '^e' 'fzfvim --exact\n'
+bindkey -s '^e' 'fzfexact\n'
 bindkey -s '^o' 'lfcd\n'
-bindkey -s '^r' 'rgvim\n'
 
 bindkey '^[[P' delete-char
 
@@ -98,8 +99,8 @@ bindkey -M visual '^[[P' vi-delete
 (pgrep xcape > /dev/null || remaps > /dev/null &)
 
 # Load syntax highlighting; should be last.
-. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
 bindkey '^L' autosuggest-accept
-. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 fi
