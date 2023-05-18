@@ -16,10 +16,10 @@ endf
 " runs fzf/lf on exit
 nn <C-l> :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
 nn <space>l :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
-nn <C-f> :cal ExitCmd('%:p:h', '$__FZF__', '%:p')<CR>
+nn <C-f> :cal ExitCmd('%:p:h', '$__FZF__', '%:p:h')<CR>
 nn <C-h> :cal ExitCmd('$HOME', '$__FZF__', '$HOME')<CR>
 nn <C-e> :cal ExitCmd('$HOME', '$__FZFEXACT__', '$HOME')<CR>
-nn <space>f :cal ExitCmd('%:p:h', '$__FZFLIVE__', '%:p')<CR>
+nn <space>f :cal ExitCmd('%:p:h', '$__FZFLIVE__', '%:p:h')<CR>
 nn <space>h :cal ExitCmd('$HOME', '$__FZFLIVEHOME__', '$HOME')<CR>
 nn <space>e :cal ExitCmd('$HOME', '$__FZFEXACTLIVE__', '$HOME')<CR>
 nn <space>r :cal ExitCmd('%:p:h', '$__GREPVIM__', '')<CR>
