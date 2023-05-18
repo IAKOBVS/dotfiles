@@ -1,5 +1,3 @@
 #!/bin/sh
-if test ! "$2"; then
-	set -- $1 'English'
-fi
+[ "$2" ] || set -- $1 'English'
 $BROWSER "https://wiktionary.org/wiki/$1#$2"

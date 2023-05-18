@@ -122,7 +122,9 @@ au FileType c,cpp nm ;cfm :silent exec "!cfm %:p"<CR>
 au FileType sh,bash,zsh nm ;cfm :silent exec "!shfmt -w -fn %:p"<CR>
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
-if filereadable(g:__templateDir__.'/skeleton.c') && filereadable(g:__templateDir__.'/skeleton.pl') && filereadable(g:__templateDir__.'/skeleton.awk')
+if filereadable(g:__templateDir__.'/skeleton.c')
+\ && filereadable(g:__templateDir__.'/skeleton.pl')
+\ && filereadable(g:__templateDir__.'/skeleton.awk')
 	au BufNewFile,BufRead *.c,*.cpp if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.c | $delete _
 	au BufNewFile,BufRead *.pl,*.pm if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.pl
 	au BufNewFile,BufRead *.awk if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.awk
