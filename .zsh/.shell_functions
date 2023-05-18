@@ -32,7 +32,7 @@ __vim_sel__()
 	$__FZFLIVE__) fzflive $arg ;;
 	$__FZFEXACT__) fzfexact $arg ;;
 	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
-	$__FZFLIVEHOME__) cd $HOME && fzflive $arg ;;
+	$__FZFLIVEHOME__) fzflive $arg ;;
 	$__GREPVIM__) grepvim ;;
 	esac
 }
@@ -49,36 +49,37 @@ lfcd()
 
 fzfbase()
 {
-	local file=$(${@##* })
-	if [ ! $file ]; then
+	if [ ! $1 ]; then
 		return
-	elif [ -f "$file" ]; then
-		vimcd $file
+	elif [ -f "$1" ]; then
+		vimcd $1
 	else
-		lfcd $file
+		lfcd $1
 	fi
 }
 
 fzfvim()
 {
-	fzfbase fzfdef $@
+	cd $1
+	fzfbase $(fzfdef)
 }
 
 fzfexact()
 {
 	cd $HOME
-	fzfbase fzfdef -e
+	fzfbase $(fzfdef -e)
 }
 
 fzflive()
 {
-	fzfbase fzfpreview
+	cd $1
+	fzfbase $(fzfpreview)
 }
 
 fzfexactlive()
 {
 	cd $HOME
-	fzfbase fzfpreview -e
+	fzfbase $(fzfpreview -e)
 }
 
 grepvim()
