@@ -81,21 +81,9 @@ fzfexactlive()
 	fzfbase fzfpreview -e
 }
 
-fzfpreviewline()
-{
-	fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}'
-}
-
 grepvim()
 {
-	local out=$(rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case '' | fzfpreviewline)
-	[ $out ] || return
-	vimcd -c ":$(echo $out | cut -d':' -f2)" ${out%%:*}
-}
-
-litgrepvim()
-{
-	local out=$(rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case '' | fzfpreviewline)
+	local out=$(rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case '' | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	[ $out ] || return
 	vimcd -c ":$(echo $out | cut -d':' -f2)" ${out%%:*}
 }
