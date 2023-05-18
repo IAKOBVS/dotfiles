@@ -80,8 +80,9 @@ zle -N zle-line-init
 
 bindkey -s '^f' 'fzfvim\n'
 bindkey -s '^e' 'fzfexact\n'
+bindkey -s '^h' 'cd ~; fzfvim\n'
 bindkey -s '^o' 'lfcd\n'
-bindkey -s '^r' 'vimgrep\n'
+bindkey -s '^r' 'grepvim\n'
 
 bindkey '^[[P' delete-char
 
