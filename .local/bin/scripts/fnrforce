@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ ! -d $1 ] || test ! $2; then
+if [ ! -d $1 ] || [ ! $2 ]; then
 	echo 'Usage: sed <dir> <find> <replace>'
 	return 1
 fi
