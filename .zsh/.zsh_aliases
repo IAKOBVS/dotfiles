@@ -31,7 +31,7 @@ pacman='sudo pacman' \
 systl='sudo systemctl' \
 sv='sudo v' \
 c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
-cu='c add $HOME/.local/bin/scripts && c commit -a -m new && c push --force' \
+cu='c add $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh && c commit -a -m new && c push --force' \
 cpl='c --reset hard && c pull' \
 sr='cd $HOME/.local/bin/scripts' \
 vd='v $HOME/.local/src/dwm/config.h' \
