@@ -40,10 +40,10 @@ __vim_sel__()
 lfcd()
 {
 	touch $__LF_DIR__
+	trap 'rm -f $__LF_DIR__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	local dir=$(<$__LF_DIR__)
-	([ -f $__LF_DIR__ ] && /bin/rm -f $__LF_DIR__ 2>/dev/null >/dev/null &)
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
 }
 
