@@ -3,6 +3,40 @@ export __VIM_PROG__=/tmp/__VIM_PROG__$$
 export __VIM_ARG__=/tmp/__VIM_ARG__$$
 export __LF_DIR__=/tmp/__LF_DIR__$$
 
+export __VIMCD__=1
+export __LFCD__=2
+export __FZF__=3
+export __FZFLIVE__=4
+export __FZFEXACT__=5
+export __FZFEXACTLIVE__=6
+export __FZFLIVEEXACT__=6
+export __FZFLIVEHOME__=7
+export __FZFHOMELIVE__=7
+export __GREPVIM__=8
+
+__vim_sel__()
+{
+	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
+	local prog=$(<$__VIM_PROG__)
+	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
+		local arg=''
+	else
+		local arg=$(<$__VIM_ARG__)
+	fi
+	(/bin/rm -f $__VIM_PROG__ &)
+	(/bin/rm -f $__VIM_ARG__ &)
+	case $prog in
+	$__VIMCD__) vimcd $arg ;;
+	$__LFCD__) lfcd $arg ;;
+	$__FZF__) fzfvim $arg ;;
+	$__FZFLIVE__) fzflive $arg ;;
+	$__FZFEXACT__) fzfexact $arg ;;
+	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
+	$__FZFLIVEHOME__) cd $HOME && fzflive $arg ;;
+	$__GREPVIM__) grepvim ;;
+	esac
+}
+
 lfcd()
 {
 	touch $__LF_DIR__
@@ -16,8 +50,9 @@ lfcd()
 fzfbase()
 {
 	local file=$(${@##* })
-	[ ! $file ] && return
-	if [ -f "$file" ]; then
+	if [ ! $file ]; then
+		return
+	elif [ -f "$file" ]; then
 		vimcd $file
 	else
 		lfcd $file
@@ -87,40 +122,6 @@ vimcd()
 	esac
 	$cmd $file $@ &&
 		__vim_sel__
-}
-
-export __VIMCD__=1
-export __LFCD__=2
-export __FZF__=3
-export __FZFLIVE__=4
-export __FZFEXACT__=5
-export __FZFEXACTLIVE__=6
-export __FZFLIVEEXACT__=6
-export __FZFLIVEHOME__=7
-export __FZFHOMELIVE__=7
-export __GREPVIM__=8
-
-__vim_sel__()
-{
-	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
-	local prog=$(<$__VIM_PROG__)
-	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
-		local arg=''
-	else
-		local arg=$(<$__VIM_ARG__)
-	fi
-	(/bin/rm -f $__VIM_PROG__ &)
-	(/bin/rm -f $__VIM_ARG__ &)
-	case $prog in
-	$__VIMCD__) vimcd $arg ;;
-	$__LFCD__) lfcd $arg ;;
-	$__FZF__) fzfvim $arg ;;
-	$__FZFLIVE__) fzflive $arg ;;
-	$__FZFEXACT__) fzfexact $arg ;;
-	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
-	$__FZFLIVEHOME__) cd $HOME && fzflive $arg ;;
-	$__GREPVIM__) grepvim '' ;;
-	esac
 }
 
 mkdir()
