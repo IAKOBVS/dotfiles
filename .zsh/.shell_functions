@@ -33,7 +33,7 @@ __vim_sel__()
 	$__FZFEXACT__) fzfexact $arg ;;
 	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
 	$__FZFLIVEHOME__) fzflive $arg ;;
-	$__GREPVIM__) grepvim ;;
+	$__GREPVIM__) grepvim $arg ;;
 	esac
 }
 
@@ -86,7 +86,7 @@ fzfexactlive()
 grepvim()
 {
 	# rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case '' | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}'
-	local out=$(jcatv | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	local out=$(jcatv $1 | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	[ $out ] || return
 	vimcd -c ":$(echo $out | cut -d':' -f2)" ${out%%:*}
 }
