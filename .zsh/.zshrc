@@ -78,9 +78,9 @@ zle-line-init() {
 }
 zle -N zle-line-init
 
-bindkey -s '^f' 'fzfvim\n'
+bindkey -s '^f' 'fzfvim $PWD\n'
 bindkey -s '^e' 'fzfexact\n'
-bindkey -s '^h' 'cd ~; fzfvim\n'
+bindkey -s '^h' 'cd ~; fzfvim $PWD\n'
 bindkey -s '^o' 'lfcd\n'
 bindkey -s '^r' 'grepvim\n'
 
