@@ -11,6 +11,8 @@ Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 cal plug#end()
 
+vn ff :Tabularize /\\$<CR>
+
 " highlight things
 au CursorHold * sil cal CocActionAsync('highlight')
 " for coc-nvim autocomplete
