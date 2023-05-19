@@ -22,7 +22,7 @@ nn <C-e> :cal ExitCmd('$HOME', '$__FZFEXACT__', '$HOME')<CR>
 nn <space>f :cal ExitCmd('%:p:h', '$__FZFLIVE__', '%:p:h')<CR>
 nn <space>h :cal ExitCmd('$HOME', '$__FZFLIVEHOME__', '$HOME')<CR>
 nn <space>e :cal ExitCmd('$HOME', '$__FZFEXACTLIVE__', '$HOME')<CR>
-nn <space>r :cal ExitCmd('%:p:h', '$__GREPVIM__', '')<CR>
+nn <space>r :cal ExitCmd('%:p:h', '$__GREPVIM__', '%:p:h')<CR>
 
 " open cwd in new terminal
 nn <space>s :!exec $TERMINAL &<CR><CR>
