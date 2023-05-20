@@ -29,7 +29,7 @@ get_incl()
 incl_c=$(get_incl .c "$file")
 incl_cpp=$(get_incl .cpp "$file")
 incl_precomp=$(get_incl .gch "$file")
-flags="$OLevel $flags $file $incl_c $incl_precomp -o $(basename $file .${file#*.})"
+flags="$OLevel $flags $file $incl_c $incl_precomp -o $(basename "$file" ".${file#*.}")"
 case $file in
 *.c) compiler=gcc ;;
 *.cpp)
@@ -37,5 +37,5 @@ case $file in
 	flags="$flags $incl_cpp -std=gnu++17"
 	;;
 esac
-echo $compiler $flags
-$compiler $flags || return
+echo "$compiler" "$flags"
+$compiler "$flags" || return
