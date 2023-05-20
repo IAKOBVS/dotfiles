@@ -1,8 +1,11 @@
 #!/bin/sh
+if [ ! -d /tmp/$__GLOBAL_FZFVIM__ ]; then
+	echo "/tmp/$__GLOBAL_FZFVIM__ dir is not found"
+	return
+fi
 while :; do
-	for file in $(find /tmp -type f -name '__LF_DIR__*' -o -name '__VIM_LAST_FILE__*' 2>/dev/null); do
-		echo $file
-		(ps -o pid | grep -q -F "${file##*LF_DIR__}" || rm -f $file &)
+	for file in $(find /tmp -type d -name '*__GLOBAL_FZFVIM__*' 2>/dev/null); do
+		(ps -o pid | grep -q -F "${file##*__GLOBAL_FZFVIM__}" || rm -rf $file &)
 	done
 	sleep 600
 done

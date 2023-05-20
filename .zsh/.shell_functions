@@ -1,9 +1,11 @@
 #!/bin/bash
-export __VIM_PROG__=/tmp/__VIM_PROG__$$
-export __VIM_ARG__=/tmp/__VIM_ARG__$$
-export __LF_DIR__=/tmp/__LF_DIR__$$
-export __VIM_LAST_FILE__=/tmp/__VIM_LAST_FILE__$$
-export __LAST_CMD__=/tmp/__LAST_CMD__$$
+export __GLOBAL_FZFVIM__=__GLOBAL_FZFVIM__$$
+
+export __VIM_PROG__=/tmp/$__GLOBAL_FZFVIM__/__VIM_PROG__$$
+export __VIM_ARG__=/tmp/$__GLOBAL_FZFVIM__/__VIM_ARG__$$
+export __LF_DIR__=/tmp/$__GLOBAL_FZFVIM__/__LF_DIR__$$
+export __VIM_LAST_FILE__=/tmp/$__GLOBAL_FZFVIM__/__VIM_LAST_FILE__$$
+export __LAST_CMD__=/tmp/$__GLOBAL_FZFVIM__/__LAST_CMD__$$
 
 export __VIMCD__=1
 export __LFCD__=2
@@ -16,7 +18,12 @@ export __FZFLIVEHOME__=7
 export __FZFHOMELIVE__=7
 export __GREPVIM__=8
 
-(touch $__LAST_CMD__ &)
+(/bin/mkdir -p /tmp/$__GLOBAL_FZFVIM__ &)
+(echo >$__VIM_PROG__ &)
+(echo >$__VIM_ARG__ &)
+(echo >$__LF_DIR__ &)
+(echo >$__VIM_LAST_FILE__ &)
+(echo >$__LAST_CMD__ &)
 
 __vim_sel__()
 {
