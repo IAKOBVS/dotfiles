@@ -132,7 +132,7 @@ vimcd()
 		;;
 	esac
 	(echo $__VIMCD__ >$__LAST_CMD__ &)
-	$cmd "$file" $@ &&
+	$cmd "$file" "$@" &&
 		__vim_sel__
 }
 
