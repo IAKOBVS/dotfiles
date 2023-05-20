@@ -36,8 +36,8 @@ __vim_sel__()
 	else
 		arg=$(<$__VIM_ARG__)
 	fi
-	(/bin/rm -f $__VIM_ARG__ &)
-	(/bin/rm -f $__VIM_PROG__ &)
+	(/bin/rm -f $__VIM_ARG__ &) >/dev/null 2>/dev/null
+	(/bin/rm -f $__VIM_PROG__ &) >/dev/null 2>/dev/null
 	case $prog in
 	"$__VIMCD__") vimcd "$arg" ;;
 	"$__LFCD__") lfcd "$arg" ;;
@@ -53,8 +53,8 @@ __vim_sel__()
 __last_cmd__()
 {
 	[ -f $__LAST_CMD__ ] || return
-	case  $(<$__LAST_CMD__) in
-	"$__VIMCD__") vimcd "$(<$__VIM_LAST_FILE__)"
+	case $(<$__LAST_CMD__) in
+	"$__VIMCD__") vimcd "$(<$__VIM_LAST_FILE__)" ;;
 	esac
 }
 
@@ -63,7 +63,9 @@ lfcd()
 	echo >$__LAST_CMD__
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
-	local dir=$(<$__LF_DIR__)
+	local dir
+	dir=$(<$__LF_DIR__)
+	(/bin/rm -f $__LF_DIR__ &) >/dev/null 2>/dev/null
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
 }
 
@@ -92,7 +94,7 @@ fzfexact()
 fzflive()
 {
 	cd "$1" || return
-	fzfbase "$(fzfpreview)" 
+	fzfbase "$(fzfpreview)"
 }
 
 fzfexactlive()
@@ -106,11 +108,11 @@ fzfexactlive()
 grepvim()
 {
 	local out
-	out=$(catvr $1 | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	if [ ! "$out" ]; then
 		__last_cmd__
 	else
-		vimcd -c ":$(echo "$out" | cut -d':' -f2)" ${out%%:*}
+		vimcd -c ":$(echo "$out" | cut -d':' -f2)" "${out%%:*}"
 	fi
 }
 
@@ -140,7 +142,7 @@ vimcd()
 			cmd=lfcd
 		else
 			cd "$(dirname "$file")" || return
-			/bin/touch "$file"
+			( (sleep 10 && [ -f "$file" ] && touch "$file" &) &) >/dev/null 2>/dev/null
 			cmd=$EDITOR
 		fi
 		shift
@@ -156,7 +158,7 @@ mkdir()
 	local file
 	file=$(realpath "${@##* }" 2>/dev/null)
 	[ -d "$file" ] || (fzf_update_dir "$file" &)
-	/bin/mkdir "$@" 
+	/bin/mkdir "$@"
 }
 
 touch()
@@ -164,5 +166,5 @@ touch()
 	local file
 	file=$(realpath "${@##* }" 2>/dev/null)
 	[ -f "$file" ] || (fzf_update_dir "$file" &)
-	/bin/touch "$@" 
+	/bin/touch "$@"
 }
