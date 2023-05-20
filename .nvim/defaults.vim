@@ -5,7 +5,7 @@ au BufEnter * sil! lcd %:p:h
 " autoupdate zsh aliases
 au BufWritePost *zsh*alias* sil !__update_vim_aliases__ &
 " cleanup fzfvim temp variables
-sil au BufEnter * sil !rm -f $__VIM_PROG__ & rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ &
+sil au BufEnter * if filereadable(expand('%')) | sil !rm -f $__VIM_PROG__ & rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ & | endif
 
 " execute cmd after vim exits
 fu ExitCmd(dir, prog, arg)
