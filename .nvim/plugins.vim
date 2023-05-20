@@ -56,7 +56,8 @@ let g:ale_cpp_cc_options = '-std=c++17 ' . g:__my_gcc_flags__
 let g:ale_c_clangtidy_checks = [
 	\ '-clang-diagnostic-error',
 	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
-	\ '-clang-analyzer-security.insecureAPI.strcpy']
+	\ '-clang-analyzer-security.insecureAPI.strcpy'
+	\ ]
 let g:ale_cpp_clangtidy_checks = g:ale_c_clangtidy_checks
 
 " respect camelCase
