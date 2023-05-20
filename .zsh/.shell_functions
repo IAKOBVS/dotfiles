@@ -56,7 +56,7 @@ __last_cmd__()
 lfcd()
 {
 	echo >$__LAST_CMD__
-	lf -last-dir-path="$__LF_DIR__" "$@" &&
+	lf -last-dir-path="$__LF_DIR__" "$@" 2>/dev/null &&
 		__vim_sel__
 	local dir
 	dir=$(<$__LF_DIR__)
