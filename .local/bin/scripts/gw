@@ -1,2 +1,2 @@
 #!/bin/sh
-grepcolor "$1" $(find . -type f) 2>/dev/null
+grepcolor "$1" -- * 2>/dev/null
