@@ -65,7 +65,6 @@ lfcd()
 		__vim_sel__
 	local dir
 	dir=$(<$__LF_DIR__)
-	(/bin/rm -f $__LF_DIR__ &) >/dev/null 2>/dev/null
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
 }
 
