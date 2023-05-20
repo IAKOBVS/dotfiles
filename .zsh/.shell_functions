@@ -28,7 +28,8 @@ export __GREPVIM__=8
 __vim_sel__()
 {
 	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
-	local prog=$(<$__VIM_PROG__)
+	local prog
+	prog=$(<$__VIM_PROG__)
 	local arg
 	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
 		arg=''
@@ -38,14 +39,14 @@ __vim_sel__()
 	(/bin/rm -f $__VIM_ARG__ &)
 	(/bin/rm -f $__VIM_PROG__ &)
 	case $prog in
-	$__VIMCD__) vimcd $arg ;;
-	$__LFCD__) lfcd $arg ;;
-	$__FZF__) fzfvim $arg ;;
-	$__FZFLIVE__) fzflive $arg ;;
-	$__FZFEXACT__) fzfexact $arg ;;
-	$__FZFEXACTLIVE__) fzfexactlive $arg ;;
-	$__FZFLIVEHOME__) fzflive $arg ;;
-	$__GREPVIM__) grepvim $arg ;;
+	"$__VIMCD__") vimcd "$arg" ;;
+	"$__LFCD__") lfcd "$arg" ;;
+	"$__FZF__") fzfvim "$arg" ;;
+	"$__FZFLIVE__") fzflive "$arg" ;;
+	"$__FZFEXACT__") fzfexact "$arg" ;;
+	"$__FZFEXACTLIVE__") fzfexactlive "$arg" ;;
+	"$__FZFLIVEHOME__") fzflive "$arg" ;;
+	"$__GREPVIM__") grepvim "$arg" ;;
 	esac
 }
 
@@ -53,7 +54,7 @@ __last_cmd__()
 {
 	[ -f $__LAST_CMD__ ] || return
 	case  $(<$__LAST_CMD__) in
-	$__VIMCD__) vimcd $(<$__VIM_LAST_FILE__)
+	"$__VIMCD__") vimcd "$(<$__VIM_LAST_FILE__)"
 	esac
 }
 
@@ -63,52 +64,53 @@ lfcd()
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	local dir=$(<$__LF_DIR__)
-	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
 }
 
 fzfbase()
 {
-	[ $1 ] || __last_cmd__
+	[ "$1" ] || __last_cmd__
 	if [ -f "$1" ]; then
-		vimcd $1
+		vimcd "$1"
 	else
-		lfcd $1
+		lfcd "$1"
 	fi
 }
 
 fzfvim()
 {
-	cd $1
-	fzfbase $(fzfdef)
+	cd "$1" || return
+	fzfbase "$(fzfdef)"
 }
 
 fzfexact()
 {
-	cd $HOME
-	fzfbase $(fzfdef -e)
+	cd "$HOME" || return
+	fzfbase "$(fzfdef -e)"
 }
 
 fzflive()
 {
-	cd $1
-	fzfbase $(fzfpreview)
+	cd "$1" || return
+	fzfbase "$(fzfpreview)" 
 }
 
 fzfexactlive()
 {
-	cd $HOME
-	fzfbase $(fzfpreview -e)
+	cd "$HOME" || return
+	fzfbase "$(fzfpreview -e)"
 }
 
 # rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case ''
 
 grepvim()
 {
-	local out=$(catvr $1 | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
-	if [ ! $out ]; then
+	local out
+	out=$(catvr $1 | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	if [ ! "$out" ]; then
 		__last_cmd__
 	else
-		vimcd -c ":$(echo $out | cut -d':' -f2)" ${out%%:*}
+		vimcd -c ":$(echo "$out" | cut -d':' -f2)" ${out%%:*}
 	fi
 }
 
@@ -122,43 +124,45 @@ vimcd()
 		file=
 		;;
 	'-c')
-		file=$(realpath $3)
-		[ -f $file ] || return
-		cd ${file%/?*}
+		file=$(realpath "$3")
+		[ -f "$file" ] || return
+		cd "${file%/?*}" || return
 		cmd=$EDITOR
-		set -- -c $2
+		set -- -c "$2"
 		;;
 	*)
-		file=$(realpath ${@##* })
-		if [ -f $file ]; then
-			cd ${file%/?*}
+		file=$(realpath "${@##* }")
+		if [ -f "$file" ]; then
+			cd "${file%/?*}" || return
 			cmd=$EDITOR
-		elif [ -d $file ]; then
-			cd $file
+		elif [ -d "$file" ]; then
+			cd "$file" || return
 			cmd=lfcd
 		else
-			cd $(dirname $file)
-			touch $file
+			cd "$(dirname "$file")" || return
+			/bin/touch "$file"
 			cmd=$EDITOR
 		fi
 		shift
 		;;
 	esac
 	(echo $__VIMCD__ >$__LAST_CMD__ &)
-	$cmd $file $@ &&
+	$cmd "$file" $@ &&
 		__vim_sel__
 }
 
 mkdir()
 {
-	local file=$(realpath ${@##* } 2>/dev/null)
-	[ -d $file ] || (fzf_update_dir $file &)
-	/bin/mkdir $@
+	local file
+	file=$(realpath "${@##* }" 2>/dev/null)
+	[ -d "$file" ] || (fzf_update_dir "$file" &)
+	/bin/mkdir "$@" 
 }
 
 touch()
 {
-	local file=$(realpath ${@##* } 2>/dev/null)
-	[ -f $file ] || (fzf_update_dir $file &)
-	/bin/touch $@
+	local file
+	file=$(realpath "${@##* }" 2>/dev/null)
+	[ -f "$file" ] || (fzf_update_dir "$file" &)
+	/bin/touch "$@" 
 }

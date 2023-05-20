@@ -44,14 +44,9 @@ no <C-s> :w<CR>
 map q <Nop>
 
 " quote $variable
-nn qs lF$dEi""<Esc>hpl
+nn qs lF$lciw<Esc>i""<Esc>i$<Esc>pf$xh
 nn Qs F"xf"xh
 nn QS Qs
-
-" quote word
-nn qq lbdEi""<Esc>hpl
-nn QQ F"xf"xh
-nn Qq QQ
 
 nn q' lbdEi''<Esc>hpl
 nn Q' F'xf'xh

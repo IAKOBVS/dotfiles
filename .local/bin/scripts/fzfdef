@@ -2,6 +2,6 @@
 case $1 in
 '') fzfdir | sed "s?$PWD/??" | fzfpreview ;;
 -e) fzfdir | fzfpreview -e ;;
-$HOME) grep -F $HOME/ /tmp/__fzfhome__ 2>/dev/null | fzfpreview ;;
+"$HOME") grep -F "$HOME"/ /tmp/__fzfhome__ 2>/dev/null | fzfpreview ;;
 *) fzfdir | fzfpreview ;;
 esac
