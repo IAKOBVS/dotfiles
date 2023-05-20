@@ -1,11 +1,12 @@
 #!/bin/sh
-if [ ! -d /tmp/$__GLOBAL_FZFVIM__ ]; then
-	echo "/tmp/$__GLOBAL_FZFVIM__ dir not found"
+tmpdir=/tmp/$__GLOBAL_FZFVIM__
+if [ "$__GLOBAL_FZFVIM__" ] && cd "$tmpdir"; then
+	echo "$tmpdir dir not found"
 	return
 fi
 while :; do
-	for file in $(find /tmp/$__GLOBAL_FZFVIM__ -type f -name '__*__*' 2>/dev/null); do
-		(ps -o pid | grep -q -F "${file##*__}" || rm -rf $file &)
+	for file in $(echo __*__*); do
+		(ps -o pid | grep -q -F "${file##*__}" || rm -rf "$file" &)
 	done
 	sleep 300
 done
