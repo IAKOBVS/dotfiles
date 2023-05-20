@@ -49,6 +49,14 @@ __vim_sel__()
 	esac
 }
 
+__last_cmd__()
+{
+	[ -f $__LAST_CMD__ ] || return
+	case  $(<$__LAST_CMD__) in
+	$__VIMCD__) vimcd $(<$__VIM_LAST_FILE__)
+	esac
+}
+
 lfcd()
 {
 	echo >$__LAST_CMD__
@@ -60,12 +68,8 @@ lfcd()
 
 fzfbase()
 {
-	if [ ! $1 ]; then
-		[ -f $__LAST_CMD__ ] || return
-		case  $(<$__LAST_CMD__) in
-		$__VIMCD__) vimcd $(<$__VIM_LAST_FILE__)
-		esac
-	elif [ -f "$1" ]; then
+	[ $1 ] || __last_cmd__
+	if [ -f "$1" ]; then
 		vimcd $1
 	else
 		lfcd $1
@@ -96,12 +100,16 @@ fzfexactlive()
 	fzfbase $(fzfpreview -e)
 }
 
+# rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case ''
+
 grepvim()
 {
-	# rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case '' | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}'
 	local out=$(jcatv $1 | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
-	[ $out ] || return
-	vimcd -c ":$(echo $out | cut -d':' -f2)" ${out%%:*}
+	if [ ! $out ]; then
+		__last_cmd__
+	else
+		vimcd -c ":$(echo $out | cut -d':' -f2)" ${out%%:*}
+	fi
 }
 
 vimcd()
