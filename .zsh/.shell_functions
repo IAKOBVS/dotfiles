@@ -2,6 +2,8 @@
 export __VIM_PROG__=/tmp/__VIM_PROG__$$
 export __VIM_ARG__=/tmp/__VIM_ARG__$$
 export __LF_DIR__=/tmp/__LF_DIR__$$
+export __VIM_LAST_FILE__=/tmp/__VIM_LAST_FILE__$$
+export __LAST_CMD__=/tmp/__LAST_CMD__$$
 
 export __VIMCD__=1
 export __LFCD__=2
@@ -14,17 +16,20 @@ export __FZFLIVEHOME__=7
 export __FZFHOMELIVE__=7
 export __GREPVIM__=8
 
+(touch $__LAST_CMD__ &)
+
 __vim_sel__()
 {
 	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
 	local prog=$(<$__VIM_PROG__)
+	local arg
 	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
-		local arg=''
+		arg=''
 	else
-		local arg=$(<$__VIM_ARG__)
+		arg=$(<$__VIM_ARG__)
 	fi
-	(/bin/rm -f $__VIM_PROG__ &)
 	(/bin/rm -f $__VIM_ARG__ &)
+	(/bin/rm -f $__VIM_PROG__ &)
 	case $prog in
 	$__VIMCD__) vimcd $arg ;;
 	$__LFCD__) lfcd $arg ;;
@@ -39,19 +44,20 @@ __vim_sel__()
 
 lfcd()
 {
-	touch $__LF_DIR__
-	trap '/bin/rm -f $__LF_DIR__ >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
+	echo >$__LAST_CMD__
 	lf -last-dir-path="$__LF_DIR__" "$@" &&
 		__vim_sel__
 	local dir=$(<$__LF_DIR__)
-	(/bin/rm -f $__LF_DIR__ &)
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
 }
 
 fzfbase()
 {
 	if [ ! $1 ]; then
-		return
+		[ -f $__LAST_CMD__ ] || return
+		case  $(<$__LAST_CMD__) in
+		$__VIMCD__) vimcd $(<$__VIM_LAST_FILE__)
+		esac
 	elif [ -f "$1" ]; then
 		vimcd $1
 	else
@@ -123,6 +129,7 @@ vimcd()
 		shift
 		;;
 	esac
+	(echo $__VIMCD__ >$__LAST_CMD__ &)
 	$cmd $file $@ &&
 		__vim_sel__
 }
