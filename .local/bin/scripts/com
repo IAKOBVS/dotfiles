@@ -41,4 +41,4 @@ case $file in
 	;;
 esac
 echo "$compiler" "$flags"
-$compiler "$flags" || return
+$compiler $flags || return
