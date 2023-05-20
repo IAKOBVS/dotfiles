@@ -11,12 +11,9 @@ export __VIMCD__=1
 export __LFCD__=2
 export __FZF__=3
 export __FZFLIVE__=4
-export __FZFEXACT__=5
-export __FZFEXACTLIVE__=6
-export __FZFLIVEEXACT__=6
-export __FZFLIVEHOME__=7
-export __FZFHOMELIVE__=7
-export __GREPVIM__=8
+export __FZFLIVEHOME__=5
+export __FZFHOMELIVE__=5
+export __GREPVIM__=6
 
 (/bin/mkdir -p /tmp/$__GLOBAL_FZFVIM__ &)
 (echo >$__VIM_PROG__ &)
@@ -43,8 +40,6 @@ __vim_sel__()
 	"$__LFCD__") lfcd "$arg" ;;
 	"$__FZF__") fzfvim "$arg" ;;
 	"$__FZFLIVE__") fzflive "$arg" ;;
-	"$__FZFEXACT__") fzfexact "$arg" ;;
-	"$__FZFEXACTLIVE__") fzfexactlive "$arg" ;;
 	"$__FZFLIVEHOME__") fzflive "$arg" ;;
 	"$__GREPVIM__") grepvim "$arg" ;;
 	esac
@@ -84,22 +79,10 @@ fzfvim()
 	fzfbase "$(fzfdef)"
 }
 
-fzfexact()
-{
-	cd "$HOME" || return
-	fzfbase "$(fzfdef -e)"
-}
-
 fzflive()
 {
 	cd "$1" || return
 	fzfbase "$(fzfpreview)"
-}
-
-fzfexactlive()
-{
-	cd "$HOME" || return
-	fzfbase "$(fzfpreview -e)"
 }
 
 # rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case ''
