@@ -1,5 +1,5 @@
 #!/bin/bash
-export __GLOBAL_FZFVIM__=__GLOBAL_FZFVIM__$$
+export __GLOBAL_FZFVIM__=__GLOBAL_FZFVIM__
 
 export __VIM_PROG__=/tmp/$__GLOBAL_FZFVIM__/__VIM_PROG__$$
 export __VIM_ARG__=/tmp/$__GLOBAL_FZFVIM__/__VIM_ARG__$$
