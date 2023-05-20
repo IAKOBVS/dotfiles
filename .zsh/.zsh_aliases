@@ -1,8 +1,8 @@
 #!/bin/sh
+rm() { echo $@; /bin/rm -vI $@; }
 alias \
 cp='cp -iv' \
 mv='mv -iv' \
-rm='rm -vI' \
 bc='bc -ql' \
 fin='. fin' \
 fs='. fs' \
