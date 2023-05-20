@@ -13,7 +13,7 @@ fu ExitCmd(dir, prog, arg)
 	x
 endf
 
-nn <C-l> :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
+" nn <C-l> :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
 nn <space>l :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
 nn <space>o :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
 
