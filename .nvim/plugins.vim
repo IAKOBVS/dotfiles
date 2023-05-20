@@ -44,8 +44,6 @@ nn <silent> <tab>k <Plug>(ale_previous_wrap)
 nn <silent> <tab>j <Plug>(ale_next_wrap)
 nn <space>a :ALEToggle<CR>
 
-au FileType sh ALEDisable
-au FileType vim ALEDisable
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 en

@@ -7,5 +7,5 @@ while :; do
 	for file in $(find /tmp/$__GLOBAL_FZFVIM__ -type f -name '__*__*' 2>/dev/null); do
 		(ps -o pid | grep -q -F "${file##*__}" || rm -rf $file &)
 	done
-	sleep 600
+	sleep 300
 done
