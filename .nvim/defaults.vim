@@ -5,17 +5,17 @@ au BufEnter * sil! lcd %:p:h
 " autoupdate zsh aliases
 au BufWritePost *zsh*alias* sil !__update_vim_aliases__ &
 " cleanup fzfvim temp variables
-au BufEnter * sil !rm -f $__VIM_PROG__ & rm -f $__VIM_ARG__ &
+sil au BufEnter * sil !rm -f $__VIM_PROG__ & rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ &
 
 " execute cmd after vim exits
 fu ExitCmd(dir, prog, arg)
-	sil exe '!echo '.a:dir.' >$__LF_DIR__ & echo '.a:prog.'> $__VIM_PROG__; echo '.a:arg.' > $__VIM_ARG__'
+	sil exe '!echo '.a:dir.' >$__LF_DIR__ & echo '.a:prog.'>$__VIM_PROG__; echo '.a:arg.' >$__VIM_ARG__'
 	x
 endf
 
 " runs fzf/lf on exit
 nn <C-l> :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
-nn <space>l :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
+nn <space>l <C-l>
 nn <C-f> :cal ExitCmd('%:p:h', '$__FZF__', '%:p:h')<CR>
 nn <C-h> :cal ExitCmd('$HOME', '$__FZF__', '$HOME')<CR>
 nn <C-e> :cal ExitCmd('$HOME', '$__FZFEXACT__', '$HOME')<CR>

@@ -1,6 +1,7 @@
 #!/bin/sh
 while :; do
-	for file in $(find /tmp -type f -name '__LF_DIR__*' 2>/dev/null); do
+	for file in $(find /tmp -type f -name '__LF_DIR__*' -o -name '__VIM_LAST_FILE__*' 2>/dev/null); do
+		echo $file
 		(ps -o pid | grep -q -F "${file##*LF_DIR__}" || rm -f $file &)
 	done
 	sleep 600
