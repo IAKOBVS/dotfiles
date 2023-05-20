@@ -1,5 +1,6 @@
 #!/bin/sh
 file=$1
+cd "$(dirname "$file")" || return
 flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer'
 shift
@@ -21,19 +22,22 @@ case $file in
 		;;
 	esac ;;
 esac
+# get impl.c from
+# include "header.h" /* impl.c */
 get_incl()
 {
-	sed -n "s/#[ \t]*include[ \t]\{1,\}\"\([^ \t]*\)\{1,\}\"[ \t]\{1,\}$1/\1$1/p" "$2"
+	sed -n "s/[ \t ]*#[ \t]*include[ \t]\{1,\}\"\([^ \t]*\)\{1,\}\"[ \t]\{1,\}.*\([-\/_.0-9A-Za-z]\{1,\}$1\).*/\1/p" "$2"
 }
-incl_c=$(get_incl .c "$file")
-incl_cpp=$(get_incl .cpp "$file")
-incl_precomp=$(get_incl .gch "$file")
-flags="$OLevel $flags $file $incl_c $incl_precomp -o $(basename "$file" ".${file#*.}")"
+o=$(get_incl .o "$file")
+c=$(get_incl .c "$file")
+cpp=$(get_incl .cpp "$file")
+precomp=$(get_incl .gch "$file")
+flags="$OLevel $flags $file $c $precomp $o -o $(basename "$file" ".${file#*.}")"
 case $file in
 *.c) compiler=gcc ;;
 *.cpp)
 	compiler=g++
-	flags="$flags $incl_cpp -std=gnu++17"
+	flags="$flags $cpp -std=gnu++17"
 	;;
 esac
 echo "$compiler" "$flags"
