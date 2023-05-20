@@ -1,12 +1,16 @@
 #!/bin/sh
 tmpdir=/tmp/$__GLOBAL_FZFVIM__
-if [ "$__GLOBAL_FZFVIM__" ] && cd "$tmpdir"; then
+if [ ! "$__GLOBAL_FZFVIM__" ] || ! cd "$tmpdir"; then
 	echo "$tmpdir dir not found"
 	return
 fi
 while :; do
+	pids=$(ps -o pid=)
 	for file in $(echo __*__*); do
-		(ps -o pid | grep -q -F "${file##*__}" || rm -rf "$file" &)
+		case $pids in
+		*"${file##*__}"*) ;;
+		*) rm -f "$file" ;;
+		esac
 	done
 	sleep 300
 done
