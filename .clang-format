@@ -82,7 +82,7 @@ CommentPragmas:  '^ IWYU pragma:'
 QualifierAlignment: Leave
 CompactNamespaces: false
 ConstructorInitializerIndentWidth: 8
-ContinuationIndentWidth: 8
+ContinuationIndentWidth: 0
 Cpp11BracedListStyle: false
 DeriveLineEnding: true
 DerivePointerAlignment: false
