@@ -60,6 +60,7 @@ lfcd()
 		__vim_sel__
 	local dir
 	dir=$(<$__LF_DIR__)
+	clear
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
 }
 
