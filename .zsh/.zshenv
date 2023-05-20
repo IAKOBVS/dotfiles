@@ -1,7 +1,7 @@
 export PATH="$PATH:/tmp/__ram_bin__:$HOME/.local/bin/scripts:$HOME/.local/bin"
-export TERM=alacritty
-export TERMINAL=alacritty
-export TERMINAL_PROG=alacritty
+export TERM=st
+export TERMINAL=st
+export TERMINAL_PROG=st
 export EDITOR=nvim
 export BROWSER=brave
 export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border'

@@ -3,13 +3,13 @@ nn ;nv :source $HOME/.nvim/init.vim<CR>
 " autocd
 au BufEnter * sil! lcd %:p:h
 " autoupdate zsh aliases
-au BufWritePost *zsh*alias* sil !__update_vim_aliases__ &
+au BufWritePost *zsh*alias* sil! !__update_vim_aliases__ &
 " cleanup fzfvim temp variables
-sil au BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | sil exe '!rm -f $__VIM_PROG__ & rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ &' | endif
+sil au BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | sil! exe '!rm -f $__VIM_PROG__ & rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ &' | endif
 
 " execute cmd after vim exits
 fu ExitCmd(dir, prog, arg)
-	sil exe '!echo '.a:dir.' >$__LF_DIR__ & echo '.a:prog.'>$__VIM_PROG__; echo '.a:arg.' >$__VIM_ARG__'
+	sil! exe '!echo '.a:dir.' >$__LF_DIR__ & echo '.a:prog.'>$__VIM_PROG__; echo '.a:arg.' >$__VIM_ARG__'
 	x
 endf
 
@@ -114,8 +114,8 @@ au BufNewFile,BufRead *.h se filetype=c
 au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
 " format current file
-au FileType c,cpp nm ;cfm :silent exec "!cfm %:p"<CR>
-au FileType sh,bash,zsh nm ;cfm :silent exec "!shfmt -w -fn %:p"<CR>
+au FileType c,cpp nm ;cfm :sil! exec "!cfm %:p"<CR>
+au FileType sh,bash,zsh nm ;cfm :sil! exec "!shfmt -w -fn %:p"<CR>
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')
