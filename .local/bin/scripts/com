@@ -4,7 +4,7 @@ cd "$(dirname "$file")" || return
 flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer'
 shift
-for opt in $@; do
+for opt in "$@"; do
 	case $opt in
 	0 | 1 | 2 | 3) OLevel="-O$opt -flto" ;;
 	s | S) flags="$flags $analyzer" ;;

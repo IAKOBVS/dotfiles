@@ -1,6 +1,6 @@
 #!/bin/sh
 img_clean="${1%.*}"
-for opt in $@; do
+for opt in "$@"; do
 	case $opt in
 	*.png | *.jpg) ;;
 	*x*)
@@ -8,7 +8,7 @@ for opt in $@; do
 		h=${r#*x}
 		;;
 	*)
-		if aredigit $opt; then
+		if aredigit "$opt"; then
 			r=$opt
 			h=$opt
 		else
@@ -27,16 +27,16 @@ upndownscale()
 	echo "$1 has been upscaled $2x."
 }
 scale=$(getres "$1" | awk -v h="$h" '{print int(h/$2 + 0.99)}')
-if [ $scale -le 1 ]; then
+if [ "$scale" -le 1 ]; then
 	echo "$1 need not be upscaled"
 	return
-elif [ $scale -le 4 ]; then
+elif [ "$scale" -le 4 ]; then
 	scale=4
-elif [ $scale -le 16 ]; then
+elif [ "$scale" -le 16 ]; then
 	scale=16
-elif [ $scale -le 32 ]; then
+elif [ "$scale" -le 32 ]; then
 	scale=32
-elif [ $scale -le 64 ]; then
+elif [ "$scale" -le 64 ]; then
 	scale=64
 fi
 upndownscale "$1" $scale

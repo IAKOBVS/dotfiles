@@ -1,6 +1,6 @@
 #!/bin/sh
-for file in $@; do
-	case $(head -n1 $file) in
-	\#!*bin*sh*) shfmt -w -fn $file & ;;
+for file in "$@"; do
+	case $(head -n1 "$file") in
+	\#!*bin*sh*) shfmt -w -fn "$file" & ;;
 	esac
 done
