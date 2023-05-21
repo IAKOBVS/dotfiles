@@ -1,4 +1,6 @@
 #!/bin/sh
+(__update_fzf__ &)
+(__update_paru_list__ &)
 mkdir -p /tmp/__ram_bin__
 __load_bin__() { cp -rf $@ /tmp/__ram_bin__ 2>/dev/null ;}
 (__load_bin__ /usr/bin/$TERMINAL &)
