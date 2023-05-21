@@ -1,6 +1,7 @@
 #!/bin/sh
 rm() { echo $@; /bin/rm -vI $@; }
 alias \
+mac='cat $HOME/c/pp_macros/global_macros.h | xclip -sel c' \
 cp='cp -iv' \
 mv='mv -iv' \
 bc='bc -ql' \
@@ -8,6 +9,7 @@ fin='. fin' \
 fs='. fs' \
 v='vimcd' \
 gr='grepvim ' \
+cv='catvr' \
 rs='res4thum' \
 z='zathura' \
 g='git' \
