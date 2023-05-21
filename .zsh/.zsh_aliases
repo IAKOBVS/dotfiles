@@ -7,6 +7,7 @@ mv='mv -iv' \
 bc='bc -ql' \
 fin='. fin' \
 fs='. fs' \
+gw='fgrepr' \
 v='vimcd' \
 gr='grepvim ' \
 cv='catvr' \
