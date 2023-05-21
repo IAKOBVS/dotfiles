@@ -1,6 +1,5 @@
 cal plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-commentary'
-Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
@@ -70,5 +69,4 @@ sunm b
 sunm e
 sunm ge
 
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsMultilineClose = 0 " disable weird pairing behaviour
+let g:airline_section_y = '%{trim(system("git branch --show-current 2>/dev/null"))}'
