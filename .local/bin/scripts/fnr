@@ -1,5 +1,5 @@
 #!/bin/sh
-grepped=$(grepcolor $2 $(find "$1" -type f))
+grepped=$(grepcolor "$2" $(find "$1" -type f))
 if ! $grepped; then
 	echo "No $2 found in $1"
 	return 1
@@ -11,4 +11,4 @@ case $ok in
 Y*) ;;
 *) return 1 ;;
 esac
-fnrforce $@
+fnrforce "$@"
