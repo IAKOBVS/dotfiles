@@ -23,6 +23,22 @@ export __FGREPR__=7
 (echo >$__VIM_LAST_FILE__ &)
 (echo >$__LAST_CMD__ &)
 
+touch()
+{
+	local file
+	file=$(realpath "${@##* }" 2>/dev/null)
+	[ -f "$file" ] || (fzf_update_dir "$file" &)
+	/bin/touch "$@"
+}
+
+mkdir()
+{
+	local file
+	file=$(realpath "${@##* }" 2>/dev/null)
+	[ -d "$file" ] || (fzf_update_dir "$file" &)
+	/bin/mkdir "$@"
+}
+
 __vim_sel__()
 {
 	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
@@ -127,8 +143,13 @@ vimcd()
 			cd "$file" || return
 			cmd=lfcd
 		else
-			cd "$(dirname "$file")" || return
-			( (sleep 10 && [ -f "$file" ] && touch "$file" &) &) >/dev/null 2>/dev/null
+			echo "$1 is not a file"
+			echo 'touch file? (y/n)'
+			read -r ok
+			case $ok in
+				y|Y) touch "$1" ;;
+				*) return ;;
+			esac
 			cmd=$EDITOR
 		fi
 		shift
@@ -137,20 +158,4 @@ vimcd()
 	(echo $__VIMCD__ >$__LAST_CMD__ &)
 	$cmd "$file" "$@" &&
 		__vim_sel__
-}
-
-mkdir()
-{
-	local file
-	file=$(realpath "${@##* }" 2>/dev/null)
-	[ -d "$file" ] || (fzf_update_dir "$file" &)
-	/bin/mkdir "$@"
-}
-
-touch()
-{
-	local file
-	file=$(realpath "${@##* }" 2>/dev/null)
-	[ -f "$file" ] || (fzf_update_dir "$file" &)
-	/bin/touch "$@"
 }
