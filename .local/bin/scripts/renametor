@@ -25,20 +25,20 @@ foreach my $old (glob('./*')) {
 
 	# trailing symbols before extension
 	$new =~ s/[[:space:]]*(\.[0-9A-Za-z]*)$/\1/; # space
-	$new =~ s/-*(\.[0-9A-Za-z]*)$/\1/; # underscore
+	$new =~ s/\-*(\.[0-9A-Za-z]*)$/\1/; # underscore
 	$new =~ s/_*(\.[0-9A-Za-z]*)$/\1/; # dash
 
 	# trailing
 	$new =~ s/\ *$//; # space
 	$new =~ s/_*$//; # underscore
-	$new =~ s/-*$//; # dash
+	$new =~ s/\-*$//; # dash
 
 	# weird symbols
-	$new =~ s/_*/_/g; # underscores
-	$new =~ s/  */\ /g; # spaces
-	$new =~ s/-*/-/g; # dashes
-	$new =~ s/_-_/_/g; # _-_
-	$new =~ s/\.-/_/g; # .-
+	$new =~ s/_{2,}/_/g; # underscores
+	$new =~ s/  {2,}/\ /g; # spaces
+	$new =~ s/-{2,}/-/g; # dashes
+	$new =~ s/_\-_/_/g; # _-_
+	$new =~ s/\.\-/_/g; # .-
 
 	$new =~ s/eason([[0-9]])/eason\ \1/g; # season2 -> season 2
 
