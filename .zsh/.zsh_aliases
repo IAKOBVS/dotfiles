@@ -35,7 +35,7 @@ systl='sudo systemctl' \
 sv='sudo v' \
 c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
 cu='c add $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh && c commit -a -m new && c push --force' \
-cpl='c --reset hard && c pull' \
+cpl='c pull' \
 gl='cd $HOME/.local/src/glibc' \
 vd='v $HOME/.local/src/dwm/config.h' \
 vdw='v $HOME/.local/src/dwmblocks/blocks.h' \
@@ -58,7 +58,6 @@ sr='cd $HOME/.local/bin/scripts' \
 cl='cd $HOME/.local/src' \
 cs='cd $HOME/.zsh' \
 fu="git commit -a -m 'newest' && git push origin" \
-gps='git commit -a && git push origin' \
 sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
 slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
 dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
