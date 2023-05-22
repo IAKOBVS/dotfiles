@@ -4,30 +4,27 @@ use warnings;
 
 my @old;
 my @new;
-
-my $new;
 my $old;
 
 while (glob('*')) {
-	no warnings; # ignores use of \1 over $1 warning as backreference
-
+	no warnings; # ignore use of \1 as backref warnings
 	$old = $_;
 
-	# brackets
+	# inside brackets
 	s/\[[^\]]*\]//g;
 
-	# leading space
+	# leading spaces
 	s/^\.\/[[:space:]]*([^[:space:]])/\1/;
 
 	# inside parens
-	s/\([0-9]*\)//g; # (2019)
-	s/\([^\)]*1080[^\)]*\)//g; # (.*1080.*)
-	s/\([^\)sS]*\)//g;
+	s/\([0-9]*\)//g; # contains num
+	s/\([^\)]*1080[^\)]*\)//g; # contains resolution
+	s/\([^\)sS]*\)//g; # does not contain season
 
 	# trailing before extension
-	s/[[:space:]]*(\.[0-9A-Za-z]*)$/\1/; # space
-	s/\-*(\.[0-9A-Za-z]*)$/\1/; # underscore
-	s/_*(\.[0-9A-Za-z]*)$/\1/; # dash
+	s/[[:space:]]{1,}(\.[0-9A-Za-z]*)$/\1/; # space
+	s/\-{1,}(\.[0-9A-Za-z]*)$/\1/; # underscore
+	s/_{1,}(\.[0-9A-Za-z]*)$/\1/; # dash
 
 	# trailing
 	s/\ *$//; # space
@@ -41,14 +38,15 @@ while (glob('*')) {
 	s/_\-_/_/g; # _-_
 	s/\.\-/_/g; # .-
 
-	s/eason([[0-9]])/eason\ \1/g; # season2 -> season 2
+	# season2 -> season 2
+	s/eason([[0-9]])/eason\ \1/g;
 
 	print "$_\n";
 	push @old, $old;
 	push @new, $_;
 }
 
-printf "\nDo you want to rename the files? (y/n)\n";
+printf "\nDo you want to rename the files? (Y/N)\n";
 chomp($_ = <>);
 
 if ($_ eq 'Y') {
