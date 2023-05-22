@@ -1,59 +1,59 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use diagnostics;
 
 my @old;
 my @new;
 
 my $new;
+my $old;
 
-foreach my $old (glob('*')) {
-	no warnings; # ignores use of \1 over $1 warning for backreference
-	$new = $old;
+while (glob('*')) {
+	no warnings; # ignores use of \1 over $1 warning as backreference
+
+	$old = $_;
 
 	# brackets
-	$new =~ s/\[[^\]]*\]//g;
+	s/\[[^\]]*\]//g;
 
 	# leading space
-	$new =~ s/^\.\/[[:space:]]*([^[:space:]])/\1/;
+	s/^\.\/[[:space:]]*([^[:space:]])/\1/;
 
-	# (str)
-	$new =~ s/\([0-9]*\)//g; # (2019)
-	$new =~ s/\([^\)]*1080[^\)]*\)//g; # (.*1080.*)
-	$new =~ s/\([^\)sS]*\)//g;
+	# inside parens
+	s/\([0-9]*\)//g; # (2019)
+	s/\([^\)]*1080[^\)]*\)//g; # (.*1080.*)
+	s/\([^\)sS]*\)//g;
 
-	# trailing symbols before extension
-	$new =~ s/[[:space:]]*(\.[0-9A-Za-z]*)$/\1/; # space
-	$new =~ s/\-*(\.[0-9A-Za-z]*)$/\1/; # underscore
-	$new =~ s/_*(\.[0-9A-Za-z]*)$/\1/; # dash
+	# trailing before extension
+	s/[[:space:]]*(\.[0-9A-Za-z]*)$/\1/; # space
+	s/\-*(\.[0-9A-Za-z]*)$/\1/; # underscore
+	s/_*(\.[0-9A-Za-z]*)$/\1/; # dash
 
 	# trailing
-	$new =~ s/\ *$//; # space
-	$new =~ s/_*$//; # underscore
-	$new =~ s/\-*$//; # dash
+	s/\ *$//; # space
+	s/_*$//; # underscore
+	s/\-*$//; # dash
 
 	# weird symbols
-	$new =~ s/_{2,}/_/g; # underscores
-	$new =~ s/  {2,}/ /g; # spaces
-	$new =~ s/-{2,}/-/g; # dashes
-	$new =~ s/_\-_/_/g; # _-_
-	$new =~ s/\.\-/_/g; # .-
+	s/_{2,}/_/g; # underscores
+	s/  {2,}/ /g; # spaces
+	s/-{2,}/-/g; # dashes
+	s/_\-_/_/g; # _-_
+	s/\.\-/_/g; # .-
 
-	$new =~ s/eason([[0-9]])/eason\ \1/g; # season2 -> season 2
+	s/eason([[0-9]])/eason\ \1/g; # season2 -> season 2
 
-	print "$new\n";
+	print "$_\n";
 	push @old, $old;
-	push @new, $new;
+	push @new, $_;
 }
 
-print "\nDo you want to rename the files? (y/n)\n";
-my $in = readline(STDIN);
-chomp($in);
+printf "\nDo you want to rename the files? (y/n)\n";
+chomp($_ = <>);
 
-if ($in eq 'Y') {
+if ($_ eq 'Y') {
 	for my $i (0..$#old) {
 		rename($old[$i], $new[$i]) or print "Unable to rename $old[$i] to $new[$i]\n";
 	}
-	print "Files successfully renamed!\n";
+	printf "Files successfully renamed!\n";
 }

@@ -1,7 +1,6 @@
 #!/bin/sh
 rm() { echo $@; /bin/rm -vI $@; }
 alias \
-mac='cat $HOME/c/pp_macros/global_macros.h | xclip -sel c' \
 cp='cp -iv' \
 mv='mv -iv' \
 bc='bc -ql' \
