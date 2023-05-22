@@ -4,7 +4,6 @@ xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
 picom -b --config $HOME/.config/picom.conf &
 dwmblocks &
 $TERMINAL &
-__cleanup_fzfvim__ &
 (cd /tmp; nohup $HOME/.local/bin/scripts/remaps &)
 sudo $HOME/c/nvtemp/nvtemp &
 sudo nvidia-smi -pl 150 &
