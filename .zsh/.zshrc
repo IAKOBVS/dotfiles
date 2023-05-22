@@ -4,7 +4,12 @@ export __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || g
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
 . $HOME/.zsh/.shell_functions 2>/dev/null
 
-(__cleanup_fzfvim__ &)
+(
+case $(ps -Ao command) in
+	*__cleanup_fzfvim__*) ;;
+	*) __cleanup_fzfvim__ &
+esac &
+)
 
 if [ -f /bin/fd ]; then
 	export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \

@@ -43,7 +43,6 @@ __vim_sel__()
 	"$__FZFLIVE__") fzflive "$arg" ;;
 	"$__FZFLIVEHOME__") fzflive "$arg" ;;
 	"$__GREPVIM__") grepvim "$arg" ;;
-	"$__FGREPR__") fgreprfzf "$arg" ;;
 	esac
 }
 
