@@ -13,7 +13,7 @@ for opt in "$@"; do
 done
 case $file in
 *.c | *.cpp) ;;
-*) case $(echo *.c *.cpp) in
+*) case $(find . -type f -name '*.c' -o -name '*.cpp') in
 	*$file.cpp*) file=$file.cpp ;;
 	*$file.c*) file=$file.c ;;
 	*)
