@@ -14,7 +14,6 @@ export __FZFLIVE__=4
 export __FZFLIVEHOME__=5
 export __FZFHOMELIVE__=5
 export __GREPVIM__=6
-export __FGREPR__=7
 
 (/bin/mkdir -p /tmp/$__GLOBAL_FZFVIM__ &)
 (echo >$__VIM_PROG__ &)
@@ -67,6 +66,7 @@ __last_cmd__()
 	[ -f $__LAST_CMD__ ] || return
 	case $(<$__LAST_CMD__) in
 	"$__VIMCD__") vimcd "$(<$__VIM_LAST_FILE__)" ;;
+	"$__LFCD__") lfcd "$(<$__VIM_LAST_FILE__)" ;;
 	esac
 }
 
