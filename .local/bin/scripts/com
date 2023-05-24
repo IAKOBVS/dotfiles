@@ -22,8 +22,7 @@ case $file in
 		;;
 	esac ;;
 esac
-# get impl.c from
-# include "header.h" /* impl.c */
+# get impl.c from #include "header.h" /* impl.c */
 get_incl()
 {
 	sed -n "s/[ \t ]*#[ \t]*include[ \t]\{1,\}\"\([^ \t]*\)\{1,\}\"[ \t]\{1,\}.*\([-\/_.0-9A-Za-z]\{1,\}$1\).*/\1/p" "$2"
