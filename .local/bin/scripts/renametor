@@ -44,7 +44,8 @@ while (glob('*')) {
 	push @new, $_;
 }
 printf "\nDo you want to rename the files? (Y/N)\n";
-chomp($_ = <>);
+$_ = <>;
+chomp;
 if ($_ eq 'Y') {
 	for my $i (0..$#old) {
 		rename($old[$i], $new[$i]) or print "Unable to rename $old[$i] to $new[$i]\n";

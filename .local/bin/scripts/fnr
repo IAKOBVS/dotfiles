@@ -4,7 +4,7 @@ if ! $grepped; then
 	echo "No $2 found in $1"
 	return 1
 fi
-echo $grepped | sed "s|$2|$3|g" | grepcolor $3
+echo $grepped | sed "s?$2?$3?g" | grepcolor $3
 echo 'Confirm the search and replace (Y/N)'
 read -r ok
 case $ok in
