@@ -2,19 +2,23 @@
 use strict;
 use warnings;
 
+my $incl;
+my $oincl;
 foreach my $file (glob('*.c *.h *.cpp *.hpp')) {
 	rename($file, "$file.bak") or die "Can't rename $file to $file.bak\n";
 	open(my $old, '<', "$file.bak") or die "Can't open $file.bak\n";
 	open(my $new, '>', $file) or die "Can't open $file";
 	while (my $ln = <$old>) {
+		# capture header.h in #include "header.h"
 		if ($ln =~ !/^[ \t]*#[ \t]*include[ \t\/]{1,}"([^"]{1,})"/) {
 			goto PRINT_LINE;
 		}
-		my $oincl = $1;
+		$oincl = $1;
 		if (-e $oincl) {
 			goto PRINT_LINE;
 		}
-		my $incl = $oincl;
+		$incl = $oincl;
+		# removes leading ../../
 		$incl =~ s/^[\/\.]{1,}//;
 		print "$incl\n";
 		for (my $max = 8; $max; $max--) {
