@@ -105,8 +105,6 @@ fzflive()
 	fzfbase "$(fzfpreview)"
 }
 
-# rg -j $__NPROC__ --line-number --no-heading --color=always --smart-case ''
-
 grepvim()
 {
 	local out
