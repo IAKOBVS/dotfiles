@@ -5,6 +5,9 @@ use warnings;
 my $incl;
 my $oincl;
 foreach my $file (glob('*.c *.h *.cpp *.hpp')) {
+	if (!-d || !-f) {
+		next;
+	}
 	rename($file, "$file.bak") or die "Can't rename $file to $file.bak\n";
 	open(my $old, '<', "$file.bak") or die "Can't open $file.bak\n";
 	open(my $new, '>', $file) or die "Can't open $file";

@@ -4,8 +4,11 @@ use warnings;
 my @old;
 my @new;
 my $old;
-while (glob('*')) {
+foreach (glob('*')) {
 	no warnings; # ignore use of \1 as backref warnings
+	if (!-d && !-f) {
+		next;
+	}
 	$old = $_;
 
 	# inside brackets
