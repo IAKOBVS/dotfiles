@@ -84,6 +84,7 @@ lfcd()
 
 fzfbase()
 {
+	clear
 	if [ ! "$1" ]; then
 		__last_cmd__
 	elif [ -f "$1" ]; then
@@ -105,10 +106,12 @@ fzflive()
 	fzfbase "$(fzfpreview)"
 }
 
+# out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+
 grepvim()
 {
 	local out
-	out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi)
 	if [ ! "$out" ]; then
 		__last_cmd__
 	else

@@ -4,7 +4,7 @@ export TERMINAL=alacritty
 export TERMINAL_PROG=alacritty
 export EDITOR=nvim
 export BROWSER=brave
-export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border'
+export FZF_DEFAULT_OPTS='--height 95% --layout=reverse'
 export GTK_THEME=Adwaita:dark
 export QT_STYLE_OVERRIDE=adwaita-dark
 
