@@ -11,36 +11,6 @@ case $(ps -Ao command) in
 esac &
 )
 
-if [ -f /bin/fd ]; then
-	export FZF_DEFAULT_COMMAND="fd -j $__NPROC__ --hidden --glob \
-		--exclude '*png' \
-		--exclude '*jpg' \
-		--exclude '*jpeg' \
-		--exclude '*mov' \
-		--exclude '*vscode*' \
-		--exclude '*git*'\
-		--exclude '*.virtualenv*'\
-		--exclude '*.rev*'\
-		--exclude '*.o'\
-		--exclude '*.cargo*'\
-		--exclude '*.pass*'\
-		--exclude '*.key*'"
-else
-	export FZF_DEFAULT_COMMAND="find \
-		! -path '*png' \
-		! -path '*jpg' \
-		! -path '*jpeg' \
-		! -path '*mov' \
-		! -path '*vscode*' \
-		! -path '*git*'\
-		! -path '*.virtualenv*'\
-		! -path '*.rev*'\
-		! -path '*.o'\
-		! -path '*.cargo*'\
-		! -path '*.pass*'\
-		! -path '*.key*'"
-fi
-
 # Enable colors and change prompt:
 # autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[white]%}[%{$fg[white]%}%n%{$fg[white]%}@%{$fg[white]%}%M %{$fg[white]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
