@@ -1,8 +1,9 @@
 #!/usr/bin/awk -f
 BEGIN {
 	N = 0
+	FS = "."
 	}
-	{
+{
 	old = $0
 	gsub(/\[[^\]]*\]/, "")  # inside brackets
 	sub(/^(\.\/){1,}[ \t]{1,}/, "") # leading spaces 
@@ -11,11 +12,11 @@ BEGIN {
 	gsub(/\([^\)]*1080[^\)]*\)/, "")
 	gsub(/\([^\)sS]*\)/, "")
 	# trailing before extension
-	if (match($0, /\.[0-9A-Za-z]{1,}$/)) {
-		tmp = substr($0, RSTART)
-		gsub(/[ \t]{1,}\.[0-9A-Za-z]{1,}$/, tmp)
-		gsub(/\-{1,}\.[0-9A-Za-z]{1,}$/, tmp)
-		gsub(/_{1,}\.[0-9A-Za-z]{1,}$/, tmp)
+	if ($NF) {
+		BF_NF = NF - 1
+		gsub(/[ \t]{1,}$/, tmp, $BF_NF)
+		gsub(/\-{1,}$/, tmp, $BF_NF)
+		gsub(/_{1,}$/, tmp, $BF_NF)
 		}
 	# trailing
 	gsub(/ *$/, "")
@@ -44,8 +45,9 @@ END {
 		exit
 	printf "\nDo you want to rename?\n"
 	getline ok <"/dev/tty"
-	if (ok == "y")
-		for (i = 0; i < N; ++i)
-			if (system("mv \"" olds[i] "\" \"" news[i] "\" &"))
-				printf "Can't rename %s into %s\n", olds[i], news[i]
+	if (ok != "y")
+		exit
+	for (i = 0; i < N; ++i)
+		if (system("mv \"" olds[i] "\" \"" news[i] "\" &"))
+			printf "Can't rename %s into %s\n", olds[i], news[i]
 	}
