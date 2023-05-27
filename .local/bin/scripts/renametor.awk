@@ -11,11 +11,12 @@ BEGIN {
 	gsub(/\([^\)]*1080[^\)]*\)/, "")
 	gsub(/\([^\)sS]*\)/, "")
 	# trailing before extension
-	match($0, /\.[0-9A-Za-z]{1,}$/)
-	tmp = substr($0, RSTART)
-	gsub(/[ \t]{1,}\.[0-9A-Za-z]{1,}$/, tmp)
-	gsub(/\-{1,}\.[0-9A-Za-z]{1,}$/, tmp)
-	gsub(/_{1,}\.[0-9A-Za-z]{1,}$/, tmp)
+	if (match($0, /\.[0-9A-Za-z]{1,}$/)) {
+		tmp = substr($0, RSTART)
+		gsub(/[ \t]{1,}\.[0-9A-Za-z]{1,}$/, tmp)
+		gsub(/\-{1,}\.[0-9A-Za-z]{1,}$/, tmp)
+		gsub(/_{1,}\.[0-9A-Za-z]{1,}$/, tmp)
+		}
 	# trailing
 	gsub(/ *$/, "")
 	gsub(/_*$/, "")

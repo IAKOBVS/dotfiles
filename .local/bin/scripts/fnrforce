@@ -3,6 +3,8 @@ if [ ! -d $1 ] || [ ! $2 ]; then
 	echo 'Usage: sed <dir> <find> <replace>'
 	return 1
 fi
+IFS='
+'
 for file in $(find "$1" -type f); do
 	printf "%s" $(sed "s|$2|$3|g" $file) >$file
 	grepcolor $3 $(find "$1" -type f)
