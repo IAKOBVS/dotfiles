@@ -1,9 +1,8 @@
 #!/usr/bin/awk -f
 BEGIN {
 	N = 0
-	FS = "."
 	}
-{
+	{
 	old = $0
 	gsub(/\[[^\]]*\]/, "")  # inside brackets
 	sub(/^(\.\/){1,}[ \t]{1,}/, "") # leading spaces 
@@ -12,11 +11,11 @@ BEGIN {
 	gsub(/\([^\)]*1080[^\)]*\)/, "")
 	gsub(/\([^\)sS]*\)/, "")
 	# trailing before extension
-	if ($NF) {
-		BF_NF = NF - 1
-		gsub(/[ \t]{1,}$/, tmp, $BF_NF)
-		gsub(/\-{1,}$/, tmp, $BF_NF)
-		gsub(/_{1,}$/, tmp, $BF_NF)
+	if (match($0, /\.[0-9A-Za-z]{1,}$/)) {
+		tmp = substr($0, RSTART)
+		gsub(/[ \t]{1,}\.[0-9A-Za-z]{1,}$/, tmp)
+		gsub(/\-{1,}\.[0-9A-Za-z]{1,}$/, tmp)
+		gsub(/_{1,}\.[0-9A-Za-z]{1,}$/, tmp)
 		}
 	# trailing
 	gsub(/ *$/, "")
