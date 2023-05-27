@@ -11,6 +11,8 @@ for opt in "$@"; do
 	*) flags="$flags $opt" ;;
 	esac
 done
+IFS='
+'
 case $file in
 *.c | *.cpp) ;;
 *) case $(find . -type f -name '*.c' -o -name '*.cpp') in
