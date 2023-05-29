@@ -13,6 +13,8 @@ fu ExitCmd(dir, prog, arg)
 	x
 endf
 
+nn <leader>c :!compiler %:p<CR>
+
 nn <space>l :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
 nn <space>o :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
 
@@ -86,7 +88,7 @@ se maxmempattern=2000000 " use more ram
 se cinoptions+=:0 " disable switch indent
 se number relativenumber
 se linebreak
-se nohlsearch
+" se nohlsearch
 se incsearch
 se mouse=a
 se encoding=utf-8

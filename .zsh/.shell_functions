@@ -51,6 +51,7 @@ __vim_sel__()
 	fi
 	(/bin/rm -f $__VIM_ARG__ &) >/dev/null 2>/dev/null
 	(/bin/rm -f $__VIM_PROG__ &) >/dev/null 2>/dev/null
+	clear
 	case $prog in
 	"$__VIMCD__") vimcd "$arg" ;;
 	"$__LFCD__") lfcd "$arg" ;;
@@ -84,7 +85,6 @@ lfcd()
 
 fzfbase()
 {
-	clear
 	if [ ! "$1" ]; then
 		__last_cmd__
 	elif [ -f "$1" ]; then
@@ -106,12 +106,11 @@ fzflive()
 	fzfbase "$(fzfpreview)"
 }
 
-# out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 
 grepvim()
 {
 	local out
-	out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi)
+	out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	if [ ! "$out" ]; then
 		__last_cmd__
 	else

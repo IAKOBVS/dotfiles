@@ -1,6 +1,7 @@
 #!/bin/sh
 rm() { echo $@; /bin/rm -vI $@; }
 alias \
+com='compiler' \
 cp='cp -iv' \
 mv='mv -iv' \
 bc='bc -ql' \

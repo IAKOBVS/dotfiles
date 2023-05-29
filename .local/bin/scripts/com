@@ -1,6 +1,6 @@
 #!/bin/sh
 file=$1
-cd "$(dirname "$file")" || return
+cd "$(dirname "$file")" || exit 1
 flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer'
 shift
@@ -20,7 +20,7 @@ case $file in
 	*$file.c*) file=$file.c ;;
 	*)
 		echo 'Not a .c or .cpp file!'
-		return
+		exit 1
 		;;
 	esac ;;
 esac
@@ -33,7 +33,7 @@ o=$(get_incl .o "$file")
 c=$(get_incl .c "$file")
 cpp=$(get_incl .cpp "$file")
 precomp=$(get_incl .gch "$file")
-flags="$OLevel $flags $file $c $precomp $o -o $(basename "$file" ".${file#*.}")"
+flags="$OLevel $(realpath $file) -o $(basename "$file" ".${file#*.}") $flags $c $precomp $o"
 case $file in
 *.c) compiler=gcc ;;
 *.cpp)
@@ -42,4 +42,4 @@ case $file in
 	;;
 esac
 echo "$compiler" "$flags"
-$compiler $flags || return
+$compiler $flags || exit 1
