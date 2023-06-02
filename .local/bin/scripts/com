@@ -15,14 +15,16 @@ IFS='
 '
 case $file in
 *.c | *.cpp) ;;
-*) case $(find . -type f -name '*.c' -o -name '*.cpp') in
-*$file.cpp*) file=$file.cpp ;;
-*$file.c*) file=$file.c ;;
 *)
-	echo 'Not a .c or .cpp file!'
-	exit 1
+	case $(find . -type f -name '*.c' -o -name '*.cpp') in
+	*$file.cpp*) file=$file.cpp ;;
+	*$file.c*) file=$file.c ;;
+	*)
+		echo 'Not a .c or .cpp file!'
+		exit 1
+		;;
+	esac
 	;;
-esac ;;
 esac
 unset IFS
 # get impl.c from #include "header.h" /* impl.c */
@@ -42,5 +44,6 @@ case $file in
 	flags="$flags $cpp -std=gnu++17"
 	;;
 esac
-echo $compiler $flags
+echo "$compiler $flags"
+echo
 $compiler $flags || exit 1
