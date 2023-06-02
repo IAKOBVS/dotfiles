@@ -3,6 +3,7 @@ cd "$1" || return
 IFS='
 '
 for file in $(find . -type f -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.hpp'); do
+	unset IFS
 	olds=$(awk -F'"' '/^[ \t]*#[ \t]*include[ \t\/]{1,}"[^"]{1,}"/ {print $2}' "$file")
 	for old in $olds; do
 		[ -f "$old" ] && continue
