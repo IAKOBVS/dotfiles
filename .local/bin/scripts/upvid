@@ -1,16 +1,12 @@
 #!/bin/sh
-OLDIFS=$IFS
-IFS='
-'
-set -- $@
-IFS=$OLDIFS
+shaders='~~/shaders/Anime4K_Clamp_Highlights.glsl:~~/shaders/Anime4K_Restore_CNN_M.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_M.glsl:~~/shaders/Anime4K_Restore_CNN_S.glsl:~~/shaders/Anime4K_AutoDownscalePre_x2.glsl:~~/shaders/Anime4K_AutoDownscalePre_x4.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_S.glsl'
 for file in "$@"; do
 	file_wo_ext=${file%.*}
 	ext=${file##*.}
-	mpv "$file" --no-sub --glsl-shaders="~~/shaders/Anime4K_Clamp_Highlights.glsl:~~/shaders/Anime4K_Restore_CNN_M.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_M.glsl:~~/shaders/Anime4K_Restore_CNN_S.glsl:~~/shaders/Anime4K_AutoDownscalePre_x2.glsl:~~/shaders/Anime4K_AutoDownscalePre_x4.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_S.glsl" -vf=gpu="w=1920:h=1080" --o="$file_wo_ext-upscaled.$ext" "$@"
+	mpv "$file" --no-sub --glsl-shaders="$shaders" -vf=gpu="w=1920:h=1080" --o="$file_wo_ext'_upscaled.'$ext" "$@"
 	i=0
 	while [ "$i" -ne "$(subtracks "$file")" ]; do
-		ffmpeg -i "0:s:$i" "$file_wo_ext-$i.srt"
+		ffmpeg -i "$file" -map "0:s:$i" "$file_wo_ext'_upscaled_'$i.srt"
 		i=$((i + 1))
 	done
 done
