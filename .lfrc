@@ -82,24 +82,24 @@ cmd extract ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "extract?[y/N]"
+	printf "extract? (Y\N)"
 	read ans
-	[ $ans = "y" ] && aunpack $fx
+	[ $ans = 'Y' ] && aunpack $fx
 }}
 
 cmd delete ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "delete?[y/N]"
+	printf "delete? (Y\N)"
 	read ans
-	[ $ans = "y" ] && rm -rf -- $fx
+	[ $ans = 'Y' ] && rm -rf -- $fx
 }}
 
 cmd moveto ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
-	clear; echo "Move to where?"
+	clear; echo "Move to where? "
 	# dest="$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|')" &&
 	dest="$(fh)" &&
 	for x in $fx; do
@@ -111,7 +111,7 @@ cmd moveto ${{
 cmd copyto ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
-	clear; echo "Copy to where?"
+	clear; echo "Copy to where? "
 	# dest="$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|')" &&
 	dest="$(fh)" &&
 	for x in $fx; do
@@ -124,33 +124,43 @@ cmd convert2mov ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "convert to mov?[y/N]"
+	printf "convert to mov? (Y\N)"
 	read ans
-	[ $ans = "y" ] && alacritty -e 2mov $fx &
+	[ $ans = 'Y' ] && alacritty -e 2mov $fx &
 }}
 
 cmd upscale4thumbnail ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "upscale?[y/N]"
+	printf "upscale? (Y\N)"
 	read ans
-	[ $ans = "y" ] && alacritty -e res4thum $fx &
+	[ $ans = 'Y' ] && alacritty -e res4thum $fx &
 }}
 
 cmd forceupscale ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "force upscale?[y/N]"
+	printf "force upscale? (Y\N)"
 	read ans
-	[ $ans = "y" ] && alacritty -e waifu2xauto $fx 4 &
+	[ $ans = 'Y' ] && alacritty -e waifu2xauto $fx 4 &
 }}
 
 cmd opengimp ${{
 	gimp $fx &
 }}
 
+cmd upvid ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "upscale vid(s)? (Y\N)"
+	read ans
+	[ $ans = 'Y' ] && upvid $fx
+}}
+
+map Z newcmd
 cmd setbg "$1"
 cmd bulkrename $vidir
 # Bindings
@@ -184,8 +194,7 @@ map <c-y> up
 map W $setsid -f $TERMINAL >/dev/null 2>&1
 map Y $printf "%s" "$fx" | xclip -selection clipboard
 map m convert2mov
-map u upscale4thumbnail
-map U forceupscale
+map u upvid
 map O opengimp
 map v push :!nvim<space>
 map c push :mv<space>
