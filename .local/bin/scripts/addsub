@@ -1,0 +1,14 @@
+#!/bin/sh
+file=$1
+shift
+mv "$file" "$file.bak" || exit 1
+i=1
+for sub in "$@"; do
+	test subs && subs="$subs "
+	test maps && maps="$maps "
+	subs="$subs-i $sub"
+	maps="$maps-map $i"
+	i=$((i + 1))
+done
+ffmpeg -i "$file.bak" $subs -map 0 -c copy $maps "$file" || { mv "$file.bak" "$file"; exit 1; }
+# rm "$file.bak"
