@@ -157,10 +157,9 @@ cmd upvid ${{
 	printf "%s\n\t" "$fx"
 	printf "upscale vid(s)? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && upvid $fx
+	[ $ans = 'Y' ] && { st -e upvid $fx;} &
 }}
 
-map Z newcmd
 cmd setbg "$1"
 cmd bulkrename $vidir
 # Bindings
