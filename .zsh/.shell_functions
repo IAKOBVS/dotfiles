@@ -135,7 +135,7 @@ vimcd()
 		set -- -c "$2"
 		;;
 	*)
-		file=$(realpath "${@##* }")
+		file=$(realpath "$1")
 		if [ -f "$file" ]; then
 			cd "${file%/?*}" || return
 			cmd=$EDITOR
