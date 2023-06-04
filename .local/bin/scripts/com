@@ -11,6 +11,7 @@ for opt in "$@"; do
 	*) flags="$flags $opt" ;;
 	esac
 done
+OLDIFS=$IFS
 IFS='
 '
 case $file in
@@ -26,7 +27,7 @@ case $file in
 	esac
 	;;
 esac
-unset IFS
+IFS=$OLDIFS
 # get impl.c from #include "header.h" /* impl.c */
 get_incl()
 {
