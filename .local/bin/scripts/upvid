@@ -2,12 +2,19 @@
 newdir=upscaled
 mkdir -p $newdir
 for file in "$@"; do
-	file_wo_ext=$(echo "$file" | sed "s/\(.*\)\/\(.*\)\..*/\1\/$newdir\/\2/g")
 	ext=${file##*.}
-	mpv "$file" --no-sub --glsl-shaders="~~/shaders/Anime4K_Clamp_Highlights.glsl:~~/shaders/Anime4K_Restore_CNN_M.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_M.glsl:~~/shaders/Anime4K_Restore_CNN_S.glsl:~~/shaders/Anime4K_AutoDownscalePre_x2.glsl:~~/shaders/Anime4K_AutoDownscalePre_x4.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_S.glsl" -vf=gpu="w=1920:h=1080" --o="$file_wo_ext"_upscaled."$ext"
+	file_wo_ext=${file##*/}
+	file_wo_ext=${file_wo_ext%.*}
+	upscaled="$file_wo_ext"_upscaled."$ext"
+	mpv "$file" --no-sub --glsl-shaders="~~/shaders/Anime4K_Clamp_Highlights.glsl:~~/shaders/Anime4K_Restore_CNN_M.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_M.glsl:~~/shaders/Anime4K_Restore_CNN_S.glsl:~~/shaders/Anime4K_AutoDownscalePre_x2.glsl:~~/shaders/Anime4K_AutoDownscalePre_x4.glsl:~~/shaders/Anime4K_Upscale_CNN_x2_S.glsl" -vf=gpu="w=1920:h=1080" --o="$upscaled"
 	i=0
 	while [ "$i" -ne "$(subtracks "$file")" ]; do
-		ffmpeg -i "$file" -map "0:s:$i" "$file_wo_ext"_upscaled_"$i".srt
+		srt="$file_wo_ext"_upscaled_"$i".srt
+		ffmpeg -i "$file" -map "0:s:$i" "$srt"
+		test "$subs" && subs=' '
+		subs="$subs$srt"
 		i=$((i + 1))
 	done
+	addsub "$upscaled" $subs
+	# rm "$upscaled.bak"
 done
