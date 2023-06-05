@@ -157,7 +157,7 @@ cmd upvid ${{
 	printf "%s\n\t" "$fx"
 	printf "upscale video(s)? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && { st -e upvid $fx; } &
+	[ $ans = 'Y' ] && setsid -f st -e upvid $fx &
 }}
 
 cmd addsub ${{
@@ -166,7 +166,7 @@ cmd addsub ${{
 	printf "%s\n\t" "$fx"
 	printf "addsub to video? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && { st -e addsub $fx; } &
+	[ $ans = 'Y' ] && setsid -f st -e addsub $fx &
 }}
 
 cmd setbg "$1"
