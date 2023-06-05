@@ -24,9 +24,11 @@ SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Basic auto/tab complete:
-# autoload -U compinit
-# compinit
-# zstyle ':completion:*' menu select
+
+autoload -U compinit
+compinit
+zstyle ':completion:*' menu select
+
 zmodload zsh/complist
 _comp_options+=(globdots) # Include hidden files.
 
