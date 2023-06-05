@@ -11,7 +11,6 @@ unclutter &
 dunst &
 xrdb $HOME/.Xresources &
 checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
-sudo updatedb &
 # qbittorrent &
 while :; do
 	ssh-agent dwm
