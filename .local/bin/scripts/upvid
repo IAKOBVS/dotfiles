@@ -11,20 +11,11 @@ for file in "$@"; do
 	file_wo_ext=${file##*/}
 	file_wo_ext=${file_wo_ext%.*}
 	upscaled="$file_wo_ext"_upscaled."$ext"
-	mpv "$file" --no-sub --glsl-shaders="$shaders" -vf=gpu="w=1920:h=1080" --o="$upscaled" || exit
-	i=0
-	while [ "$i" -ne "$(subtracks "$file")" ]; do
-		srt="$file_wo_ext"_upscaled_"$i".srt
-		ffmpeg -i "$file" -map "0:s:$i" "$srt"
-		test "$subs" && subs=' '
-		subs="$subs$srt"
-		i=$((i + 1))
-	done
-	addsub "$upscaled" $subs
-	cd $newdir
-	mkdir -p subs
-	mv -- *.srt subs
-	mkdir -p baks
-	mv -- *.bak baks
-	# rm "$upscaled.bak"
+	mpv "$file" --no-sub --glsl-shaders="$shaders" -vf=gpu="w=1920:h=1080" --o="$upscaled" --aid=no --sid=no
+	mv "$upscaled" "$upscaled.bak"
+	ffmpeg -i "$upscaled.bak" -i "$file" -map 0:v -map 1:a -map 1:s -c copy "$upscaled"
 done
+mv -- *_upscaled_* $newdir
+cd $newdir
+mkdir -p baks
+mv -- *bak* baks
