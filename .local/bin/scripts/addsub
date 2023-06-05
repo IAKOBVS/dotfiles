@@ -1,6 +1,17 @@
 #!/bin/sh
-file=$1
-shift
+case $1 in
+*.srt)
+	file=$2
+	one=$1
+	shift
+	shift
+	set -- $one $@
+	;;
+*.*)
+	file=$1
+	shift
+	;;
+esac
 mv "$file" "$file.bak" || exit 1
 i=1
 for sub in "$@"; do

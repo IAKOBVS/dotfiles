@@ -155,9 +155,18 @@ cmd upvid ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "upscale vid(s)? (Y\N)"
+	printf "upscale video(s)? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && { st -e upvid $fx;} &
+	[ $ans = 'Y' ] && { st -e upvid $fx; } &
+}}
+
+cmd addsub ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "addsub to video? (Y\N)"
+	read ans
+	[ $ans = 'Y' ] && { st -e addsub $fx; } &
 }}
 
 cmd setbg "$1"
@@ -194,6 +203,7 @@ map W $setsid -f $TERMINAL >/dev/null 2>&1
 map Y $printf "%s" "$fx" | xclip -selection clipboard
 map m convert2mov
 map u upvid
+map S addsub
 map O opengimp
 map v push :!nvim<space>
 map c push :mv<space>
