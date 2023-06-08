@@ -110,7 +110,7 @@ fzflive()
 grepvim()
 {
 	local out
-	out=$(catvr "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	out=$(catvrln "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	if [ ! "$out" ]; then
 		__last_cmd__
 	else
