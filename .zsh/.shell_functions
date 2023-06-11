@@ -106,18 +106,6 @@ fzflive()
 	fzfbase "$(fzfpreview)"
 }
 
-
-grepvim()
-{
-	local out
-	out=$(catvrln "$1" | fzf -d ':' -n 2.. --ansi --preview-window 'down:20%:+{2}' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
-	if [ ! "$out" ]; then
-		__last_cmd__
-	else
-		vimcd -c ":$(echo "$out" | cut -d':' -f2)" "${out%%:*}"
-	fi
-}
-
 vimcd()
 {
 	local cmd
@@ -158,4 +146,19 @@ vimcd()
 	(echo $__VIMCD__ >$__LAST_CMD__ &)
 	$cmd "$file" "$@" &&
 		__vim_sel__
+}
+
+__rg_arg__='--line-number --no-heading --color=always -FS -j $__NPROC__'
+
+grepvim() {
+	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rg $__rg_arg__ \"\"" \
+		--bind "change:reload:rg $__rg_arg__ {q} || true" \
+		--ansi --disabled \
+		--preview-window "down:20%:+{2}" \
+		--preview "bat --style=numbers \
+		--color=always \
+		--highlight-line {2} {1}")
+	if [ "$__grepvim__" ]; then vimcd -c ":$(echo "$__grepvim__" | cut -d: -f2)" "${__grepvim__%%:*}"
+	else __last_cmd__
+	fi
 }
