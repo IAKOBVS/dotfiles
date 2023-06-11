@@ -55,7 +55,7 @@ __vim_sel__()
 	case $prog in
 	"$__VIMCD__") vimcd "$arg" ;;
 	"$__LFCD__") lfcd "$arg" ;;
-	"$__FZF__") fzfvim "$arg" ;;
+	"$__FZF__") fzflive "$arg" ;;
 	"$__FZFLIVE__") fzflive "$arg" ;;
 	"$__FZFLIVEHOME__") fzflive "$arg" ;;
 	"$__GREPVIM__") grepvim "$arg" ;;
