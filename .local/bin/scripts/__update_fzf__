@@ -26,5 +26,5 @@ __find__()
 		! -path '*dart*' \
 		2>/dev/null
 }
-__find__ / >/tmp/__fzfroot__
 __find__ $HOME >/tmp/__fzfhome__
+__find__ / >/tmp/__fzfroot__

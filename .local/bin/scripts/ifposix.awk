@@ -72,16 +72,14 @@ BEGIN {
 				&& $i !~ /^;/); \
 				++i) {
 			if ($i ~ /^--[A-Za-z]/) {
-				ret = eol()
-				if (ret) {
+				if (ret = eol()) {
 					gsub(ret, "", $i)
 					shopt()
 					break
 				}
 				shopt()
 			} else if ($i ~ /^-[A-Za-z]/) {
-				ret = eol()
-				if (ret)
+				if (ret = eol())
 					gsub(ret, "", $i)
 				len = length($i)
 				for (j = 2; j <= len; ++j)

@@ -36,6 +36,8 @@ c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
 cu='c add $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh && c commit -a -m new && c push --force' \
 cpl='c pull' \
 gl='cd $HOME/.local/src/glibc' \
+bs='cd $HOME/.local/src/freebsd-src/lib/libc' \
+mu='cd $HOME/.local/src/musl/src' \
 vd='v $HOME/.local/src/dwm/config.h' \
 vdw='v $HOME/.local/src/dwmblocks/blocks.h' \
 vsl='v $HOME/.local/src/slstatus/config.h' \
