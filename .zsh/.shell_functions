@@ -148,11 +148,24 @@ vimcd()
 		__vim_sel__
 }
 
-__rg_arg__='--line-number --no-heading --color=always -FS -j $__NPROC__'
+# __rg_arg__='--line-number --no-heading --color=always -FS -j $__NPROC__'
+
+# grepvim() {
+# 	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rg $__rg_arg__ \"\"" \
+# 		--bind "change:reload:rg $__rg_arg__ {q} || true" \
+# 		--ansi --disabled \
+# 		--preview-window "down:20%:+{2}" \
+# 		--preview "bat --style=numbers \
+# 		--color=always \
+# 		--highlight-line {2} {1}")
+# 	if [ "$__grepvim__" ]; then vimcd -c ":$(echo "$__grepvim__" | cut -d: -f2)" "${__grepvim__%%:*}"
+# 	else __last_cmd__
+# 	fi
+# }
 
 grepvim() {
-	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rg $__rg_arg__ \"\"" \
-		--bind "change:reload:rg $__rg_arg__ {q} || true" \
+	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rgrep '' $PWD \"\"" \
+		--bind "change:reload:rgrep {q} $PWD || true" \
 		--ansi --disabled \
 		--preview-window "down:20%:+{2}" \
 		--preview "bat --style=numbers \
