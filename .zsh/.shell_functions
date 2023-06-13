@@ -26,7 +26,7 @@ touch()
 {
 	local file
 	file=$(realpath "${@##* }" 2>/dev/null)
-	[ -f "$file" ] || (fzf_update_dir "$file" &)
+	# [ -f "$file" ] || (fzf_update_dir "$file" &)
 	/bin/touch "$@"
 }
 
@@ -34,7 +34,7 @@ mkdir()
 {
 	local file
 	file=$(realpath "${@##* }" 2>/dev/null)
-	[ -d "$file" ] || (fzf_update_dir "$file" &)
+	# [ -d "$file" ] || (fzf_update_dir "$file" &)
 	/bin/mkdir "$@"
 }
 
@@ -94,16 +94,26 @@ fzfbase()
 	fi
 }
 
+__FD_ARGS__="-t f -j  --hidden -F"
+
 fzfvim()
 {
 	cd "$1" || return
-	fzfbase "$(fzfdef)"
+	fzfbase "$(fzf -d: --bind "start:reload:fd $__FD_ARGS__ \"\"" \
+		--bind "change:reload:fd $__FD_ARGS__ {q} || true" \
+		--ansi --disabled \
+		--preview "bat --style=numbers \
+		--color=always {}")"
 }
 
 fzflive()
 {
 	cd "$1" || return
-	fzfbase "$(fzfpreview)"
+	fzfbase "$(fzf -d: --bind "start:reload:rfind \"\"" \
+		--bind "change:reload:rfind {q} || true" \
+		--ansi --disabled \
+		--preview "bat --style=numbers \
+		--color=always {}")"
 }
 
 vimcd()
@@ -148,6 +158,19 @@ vimcd()
 		__vim_sel__
 }
 
+grepvim() {
+	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rgrep '' $PWD \"\"" \
+		--bind "change:reload:rgrep {q} $PWD || true" \
+		--ansi --disabled \
+		--preview-window "down:20%:+{2}" \
+		--preview "bat --style=numbers \
+		--color=always \
+		--highlight-line {2} {1}")
+	if [ "$__grepvim__" ]; then vimcd -c ":$(echo "$__grepvim__" | cut -d: -f2)" "${__grepvim__%%:*}"
+	else __last_cmd__
+	fi
+}
+
 # __rg_arg__='--line-number --no-heading --color=always -FS -j $__NPROC__'
 
 # grepvim() {
@@ -162,16 +185,3 @@ vimcd()
 # 	else __last_cmd__
 # 	fi
 # }
-
-grepvim() {
-	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rgrep '' $PWD \"\"" \
-		--bind "change:reload:rgrep {q} $PWD || true" \
-		--ansi --disabled \
-		--preview-window "down:20%:+{2}" \
-		--preview "bat --style=numbers \
-		--color=always \
-		--highlight-line {2} {1}")
-	if [ "$__grepvim__" ]; then vimcd -c ":$(echo "$__grepvim__" | cut -d: -f2)" "${__grepvim__%%:*}"
-	else __last_cmd__
-	fi
-}
