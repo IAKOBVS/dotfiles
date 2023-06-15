@@ -51,7 +51,7 @@ __vim_sel__()
 	fi
 	(/bin/rm -f $__VIM_ARG__ &) >/dev/null 2>/dev/null
 	(/bin/rm -f $__VIM_PROG__ &) >/dev/null 2>/dev/null
-	clear
+	# clear
 	case $prog in
 	"$__VIMCD__") vimcd "$arg" ;;
 	"$__LFCD__") lfcd "$arg" ;;
@@ -79,41 +79,8 @@ lfcd()
 	local dir
 	dir=$(<$__LF_DIR__)
 	(/bin/rm -f $__LF_DIR__ >/dev/null 2>/dev/null &)
-	clear
+	# clear
 	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
-}
-
-fzfbase()
-{
-	if [ ! "$1" ]; then
-		__last_cmd__
-	elif [ -f "$1" ]; then
-		vimcd "$1"
-	else
-		lfcd "$1"
-	fi
-}
-
-__FD_ARGS__="-t f -j  --hidden -F"
-
-fzfvim()
-{
-	cd "$1" || return
-	fzfbase "$(fzf -d: --bind "start:reload:fd $__FD_ARGS__ \"\"" \
-		--bind "change:reload:fd $__FD_ARGS__ {q} || true" \
-		--ansi --disabled \
-		--preview "bat --style=numbers \
-		--color=always {}")"
-}
-
-fzflive()
-{
-	cd "$1" || return
-	fzfbase "$(fzf -d: --bind "start:reload:rfind \"\"" \
-		--bind "change:reload:rfind {q} || true" \
-		--ansi --disabled \
-		--preview "bat --style=numbers \
-		--color=always {}")"
 }
 
 vimcd()
@@ -158,30 +125,34 @@ vimcd()
 		__vim_sel__
 }
 
-grepvim() {
-	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rgrep '' $PWD \"\"" \
-		--bind "change:reload:rgrep {q} $PWD || true" \
-		--ansi --disabled \
-		--preview-window "down:20%:+{2}" \
-		--preview "bat --style=numbers \
-		--color=always \
-		--highlight-line {2} {1}")
-	if [ "$__grepvim__" ]; then vimcd -c ":$(echo "$__grepvim__" | cut -d: -f2)" "${__grepvim__%%:*}"
-	else __last_cmd__
+fzfbase()
+{
+	if [ ! "$1" ]; then
+		__last_cmd__
+	elif [ -f "$1" ]; then
+		vimcd "$1"
+	else
+		lfcd "$1"
 	fi
 }
 
-# __rg_arg__='--line-number --no-heading --color=always -FS -j $__NPROC__'
+fzflive()
+{
+	cd "$1" 2>/dev/null
+	fzfbase "$(rfind '' | fzf --exact --preview "bat --style=numbers --color=always {1}")"
+}
 
-# grepvim() {
-# 	__grepvim__=$(fzf -d: -n 2.. --bind "start:reload:rg $__rg_arg__ \"\"" \
-# 		--bind "change:reload:rg $__rg_arg__ {q} || true" \
-# 		--ansi --disabled \
-# 		--preview-window "down:20%:+{2}" \
-# 		--preview "bat --style=numbers \
-# 		--color=always \
-# 		--highlight-line {2} {1}")
-# 	if [ "$__grepvim__" ]; then vimcd -c ":$(echo "$__grepvim__" | cut -d: -f2)" "${__grepvim__%%:*}"
-# 	else __last_cmd__
-# 	fi
-# }
+grepvim() {
+	cd "$1" 2>/dev/null
+	local grepped
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:rgrep ''"                          \
+		--bind "change:reload:rgrep {q} || true"                                 \
+		--ansi --disabled                                                        \
+		--preview-window "down:20%:+{2}"                                         \
+		--preview "bat --style=numbers --color=always --highlight-line {2} {1}")
+	if [ "$grepped" ]; then
+		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+	else
+		__last_cmd__
+	fi
+}
