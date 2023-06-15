@@ -87,7 +87,8 @@ se wildmode=longest,full,full
 se maxmempattern=2000000 " use more ram
 se cinoptions+=:0 " disable switch indent
 se number relativenumber
-se linebreak
+se wrap!
+" se linebreak
 " se nohlsearch
 se incsearch
 se mouse=a
