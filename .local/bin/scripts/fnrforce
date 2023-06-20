@@ -1,7 +1,7 @@
 #!/bin/sh
-if [ ! -d $1 ] || [ ! $2 ]; then
+if [ ! -d "$1" ] || [ ! "$2" ]; then
 	echo 'Usage: sed <dir> <find> <replace>'
-	return 1
+	exit 1
 fi
 OLDIFS=$IFS
 IFS='
@@ -9,6 +9,6 @@ IFS='
 files=$(find "$1" -type f)
 IFS=$OLDIFS
 for file in $files; do
-	printf "%s" "$(sed "s|$2|$3|g" $file)" >$file
+	printf "%s" "$(sed "s?$2?$3?g" "$file")" >"$file"
 	grepcolor "$3" "$(find "$1" -type f)"
 done

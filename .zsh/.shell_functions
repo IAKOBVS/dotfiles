@@ -146,17 +146,50 @@ fzfbase()
 fzflive()
 {
 	cd "$1" 2>/dev/null
-	fzfbase "$(fd --hidden -F -j $__NPROC__ -t f | fzf --exact --preview "bat --style=numbers --color=always {1}")"
+	fzfbase "$(rfind '' | fzf --exact --preview "bat --style=numbers --color=always {1}")"
 }
 
 __RG_ARGS__="-j $__NPROC__ --color=always --no-heading -F -uu -n"
 
-grepvim()
+rgvim()
 {
 	cd "$1" 2>/dev/null
 	local grepped
 	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ ''" \
 		--bind "change:reload:rg $__RG_ARGS__ {q} || true" \
+		--ansi --disabled \
+		--preview-window 'down:20%:+{2}' \
+		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	if [ "$grepped" ]; then
+		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+	else
+		__last_cmd__
+	fi
+}
+
+grepvim()
+{
+	cd "$1" 2>/dev/null
+	local grepped
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:rgrep ''" \
+		--bind "change:reload:rgrep {q} || true" \
+		--ansi --disabled \
+		--preview-window 'down:20%:+{2}' \
+		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	if [ "$grepped" ]; then
+		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+	else
+		__last_cmd__
+	fi
+}
+
+
+thvim()
+{
+	cd "$1" 2>/dev/null
+	local grepped
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:thgrep ''" \
+		--bind "change:reload:thgrep {q} || true" \
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')

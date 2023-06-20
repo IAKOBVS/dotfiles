@@ -116,6 +116,7 @@ au BufNewFile,BufRead *.h se filetype=c
 " 4-space tabs
 au BufNewFile,BufRead *.dart se autoindent expandtab tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.json se autoindent expandtab tabstop=4 shiftwidth=4
+au BufNewFile,BufRead *.ejs,*.html se filetype=html autoindent expandtab tabstop=4 shiftwidth=4
 " format current file
 au FileType c,cpp nm ;cfm :sil! exec "!cfm %:p"<CR>
 au FileType sh,bash,zsh nm ;cfm :sil! exec "!shfmt -w -fn %:p"<CR>
