@@ -1,2 +1,7 @@
 #!/bin/sh
-clang-format -i --style=file:"$HOME"/.clang-format "$@"
+if [ -f .clang-format ]; then
+	fmt=.clang-format
+else
+	fmt=$HOME/.clang-format
+fi
+clang-format -i --style=file:"$fmt" "$@"
