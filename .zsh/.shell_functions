@@ -167,18 +167,18 @@ grepvim()
 	fi
 }
 
-# grepvim()
-# {
-# 	cd "$1" 2>/dev/null
-# 	local grepped
-# 	grepped=$(fzf -d: -n 2.. --bind "start:reload:rgrep ''" \
-# 		--bind "change:reload:rgrep {q} || true" \
-# 		--ansi --disabled \
-# 		--preview-window 'down:20%:+{2}' \
-# 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
-# 	if [ "$grepped" ]; then
-# 		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
-# 	else
-# 		__last_cmd__
-# 	fi
-# }
+rgvim()
+{
+	cd "$1" 2>/dev/null
+	local grepped
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:rgrep ''" \
+		--bind "change:reload:rgrep {q} || true" \
+		--ansi --disabled \
+		--preview-window 'down:20%:+{2}' \
+		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
+	if [ "$grepped" ]; then
+		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+	else
+		__last_cmd__
+	fi
+}
