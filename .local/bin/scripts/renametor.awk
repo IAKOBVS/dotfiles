@@ -4,6 +4,7 @@ BEGIN {
 	}
 	{
 	old = $0
+	gsub(/ /, "_");
 	gsub(/\[[^\]]*\]/, "")  # inside brackets
 	sub(/^(\.\/){1,}[ \t]{1,}/, "") # leading spaces 
 	# inside parens
@@ -42,9 +43,9 @@ BEGIN {
 END {
 	if (!N)
 		exit
-	printf "\nDo you want to rename?\n"
+	printf "\nDo you want to rename? (y/n)\n"
 	getline ok <"/dev/tty"
-	if (ok != "y")
+	if (ok != "y" && ok != "Y")
 		exit
 	for (i = 0; i < N; ++i)
 		if (system("mv \"" olds[i] "\" \"" news[i] "\" &"))
