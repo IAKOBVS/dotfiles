@@ -1,10 +1,10 @@
 #!/bin/sh
 set -- "$(find $HOME/.local/bin/scripts $HOME/c -type f \
-	! -path '*cnlp*data*' \
-	! -path '*vscode*' \
-	! -path '*git*' \
+	! -path '.git*' \
 	! -path '*.o' \
-	! -path '*.out' \
-	! -path '?' \
+	! -name '?' \
+	! -name '.vscode*' \
+	! -name '.clang-format' \
+	! -name '.gitignore' \
 	2>/dev/null | fzfpreview --delimiter / --with-nth -1)"
 [ $1 ] && v $1
