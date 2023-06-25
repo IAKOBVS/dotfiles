@@ -157,8 +157,8 @@ fu __FileEmpty__()
 	return 0
 endf
 
-" hi CursorLine ctermbg=none guibg=#3c3836
+" hi CursorLine ctermbg=none guibg=#2c3836
 " hi CursorColumn ctermbg=none guibg=#3c3836
 " completion menu
-" hi Pmenu ctermbg=none ctermfg=15 guibg=none guifg=#ffffff
+" hi Pmenu ctermbg=none ctermfg=14 guibg=none guifg=#ffffff
 " hi PmenuSel ctermfg=Black ctermbg=none gui=reverse
