@@ -4,6 +4,7 @@ nn ;nv :source $HOME/.nvim/init.vim<CR>
 au BufEnter * sil! lcd %:p:h
 " autoupdate zsh aliases
 au BufWritePost *zsh*alias* sil! !__update_vim_aliases__ &
+au BufWritePost *.shell_functions*,.z* sil! !__recompile_zsh_scripts__ &
 " cleanup fzfvim temp variables
 sil au BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | sil! exe '!/bin/rm -f $__VIM_PROG__ & /bin/rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ &' | endif
 

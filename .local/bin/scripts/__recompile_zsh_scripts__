@@ -1,0 +1,6 @@
+#!/bin/zsh
+cd $HOME/.zsh &&
+for f in $(find $HOME/.zsh -type f ! -name '*.zwc'); do
+	{ test $f -nt ${f%.*} && zcompile $f; } &
+done
+wait
