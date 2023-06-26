@@ -25,9 +25,9 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Basic auto/tab complete:
 
-# autoload -U compinit
-# compinit
-# zstyle ':completion:*' menu select
+autoload -U compinit
+compinit
+zstyle ':completion:*' menu select
 
 zmodload zsh/complist
 _comp_options+=(globdots) # Include hidden files.
@@ -73,7 +73,9 @@ bindkey -M visual '^[[P' vi-delete
 
 (pgrep xcape > /dev/null || remaps > /dev/null &)
 
+ZSH_AUTOSUGGEST_MANUAL_REBIND=0
+
 # Load syntax highlighting; should be last.
-. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 bindkey '^L' autosuggest-accept
 . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
