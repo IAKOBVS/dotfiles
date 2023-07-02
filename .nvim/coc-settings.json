@@ -23,5 +23,7 @@
     "flutter.enabled": false,
     "prettier.useTabs": true,
     "prettier.semi": true,
-    "prettier.printWidth": 100
+    "prettier.printWidth": 100,
+    "prettier.bracketSameLine": false,
+    "eslint.onIgnoredFiles": "off"
 }
