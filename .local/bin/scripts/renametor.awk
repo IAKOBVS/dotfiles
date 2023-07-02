@@ -4,9 +4,9 @@ BEGIN {
 	}
 	{
 	old = $0
-	gsub(/ /, "_");
 	gsub(/\[[^\]]*\]/, "")  # inside brackets
 	sub(/^(\.\/){1,}[ \t]{1,}/, "") # leading spaces 
+	gsub(/ /, "_");
 	# inside parens
 	gsub(/\([0-9]*\)/, "")
 	gsub(/\([^\)]*1080[^\)]*\)/, "")
@@ -24,7 +24,7 @@ BEGIN {
 	gsub(/\-*$/, "")
 	# weird symbols
 	gsub(/_{2,}/, "_")
-	gsub(/  {2,}/ , "")
+	gsub(/ {2,}/, "")
 	gsub(/-{2,}/, "-")
 	gsub(/_\-_/, "_")
 	gsub(/\.\-/, "_")

@@ -21,6 +21,7 @@
 	},
     "sh.commandPath": "bash-language-server",
     "flutter.enabled": false,
-    "pylsp.enable": true,
-    "lua.enable": false
+    "prettier.useTabs": true,
+    "prettier.semi": true,
+    "prettier.printWidth": 100
 }

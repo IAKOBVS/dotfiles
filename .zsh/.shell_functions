@@ -1,4 +1,12 @@
 #!/bin/bash
+
+# (case $(ps -Ao command) in
+# 	*__cleanup_fzfvim__*) ;;
+# 	*) __cleanup_fzfvim__ &
+# esac &)
+
+export __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
+
 export __GLOBAL_FZFVIM__=__GLOBAL_FZFVIM__
 
 export __VIM_PROG__=/tmp/$__GLOBAL_FZFVIM__/__VIM_PROG__$$
@@ -146,7 +154,7 @@ fzfbase()
 fzflive()
 {
 	cd "$1" 2>/dev/null
-	fzfbase "$(rfind '' | fzf --exact --preview "bat --style=numbers --color=always {1}")"
+	fzfbase "$(find . -type f ! -name '.git' | fzf --exact --preview "bat --style=numbers --color=always {1}")"
 }
 
 __RG_ARGS__="-j $__NPROC__ --color=always --no-heading -F -uu -n"
@@ -166,19 +174,3 @@ grepvim()
 		__last_cmd__
 	fi
 }
-
-# rgvim()
-# {
-# 	cd "$1" 2>/dev/null
-# 	local grepped
-# 	grepped=$(fzf -d: -n 2.. --bind "start:reload:rgrep ''" \
-# 		--bind "change:reload:rgrep {q} || true" \
-# 		--ansi --disabled \
-# 		--preview-window 'down:20%:+{2}' \
-# 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
-# 	if [ "$grepped" ]; then
-# 		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
-# 	else
-# 		__last_cmd__
-# 	fi
-# }
