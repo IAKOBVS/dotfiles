@@ -14,7 +14,7 @@ for opt in "$@"; do
 		else
 			echo 'usage: res4thumbnail <image> <res>'
 			echo 'Not an image file!'
-			return 1
+			exit 1
 		fi
 		;;
 	esac
@@ -29,7 +29,7 @@ upndownscale()
 scale=$(getres "$1" | awk -v h="$h" '{print int(h/$2 + 0.99)}')
 if [ "$scale" -le 1 ]; then
 	echo "$1 need not be upscaled"
-	return
+	exit 1
 elif [ "$scale" -le 4 ]; then
 	scale=4
 elif [ "$scale" -le 16 ]; then

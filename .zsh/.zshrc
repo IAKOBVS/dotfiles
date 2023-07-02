@@ -1,18 +1,10 @@
 #!/bin/zsh
-export __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
 . $HOME/.zsh/.shell_functions 2>/dev/null
 
-(
-case $(ps -Ao command) in
-	*__cleanup_fzfvim__*) ;;
-	*) __cleanup_fzfvim__ &
-esac &
-)
-
 # Enable colors and change prompt:
-# autoload -U colors && colors	# Load colors
+autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[white]%}[%{$fg[white]%}%n%{$fg[white]%}@%{$fg[white]%}%M %{$fg[white]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
@@ -22,9 +14,9 @@ setopt interactive_comments
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+([ -f $HISTFILE ] && sed -i '/poweroff/d; /reboot/d' $HISTFILE &)
 
 # Basic auto/tab complete:
-
 autoload -U compinit
 compinit
 zstyle ':completion:*' menu select
@@ -57,11 +49,6 @@ zle-line-init() {
 }
 zle -N zle-line-init
 
-bindkey -s '^f' 'fzflive $PWD\n'
-bindkey -s '^e' 'fzfexact\n'
-bindkey -s '^o' 'lfcd\n'
-bindkey -s '^r' 'grepvim\n'
-
 bindkey '^[[P' delete-char
 
 # Edit line in vim with ctrl-e:
@@ -71,6 +58,10 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
+bindkey -s '^f' 'fzflive $PWD\n'
+bindkey -s '^e' 'fzfexact\n'
+bindkey -s '^o' 'lfcd\n'
+bindkey -s '^r' 'grepvim\n'
 (pgrep xcape > /dev/null || remaps > /dev/null &)
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=0
@@ -78,4 +69,4 @@ ZSH_AUTOSUGGEST_MANUAL_REBIND=0
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 bindkey '^L' autosuggest-accept
-. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+# . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null

@@ -11,3 +11,4 @@ nn ;vp :edit $HOME/.config/picom.conf<CR>
 nn ;vvim :edit $HOME/.nvim/defaults.vim<CR>
 nn ;zf :edit $HOME/.zsh/.shell_functions<CR>
 nn ;vsi :edit $HOME/.local/share/alias/sites<CR>
+nn ;vb :edit $HOME/.zsh/.bashrc<CR>

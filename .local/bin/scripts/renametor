@@ -1,2 +1,2 @@
 #!/bin/sh
-find . -type f -o -type d | renametor.awk
+find . -type f -o -type d | grep '^\./[^/]\{1,\}$' | renametor.awk

@@ -8,6 +8,7 @@ Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'OmniSharp/omnisharp-vim'
 cal plug#end()
 
 vn ff :Tabularize /\\$<CR>
@@ -37,6 +38,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nn ;coc :CocConfig<CR>
+au BufNewFile,BufEnter *.js,*.ts sil! nn <leader>f :CocCommand prettier.formatFile<CR>
 
 " accept completion
 nn <silent> <tab>k <Plug>(ale_previous_wrap)
@@ -70,3 +72,8 @@ sunm e
 sunm ge
 
 let g:airline_section_y = '%{trim(system("git branch --show-current 2>/dev/null"))}'
+
+" let g:OmniSharp_selector_ui = 'fzf'    " Use fzf
+" let g:ale_linters = { 
+" \ 'cs': ['OmniSharp']
+" \}

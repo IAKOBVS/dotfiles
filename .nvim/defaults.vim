@@ -1,7 +1,7 @@
 nn ;nv :source $HOME/.nvim/init.vim<CR>
 
 " autocd
-au BufEnter * sil! lcd %:p:h
+au BufNewFile,BufEnter * sil! lcd %:p:h
 " autoupdate zsh aliases
 au BufWritePost *zsh*alias* sil! !__update_vim_aliases__ &
 au BufWritePost *.shell_functions*,.z* sil! !__recompile_zsh_scripts__ &
