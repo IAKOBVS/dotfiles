@@ -1,55 +1,65 @@
 #!/usr/bin/awk -f
 
-function ifpsx(flag)
+function ifpsx(cmd, flag)
 {
-	if (prog == "awk") {
-		if (system("man gawk 2>/dev/null | grep -q \"^[[:space:]]*"flag"[^A-Za-z]\""))
-			return -1
-		if (system("man 1p awk 2>/dev/null | grep -q \"^[[:space:]]*"flag"[^A-Za-z]\""))
-			return 1
-		return 0
-	}
-	if (system("man " prog " 2>/dev/null | grep -q \"^[[:space:]]*"flag"[^A-Za-z]\""))
+	if (system("man " ((cmd == "awk") ? "gawk" : cmd) " 2>/dev/null | grep -q \"^[[:space:]]*" flag "[^A-Za-z]\""))
 		return -1
-	if (system("man 1p " prog " 2>/dev/null | grep -q \"^[[:space:]]*"flag"[^A-Za-z]\""))
+	if (system("man 1p " cmd " 2>/dev/null | grep -q \"^[[:space:]]*" flag "[^A-Za-z]\""))
 		return 1
 	return 0
 }
 
-function shopt()
+function shopt(cmd, flag)
 {
-	ret = ifpsx($i)
+	ret = ifpsx(flag)
 	if (ret == -1)
-		printf "%s:%s:%s:%s:invalid flag\n", FILENAME, FNR, prog, $i
+		print FILENAME ":" FNR ":" cmd ":" flag ":invalid flag"
 	else if (ret == 1)
-		printf "%s:%s:%s:%s:non-POSIX flag\n", FILENAME, FNR, prog, $i
+		print FILENAME ":" FNR ":" cmd ":" flag ":non-POSIX flag"
 }
 
-function loopt()
+function loopt(cmd, flag)
 {
-	c = substr($i, j, 1)
-	ret = ifpsx("-" c)
+	c = substr(flag, j, 1)
+	ret = ifpsx(cmd, "-" c)
 	if (ret == -1)
-		printf "%s:%s:%s:-%s:invalid flag\n", FILENAME, FNR, prog, c
+		print FILENAME ":" FNR ":" cmd ":" c ":invalid flag"
 	else if (ret == 1)
-		printf "%s:%s:%s:-%s:non-POSIX flag\n", FILENAME, FNR, prog, c
+		print FILENAME ":" FNR ":" cmd ":" c ":non-POSIX flag"
 }
 
-function eol()
+function eol(w)
 {
-	if ($i ~ /\|$/)
+	if (w ~ /\|$/) {
+		if (w ~ /\|\|$/)
+			return "||"
 		return "$"
-	if ($i ~ /&$/)
+	}
+	if (w ~ /&$/) {
+		if (w ~ /&&$/)
+			return "&&";
 		return "&"
-	if ($i ~ /;$/)
+	}
+	if (w ~ /;$/)
 		return ";"
 	return 0
 }
 
-BEGIN {
-	FS = "[^-|&;_0-9A-Za-z]{1,}"
+function eol_match(w)
+{
+	if (w == "|" \
+	|| w == "||" \
+	|| w == "&" \
+	|| w == "&&" \
+	|| w == ";")
+		return 1;
+	return 0;
 }
-/awk|grep|sed/ {
+
+BEGIN {
+	FS = "[[:space:]]{1,}"
+}
+/awk|grep|sed|echo|cd|pwd|ls|cp|mkdir|rmdir|touch|cat|sort/ {
 	for (i = 1; i <= NF; ++i) {
 		if ($i != "awk" \
 		&& $i != "grep" \
@@ -66,24 +76,20 @@ BEGIN {
 		&& $i != "sort")
 			continue
 		prog = $i
-		for (++i; i <= NF && \
-				($i !~ /^\|/ \
-				&& $i !~ /^&/ \
-				&& $i !~ /^;/); \
-				++i) {
+		for (++i; i <= NF && !eol_match($i); ++i) {
 			if ($i ~ /^--[A-Za-z]/) {
-				if (ret = eol()) {
+				if (ret = eol($i)) {
 					gsub(ret, "", $i)
-					shopt()
+					shopt(prog, $i)
 					break
 				}
-				shopt()
+				shopt(prog, $i)
 			} else if ($i ~ /^-[A-Za-z]/) {
-				if (ret = eol())
+				if (ret = eol($i))
 					gsub(ret, "", $i)
 				len = length($i)
 				for (j = 2; j <= len; ++j)
-					loopt()
+					loopt(prog, $i)
 			}
 		}
 	}
