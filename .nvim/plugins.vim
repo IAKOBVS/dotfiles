@@ -39,6 +39,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nn ;coc :CocConfig<CR>
 au BufNewFile,BufEnter *.js,*.ts,*.html,*.css sil! nn <leader>f :CocCommand prettier.formatFile<CR>
+" au BufNewFile,BufEnter *.js,*.ts,*.html,*.css sil! :ALEDisable<CR>
 
 " accept completion
 nn <silent> <tab>k <Plug>(ale_previous_wrap)
