@@ -1,3 +1,17 @@
 #!/bin/sh
-man "$1" | grep "^[[:space:]]*$2[^A-Za-z]" || echo "System $1 doesn't support $2"
-manp "$1" | grep "^[[:space:]]*$2[^A-Za-z]" || echo "POSIX $1 doesn't support $2"
+case $2 in
+--*) grep_psx()
+	{
+		grep -E ",[[:space:]]{1,}$2([^A-Za-z]|$)"
+	} ;;
+-*) grep_psx()
+	{
+		grep -e "^[[:space:]]*$2[^A-Za-z]"
+	} ;;
+*)
+	echo '$2 does not start with - or --'
+	exit
+	;;
+esac
+man "$1" | grep_psx $@ || echo "System $1 doesn't support $2"
+manp "$1" | grep_psx $@ || echo "POSIX $1 doesn't support $2"
