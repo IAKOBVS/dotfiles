@@ -14,9 +14,16 @@ fu ExitCmd(dir, prog, arg)
 	x
 endf
 
-vnoremap <leader>s :s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<C-f>F(hi
-nnoremap <leader>s :%s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<C-f>F(hi
-nn <leader>r f1a
+" cno <C-W> <S-Right>
+" cno <C-B> <S-Right>
+" cno <C-A> <C-Right>
+" cno <C-I> <C-Left>
+" cno <C-L> <Right>
+" cno <C-H> <Left>
+
+vn <leader>s :s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+nn <leader>s :%s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+cno <C-R> <C-Right><Left><Left><Left><Left>
 
 nn <leader>c :!compiler %:p<CR>
 
