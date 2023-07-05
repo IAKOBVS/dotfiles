@@ -1,10 +1,10 @@
 #!/bin/sh
 if [ $(uname -s) = Linux ]; then
-	du -shc -- * | sort -h | less
+	du -shc -- * 2>/dev/null | sort -h | less
 	exit
 fi
 toGb=$((1024 * 1024))
-du -s -- * |
+du -s -- * 2>/dev/null |
 	sort -n |
 	awk -v fmt=$toGb \
 		'BEGIN { total = 0 } \

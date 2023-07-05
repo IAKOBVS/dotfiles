@@ -1,31 +1,20 @@
 #!/usr/bin/awk -f
 
-function ifpsx(cmd, flag)
+function bad_flag(cmd, flag, posixity)
 {
-	if (system("man " ((cmd == "awk") ? "gawk" : cmd) " 2>/dev/null | grep -q \"^[[:space:]]*" flag "[^A-Za-z]\""))
-		return -1
-	if (system("man 1p " cmd " 2>/dev/null | grep -q \"^[[:space:]]*" flag "[^A-Za-z]\""))
-		return 1
-	return 0
+	print FILENAME ":" FNR ":" cmd ":" flag ":" posixity " flag"
 }
 
-function shopt(cmd, flag)
+function ifpsx(cmd, flag, longopt)
 {
-	ret = ifpsx(flag)
-	if (ret == -1)
-		print FILENAME ":" FNR ":" cmd ":" flag ":invalid flag"
-	else if (ret == 1)
-		print FILENAME ":" FNR ":" cmd ":" flag ":non-POSIX flag"
-}
-
-function loopt(cmd, flag)
-{
-	c = substr(flag, j, 1)
-	ret = ifpsx(cmd, "-" c)
-	if (ret == -1)
-		print FILENAME ":" FNR ":" cmd ":" c ":invalid flag"
-	else if (ret == 1)
-		print FILENAME ":" FNR ":" cmd ":" c ":non-POSIX flag"
+	if (longopt)
+		grep = " 2>/dev/null | grep -q -E \",[[:space:]]{1,}" flag "([^A-Za-z]|$)\""
+	else
+		grep = " 2>/dev/null | grep -q \"^[[:space:]]*" flag "[^A-Za-z]\""
+	if (system("man " ((cmd == "awk") ? "gawk" : cmd) grep))
+		bad_flag(cmd, flag, "invalid")
+	else if (system("man 1p " cmd grep))
+		bad_flag(cmd, flag, "non-POSIX")
 }
 
 function eol(w)
@@ -37,7 +26,7 @@ function eol(w)
 	}
 	if (w ~ /&$/) {
 		if (w ~ /&&$/)
-			return "&&";
+			return "&&"
 		return "&"
 	}
 	if (w ~ /;$/)
@@ -78,18 +67,20 @@ BEGIN {
 		prog = $i
 		for (++i; i <= NF && !eol_match($i); ++i) {
 			if ($i ~ /^--[A-Za-z]/) {
-				if (ret = eol($i)) {
+				ret = eol($i)
+				if (ret) {
 					gsub(ret, "", $i)
-					shopt(prog, $i)
+					ifpsx(prog, $i, 1)
 					break
 				}
-				shopt(prog, $i)
+				long(prog, $i)
 			} else if ($i ~ /^-[A-Za-z]/) {
-				if (ret = eol($i))
+				ret = eol($i)
+				if (ret)
 					gsub(ret, "", $i)
 				len = length($i)
 				for (j = 2; j <= len; ++j)
-					loopt(prog, $i)
+					ifpsx(prog, "-" substr($i, j, 1), 0)
 			}
 		}
 	}
