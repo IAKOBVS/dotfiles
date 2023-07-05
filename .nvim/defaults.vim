@@ -21,6 +21,22 @@ endf
 " cno <C-L> <Right>
 " cno <C-H> <Left>
 
+" '<'>
+
+" fu SearchReplace(visual)
+" 	cal inputsave()
+" 	let l:input = input('s/')
+" 	cal inputrestore()
+" 	let l:find = substitute(l:input, '^.*/', '', '')
+" 	let l:replace = substitute(l:input, '^.*/', '', '')
+" 	let l:replace = substitute(l:input, '/.*$', '', '')
+" 	let l:global = match(l:input, 'g$')
+" 	exe ':' . (a:visual ? "'<,'>" : '%') . 's/\([^_0-9A-Zl-z]\|^\)' . l:find . '\([^0-9A-Zl-z]\|$\)/\1' . l:replace . '\2/' . ((l:global == -1) ? '' : 'g')
+" endf
+
+" vn <leader>s <Esc>:cal SearchReplace(1)<CR>
+" nn <leader>s :cal SearchReplace(0)<CR>
+
 vn <leader>s :s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 nn <leader>s :%s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 cno <C-R> <C-Right><Left><Left><Left><Left>
