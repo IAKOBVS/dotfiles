@@ -2,7 +2,7 @@
 file=$1
 cd "$(dirname "$file")" || exit 1
 flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
-analyzer='-fanalyzer'
+analyzer='-fanalyzer -fsanitize=address -g'
 shift
 for opt in "$@"; do
 	case $opt in
