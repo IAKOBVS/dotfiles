@@ -14,6 +14,10 @@ fu ExitCmd(dir, prog, arg)
 	x
 endf
 
+vnoremap <leader>s :s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<C-f>F(hi
+nnoremap <leader>s :%s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<C-f>F(hi
+nn <leader>r f1a
+
 nn <leader>c :!compiler %:p<CR>
 
 nn <space>l :cal ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
