@@ -1,3 +1,3 @@
-so $HOME/.nvim/plugins.vim
-so $HOME/.nvim/defaults.vim
-so $HOME/.nvim/vim_aliases.vim
+source $HOME/.nvim/plugins.vim
+source $HOME/.nvim/defaults.vim
+source $HOME/.nvim/vim_aliases.vim
