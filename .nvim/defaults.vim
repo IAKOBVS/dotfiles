@@ -27,7 +27,7 @@ function SearchReplace(visual)
 	call inputsave()
 	let l:input = input('s/')
 	call inputrestore()
-	if l:input == '' || (l:input !~ '/') || (l:input !~ '^.\{1,\}/')
+	if l:input == '' || (stridx(l:input, '/') == -1) || (l:input !~ '^.\{1,\}/')
 		return
 	endif
 	let l:find = substitute(l:input, '/.*$', '', '')

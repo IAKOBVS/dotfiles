@@ -5,7 +5,7 @@ if test ! "$grepped"; then
 	echo "Usage: ./fnr <dir> <search> <replace>"
 	exit 1
 fi
-set -- "$1" "$(echo "$2" | sed "s/\//\\\//g")" "$3"
+set -- "$1" "$(echo "$2" | rmregex)" "$3"
 echo "$grepped" | sed "s/$2/$3/g" | grepcolor "$3"
 echo 'Confirm the search and replace (Y/N)'
 read -r ok
