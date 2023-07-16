@@ -1,0 +1,3 @@
+#!/bin/sh
+mv .clang-format .clang-format.bak
+cp -rf $HOME/.clang-format .
