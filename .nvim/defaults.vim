@@ -149,16 +149,9 @@ autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=
 autocmd BufNewFile,BufRead *.json set autoindent expandtab tabstop=4 shiftwidth=4
 autocmd BufNewFile,BufRead *.ejs,*.html set filetype=html autoindent expandtab tabstop=4 shiftwidth=4
 " format current file
-autocmd FileType c,cpp nmap ;cfm :w<CR>:silent! exec "!cfm %:p"<CR>
-autocmd FileType sh,bash,zsh nmap ;cfm :w<CR>:silent! exec "!shfmt -w -fn %:p"<CR>
-autocmd FileType perl nmap ;cfm :w<CR>:call PerlTidy()<CR>
-
-function PerlTidy()
-	silent! execute '!perltidy -gnu ' . expand('%:p')
-	silent! execute ':%s/^    /\t/g'
-	silent! execute ':%s/\([^;]\)[ \t]*\n[ \t]*{/\1 {/g'
-	silent! execute ':%s/\(^[ \t]*}\)[ \t]*\n[ \t]*\(elsif\|else\)/\1 \2/g'
-endfunction
+autocmd FileType c,cpp nmap ;cfm :w!<CR>:silent! exec "!cfm %:p"<CR>
+autocmd FileType sh,bash,zsh nmap ;cfm :w!<CR>:silent! exec "!shfmt -w -fn %:p"<CR>
+autocmd FileType perl nmap ;cfm :w!<CR>:silent !pfmt %:p<CR>
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')
