@@ -12,10 +12,11 @@ for opt in "$@"; do
 	esac
 done
 case $file in
-*.c | *.cpp) ;;
+*.c | *.cpp | *.cc) ;;
 *)
-	case $(find . -type f -name '*.c' -o -name '*.cpp') in
+	case $(find . -type f -name '*.c' -o -name '*.cpp' -o -name '*.cc') in
 	*$file.cpp*) file=$file.cpp ;;
+	*$file.cc*) file=$file.cc ;;
 	*$file.c*) file=$file.c ;;
 	*)
 		echo 'Not a .c or .cpp file!'
@@ -27,7 +28,7 @@ esac
 # get impl.c from #include "header.h" /* impl.c */
 get_incl()
 {
-	sed -n "s/[ \t ]*#[ \t]*include[ \t]\{1,\}\"\([^ \t]*\)\{1,\}\"[ \t]\{1,\}.*\([-\/_.0-9A-Za-z]\{1,\}$1\).*/\1/p" "$2"
+	sed -n "s/^[ \t ]*#[ \t]*include[ \t]\{1,\}\"\([^ \t]*\)\{1,\}\"[ \t]\{1,\}.*\([-\/_.0-9A-Za-z]\{1,\}$1\).*/\1/p" "$2"
 }
 o=$(get_incl .o "$file")
 c=$(get_incl .c "$file")
@@ -36,7 +37,7 @@ precomp=$(get_incl .gch "$file")
 flags="$OLevel $file -o $(basename "$file" ".${file#*.}") $flags $c $precomp $o"
 case $file in
 *.c) compiler=gcc ;;
-*.cpp)
+*.cpp | *.cc)
 	compiler=g++
 	flags="$flags $cpp -std=gnu++17"
 	;;
@@ -44,3 +45,4 @@ esac
 echo "$compiler $flags"
 echo
 $compiler $flags || exit 1
+./${file%.*}

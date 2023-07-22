@@ -138,9 +138,9 @@ cnorea w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 
 " C highlighting
-autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! highlight PreProc ctermfg=35 guifg=#8ed5e5
-silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
-silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.cpp silent! 2mat Special /[(){}]/
+autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! highlight PreProc ctermfg=35 guifg=#8ed5e5
+silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
+silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! 2mat Special /[(){}]/
 " disable autocomment
 autocmd FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd BufNewFile,BufRead *.h set filetype=c
@@ -151,12 +151,20 @@ autocmd BufNewFile,BufRead *.ejs,*.html set filetype=html autoindent expandtab t
 " format current file
 autocmd FileType c,cpp nmap ;cfm :w<CR>:silent! exec "!cfm %:p"<CR>
 autocmd FileType sh,bash,zsh nmap ;cfm :w<CR>:silent! exec "!shfmt -w -fn %:p"<CR>
+autocmd FileType perl nmap ;cfm :w<CR>:call PerlTidy()<CR>
+
+function PerlTidy()
+	silent! execute '!perltidy -gnu ' . expand('%:p')
+	silent! execute ':%s/^    /\t/g'
+	silent! execute ':%s/\([^;]\)[ \t]*\n[ \t]*{/\1 {/g'
+	silent! execute ':%s/\(^[ \t]*}\)[ \t]*\n[ \t]*\(elsif\|else\)/\1 \2/g'
+endfunction
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')
 \ && filereadable(g:__templateDir__.'/skeleton.pl')
 \ && filereadable(g:__templateDir__.'/skeleton.awk')
-	autocmd BufNewFile,BufRead *.c,*.cpp if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.c | $delete _
+	autocmd BufNewFile,BufRead *.c,*.cc,*.cpp if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.c | $delete _
 	autocmd BufNewFile,BufRead *.pl,*.pm if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.pl
 	autocmd BufNewFile,BufRead *.awk if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.awk
 endif
