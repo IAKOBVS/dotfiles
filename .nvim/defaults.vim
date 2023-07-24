@@ -14,15 +14,6 @@ function ExitCmd(dir, prog, arg)
 	xit
 endfunction
 
-" cnoremap <C-W> <S-Right>
-" cnoremap <C-B> <S-Right>
-" cnoremap <C-A> <C-Right>
-" cnoremap <C-I> <C-Left>
-" cnoremap <C-L> <Right>
-" cnoremap <C-H> <Left>
-
-" '<'>
-
 function SearchReplace(visual)
 	call inputsave()
 	let l:input = input('s/')
@@ -39,10 +30,6 @@ endfunction
 
 vnoremap <space>s <Esc>:call SearchReplace(1)<CR>
 nnoremap <space>s :call SearchReplace(0)<CR>
-
-" vnoremap <leader>s :s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-" nnoremap <leader>s :%s/\([^_0-9A-Za-z]\\|^\)\([^0-9A-Za-z]\\|$\)/\1\2/g<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-" cnoremap <C-R> <C-Right><Left><Left><Left><Left>
 
 nnoremap <leader>c :!compiler %:p<CR>
 
