@@ -2,12 +2,12 @@
 case "$(checkaudioport)" in
 *headphone*)
 	pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-lineout
-	$TERMINAL -e pulseaudio-equalizer disable
+	jamesdsp --set-graphiceq_enable=false
 	notify-send "🔊 now using speakers!"
 	;;
 *)
 	pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-headphones
-	$TERMINAL -e pulseaudio-equalizer enable
+	jamesdsp --set-graphiceq_enable=true
 	notify-send "🎧 now using headphones!"
 	;;
 esac

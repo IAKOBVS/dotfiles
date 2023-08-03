@@ -25,7 +25,7 @@ function SearchReplace(visual)
 	let l:replace = substitute(l:replace, '/[^/]*$', '', '')
 	let l:g = (l:input =~ '/[^/]*/g$') ? 'g' : ''
 	let l:find = substitute(l:input, '/.*$', '', '')
-	execute ':' . (a:visual ? "'<,'>" : '%') . 's/\([^_0-9A-Za-z]\|^\)' . l:find . '\([^_0-9A-Za-z]\|$\)/\1' . l:replace . '\2/' . l:g
+	execute ':' . (a:visual ? "'<,'>" : '%') . 's/\([^"''_0-9A-Za-z]\|^\)' . l:find . '\([^"''_0-9A-Za-z]\|$\)/\1' . l:replace . '\2/' . l:g
 endfunction
 
 vnoremap <space>s <Esc>:call SearchReplace(1)<CR>
@@ -139,6 +139,7 @@ autocmd BufNewFile,BufRead *.ejs,*.html set filetype=html autoindent expandtab t
 autocmd FileType c,cpp nmap ;cfm :w!<CR>:silent! exec "!cfm %:p"<CR>
 autocmd FileType sh,bash,zsh nmap ;cfm :w!<CR>:silent! exec "!shfmt -w -fn %:p"<CR>
 autocmd FileType perl nmap ;cfm :w!<CR>:silent !pfmt %:p<CR>
+autocmd FileType c,cpp nmap ;bu :silent !./build &<CR>
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')
