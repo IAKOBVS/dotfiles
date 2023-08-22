@@ -2,5 +2,5 @@
 filename=/tmp/$1-deb.c
 gcc -E -P "$1" |
 	clang-format -style=file:"$HOME"/.clang-format -assume-filename="*.c" >"$filename" &&
-	$EDITOR "-c $(grep -n 'int main.*()' "$filename" |
-		cut -d':' -f1)" "$filename"
+	$TERMINAL -e $EDITOR "-c $(grep -n 'int main.*()' "$filename" |
+		cut -d':' -f1)" "$filename" &

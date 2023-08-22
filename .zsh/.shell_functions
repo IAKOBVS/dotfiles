@@ -5,9 +5,10 @@ export __NPROC__
 
 export __GLOBAL_FZFVIM__=__GLOBAL_FZFVIM__
 
+# shellcheck disable=SC2009
 (case $(ps -Ao command | grep -v grep) in
-	*__cleanup_fzfvim__*) ;;
-	*) __cleanup_fzfvim__ &
+*__cleanup_fzfvim__*) ;;
+*) __cleanup_fzfvim__ & ;;
 esac &)
 
 export __VIM_PROG__=/tmp/$__GLOBAL_FZFVIM__/__VIM_PROG__$$
@@ -154,14 +155,16 @@ fzfbase()
 
 fzflive()
 {
+	# shellcheck disable=SC2164
 	cd "$1" 2>/dev/null
 	fzfbase "$(find . -type f ! -path '*.git*' ! -path '*.o' ! -path '*node_modules*' | fzf --exact --preview "bat --style=numbers --color=always {1}")"
 }
 
-__RG_ARGS__="-j $__NPROC__ --color=always --no-heading -F -uu -n"
+__RG_ARGS__="-j $__NPROC__ --color=always --no-heading -uu -n"
 
 grepvim()
 {
+	# shellcheck disable=SC2164
 	cd "$1" 2>/dev/null
 	local grepped
 	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ ''" \

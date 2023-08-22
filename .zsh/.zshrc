@@ -53,13 +53,13 @@ bindkey '^[[P' delete-char
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
-bindkey '^v' edit-command-line
+bindkey '^e' edit-command-line
 bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 bindkey -s '^f' 'fzflive $PWD\n'
-bindkey -s '^e' 'fzfexact\n'
+# bindkey -s '^e' 'fzfexact\n'
 bindkey -s '^o' 'lfcd\n'
 bindkey -s '^r' 'grepvim\n'
 (pgrep xcape > /dev/null || remaps > /dev/null &)

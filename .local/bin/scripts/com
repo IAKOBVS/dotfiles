@@ -7,7 +7,8 @@ shift
 for opt in "$@"; do
 	case $opt in
 	0 | 1 | 2 | 3) OLevel="-O$opt -flto" ;;
-	s | S) flags="$flags $analyzer" ;;
+	s | S) flags="$flags $analyzer -g" ;;
+	d | D | g | G) flags='-fsanitize=address -g' ;;
 	*) flags="$flags $opt" ;;
 	esac
 done

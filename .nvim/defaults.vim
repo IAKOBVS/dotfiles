@@ -25,13 +25,14 @@ function SearchReplace(visual)
 	let l:replace = substitute(l:replace, '/[^/]*$', '', '')
 	let l:g = (l:input =~ '/[^/]*/g$') ? 'g' : ''
 	let l:find = substitute(l:input, '/.*$', '', '')
-	execute ':' . (a:visual ? "'<,'>" : '%') . 's/\([^"''_0-9A-Za-z]\|^\)' . l:find . '\([^"''_0-9A-Za-z]\|$\)/\1' . l:replace . '\2/' . l:g
+	execute ':' . (a:visual ? "'<,'>" : '%') . 's/\([^"''%_0-9A-Za-z]\|^\)' . l:find . '\([^"''%_0-9A-Za-z]\|$\)/\1' . l:replace . '\2/' . l:g
 endfunction
 
 vnoremap <space>s <Esc>:call SearchReplace(1)<CR>
 nnoremap <space>s :call SearchReplace(0)<CR>
 
 nnoremap <leader>c :!compiler %:p<CR>
+nnoremap ;cc :!gcc -O3 -march=native %:p; ./a.out<CR>
 
 nnoremap <space>l :call ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
 nnoremap <space>o :call ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
@@ -139,7 +140,10 @@ autocmd BufNewFile,BufRead *.ejs,*.html set filetype=html autoindent expandtab t
 autocmd FileType c,cpp nmap ;cfm :w!<CR>:silent! exec "!cfm %:p"<CR>
 autocmd FileType sh,bash,zsh nmap ;cfm :w!<CR>:silent! exec "!shfmt -w -fn %:p"<CR>
 autocmd FileType perl nmap ;cfm :w!<CR>:silent !pfmt %:p<CR>
-autocmd FileType c,cpp nmap ;bu :silent !./build &<CR>
+autocmd FileType c,cpp,perl nmap ;bu :silent !./build &<CR>
+autocmd FileType c,cpp nmap ;ga :silent !gasm %:p &<CR>
+autocmd FileType c,cpp nmap ;vga :silent !vgasm %:p &<CR>
+autocmd FileType c,cpp nmap ;coe :silent !coe %:p<CR>
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')
