@@ -1,2 +1,2 @@
 #!/bin/sh
-$TERMINAL -e sxiv ~/Pictures/jadwal-new.png
+$TERMINAL -e sxiv ~/Pictures/sched-2023.png

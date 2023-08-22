@@ -4,8 +4,10 @@ BEGIN {
 	}
 	{
 	old = $0
-	gsub(/\[[^\]]*\]/, "")  # inside brackets
-	sub(/^(\.\/){1,}[ \t]{1,}/, "") # leading spaces 
+	# inside brackets
+	gsub(/\[[^\]]*\]/, "") 
+	# leading spaces 
+	sub(/^(\.\/){1,}[ \t]{1,}/, "")
 	gsub(/ /, "_");
 	# inside parens
 	gsub(/\([0-9]*\)/, "")
@@ -28,11 +30,6 @@ BEGIN {
 	gsub(/-{2,}/, "-")
 	gsub(/_\-_/, "_")
 	gsub(/\.\-/, "_")
-	# seasonN
-	if (match($0, /eason [0-9]/)) {
-		tmp = substr($0, RSTART, length("eason 1"))
-		gsub(/eason([[0-9]])/, tmp)
-		}
 	if ($0 == old)
 		next
 	printf "%s\n", $0
