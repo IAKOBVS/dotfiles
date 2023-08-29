@@ -127,10 +127,10 @@ autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 
 " C highlighting
 autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! highlight PreProc ctermfg=35 guifg=#8ed5e5
-silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! match Operator /[\<\>\?\{\}\:\+\=\|\.\-\&\*,;!]/
-silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! 2mat Special /[(){}]/
+silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! match Operator /[\<\>\?\:\+\=\|\.\-\&\*,;!]/
+silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! 2match Special /[(){}]/
 " disable autocomment
-autocmd FileType * setl formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd BufNewFile,BufRead *.h set filetype=c
 " 4-space tabs
 autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=4
