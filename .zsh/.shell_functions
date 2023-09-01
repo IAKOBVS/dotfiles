@@ -160,15 +160,15 @@ fzflive()
 	fzfbase "$(find . -type f ! -path '*.git*' ! -path '*.o' ! -path '*node_modules*' | fzf --exact --preview "bat --style=numbers --color=always {1}")"
 }
 
-__RG_ARGS__="-j $__NPROC__ --color=always --no-heading -uu -n"
+__RG_ARGS__="-j $__NPROC__ --color=always --no-heading -n --max-filesize 1M"
 
 grepvim()
 {
 	# shellcheck disable=SC2164
 	cd "$1" 2>/dev/null
 	local grepped
-	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ ''" \
-		--bind "change:reload:rg $__RG_ARGS__ {q} || true" \
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' $1 " \
+		--bind "change:reload:rg $__RG_ARGS__ '' $1 || true" \
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')

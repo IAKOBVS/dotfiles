@@ -44,7 +44,7 @@ nnoremap <space>f :call ExitCmd('%:p:h', '$__FZFLIVE__', '%:p:h')<CR>
 nnoremap <space>h :call ExitCmd('$HOME', '$__FZFLIVEHOME__', '$HOME')<CR>
 
 nnoremap <space>r :call ExitCmd('%:p:h', '$__GREPVIM__', '%:p:h')<CR>
-nnoremap <space>i :call ExitCmd('%:p', '$__GREPVIM__', '%:p')<CR>
+nnoremap <space>c :call ExitCmd('%:p', '$__GREPVIM__', '--max-depth=1')<CR>
 
 " open cwd in new terminal
 nnoremap <space>t :!exec $TERMINAL &<CR><CR>
@@ -144,6 +144,7 @@ autocmd FileType c,cpp,perl nmap ;bu :silent !./build &<CR>
 autocmd FileType c,cpp nmap ;ga :silent !gasm %:p &<CR>
 autocmd FileType c,cpp nmap ;vga :silent !vgasm %:p &<CR>
 autocmd FileType c,cpp nmap ;coe :silent !coe %:p<CR>
+autocmd FileType c,cpp nmap ;fa gg<S-V>G:Tabularize /\\$<CR><C-o>
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')

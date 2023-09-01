@@ -50,8 +50,8 @@ if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 endif
 let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_text_changed = 1
 let g:ale_c_cc_executable = 'gcc'
 let g:ale_cpp_cc_executable = 'g++'
