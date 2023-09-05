@@ -1,0 +1,3 @@
+#!/bin/sh
+echo 'git format-patch -1 HEAD
+git send-email --to=libc-alpha@sourceware.org <patch_file>'

@@ -69,4 +69,7 @@ ZSH_AUTOSUGGEST_MANUAL_REBIND=0
 # Load syntax highlighting; should be last.
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 bindkey '^L' autosuggest-accept
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 # . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null

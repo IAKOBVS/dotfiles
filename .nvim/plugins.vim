@@ -11,6 +11,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'OmniSharp/omnisharp-vim'
 call plug#end()
 
+let g:LargeFile = 10 
+
 vnoremap ff :Tabularize /\\$<CR>
 
 " highlight things
