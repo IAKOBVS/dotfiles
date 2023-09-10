@@ -1,2 +1,0 @@
-#!/bin/sh
-< "$HOME"/c/pp_macros/global_macros.h xclip -sel c
