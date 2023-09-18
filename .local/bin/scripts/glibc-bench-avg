@@ -1,0 +1,15 @@
+#!/bin/sh
+grep 'timings' "$1" |
+	sed 's/\[//g; s/\]//g; s/,//g' |
+	awk '
+	BEGIN {
+		avg1 = 0;
+		avg2 = 0;
+		avg3 = 0
+	}
+	{
+		avg1 += $2;
+		avg2 += $3;
+		avg3 += $4
+	}
+	END { print avg1, avg2, avg3 }'

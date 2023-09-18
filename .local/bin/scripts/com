@@ -6,6 +6,7 @@ analyzer='-fanalyzer -fsanitize=address -g'
 shift
 for opt in "$@"; do
 	case $opt in
+	*.h) exit 1 ;;
 	0 | 1 | 2 | 3) OLevel="-O$opt -flto" ;;
 	s | S) flags="$flags $analyzer -g" ;;
 	d | D | g | G) flags='-fsanitize=address -g' ;;
