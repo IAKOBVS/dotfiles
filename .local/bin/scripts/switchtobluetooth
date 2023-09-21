@@ -1,0 +1,2 @@
+#!/bin/sh
+pactl set-default-sink bluez_sink.84_0F_2A_39_8E_E0.a2dp_sink

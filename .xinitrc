@@ -13,6 +13,7 @@ xrdb $HOME/.Xresources &
 checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 # jamesdsp -t &
 # qbittorrent &
+{ bluetoothctl & sleep 2 && killall bluetoothctl; } &
 while :; do
 	ssh-agent dwm
 done

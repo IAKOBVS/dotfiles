@@ -57,7 +57,6 @@ dt='cd /tmp' \
 sr='cd $HOME/.local/bin/scripts' \
 cl='cd $HOME/.local/src' \
 cs='cd $HOME/.zsh' \
-fu="git commit -a -m 'newest' && git push origin" \
 sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
 slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
 dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
