@@ -11,7 +11,7 @@
 			"filetypes": ["perl"]
 		},
 		"perlpls": {
-			"command": "/usr/bin/site_perl/pls",
+			"command": "pls",
 			"filetypes": ["perl"]
 		},
         "awk": {

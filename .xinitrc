@@ -5,7 +5,7 @@ picom -b --config $HOME/.config/picom.conf &
 dwmblocks &
 $TERMINAL &
 (cd /tmp; nohup $HOME/.local/bin/scripts/remaps &)
-sudo $HOME/c/nvtemp/nvtemp &
+sudo $HOME/c/nvspeed/nvspeed &
 sudo nvidia-smi -pl 150 &
 unclutter &
 dunst &

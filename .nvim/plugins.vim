@@ -66,6 +66,7 @@ let g:ale_c_clangtidy_checks = [
 	\ '-clang-analyzer-security.insecureAPI.strcpy'
 	\ ]
 let g:ale_cpp_clangtidy_checks = g:ale_c_clangtidy_checks
+let g:ale_javascript_eslint_executable = 0
 
 " respect camelCase
 map <silent>w <Plug>CamelCaseMotion_w
