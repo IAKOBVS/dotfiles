@@ -76,7 +76,7 @@ cmd open ${{
 	application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
         *)
 		case $f in
-			*.ts)
+			*.ts|*.js)
 				echo $__VIMCD__ >$__VIM_PROG__
 				echo "$fx" >$__VIM_ARG__
 				lf -remote "send $id quit"
