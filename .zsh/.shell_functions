@@ -167,8 +167,8 @@ grepvim()
 	# shellcheck disable=SC2164
 	cd "$1" 2>/dev/null
 	local grepped
-	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' $1 " \
-		--bind "change:reload:rg $__RG_ARGS__ {q} $1 || true" \
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' " \
+		--bind "change:reload:rg $__RG_ARGS__ {q} || true" \
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
