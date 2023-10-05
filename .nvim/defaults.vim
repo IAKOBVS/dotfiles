@@ -43,7 +43,7 @@ nnoremap <C-h> :call ExitCmd('$HOME', '$__FZF__', '$HOME')<CR>
 nnoremap <space>f :call ExitCmd('%:p:h', '$__FZFLIVE__', '%:p:h')<CR>
 nnoremap <space>h :call ExitCmd('$HOME', '$__FZFLIVEHOME__', '$HOME')<CR>
 
-nnoremap <space>r :call ExitCmd('%:p:h', '$__GREPVIM__', '')<CR>
+nnoremap <space>r :call ExitCmd('%:p:h', '$__GREPVIM__', '%:p:h')<CR>
 nnoremap <space>c :call ExitCmd('%:p', '$__GREPVIM__', '--max-depth=1')<CR>
 
 " open cwd in new terminal

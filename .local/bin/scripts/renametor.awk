@@ -40,9 +40,9 @@ BEGIN {
 END {
 	if (!N)
 		exit
-	printf "\nDo you want to rename? (y/n)\n"
+	printf "\nDo you want to rename? (Y/n)\n"
 	getline ok <"/dev/tty"
-	if (ok != "y" && ok != "Y")
+	if (ok != "Y")
 		exit
 	for (i = 0; i < N; ++i)
 		if (system("mv \"" olds[i] "\" \"" news[i] "\" &"))
