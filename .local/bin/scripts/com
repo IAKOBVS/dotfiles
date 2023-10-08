@@ -7,7 +7,7 @@ shift
 for opt in "$@"; do
 	case $opt in
 	*.h) exit 1 ;;
-	0 | 1 | 2 | 3) OLevel="-O$opt -flto" ;;
+	0 | 1 | 2 | 3) OLevel="-O$opt -flto -march=native" ;;
 	s | S) flags="$flags $analyzer -g" ;;
 	d | D | g | G) flags="$flags -fsanitize=address -g" ;;
 	*) flags="$flags $opt" ;;
