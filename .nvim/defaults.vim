@@ -107,8 +107,10 @@ set maxmempattern=2000000 " use more ram
 set cinoptions+=:0 " disable switch indent
 set number relativenumber
 set wrap!
-" set linebreak
-" set nohlsearch
+if 0
+	set linebreak
+	set nohlsearch
+endif
 set incsearch
 set mouse=a
 set encoding=utf-8
@@ -182,8 +184,10 @@ function __FileEmpty__()
 	return 0
 endfunction
 
-" highlight CursorLine ctermbg=none guibg=#2c3836
-" highlight CursorColumn ctermbg=none guibg=#3c3836
-" completion menu
-" highlight Pmenu ctermbg=none ctermfg=14 guibg=none guifg=#ffffff
-" highlight PmenuSel ctermfg=Black ctermbg=none gui=reverse
+if 0
+	highlight CursorLine ctermbg=none guibg=#2c3836
+	highlight CursorColumn ctermbg=none guibg=#3c3836
+	" completion menu
+	highlight Pmenu ctermbg=none ctermfg=14 guibg=none guifg=#ffffff
+	highlight PmenuSel ctermfg=Black ctermbg=none gui=reverse
+endif

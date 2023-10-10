@@ -20,7 +20,6 @@
         }
 	},
     "sh.commandPath": "bash-language-server",
-    "flutter.enabled": false,
     "prettier.useTabs": true,
     "prettier.semi": true,
     "prettier.bracketSameLine": false,
