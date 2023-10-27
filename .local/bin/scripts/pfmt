@@ -2,7 +2,7 @@
 for file in "$@"; do
 	{
 	case $(head -n1 "$file") in
-	\#!*bin*perl*) perltidy "$file" -b -bt=2 -bbt=2 -xbt=2 -sbt=2 -pt=2 -nsfs -asc -aws -nbl -bar -cb -et=4 -l=180 -sbl -vt=2
+	\#!*bin*perl*) perltidy "$file" -b -pt=2 -cb -et=4 -l=180
 	esac
 	rm "$file.bak"
 	} &
