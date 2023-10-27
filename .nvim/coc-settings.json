@@ -4,6 +4,7 @@
     "clangd.disableDiagnostics": true,
 	"languageserver": {
 		"perlnavigator": {
+            "enable": true,
 			"command": "perlnavigator",
 			"args": [
 				"--stdio"
@@ -11,12 +12,17 @@
 			"filetypes": ["perl"]
 		},
 		"perlpls": {
+            "enable": true,
 			"command": "pls",
 			"filetypes": ["perl"]
 		},
         "awk": {
             "command": "awk-language-server",
             "filetypes": ["awk"]
+        },
+        "asm-lsp": {
+            "command": "/home/james/.cargo/bin/asm-lsp",
+            "filetypes": ["asm", "s", "S"]
         }
 	},
     "sh.commandPath": "bash-language-server",

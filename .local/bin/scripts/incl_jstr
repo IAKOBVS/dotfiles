@@ -1,0 +1,2 @@
+#!/bin/sh
+echo '#include "/usr/local/code/c/jstring/src/jstr.h"' | xclip -sel c

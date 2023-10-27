@@ -8,6 +8,7 @@ Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'bergercookie/asm-lsp'
 if 0
 	Plug 'OmniSharp/omnisharp-vim'
 endif

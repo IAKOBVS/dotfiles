@@ -139,7 +139,7 @@ autocmd BufNewFile,BufRead *.dart set autoindent expandtab tabstop=4 shiftwidth=
 autocmd BufNewFile,BufRead *.json set autoindent expandtab tabstop=4 shiftwidth=4
 autocmd BufNewFile,BufRead *.ejs,*.html set filetype=html autoindent expandtab tabstop=4 shiftwidth=4
 " format current file
-autocmd FileType c,cpp nmap ;cfm :w!<CR>:silent! exec "!cfm %:p"<CR>
+autocmd FileType c,cpp,java,javascript,json nmap ;cfm :w!<CR>:silent! exec "!cfm %:p"<CR>
 autocmd FileType sh,bash,zsh nmap ;cfm :w!<CR>:silent! exec "!shfmt -w -fn %:p"<CR>
 autocmd FileType perl nmap ;cfm :w!<CR>:silent !pfmt %:p<CR>
 autocmd FileType c,cpp,perl nmap ;bu :silent !./build &<CR>
