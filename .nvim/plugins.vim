@@ -72,6 +72,8 @@ let g:ale_c_clangtidy_checks = [
 	\ ]
 let g:ale_cpp_clangtidy_checks = g:ale_c_clangtidy_checks
 let g:ale_javascript_eslint_executable = 0
+let g:ale_perl_perl_executable = 'perl'
+let g:ale_perl_perl_options = '-c -Mwarnings -Ilib'
 
 " respect camelCase
 map <silent>w <Plug>CamelCaseMotion_w
