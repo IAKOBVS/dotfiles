@@ -43,8 +43,9 @@ noremap <silent> gd <Plug>(coc-definition)
 noremap <silent> gi <Plug>(coc-implementation)
 noremap <silent> gr <Plug>(coc-references)
 nnoremap ;coc :CocConfig<CR>
-autocmd BufNewFile,BufEnter *.js,*.ts,*.html,*.css silent! nnoremap <leader>f :CocCommand prettier.formatFile<CR>
+
 if 0
+	autocmd BufNewFile,BufEnter *.js,*.ts,*.html,*.css silent! nnoremap <leader>f :CocCommand prettier.formatFile<CR>
 	autocmd BufNewFile,BufEnter *.js,*.ts,*.html,*.css silent! :ALEDisable<CR>
 endif
 
@@ -52,6 +53,9 @@ endif
 nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
 nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
 nnoremap <space>a :ALEToggle<CR>
+
+autocmd FileType perl silent :CocDisable
+autocmd FileType perl nnoremap <leader>f :silent! CocEnable<CR> :silent! CocStart<CR>
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
@@ -72,8 +76,10 @@ let g:ale_c_clangtidy_checks = [
 	\ ]
 let g:ale_cpp_clangtidy_checks = g:ale_c_clangtidy_checks
 let g:ale_javascript_eslint_executable = 0
-let g:ale_perl_perl_executable = 'perl'
-let g:ale_perl_perl_options = '-c -Mwarnings -Ilib'
+
+if 0
+	autocmd FileType perl nnoremap <silent> <leader>f :let g:ale_linters = {'perl': ['perl']}<CR>
+endif
 
 " respect camelCase
 map <silent>w <Plug>CamelCaseMotion_w
