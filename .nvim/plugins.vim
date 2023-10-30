@@ -8,8 +8,8 @@ Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'bergercookie/asm-lsp'
-if 1
+if 0
+	Plug 'bergercookie/asm-lsp'
 	Plug 'OmniSharp/omnisharp-vim'
 endif
 call plug#end()
@@ -93,9 +93,12 @@ sunmap ge
 
 let g:airline_section_y = '%{trim(system("git branch --show-current 2>/dev/null"))}'
 
-if 1
-	let g:OmniSharp_selector_ui = 'fzf'    " Use fzf
+if 0
+	let g:OmniSharp_server_use_mono = 1
+	let g:OmniSharp_typeLookupInPreview = 1
+	let g:OmniSharp_coc_snippet = 1
+	let g:OmniSharp_popup = 1
 	let g:ale_linters = { 
-	\ 'cs': ['mcs']
+	\ 'cs': ['OmniSharp', 'mcs']
 	\}
 endif
