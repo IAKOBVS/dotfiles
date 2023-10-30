@@ -9,7 +9,7 @@ Plug 'vim-scripts/LargeFile'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bergercookie/asm-lsp'
-if 0
+if 1
 	Plug 'OmniSharp/omnisharp-vim'
 endif
 call plug#end()
@@ -93,9 +93,9 @@ sunmap ge
 
 let g:airline_section_y = '%{trim(system("git branch --show-current 2>/dev/null"))}'
 
-if 0
+if 1
 	let g:OmniSharp_selector_ui = 'fzf'    " Use fzf
 	let g:ale_linters = { 
-	\ 'cs': ['OmniSharp']
+	\ 'cs': ['mcs']
 	\}
 endif

@@ -48,43 +48,43 @@ cmd grepvim ${{
 }}
 
 cmd open ${{
-    case $(file --mime-type "$(readlink -f $f)" -b) in
-	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
-	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
-        text/*|application/json|inode/x-empty|application/x-subrip)
+	case $f in
+	*.ts|*.js|*.lua|*.java|*.cs)
 		echo $__VIMCD__ >$__VIM_PROG__
 		echo "$fx" >$__VIM_ARG__
 		lf -remote "send $id quit"
 		;;
-	image/x-xcf) gimp $fx ;;
-	image/svg+xml) display -- $f ;;
-	image/*) sxiv $fx
-		;;
-	audio/*|video/x-ms-asf) mpv --really-quiet --audio-display=no $f ;;
-	video/*) mpv --really-quiet $fx ;;
-	application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
-	application/pgp-encrypted)
-		echo $__VIMCD__ >$__VIM_PROG__
-		echo "$fx" >$__VIM_ARG__
-		lf -remote "send $id quit"
-		;;
-	application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
-	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
-	application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
-	application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
-	application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
-	application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
-        *)
-		case $f in
-			*.ts|*.js|*.lua|*.java)
-				echo $__VIMCD__ >$__VIM_PROG__
-				echo "$fx" >$__VIM_ARG__
-				lf -remote "send $id quit"
-				;;
-			*)
-				for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
-				;;
+	*)
+		case $(file --mime-type "$(readlink -f $f)" -b) in
+		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
+		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
+		text/*|application/json|inode/x-empty|application/x-subrip)
+			echo $__VIMCD__ >$__VIM_PROG__
+			echo "$fx" >$__VIM_ARG__
+			lf -remote "send $id quit"
+			;;
+		image/x-xcf) gimp $fx ;;
+		image/svg+xml) display -- $f ;;
+		image/*) sxiv $fx
+			;;
+		audio/*|video/x-ms-asf) mpv --really-quiet --audio-display=no $f ;;
+		video/*) mpv --really-quiet $fx ;;
+		application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+		application/pgp-encrypted)
+			echo $__VIMCD__ >$__VIM_PROG__
+			echo "$fx" >$__VIM_ARG__
+			lf -remote "send $id quit"
+			;;
+		application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
+		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
+		application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
+		application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
+		application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
+		application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
+		*)
+			for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
 		esac
+		;;
     esac
 }}
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
