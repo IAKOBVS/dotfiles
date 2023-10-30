@@ -16,17 +16,17 @@ foreach (glob('*')) {
 	s/\[[^\]]*\]//g;
 
 	# leading spaces
-	s/^\.\/[[:space:]]*([^[:space:]])/\1/;
+	s/^\.\/\s*([^[:space:]])/\1/;
 
 	# inside parens
-	s/\([0-9]*\)//g; # contains num
+	s/\(\d*\)//g; # contains num
 	s/\([^\)]*1080[^\)]*\)//g; # contains resolution
 	s/\([^\)sS]*\)//g; # does not contain season
 
 	# trailing before extension
 	s/[[:space:]]{1,}(\.[0-9A-Za-z]*)$/\1/; # space
-	s/\-{1,}(\.[0-9A-Za-z]*)$/\1/; # underscore
-	s/_{1,}(\.[0-9A-Za-z]*)$/\1/; # dash
+	s/\-+(\.[0-9A-Za-z]*)$/\1/; # underscore
+	s/_+(\.[0-9A-Za-z]*)$/\1/; # dash
 
 	# trailing
 	s/\ *$//; # space
@@ -41,7 +41,7 @@ foreach (glob('*')) {
 	s/\.\-/_/g; # .-
 
 	# season2 -> season 2
-	s/eason([[0-9]])/eason\ \1/g;
+	s/eason([\d])/eason\ \1/g;
 
 	print "$_\n";
 	push @old, $old;

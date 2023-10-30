@@ -76,13 +76,15 @@ cmd open ${{
 	application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
         *)
 		case $f in
-			*.ts|*.js|*.lua)
+			*.ts|*.js|*.lua|*.java)
 				echo $__VIMCD__ >$__VIM_PROG__
 				echo "$fx" >$__VIM_ARG__
 				lf -remote "send $id quit"
 				;;
+			*)
+				for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+				;;
 		esac
-		# for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
 }}
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
