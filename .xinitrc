@@ -14,6 +14,7 @@ checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 # jamesdsp -t &
 # qbittorrent &
 { bluetoothctl & sleep 2 && killall bluetoothctl; } &
+/usr/local/code/c/jstring/src/update-glibc &
 while :; do
 	ssh-agent dwm
 done

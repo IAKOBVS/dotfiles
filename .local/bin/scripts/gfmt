@@ -1,0 +1,3 @@
+#!/bin/sh
+#shellcheck disable=SC2005
+echo "$(gofmt "$1")" >"$1"

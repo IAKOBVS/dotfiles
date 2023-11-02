@@ -1,10 +1,21 @@
 #!/bin/sh
 for file in "$@"; do
 	{
-	case $(head -n1 "$file") in
-	\#!*bin*perl*) perltidy "$file" -b -pt=2 -cb -et=4 -l=180 --freeze-blank-lines
-	esac
-	rm "$file.bak"
+		case $(head -n1 "$file") in
+		# -b, --backup-and-modify-in-place
+		# -pt, --paren-tightness
+		# -cb, --cuddled-blocks
+		# -et, --entab-leading-whitespace
+		# -l=n, --maximum-line-length
+		# -fbl, --freeze-blank-lines
+		# -nsfs, --no-space-for-semicolon
+		# -pbp, --perl-best-practices
+		# -nbbb, --noblanks-before-blocks
+		# -lbl=n, --long-block-line-count
+		# -nbbc, --no-blanks-before-comments
+		\#!*bin*perl*) perltidy "$file" -b -pt=2 -cb -et=4 -l=180 -nsfs -pbp -nbbb -lbl=0 -nbbc ;;
+		esac
+		rm "$file.bak"
 	} &
 done
 wait

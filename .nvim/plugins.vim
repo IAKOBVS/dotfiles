@@ -60,6 +60,9 @@ autocmd FileType perl nnoremap <leader>f :silent! CocEnable<CR> :silent! CocStar
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 endif
+let g:ale_linters = { 
+\ 'cs': ['mcs'] 
+\}
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_insert_leave = 0
@@ -98,7 +101,4 @@ if 0
 	let g:OmniSharp_typeLookupInPreview = 1
 	let g:OmniSharp_coc_snippet = 1
 	let g:OmniSharp_popup = 1
-	let g:ale_linters = { 
-	\ 'cs': ['OmniSharp', 'mcs']
-	\}
 endif
