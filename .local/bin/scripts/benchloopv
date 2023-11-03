@@ -1,6 +1,0 @@
-#!/bin/sh
-max=$1
-shift
-for i in $(seq 1 $max); do
-	$@
-done
