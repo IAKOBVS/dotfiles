@@ -1,0 +1,24 @@
+#!/bin/sh
+if [ $# -lt 3 ]; then
+	echo "Usage: $(dirname "$0") <find> <replace> <filename>"
+	exit
+fi
+find=$1
+replace=$2
+shift
+shift
+#shellcheck disable=SC2068
+sed -n "s/$find/$replace/gp" $@
+wait
+echo
+echo "Files to be changed: $*"
+echo 'Are you sure? (Y/N)'
+echo
+read -r ok
+[ "$ok" != 'Y' ] && exit
+#shellcheck disable=SC2068
+for file in $@; do
+	echo "$(sed "s/$find/$replace/gp" $file)" >"$file" &
+done
+wait
+echo "Files changed: $*"
