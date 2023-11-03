@@ -1,4 +1,8 @@
 #!/bin/sh
+if [ -z "$1" ]; then
+	echo "Usage: $(basename "$0") <cmd> <flag>"
+	exit
+fi
 case $2 in
 --*) grep_psx()
 	{
@@ -9,9 +13,11 @@ case $2 in
 		grep -e "^[[:space:]]*$2[^A-Za-z]"
 	} ;;
 *)
-	echo '$2 does not start with - or --'
+	echo "$2 does not start with - or --"
 	exit
 	;;
 esac
+#shellcheck disable=SC2068
 man "$1" | grep_psx $@ || echo "System $1 doesn't support $2"
+#shellcheck disable=SC2068
 manp "$1" | grep_psx $@ || echo "POSIX $1 doesn't support $2"
