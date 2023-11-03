@@ -47,7 +47,7 @@ foreach (glob('*')) {
 	push @old, $old;
 	push @new, $_;
 }
-printf "\nDo you want to rename the files? (Y/N)\n";
+printf "\nDo you want to rename the files? [Y/n]\n";
 $_ = <>;
 chomp;
 if ($_ eq 'Y') {

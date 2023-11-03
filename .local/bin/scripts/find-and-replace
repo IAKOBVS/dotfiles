@@ -3,16 +3,18 @@ if [ $# -lt 3 ]; then
 	echo "Usage: $(dirname "$0") <find> <replace> <filename>"
 	exit
 fi
-find=$(escregex "$find")
+find=$(escregex "$1")
 replace=$2
 shift
 shift
+echo "$find"
+echo "$replace"
 #shellcheck disable=SC2068
 sed -n "s/$find/$replace/gp" $@
 wait
 echo
 echo "Files to be changed: $*"
-echo 'Are you sure? (Y/N)'
+echo 'Are you sure? [Y/n]'
 echo
 read -r ok
 [ "$ok" != 'Y' ] && exit
