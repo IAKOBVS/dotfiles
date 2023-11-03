@@ -3,7 +3,7 @@ if [ $# -lt 3 ]; then
 	echo "Usage: $(dirname "$0") <find> <replace> <filename>"
 	exit
 fi
-find=$1
+find=$(escregex "$find")
 replace=$2
 shift
 shift
@@ -18,7 +18,8 @@ read -r ok
 [ "$ok" != 'Y' ] && exit
 #shellcheck disable=SC2068
 for file in $@; do
-	echo "$(sed "s/$find/$replace/gp" $file)" >"$file" &
+	#shellcheck disable=SC2005
+	echo "$(sed "s/$find/$replace/gp" "$file")" >"$file" &
 done
 wait
 echo "Files changed: $*"
