@@ -4,12 +4,18 @@ cd "$(dirname "$file")" || exit 1
 flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
 analyzer='-fanalyzer -fsanitize=address -g'
 shift
+vg=
+vg_flag=
 for opt in "$@"; do
 	case $opt in
 	*.h) exit 1 ;;
 	0 | 1 | 2 | 3) OLevel="-O$opt -flto -march=native" ;;
 	s | S) flags="$flags $analyzer -g" ;;
-	d | D | g | G) flags="$flags -fsanitize=address -g" ;;
+	d | D | g | G) flags="$flags -g" ;;
+	v) flags="$flags -g"
+		vg=valgrind
+		vg_flag='-leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
+		;;
 	*) flags="$flags $opt" ;;
 	esac
 done
@@ -47,4 +53,4 @@ esac
 echo "$compiler $flags"
 echo
 $compiler $flags || exit 1
-./${file%.*}
+$vg ./${file%.*} $vg_flag
