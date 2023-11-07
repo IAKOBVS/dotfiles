@@ -14,7 +14,7 @@ for opt in "$@"; do
 	d | D | g | G) flags="$flags -g" ;;
 	v) flags="$flags -g"
 		vg=valgrind
-		vg_flag='-leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
+		vg_flag='--leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
 		;;
 	*) flags="$flags $opt" ;;
 	esac

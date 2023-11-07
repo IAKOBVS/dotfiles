@@ -205,7 +205,7 @@ StatementMacros:
   - BRK
 TabWidth:        8
 UseCRLF:         false
-UseTab:          Always
+UseTab:          ForIndentation
 WhitespaceSensitiveMacros:
   - STRINGIZE
   - PP_STRINGIZE
