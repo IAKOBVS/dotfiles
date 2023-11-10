@@ -40,21 +40,11 @@ case $file in
 	esac
 	;;
 esac
-# get impl.c from #include "header.h" /* impl.c */
-get_incl()
-{
-	sed -n "s/^[ \t ]*#[ \t]*include[ \t]\{1,\}\"\([^ \t]*\)\{1,\}\"[ \t]\{1,\}.*\([-\/_.0-9A-Za-z]\{1,\}$1\).*/\1/p" "$2"
-}
-o=$(get_incl .o "$file")
-c=$(get_incl .c "$file")
-cpp=$(get_incl .cpp "$file")
-precomp=$(get_incl .gch "$file")
-flags="$OLevel $file -o $(basename "$file" ".${file#*.}") $flags $c $precomp $o"
+flags="$OLevel $file -o $(basename "$file" ".${file#*.}") $flags"
 case $file in
 *.c) compiler=$CC ;;
 *.cpp | *.cc)
 	compiler=$CPP
-	flags="$flags $cpp"
 	;;
 esac
 echo "$compiler $flags"
