@@ -6,7 +6,7 @@ dwmblocks &
 $TERMINAL &
 (cd /tmp; nohup $HOME/.local/bin/scripts/remaps &)
 sudo $HOME/c/nvspeed/nvspeed &
-sudo nvidia-smi -pl 150 &
+# sudo nvidia-smi -pl 150 &
 unclutter &
 dunst &
 xrdb $HOME/.Xresources &
