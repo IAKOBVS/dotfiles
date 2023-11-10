@@ -20,4 +20,4 @@ esac
 #shellcheck disable=SC2068
 man "$1" | grep_psx $@ || echo "System $1 doesn't support $2"
 #shellcheck disable=SC2068
-manp "$1" | grep_psx $@ || echo "POSIX $1 doesn't support $2"
+man-posix "$1" | grep_psx $@ || echo "POSIX $1 doesn't support $2"
