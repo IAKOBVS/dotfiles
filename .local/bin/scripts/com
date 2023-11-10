@@ -6,16 +6,23 @@ analyzer='-fanalyzer -fsanitize=address -g'
 shift
 vg=
 vg_flag=
+CC=cc
+CPP='c++'
 for opt in "$@"; do
 	case $opt in
 	*.h) exit 1 ;;
-	0 | 1 | 2 | 3) OLevel="-O$opt -flto -march=native" ;;
+	0 | 1 | 2 | 3)
+		OLevel="-O$opt"
+		flags="$flags -flto -march=native"
+		;;
 	s | S) flags="$flags $analyzer -g" ;;
 	d | D | g | G) flags="$flags -g" ;;
-	v) flags="$flags -g"
+	v)
+		flags="$flags -g"
 		vg=valgrind
 		vg_flag='--leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
 		;;
+	t) CC=tcc ;;
 	*) flags="$flags $opt" ;;
 	esac
 done
@@ -44,13 +51,15 @@ cpp=$(get_incl .cpp "$file")
 precomp=$(get_incl .gch "$file")
 flags="$OLevel $file -o $(basename "$file" ".${file#*.}") $flags $c $precomp $o"
 case $file in
-*.c) compiler=gcc ;;
+*.c) compiler=$CC ;;
 *.cpp | *.cc)
-	compiler=g++
-	flags="$flags $cpp -std=gnu++17"
+	compiler=$CPP
+	flags="$flags $cpp"
 	;;
 esac
 echo "$compiler $flags"
 echo
+#shellcheck disable=SC2086
 $compiler $flags || exit 1
+#shellcheck disable=SC2086
 $vg ./${file%.*} $vg_flag
