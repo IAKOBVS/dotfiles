@@ -57,8 +57,7 @@ __vim_sel__()
 	else
 		arg=$(<$__VIM_ARG__)
 	fi
-	(/bin/rm -f $__VIM_ARG__ &) >/dev/null 2>/dev/null
-	(/bin/rm -f $__VIM_PROG__ &) >/dev/null 2>/dev/null
+	(/bin/rm -f $__VIM_ARG__ $__VIM_PROG__ &) >/dev/null 2>/dev/null
 	clear
 	case $prog in
 	"$__VIMCD__") vimcd "$arg" ;;
