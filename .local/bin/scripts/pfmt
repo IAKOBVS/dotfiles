@@ -20,7 +20,7 @@ for file in "$@"; do
 		# -sfp, --space-function-paren
 		# -kpit=n, --keyword-paren-inner-tightness
 		\#!*bin*perl*)
-			echo "$(perltidy "$file" -vmll -bt=2 -bbt=2 -pt=2 -cb -et=4 -nsfs -nbbb -lbl=0 -nbbc -kpit=2)" >"$file"
+			echo "$(perltidy "$file" -vmll -bt=2 -bbt=2 -pt=2 -cb -et=4 -nsfs -nbbb -lbl=0 -nbbc -kpit=2 -l=180)" >"$file"
 			rm "$file"
 			mv "$file.tdy" "$file"
 			;;
