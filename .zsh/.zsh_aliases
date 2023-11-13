@@ -24,6 +24,7 @@ pq='paru -Q | fzf' \
 poweroff='sync && systemctl poweroff' \
 reboot='sync && systemctl reboot' \
 sp='sync && systemctl suspend' \
+prs="cat $HOME/.cache/paru/__list_of_packages__ | fzf --multi --ansi --preview 'paru -Qi {1}'" \
 par='paru --needed --skipreview -S' \
 pars='paru --needed --skipreview -Syu' \
 prq='paru -Q | fzf' \

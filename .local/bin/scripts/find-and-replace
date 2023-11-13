@@ -7,8 +7,6 @@ find=$(escregex "$1")
 replace=$2
 shift
 shift
-echo "$find"
-echo "$replace"
 #shellcheck disable=SC2068
 sed -n "s/$find/$replace/gp" $@
 wait
@@ -21,7 +19,7 @@ read -r ok
 #shellcheck disable=SC2068
 for file in $@; do
 	#shellcheck disable=SC2005
-	echo "$(sed "s/$find/$replace/gp" "$file")" >"$file" &
+	echo "$(sed "s/$find/$replace/g" "$file")" >"$file" &
 done
 wait
 echo "Files changed: $*"
