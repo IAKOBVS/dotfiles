@@ -68,7 +68,7 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_text_changed = 1
 let g:ale_c_cc_executable = 'gcc'
 let g:ale_cpp_cc_executable = 'g++'
-let g:__my_gcc_flags__ = '-Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wno-sign-compare -Wno-sign-conversion -fanalyzer'
+let g:__my_gcc_flags__ = '-Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -fanalyzer'
 let g:ale_c_cc_options = '-std=c17 ' . g:__my_gcc_flags__
 let g:ale_cpp_cc_options = '-std=c++17 ' . g:__my_gcc_flags__
 let g:ale_c_clangtidy_checks = [

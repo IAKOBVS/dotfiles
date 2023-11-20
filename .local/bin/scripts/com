@@ -2,7 +2,8 @@
 file=$1
 cd "$(dirname "$file")" || exit 1
 flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
-analyzer='-fanalyzer -fsanitize=address -g'
+sanitizer='-fsanitize=address'
+analyzer="-fanalyzer $sanitizer -g"
 shift
 vg=
 vg_flag=
@@ -15,7 +16,8 @@ for opt in "$@"; do
 		OLevel="-O$opt"
 		flags="$flags -flto -march=native"
 		;;
-	s | S) flags="$flags $analyzer -g" ;;
+	s | S) flags="$flags $sanitizer -g" ;;
+	f | F) flags="$flags $analyzer -g" ;;
 	d | D | g | G) flags="$flags -g" ;;
 	v)
 		flags="$flags -g"
