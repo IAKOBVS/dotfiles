@@ -1,0 +1,60 @@
+#include <assert.h>
+#include <ctype.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int
+aredigits(const char *s)
+{
+	const unsigned char *p;
+	p = (const unsigned char *)s;
+	if (*p == '\0')
+		return -1;
+	for (;; ++p)
+		if (!isdigit(*p) && *p != '\0')
+			return 0;
+	return 1;
+}
+
+size_t
+handle(const char *s)
+{
+	size_t ret;
+	ret = aredigits(s);
+	switch (ret) {
+	case 0:
+		assert(s[1] == '\0');
+		ret = *s;
+		break;
+	case 1:
+		ret = strtol(s, NULL, 10);
+		assert(errno != EINVAL);
+		break;
+	case -1:
+		puts(strerror(errno));
+		exit(EXIT_FAILURE);
+		break;
+	}
+	return ret;
+}
+
+int
+main(int argc,
+     char **argv)
+{
+	assert(argv[1] && argv[1][0]);
+	size_t i, j;
+	i = handle(argv[1]);
+	if (argv[2] || argv[2][0] == '\0')
+		j = 256;
+	else
+		j = handle(argv[2]);
+	for (; i <= j; ++i)
+		if (i > 0 && i < 256 && isprint(i))
+			printf("%c\n", (char)i);
+		else
+			printf("%zu\n", i);
+	return EXIT_SUCCESS;
+}
