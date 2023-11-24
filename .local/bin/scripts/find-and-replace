@@ -3,12 +3,12 @@ if [ $# -lt 3 ]; then
 	echo "Usage: $(dirname "$0") <find> <replace> <filename>"
 	exit
 fi
-find=$(escregex "$1")
+find=$1
 replace=$2
 shift
 shift
 #shellcheck disable=SC2068
-sed -n "s/$find/$replace/gp" $@
+awk -v f="$find" -v r="$replace" '{gsub(f, r); print;}' $@
 wait
 echo
 echo "Files to be changed: $*"
@@ -19,7 +19,7 @@ read -r ok
 #shellcheck disable=SC2068
 for file in $@; do
 	#shellcheck disable=SC2005
-	echo "$(sed "s/$find/$replace/g" "$file")" >"$file" &
+	echo "$(awk -v f="$find" -v r="$replace" '{gsub(f, r); print;}' "$file")" >"$file" &
 done
 wait
 echo "Files changed: $*"
