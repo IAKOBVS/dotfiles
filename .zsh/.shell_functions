@@ -163,8 +163,8 @@ grepvim()
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
-	if [ "$grepped" ]; then
-		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+	if [ "$__grepped__" ]; then
+		vimcd -c ":$(echo "$__grepped__" | cut -d: -f2)" "${__grepped__%%:*}"
 	else
 		__last_cmd__
 	fi
