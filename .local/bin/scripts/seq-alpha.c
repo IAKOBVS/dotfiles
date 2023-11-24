@@ -8,8 +8,6 @@
 int
 aredigits(const char *s)
 {
-	if (!strcmp(s, "256"))
-		puts("here");
 	const unsigned char *p;
 	p = (const unsigned char *)s;
 	if (*p == '\0')
@@ -54,9 +52,13 @@ main(int argc,
 	else
 		j = handle(argv[2]);
 	for (; i <= j; ++i)
-		if (i < 256 && isprint(i))
-			printf("'%c'\n", (char)i);
-		else
+		if (i < 256 && isprint(i)) {
+			if (i == '\\' || i == '\'')
+				printf("'\\%c'\n", (char)i);
+			else
+				printf("'%c'\n", (char)i);
+		} else {
 			printf("%zu\n", i);
+		}
 	return EXIT_SUCCESS;
 }

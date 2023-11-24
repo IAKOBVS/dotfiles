@@ -34,38 +34,34 @@ export __GREPVIM__=6
 
 touch()
 {
-	local file
-	file=$(realpath "${@##* }" 2>/dev/null)
+	__file__=$(realpath "${@##* }" 2>/dev/null)
 	/bin/touch "$@"
 }
 
 mkdir()
 {
-	local file
-	file=$(realpath "${@##* }" 2>/dev/null)
+	__file__=$(realpath "${@##* }" 2>/dev/null)
 	/bin/mkdir "$@"
 }
 
 __vim_sel__()
 {
 	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
-	local prog
-	prog=$(<$__VIM_PROG__)
-	local arg
+	__prog__=$(<$__VIM_PROG__)
 	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
-		arg=''
+		__arg__=''
 	else
-		arg=$(<$__VIM_ARG__)
+		__arg__=$(<$__VIM_ARG__)
 	fi
 	(/bin/rm -f $__VIM_ARG__ $__VIM_PROG__ &) >/dev/null 2>/dev/null
 	clear
-	case $prog in
-	"$__VIMCD__") vimcd "$arg" ;;
-	"$__LFCD__") lfcd "$arg" ;;
-	"$__FZF__") fzflive "$arg" ;;
-	"$__FZFLIVE__") fzflive "$arg" ;;
-	"$__FZFLIVEHOME__") fzflive "$arg" ;;
-	"$__GREPVIM__") grepvim "$arg" ;;
+	case $__prog__ in
+	"$__VIMCD__") vimcd "$__arg__" ;;
+	"$__LFCD__") lfcd "$__arg__" ;;
+	"$__FZF__") fzflive "$__arg__" ;;
+	"$__FZFLIVE__") fzflive "$__arg__" ;;
+	"$__FZFLIVEHOME__") fzflive "$__arg__" ;;
+	"$__GREPVIM__") grepvim "$__arg__" ;;
 	esac
 }
 
@@ -83,53 +79,50 @@ lfcd()
 	echo >$__LAST_CMD__
 	lf -last-dir-path="$__LF_DIR__" "$@" 2>/dev/null &&
 		__vim_sel__
-	local dir
-	dir=$(<$__LF_DIR__)
+	__dir__=$(<$__LF_DIR__)
 	(/bin/rm -f $__LF_DIR__ >/dev/null 2>/dev/null &)
 	clear
-	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
+	[ -d "$__dir__" ] && [ "$__dir__" != "$(pwd)" ] && cd "$__dir__" || return
 }
 
 vimcd()
 {
-	local cmd
-	local file
 	case $1 in
 	'')
-		cmd=$EDITOR
-		file=
+		__cmd__=$EDITOR
+		__file__=
 		;;
 	'-c')
-		file=$(realpath "$3")
-		[ -f "$file" ] || return
-		cd "${file%/?*}" || return
-		cmd=$EDITOR
+		__file__=$(realpath "$3")
+		[ -f "$__file__" ] || return
+		cd "${__file__%/?*}" || return
+		__cmd__=$EDITOR
 		set -- -c "$2"
 		;;
 	*)
-		file=$(realpath "$1")
-		case $file in
+		__file__=$(realpath "$1")
+		case $__file__ in
 		*.mkv | *.mov | *.mp4 | \
 			*.png | *.jpg | *.jpeg)
 			(echo $__LFCD__ >$__LAST_CMD__ &)
-			lfcd "$file"
+			lfcd "$__file__"
 			;;
 		*)
-			if [ -f "$file" ]; then
-				cd "${file%/?*}" || return
-				cmd=$EDITOR
-			elif [ -d "$file" ]; then
-				cd "$file" || return
-				cmd=lfcd
+			if [ -f "$__file__" ]; then
+				cd "${__file__%/?*}" || return
+				__cmd__=$EDITOR
+			elif [ -d "$__file__" ]; then
+				cd "$__file__" || return
+				__cmd__=lfcd
 			else
-				echo "$1 is not a file"
-				echo 'touch file? (y/n)'
+				echo "$1 is not a __file__"
+				echo 'touch __file__? (y/n)'
 				read -r ok
 				case $ok in
 				y | Y) touch "$1" ;;
 				*) return ;;
 				esac
-				cmd=$EDITOR
+				__cmd__=$EDITOR
 			fi
 			shift
 			;;
@@ -137,7 +130,7 @@ vimcd()
 		;;
 	esac
 	(echo $__VIMCD__ >$__LAST_CMD__ &)
-	$cmd "$file" "$@" &&
+	$__cmd__ "$__file__" "$@" &&
 		__vim_sel__
 }
 
@@ -165,8 +158,7 @@ grepvim()
 {
 	# shellcheck disable=SC2164
 	cd "$1" 2>/dev/null
-	local grepped
-	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' " \
+	__grepped__=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' " \
 		--bind "change:reload:rg $__RG_ARGS__ {q} || true" \
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
