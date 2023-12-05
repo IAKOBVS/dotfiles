@@ -55,6 +55,14 @@ main(int argc,
 		if (i < 256 && isprint(i)) {
 			if (i == '\\' || i == '\'')
 				printf("'\\%c'\n", (char)i);
+			else if (i == '\n')
+				puts("'\\n'");
+			else if (i == '\v')
+				puts("'\\v'");
+			else if (i == '\f')
+				puts("'\\f'");
+			else if (i == '\r')
+				puts("'\\r'");
 			else
 				printf("'%c'\n", (char)i);
 		} else {

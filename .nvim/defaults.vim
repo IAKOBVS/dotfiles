@@ -31,7 +31,7 @@ endfunction
 vnoremap <space>s <Esc>:call SearchReplace(1)<CR>
 nnoremap <space>s :call SearchReplace(0)<CR>
 
-nnoremap <leader>c :!compiler %:p<CR>
+nnoremap <leader>c :!tcc -run %:p<CR>
 nnoremap ;cc :!gcc -O3 -march=native %:p; ./a.out<CR>
 
 nnoremap <space>l :call ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>

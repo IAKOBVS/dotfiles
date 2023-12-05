@@ -1,7 +1,7 @@
 #!/bin/sh
 file=$1
 cd "$(dirname "$file")" || exit 1
-flags='-Wall -Wextra -Warray-bounds -Wshadow -Wuninitialized -Wunused-variable -Wnull-dereference -Wformat'
+flags='-std=c99 -Wpedantic -pedantic -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wunused -Wwrite-strings'
 sanitizer='-fsanitize=address'
 analyzer="-fanalyzer $sanitizer -g"
 shift
@@ -25,6 +25,7 @@ for opt in "$@"; do
 		vg_flag='--leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
 		;;
 	t) CC=tcc ;;
+	tmp) use_tmp=1;;
 	*) flags="$flags $opt" ;;
 	esac
 done
@@ -42,7 +43,12 @@ case $file in
 	esac
 	;;
 esac
-flags="$OLevel $file -o $(basename "$file" ".${file#*.}") $flags"
+if test "$use_tmp"; then
+	out_file=/tmp/$(basename "$file" ".${file#*.}")
+else
+	out_file=$(basename "$file" ".${file#*.}")
+fi
+flags="$OLevel $file -o $out_file $flags"
 case $file in
 *.c) compiler=$CC ;;
 *.cpp | *.cc)
@@ -54,4 +60,5 @@ echo
 #shellcheck disable=SC2086
 $compiler $flags || exit 1
 #shellcheck disable=SC2086
-$vg ./${file%.*} $vg_flag
+$vg ${out_file%.*} $vg_flag
+test "$use_tmp" && rm "$out_file"

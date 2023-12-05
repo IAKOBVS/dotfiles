@@ -115,8 +115,8 @@ vimcd()
 				cd "$__file__" || return
 				__cmd__=lfcd
 			else
-				echo "$1 is not a __file__"
-				echo 'touch __file__? (y/n)'
+				echo "$1 is not a file"
+				echo 'touch file? (y/n)'
 				read -r ok
 				case $ok in
 				y | Y) touch "$1" ;;

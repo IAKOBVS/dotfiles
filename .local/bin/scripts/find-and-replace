@@ -8,7 +8,7 @@ replace=$2
 shift
 shift
 #shellcheck disable=SC2068
-awk -v f="$find" -v r="$replace" '{gsub(f, r); print;}' $@
+awk -v f="$find" -v r="$replace" '{ if (gsub(f, r)) print }' $@
 wait
 echo
 echo "Files to be changed: $*"
