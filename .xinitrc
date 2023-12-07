@@ -17,6 +17,7 @@ checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 /usr/local/code/c/jstring/src/update-glibc &
 /usr/local/code/c/jstring/src/update-copyright &
+/usr/local/code/c/jstring/src/fmt /usr/local/code/c/jstring/src/*.h &
 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
 while :; do
 	ssh-agent dwm

@@ -25,7 +25,7 @@ for opt in "$@"; do
 		vg_flag='--leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
 		;;
 	t) CC=tcc ;;
-	tmp) use_tmp=1;;
+	tmp) use_tmp=1 ;;
 	*) flags="$flags $opt" ;;
 	esac
 done
