@@ -54,7 +54,6 @@ __vim_sel__()
 		__arg__=$(<$__VIM_ARG__)
 	fi
 	(/bin/rm -f $__VIM_ARG__ $__VIM_PROG__ &) >/dev/null 2>/dev/null
-	clear
 	case $__prog__ in
 	"$__VIMCD__") vimcd "$__arg__" ;;
 	"$__LFCD__") lfcd "$__arg__" ;;
@@ -80,8 +79,7 @@ lfcd()
 	lf -last-dir-path="$__LF_DIR__" "$@" 2>/dev/null &&
 		__vim_sel__
 	__dir__=$(<$__LF_DIR__)
-	(/bin/rm -f $__LF_DIR__ >/dev/null 2>/dev/null &)
-	clear
+	# (/bin/rm -f $__LF_DIR__ >/dev/null 2>/dev/null &)
 	[ -d "$__dir__" ] && [ "$__dir__" != "$(pwd)" ] && cd "$__dir__" || return
 }
 

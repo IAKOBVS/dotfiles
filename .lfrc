@@ -25,9 +25,9 @@ set cleaner ctpvclear
 &ctpvquit $id
 
 cmd quitclear ${{
-	([ -f $__VIM_PROG__ ] && /bin/rm -f $__VIM_PROG__ >/dev/null 2>/dev/null &)
-	([ -f $__VIM_ARG__ ] && /bin/rm -f $__VIM_ARG__ >/dev/null 2>/dev/null &)
-	([ -f $__LAST_CMD__] && /bin/rm -f $__LAST_CMD__ >/dev/null 2>/dev/null &)
+	# ([ -f $__VIM_PROG__ ] && /bin/rm -f $__VIM_PROG__ >/dev/null 2>/dev/null &)
+	# ([ -f $__VIM_ARG__ ] && /bin/rm -f $__VIM_ARG__ >/dev/null 2>/dev/null &)
+	# ([ -f $__LAST_CMD__] && /bin/rm -f $__LAST_CMD__ >/dev/null 2>/dev/null &)
 	lf -remote "send $id quit"
 }}
 
