@@ -1,0 +1,2 @@
+#!/bin/sh
+chromium https://youtube.com

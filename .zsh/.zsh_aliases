@@ -35,6 +35,8 @@ c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
 cu='c add $(realpath $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh) && c commit -a -m new && c push --force' \
 cpl='c pull' \
 gl='cd $HOME/.local/src/glibc' \
+gls='cd $HOME/.local/src/glibc-strstr-avx2' \
+glm='cd $HOME/.local/src/glibc-memmem-avx2' \
 bs='cd $HOME/.local/src/freebsd-src/lib/libc' \
 mu='cd $HOME/.local/src/musl/src' \
 vd='v $HOME/.local/src/dwm/config.h' \

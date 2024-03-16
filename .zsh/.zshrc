@@ -3,9 +3,15 @@
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
 . $HOME/.zsh/.shell_functions 2>/dev/null
 
+getBranch() {
+    git rev-parse --abbrev-ref HEAD 2> /dev/null
+}
+
+setopt PROMPT_SUBST
+
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-PS1="%B%{$fg[white]%}[%{$fg[white]%}%n%{$fg[white]%}@%{$fg[white]%}%M %{$fg[white]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
+PS1="%B%{$fg[white]%}[%{$fg[white]%}%n%{$fg[white]%}@%{$fg[white]%}%M %{$fg[white]%}%~%{$fg[white]%} \$(getBranch)]%{$reset_color%}$%b "
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments

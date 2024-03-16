@@ -3,13 +3,21 @@ grep 'timings' "$1" |
 	sed 's/\[//g; s/\]//g; s/,//g' |
 	awk '
 	BEGIN {
-		avg1 = 0;
-		avg2 = 0;
+		n = 0
+		avg1 = 0
+		avg2 = 0
 		avg3 = 0
+		avg4 = 0
+		avg5 = 0
+		avg6 = 0
 	}
 	{
-		avg1 += $2;
-		avg2 += $3;
+		++n;
+		avg1 += $2
+		avg2 += $3
 		avg3 += $4
+		avg4 += $5
+		avg5 += $6
+		avg6 += $7
 	}
-	END { print avg1, avg2, avg3 }'
+	END { print avg1/n, avg2/n, avg3/n, avg4/n, avg5/n, avg6/n }'

@@ -1,0 +1,2 @@
+#!/bin/sh
+grep 'Length' $1 | sed 's/^.*:[ \t]*//g' | awk '{++n; a+=$1; b+=$2; c+=$3} END {print a/n, b/n, c/n}'

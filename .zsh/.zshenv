@@ -7,6 +7,7 @@ export BROWSER=brave
 export FZF_DEFAULT_OPTS='--height 95% --layout=reverse'
 export GTK_THEME=Adwaita:dark
 export QT_STYLE_OVERRIDE=adwaita-dark
+export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 if [ -f /bin/fd ]; then
 	export FZF_DEFAULT_COMMAND="fd -j $(nproc) --hidden --glob \

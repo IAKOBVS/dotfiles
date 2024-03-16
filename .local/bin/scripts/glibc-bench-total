@@ -1,0 +1,21 @@
+#!/bin/sh
+grep 'timings' "$1" |
+	sed 's/\[//g; s/\]//g; s/,//g' |
+	awk '
+	BEGIN {
+		tot1 = 0
+		tot2 = 0
+		tot3 = 0
+		tot4 = 0
+		tot5 = 0
+		tot6 = 0
+	}
+	{
+		tot1 += $2
+		tot2 += $3
+		tot3 += $4
+		tot4 += $5
+		tot5 += $6
+		tot6 += $7
+	}
+	END { print tot1, tot2, tot3, tot4, tot5, tot6 }'

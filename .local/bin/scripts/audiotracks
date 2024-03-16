@@ -1,2 +1,2 @@
 #!/bin/sh
-mediainfo "$1" | awk 'BEGIN {N = 0} $0 == "Audio" {++N} END {print N}'
+mediainfo "$1" | awk 'BEGIN {N = 0} $1 == "Audio" {++N} END {print N}'

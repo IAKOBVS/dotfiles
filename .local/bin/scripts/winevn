@@ -1,0 +1,2 @@
+#!/bin/sh
+WINEPREFIX=~/.local/share/winevn wine "$1"
