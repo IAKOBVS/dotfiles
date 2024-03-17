@@ -75,4 +75,5 @@ diff='diff --color=auto' \
 hi='highlight --out-format=ansi' \
 ip='ip -color=auto' \
 kdb='killall dwmblocks' \
-info='info --vi-keys'
+info='info --vi-keys' \
+pac='sudo pacman -Syu'
