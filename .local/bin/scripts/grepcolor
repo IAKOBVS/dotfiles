@@ -1,4 +1,6 @@
 #!/bin/sh
-col=''
-[ "$(uname -s)" = 'Linux' ] && col='--color=always'
-grep $col "$@"
+if grep --version 2>/dev/null | grep -i -q 'GNU'; then
+	grep --color=always $@
+else
+	grep $@
+fi

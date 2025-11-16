@@ -1,2 +1,2 @@
 #!/bin/sh
-convert -resize "$2" "$1" "${1%.*}-resized.png"
+convert -resize "$2" "$1" "${1%.*}-resized-$2.png"

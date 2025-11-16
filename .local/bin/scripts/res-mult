@@ -1,0 +1,6 @@
+#!/bin/sh
+res=$1
+shift
+for file in $@; do
+	convert -resize "$res" "$file" "${file%.*}-resized-$res.png"
+done

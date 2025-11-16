@@ -148,6 +148,7 @@ autocmd FileType c,cpp nmap ;ga :silent !gasm %:p &<CR>
 autocmd FileType c,cpp nmap ;vga :silent !vgasm %:p &<CR>
 autocmd FileType c,cpp nmap ;coe :silent !coe %:p<CR>
 autocmd FileType c,cpp nmap ;fa gg<S-V>G:Tabularize /\\$<CR><C-o>
+autocmd FileType text set wrap linebreak spell
 
 let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')

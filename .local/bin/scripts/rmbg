@@ -1,0 +1,3 @@
+#!/bin/sh
+out="${1%.*}-rembg.png"
+rembg i $1 -m isnet-anime $out

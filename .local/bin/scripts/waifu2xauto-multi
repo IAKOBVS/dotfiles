@@ -1,0 +1,6 @@
+#!/bin/sh
+scale=$1
+shift
+for file in $@; do
+	waifu2xauto "$file" "$scale"
+done
