@@ -1,0 +1,2 @@
+#!/bin/sh
+gthumb $HOME/Pictures/Screenshots/mpv-screenshots

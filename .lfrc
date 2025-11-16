@@ -146,7 +146,7 @@ cmd upscale4thumbnail ${{
 	printf "%s\n\t" "$fx"
 	printf "upscale? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && alacritty -e res4thum $fx &
+	[ $ans = 'Y' ] && alacritty -e waifu2xauto-res-multi 4 $fx &
 }}
 
 cmd forceupscale ${{
@@ -155,7 +155,7 @@ cmd forceupscale ${{
 	printf "%s\n\t" "$fx"
 	printf "force upscale? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && alacritty -e waifu2xauto $fx 4 &
+	[ $ans = 'Y' ] && alacritty -e waifu2xauto-res 4 $fx &
 }}
 
 cmd opengimp ${{

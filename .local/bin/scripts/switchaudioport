@@ -1,13 +1,31 @@
 #!/bin/sh
-case "$(checkaudioport)" in
-*headphone*)
-	pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-lineout
-	notify-send "🔊 now using speakers!"
-	pulseaudio-equalizer disable
-	;;
-*)
-	pactl set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-headphones
+HEADPHONE=bluez_sink.84_0F_2A_39_8E_E0.a2dp_sink
+SPEAKER=alsa_output.pci-0000_00_1f.3.analog-stereo
+case "$(pactl get-default-sink)" in
+*alsa*) # is speaker
+	echo "$(pamixer --get-volume)%" > /tmp/__james_speaker_volume__
+	pactl set-sink-mute $SPEAKER 1
+	pactl set-sink-volume $SPEAKER 0
+
+	pactl set-sink-mute $HEADPHONE 0
+	pactl set-default-sink $HEADPHONE
+	if test /tmp/__james_headphone_volume__; then
+		pactl set-sink-volume $HEADPHONE "$(cat /tmp/__james_headphone_volume__)"
+	fi
+
 	notify-send "🎧 now using headphones!"
-	pulseaudio-equalizer enable
+	# pulseaudio-equalizer disable
+	;;
+*)	# is headphone
+	echo "$(pamixer --get-volume)%" > /tmp/__james_headphone_volume__
+	pactl set-sink-mute $HEADPHONE 1
+	pactl set-sink-volume $HEADPHONE 0
+
+	pactl set-sink-mute $SPEAKER 0
+	pactl set-default-sink $SPEAKER
+	pactl set-sink-volume $SPEAKER "$(cat /tmp/__james_speaker_volume__)"
+
+	notify-send "🔊 now using speakers!"
+	# pulseaudio-equalizer disable
 	;;
 esac

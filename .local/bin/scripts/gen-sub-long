@@ -1,0 +1,2 @@
+#!/bin/sh
+buzz add --task transcribe -m whispercpp -s medium -l en --srt --hide-gui $@

@@ -1,9 +1,7 @@
 #!/bin/sh
 rm() { echo $@; /bin/rm -vI $@; }
 alias \
-cp='cp -iv' \
 mv='mv -iv' \
-bc='bc -ql' \
 fin='. fin' \
 fs='. fs' \
 v='vimcd' \
@@ -76,4 +74,7 @@ hi='highlight --out-format=ansi' \
 ip='ip -color=auto' \
 kdb='killall dwmblocks' \
 info='info --vi-keys' \
-pac='sudo pacman -Syu'
+pac='sudo pacman -Syu' \
+skr="cd $HOME/Pictures/Screenshots/mpv-screenshots" \
+bu="cd $HOME/books"
+mi="cd $HOME/books/Mythology"

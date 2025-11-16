@@ -1,3 +1,2 @@
 #!/bin/sh
-pactl set-default-sink bluez_sink.84_0F_2A_39_8E_E0.a2dp_sink
-pulseaudio-equalizer enable
+bluetoothctl connect 84:0F:2A:39:8E:E0

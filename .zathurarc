@@ -2,7 +2,6 @@ set sandbox none
 set statusbar-h-padding 0
 set statusbar-v-padding 0
 set page-padding 1
-set recolor true
 set selection-clipboard clipboard
 map u scroll half-up
 map d scroll half-down
@@ -13,3 +12,15 @@ map i recolor
 map p print
 map g goto top
 set cache-size 100%
+
+set recolor true
+
+# light
+map <F1> focus_inputbar ":set recolor-lightcolor \#fff7d6<Return>"
+map <F2> focus_inputbar ":set recolor-darkcolor \#000000<Return>"
+map ! feedkeys "<F1><Return><F2><Return>"    
+
+# dark
+map <F6> focus_inputbar ":set recolor-lightcolor \#000000<Return>"
+map <F7> focus_inputbar ":set recolor-darkcolor \#000000<Return>"
+map \# feedkeys "<F6><Return><F7><Return>"

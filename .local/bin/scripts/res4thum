@@ -8,7 +8,7 @@ for opt in "$@"; do
 		h=${r#*x}
 		;;
 	*)
-		if aredigit "$opt"; then
+		if expr "$opt" : '[0-9]'; then
 			r=$opt
 			h=$opt
 		else

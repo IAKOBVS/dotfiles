@@ -1,2 +1,0 @@
-#!/bin/sh
-gasm "$1" -fverbose-asm

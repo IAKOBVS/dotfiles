@@ -50,3 +50,8 @@ while [ $i -lt $n ]; do
 	realesr "$out"
 	i=$((i = i + 1))
 done
+resolution=$(identify -ping "$out" | awk '{print $3}' | sed 's/x.*//')
+if [ $resolution -gt 2400 ]; then
+	res "$out" 2400
+	rm "$out"
+fi

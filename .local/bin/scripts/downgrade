@@ -1,0 +1,6 @@
+#!/bin/sh
+_uninstall='sudo pacman -U'
+for x in $@; do
+	pkgs="$pkgs $(last-pkg "$x")"
+done
+$_uninstall $pkgs
