@@ -30,7 +30,7 @@ pacman='sudo pacman' \
 systl='sudo systemctl' \
 sv='sudo v' \
 c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
-cu='c add $(realpath $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh) && c commit -a -m new && c push --force' \
+cu='c add $(realpath $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh $HOME/.config/alacritty $HOME/.config/redshift) && c commit -a -m new && c push --force' \
 cpl='c pull' \
 gl='cd $HOME/.local/src/glibc' \
 gls='cd $HOME/.local/src/glibc-strstr-avx2' \

@@ -1,0 +1,13 @@
+#!/bin/sh
+gethour() {
+	LC_TIME="C.UTF-8" date | awk '{ gsub(/:.*/, ""); print $4 }'
+}
+curr_hour=$(gethour)
+if [ $curr_hour -lt 18 ];
+	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+	sleep $((18 - $curr_hour))
+	auto-dark-mode
+then
+	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+	killall redshift
+fi

@@ -6,4 +6,5 @@ else
 	notif='🎤 Mic is on!'
 fi
 dunstctl close
-notify-send $notif
+notify-send "$notif"
+gst-play-1.0 /usr/share/sounds/freedesktop/stereo/bell.oga

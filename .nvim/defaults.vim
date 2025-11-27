@@ -86,7 +86,12 @@ nnoremap Q- F_xf_xh
 nnoremap q_ q-
 nnoremap Q_ Q-
 
-colo murphy
+if strftime("%H") < 18
+	colorscheme peachpuff
+else
+	colorscheme murphy
+endif
+
 if has('termguicolors')
 	set termguicolors
 endif

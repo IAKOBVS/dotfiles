@@ -28,6 +28,8 @@ checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
 sudo fan2go &
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+redshift &
+auto-dark-mode &
 
 while :; do
 	ssh-agent dwm
