@@ -5,9 +5,11 @@ gethour() {
 curr_hour=$(gethour)
 if [ $curr_hour -lt 18 ];
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+	cp -f $HOME/.config/alacritty/alacritty.toml.white $HOME/.config/alacritty/alacritty.toml
 	sleep $((18 - $curr_hour))
 	auto-dark-mode
 then
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+	cp -f $HOME/.config/alacritty/alacritty.toml.dark $HOME/.config/alacritty/alacritty.toml
 	killall redshift
 fi
