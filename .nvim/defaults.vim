@@ -133,9 +133,9 @@ cnorea w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 
 " C highlighting
-autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! highlight PreProc ctermfg=35 guifg=#8ed5e5
-silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! match Operator /[\<\>\?\:\+\=\|\.\-\&\*,;!]/
-silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! 2match Special /[(){}]/
+" autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! highlight PreProc ctermfg=35 guifg=#8ed5e5
+" silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! match Operator /[\<\>\?\:\+\=\|\.\-\&\*,;!]/
+" silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! 2match Special /[(){}]/
 " disable autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd BufNewFile,BufRead *.h set filetype=c
