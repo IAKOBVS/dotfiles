@@ -3,16 +3,11 @@ gethour() {
 	LC_TIME="C.UTF-8" date | awk '{ gsub(/:.*/, ""); print $4 }'
 }
 curr_hour=$(gethour)
-if [ $curr_hour -lt 18 ];
+if [ $curr_hour -lt 16];
 then
-	zw
-	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
-	cp -f $HOME/.config/alacritty/alacritty.toml.white $HOME/.config/alacritty/alacritty.toml
-	sleep $(((18 - $curr_hour) * 3600))
+	light-mode
+	sleep $(((16 - $(gethour)) * 3600))
 	auto-dark-mode
 else
-	zb
-	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-	cp -f $HOME/.config/alacritty/alacritty.toml.dark $HOME/.config/alacritty/alacritty.toml
-	killall redshift
+	dark-mode
 fi

@@ -1,0 +1,4 @@
+#!/bin/sh
+zw
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+cp -f $HOME/.config/alacritty/alacritty.toml.white $HOME/.config/alacritty/alacritty.toml

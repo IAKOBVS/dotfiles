@@ -1,0 +1,4 @@
+!/bin/sh
+zb
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+cp -f $HOME/.config/alacritty/alacritty.toml.dark $HOME/.config/alacritty/alacritty.toml
