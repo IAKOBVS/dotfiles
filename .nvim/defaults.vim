@@ -86,7 +86,7 @@ nnoremap Q- F_xf_xh
 nnoremap q_ q-
 nnoremap Q_ Q-
 
-if strftime("%H") < 18
+if strftime("%H") < 16 && strftime("%H") > 5
 	colorscheme peachpuff
 else
 	colorscheme murphy

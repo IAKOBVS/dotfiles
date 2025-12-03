@@ -1,2 +1,2 @@
 #!/bin/sh
-ebook-convert $1
+ebook-convert $1 $(echo $1 | sed 's/epub$/pdf/')
