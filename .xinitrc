@@ -19,12 +19,12 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
+# checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 # jamesdsp -t &
 # qbittorrent &
 { bluetoothctl & sleep 2 && killall bluetoothctl; } &
-/usr/local/code/c/jstring/src/update-copyright &
-/usr/local/code/c/jstring/src/fmt /usr/local/code/c/jstring/src/*.h &
+/usr/local/code/c/jstring/scripts/update-copyright &
+/usr/local/code/c/jstring/scripts/fmt /usr/local/code/c/jstring/src/*.h &
 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
 sudo fan2go &
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
