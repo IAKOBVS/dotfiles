@@ -1,5 +1,5 @@
 #!/bin/sh
 _pkg=$1
 _path=/var/cache/pacman/pkg
-_last_pkg=$(find "$_path" -name "$_pkg-*.zst" | sort | tail -n2 | head -n1)
+_last_pkg=$(find "$_path" -type f | grep "$path/$_pkg[^A-Za-z][^A-Za-z].*\.zst$" | sort | tail -n2 | head -n1)
 echo "$_last_pkg"

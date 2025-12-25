@@ -58,7 +58,11 @@ esac
 echo "$compiler $flags"
 echo
 #shellcheck disable=SC2086
-$compiler $flags || exit 1
-#shellcheck disable=SC2086
-$vg ${out_file%.*} $vg_flag
-test "$use_tmp" && rm "$out_file"
+if $compiler $flags; then
+	./"$out_file"
+	test "$use_tmp" && rm "$out_file"
+else
+	#shellcheck disable=SC2086
+	$vg ${out_file%.*} $vg_flag
+	test "$use_tmp" && rm "$out_file"
+fi
