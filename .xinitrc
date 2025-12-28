@@ -26,11 +26,7 @@ fi
 /usr/local/code/c/jstring/scripts/update-copyright &
 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
 sudo fan2go &
-if [ $(uname) = 'Linux' ]; then
-	fzfvim-cleanup &
-else
-	__cleanup_fzfvim__ &
-fi
+fzfvim-cleanup &
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 # redshift &
 # auto-dark-mode &

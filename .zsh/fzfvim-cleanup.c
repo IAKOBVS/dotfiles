@@ -1,9 +1,11 @@
-#define DEBUG 0
+#define DEBUG 1
 
 #include <dirent.h>
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #ifdef __glibc_has_builtin
 #	define JSTR_HAS_BUILTIN(name) __glibc_has_builtin(name)
@@ -31,7 +33,7 @@
 #define NAMESZ (sizeof(size_t) * 8)
 #define LINESZ 1024
 
-#define TMP_DIR     "/tmp/__GLOBAL_FZFVIM__"
+#define TMP_DIR_ENV "__GLOBAL_FZFVIM__"
 #define FNAME_START "/proc/"
 #define FNAME_END   "/status"
 
@@ -40,7 +42,14 @@
 int
 main()
 {
-	assert(chdir(TMP_DIR) == 0);
+	/* Require /proc/ */
+	assert(access(FNAME_START, F_OK) == 0);
+	/* Require tmp_dir */
+	const char *tmp_dir = getenv(TMP_DIR_ENV);
+	assert(tmp_dir);
+	DEBUG_PRINT("tmp_dir:%s\n", tmp_dir);
+	/* cd to tmp_dir and open directory */
+	assert(chdir(tmp_dir) == 0);
 	DIR *dp = opendir(".");
 	assert(dp);
 	struct dirent *ep;
@@ -58,7 +67,7 @@ main()
 			pid += 2;
 			strcpy(fname + S_LEN(FNAME_START), pid);
 			DEBUG_PRINT("pid:%s\n", pid);
-			DEBUG_PRINT("fname_new:%s\n", fname);
+			DEBUG_PRINT("fname:%s\n", fname);
 			/* Check if file in /tmp/__GLOBAL_FZFVIM__ a process. */
 			if (access(fname, F_OK) == -1)
 				/* It is not. Do cleanup. */

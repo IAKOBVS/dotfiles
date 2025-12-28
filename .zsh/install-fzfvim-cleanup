@@ -1,6 +1,6 @@
 #!/bin/sh
 CFILE=fzfvim-cleanup.c
-BIN=fzfvim-cleanup
+BIN=fzfvim-cleanup-bin
 DST=$HOME/.local/bin/scripts
 mkdir -p $DST
 cc "$CFILE" -O2 -o "$BIN"
