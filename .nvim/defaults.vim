@@ -4,7 +4,7 @@ nnoremap ;nv :source $HOME/.nvim/init.vim<CR>
 autocmd BufNewFile,BufEnter * silent! lcd %:p:h
 " autoupdate zsh aliases
 autocmd BufWritePost *zsh*alias* silent! !__update_vim_aliases__ &
-autocmd BufWritePost *.shell_functions*,.z* silent! !__recompile_zsh_scripts__ &
+" autocmd BufWritePost *.shell_functions*,.z* silent! !__recompile_zsh_scripts__ &
 " cleanup fzfvim temp variables
 silent autocmd BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | silent! execute '!/bin/rm -f $__VIM_PROG__ & /bin/rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ &' | endif
 

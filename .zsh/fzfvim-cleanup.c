@@ -39,8 +39,7 @@
 
 #define SLEEP_TIME (900)
 
-int
-main()
+void process(void)
 {
 	/* Require /proc/ */
 	assert(access(FNAME_START, F_OK) == 0);
@@ -73,8 +72,14 @@ main()
 				/* It is not. Do cleanup. */
 				assert(unlink(ep->d_name) == 0);
 		}
+		closedir(dp);
 		sleep(SLEEP_TIME);
 	}
-	closedir(dp);
+}
+
+int
+main()
+{
+	process();
 	return 0;
 }
