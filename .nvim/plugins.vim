@@ -103,3 +103,5 @@ if 0
 	let g:OmniSharp_coc_snippet = 1
 	let g:OmniSharp_popup = 1
 endif
+
+autocmd Filetype c setlocal commentstring=/\*%s\*/
