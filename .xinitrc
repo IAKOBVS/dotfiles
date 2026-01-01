@@ -23,7 +23,6 @@ fi
 # jamesdsp -t &
 # qbittorrent &
 { bluetoothctl & sleep 2 && killall bluetoothctl; } &
-/usr/local/code/c/jstring/scripts/update-copyright &
 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
 sudo fan2go &
 fzfvim-cleanup &
