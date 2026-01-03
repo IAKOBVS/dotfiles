@@ -8,6 +8,7 @@ shift
 vg=
 vg_flag=
 CC=cc
+CC=clang
 CPP='c++'
 for opt in "$@"; do
 	case $opt in

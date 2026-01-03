@@ -2,7 +2,7 @@
 [ "$SSH_CLIENT" ] && return
 xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
 picom -b --config "$HOME"/.config/picom.conf &
-dwmblocks &
+dwmblocks-fast &
 $TERMINAL &
 #shellcheck disable=SC2164
 (cd /tmp; nohup "$HOME"/.local/bin/scripts/remaps & rm nohup.out &)

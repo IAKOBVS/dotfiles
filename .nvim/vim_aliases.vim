@@ -1,5 +1,5 @@
 nnoremap ;vd :edit $HOME/.local/src/dwm/config.h<CR>
-nnoremap ;vdw :edit $HOME/.local/src/dwmblocks/blocks.h<CR>
+nnoremap ;vdw :edit $HOME/.local/src/dwmblocks-fast/blocks.h<CR>
 nnoremap ;vsl :edit $HOME/.local/src/slstatus/config.h<CR>
 nnoremap ;vlf :edit $HOME/.lfrc<CR>
 nnoremap ;vs :edit $HOME/.local/src/st/config.h<CR>

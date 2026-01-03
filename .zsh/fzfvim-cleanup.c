@@ -6,6 +6,8 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
+#include <fcntl.h>
 
 #ifdef __glibc_has_builtin
 #	define JSTR_HAS_BUILTIN(name) __glibc_has_builtin(name)
@@ -33,28 +35,64 @@
 #define NAMESZ (sizeof(size_t) * 8)
 #define LINESZ 1024
 
-#define TMP_DIR_ENV "__GLOBAL_FZFVIM__"
+#define TMP_DIR_ENV "/tmp/__GLOBAL_FZFVIM__"
 #define FNAME_START "/proc/"
 #define FNAME_END   "/status"
 
 #define SLEEP_TIME (900)
 
-void process(void)
+#define CHK(cond, string)                                     \
+	do {                                                  \
+		if (!(cond)) {                                \
+			err(TMP_DIR_ENV "/err", string, strlen(string)); \
+			assert(0);                            \
+		}                                             \
+	} while (0)
+
+char *
+xstpcpy_len(char *dst, const char *src, size_t n)
 {
-	/* Require /proc/ */
-	assert(access(FNAME_START, F_OK) == 0);
+	dst = (char *)memcpy(dst, src, n) + n;
+	*dst = '\0';
+	return dst;
+}
+
+void
+err(const char *errorfile, const char *err_string, unsigned int err_string_len)
+{
+	char *err = strerror(errno);
+	DEBUG_PRINT("%s:%s:%s\n", errorfile, err, err_string);
+	unsigned int err_len = strlen(err);
+	char buf[4096];
+	char *p = xstpcpy_len(buf, err, err_len);
+	p = xstpcpy_len(p, err_string, err_string_len);
+	*p = '\0';
+	int fd = open(errorfile, O_APPEND | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	assert(fd != -1);
+	assert(write(fd, buf, (size_t)(p - buf)) == (p - buf));
+	fd = close(fd);
+	assert(fd != -1);
+	exit(EXIT_FAILURE);
+}
+
+void
+process(void)
+{
+	DEBUG_PRINT("err_file:%s\n", TMP_DIR_ENV "/err");
 	/* Require tmp_dir */
-	const char *tmp_dir = getenv(TMP_DIR_ENV);
+	const char *tmp_dir = TMP_DIR_ENV;
 	assert(tmp_dir);
+	/* Require /proc/ */
+	CHK(access(FNAME_START, F_OK) == 0, "");
 	DEBUG_PRINT("tmp_dir:%s\n", tmp_dir);
 	/* cd to tmp_dir and open directory */
-	assert(chdir(tmp_dir) == 0);
-	DIR *dp = opendir(".");
-	assert(dp);
-	struct dirent *ep;
+	CHK(chdir(tmp_dir) == 0, "");
 	char fname[NAMESZ + S_LEN(FNAME_END) + 1];
 	strcpy(fname, FNAME_START);
 	for (;;) {
+		DIR *dp = opendir(".");
+		assert(dp);
+		struct dirent *ep;
 		/* Loop over files in /tmp/__GLOBAL_FZFVIM__ */
 		while ((ep = readdir(dp))) {
 			if (unlikely(*(ep->d_name) == '.')
@@ -69,10 +107,12 @@ void process(void)
 			DEBUG_PRINT("fname:%s\n", fname);
 			/* Check if file in /tmp/__GLOBAL_FZFVIM__ a process. */
 			if (access(fname, F_OK) == -1)
+				DEBUG_PRINT("fname_is_process:%s\n", fname);
 				/* It is not. Do cleanup. */
-				assert(unlink(ep->d_name) == 0);
+				CHK(unlink(ep->d_name) == 0, "");
 		}
-		closedir(dp);
+		CHK(closedir(dp) == 0, "");
+		DEBUG_PRINT("%s\n", "sleeping...");
 		sleep(SLEEP_TIME);
 	}
 }

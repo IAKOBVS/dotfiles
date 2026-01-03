@@ -7,6 +7,12 @@ getBranch() {
     git rev-parse --abbrev-ref HEAD 2> /dev/null
 }
 
+if command -v pgrep >/dev/null; then
+	(test -z "$(pgrep 'fzfvim-cleanup')" >/dev/null && fzfvim-cleanup &)
+else
+	(test -z "$(ps -ef | awk '{ if ($8 ~ /fzfvim-cleanup/) {exist=1; exit; } } END { print exist; }')" >/dev/null && fzfvim-cleanup &)
+fi
+
 setopt PROMPT_SUBST
 
 # Enable colors and change prompt:

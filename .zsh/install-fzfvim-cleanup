@@ -4,4 +4,6 @@ BIN=fzfvim-cleanup-bin
 DST=$HOME/.local/bin/scripts
 mkdir -p $DST
 cc "$CFILE" -O2 -o "$BIN"
+echo "cc "$CFILE" -O2 -o "$BIN""
 cp -f "$BIN" $DST
+echo "cp -f "$BIN" $DST"
