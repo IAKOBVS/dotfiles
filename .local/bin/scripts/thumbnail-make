@@ -1,0 +1,20 @@
+#!/bin/sh
+usage="$(basename $0): <text> <title>"
+font=/usr/share/fonts/TTF/Montserrat-SemiBold.ttf
+res=1920x1080
+text=$1
+name=$2
+opt=$3
+text_output=$(echo $text | sed 's/ /-/g; s/\//-/g')
+name_output=$(echo $name | sed 's/ /-/g; s/\//-/g')
+if [ $# -ne 3 ]; then
+	echo $usage
+	exit 1
+fi
+if [ $opt = '1' ]; then
+	opt=label
+else
+	opt=caption
+fi
+echo "magick -size "$res" -background black -fill white -font "$font" -gravity center $opt:"$text" "$name_output-$text_output.png""
+magick -size "$res" -background black -fill white -font "$font" -gravity center "$opt:$text" "$name_output-$text_output.png"
