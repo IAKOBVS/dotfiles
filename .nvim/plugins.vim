@@ -4,7 +4,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'bkad/CamelCaseMotion'
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
