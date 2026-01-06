@@ -27,8 +27,8 @@
 #
 # The motivation is to be able to call cli commands within the current program,
 # and directly transition into the next program, without needing to exit into the
-# terminal, emulating the behaviour of plugins such as fzf.vim with a shell
-# script that can be used for other programs, and adheres more to the UNIX philosophy.
+# terminal, emulating the behaviour of plugins such as fzf.vim with a shell script
+# that can be used for other programs, and adheres more to the UNIX philosophy.
 #
 # For every opened shell, it will save the last directory and command in
 # a temporary file, whose value will be read in the future to determine
