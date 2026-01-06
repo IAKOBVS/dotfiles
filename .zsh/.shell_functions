@@ -26,7 +26,7 @@
 __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 export __NPROC__
 
-# Temporary files here will be cleaned periodically by fzfvim-cleanup.
+# Temporary files here will be cleaned up periodically by fzfvim-cleanup.
 export __GLOBAL_FZFVIM__=/tmp/__GLOBAL_FZFVIM__
 
 # TODO: maybe make a more human readable format like /proc/
