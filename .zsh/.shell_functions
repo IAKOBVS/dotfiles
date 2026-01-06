@@ -22,6 +22,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# This file is used for doing inter-process communication, using tmp files,
+# between vim, grep, and lf, and can be easily extended for other programs.
+#
+# The motivation is to be able to call cli commands within the current program,
+# and directly transition into that program, without needing to exit into the
+# terminal, emulating the behaviour of plugins such as fzf.vim, with a shell
+# script that is useable for other programs, and adheres more to the UNIX philosophy.
+#
+# For every opened shell, it will save the last directory and command in
+# a temporary file, whose value will be read in the future to determine
+# which command to execute and directory into which to cd.
+#
+# The tmp files will be temporarily cleaned up by fzfvim-cleanup by checking
+# if the PIDs, which are embedded into the file name, exist, removing the
+# tmp files whose PIDs do not.
+
 # Available CPU cores.
 __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 export __NPROC__
@@ -41,7 +57,7 @@ export __LF_DIR__=$__GLOBAL_FZFVIM__/__LF_DIR__$$
 export __VIM_LAST_FILE__=$__GLOBAL_FZFVIM__/__VIM_LAST_FILE__$$
 export __LAST_CMD__=$__GLOBAL_FZFVIM__/__LAST_CMD__$$
 
-# Export the operations to support.
+# Export the commands to support.
 export __VIMCD__=1
 export __LFCD__=2
 export __FZF__=3
@@ -105,8 +121,7 @@ __last_cmd__()
 lfcd()
 {
 	echo >$__LAST_CMD__
-	lf -last-dir-path="$__LF_DIR__" "$@" 2>/dev/null &&
-		__vim_sel__
+	lf -last-dir-path="$__LF_DIR__" "$@" 2>/dev/null && __vim_sel__
 	__dir__=$(<$__LF_DIR__)
 	# (/bin/rm -f $__LF_DIR__ >/dev/null 2>/dev/null &)
 	[ -d "$__dir__" ] && [ "$__dir__" != "$(pwd)" ] && cd "$__dir__" || return
