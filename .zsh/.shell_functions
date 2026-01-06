@@ -38,8 +38,6 @@
 # if the PIDs, which are embedded into the file name, exist, removing the
 # tmp files whose PIDs do not.
 
-# TODO: rewrite in C?
-
 # Available CPU cores.
 __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 export __NPROC__
