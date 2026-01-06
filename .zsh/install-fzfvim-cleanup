@@ -1,4 +1,7 @@
 #!/bin/sh
+
+set -x
+
 CFILE=fzfvim-cleanup.c
 BIN=fzfvim-cleanup-bin
 DST=$HOME/.local/bin/scripts

@@ -22,17 +22,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# Available CPU cores.
 __NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 export __NPROC__
 
+# Temporary files here will be cleaned periodically by fzfvim-cleanup.
 export __GLOBAL_FZFVIM__=/tmp/__GLOBAL_FZFVIM__
 
+# TODO: maybe make a more human readable format like /proc/
+# since performance doesn't matter here
+
+# TODO: rewrite in C?
+
+# Template for tmp files
 export __VIM_PROG__=$__GLOBAL_FZFVIM__/__VIM_PROG__$$
 export __VIM_ARG__=$__GLOBAL_FZFVIM__/__VIM_ARG__$$
 export __LF_DIR__=$__GLOBAL_FZFVIM__/__LF_DIR__$$
 export __VIM_LAST_FILE__=$__GLOBAL_FZFVIM__/__VIM_LAST_FILE__$$
 export __LAST_CMD__=$__GLOBAL_FZFVIM__/__LAST_CMD__$$
 
+# Export the operations to support.
 export __VIMCD__=1
 export __LFCD__=2
 export __FZF__=3
@@ -41,6 +50,7 @@ export __FZFLIVEHOME__=5
 export __FZFHOMELIVE__=5
 export __GREPVIM__=6
 
+# Create tmp file.
 /bin/mkdir -p $__GLOBAL_FZFVIM__ 
 echo >$__VIM_PROG__ 
 echo >$__VIM_ARG__ 
@@ -60,6 +70,7 @@ mkdir()
 	/bin/mkdir "$@"
 }
 
+# Select program to call based on the value in the tmp file.
 __vim_sel__()
 {
 	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
@@ -80,6 +91,7 @@ __vim_sel__()
 	esac
 }
 
+# Get the last command.
 __last_cmd__()
 {
 	[ -f $__LAST_CMD__ ] || return
@@ -89,6 +101,7 @@ __last_cmd__()
 	esac
 }
 
+# Open lf and cd to the last directory.
 lfcd()
 {
 	echo >$__LAST_CMD__
@@ -99,6 +112,7 @@ lfcd()
 	[ -d "$__dir__" ] && [ "$__dir__" != "$(pwd)" ] && cd "$__dir__" || return
 }
 
+# Open vim and cd to the last directory.
 vimcd()
 {
 	case $1 in
@@ -166,8 +180,10 @@ fzflive()
 	fzfbase "$(find . -type f ! -path '*.git*' ! -path '*.o' ! -path '*node_modules*' | fzf --preview "bat --style=numbers --color=always {1}")"
 }
 
+# Default args for rg.
 __RG_ARGS__="-j $__NPROC__ --color=always --no-heading -n --max-filesize 1M"
 
+# Grep and open vim.
 grepvim()
 {
 	# shellcheck disable=SC2164

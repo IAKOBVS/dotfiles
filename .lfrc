@@ -34,16 +34,20 @@ cmd quitclear ${{
 cmd fzfvim ${{
 	echo $__FZF__ >$__VIM_PROG__
 	echo $PWD >$__VIM_ARG__
-	(echo $__LFCD__ >$__LAST_CMD__ &)
-	(echo $PWD >$__VIM_LAST_FILE__ &)
+	# (echo $__LFCD__ >$__LAST_CMD__ &)
+	# (echo $PWD >$__VIM_LAST_FILE__ &)
+	echo $__LFCD__ >$__LAST_CMD__
+	echo $PWD >$__VIM_LAST_FILE__
 	lf -remote "send $id quit"
 }}
 
 cmd grepvim ${{
 	echo $__GREPVIM__ >$__VIM_PROG__
 	echo $PWD >$__VIM_ARG__
-	(echo $__LFCD__ >$__LAST_CMD__ &)
-	(echo $PWD >$__VIM_LAST_FILE__ &)
+	# (echo $__LFCD__ >$__LAST_CMD__ &)
+	# (echo $PWD >$__VIM_LAST_FILE__ &)
+	echo $__LFCD__ >$__LAST_CMD__
+	echo $PWD >$__VIM_LAST_FILE__
 	lf -remote "send $id quit"
 }}
 

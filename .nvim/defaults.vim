@@ -1,5 +1,9 @@
 nnoremap ;nv :source $HOME/.nvim/init.vim<CR>
 
+"  disable mosue
+set mouse=
+" set mouse=a
+
 " autocd
 autocmd BufNewFile,BufEnter * silent! lcd %:p:h
 " autoupdate zsh aliases
@@ -113,7 +117,6 @@ if 0
 	set nohlsearch
 endif
 set incsearch
-set mouse=a
 set encoding=utf-8
 set nobackup
 set nowritebackup
