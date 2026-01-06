@@ -14,7 +14,7 @@ silent autocmd BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | sile
 
 " execute cmd after vim exits
 function ExitCmd(dir, prog, arg)
-	silent! execute '!echo '.a:dir.' >$__LF_DIR__ & echo '.a:prog.'>$__VIM_PROG__; echo '.a:arg.' >$__VIM_ARG__'
+	silent! execute '!echo '.a:dir.' >$__LF_DIR__; echo '.a:prog.'>$__VIM_PROG__; echo '.a:arg.' >$__VIM_ARG__'
 	xit
 endfunction
 
@@ -135,6 +135,7 @@ autocmd SwapExists * let v:swapchoice = "e" | echomsg "swap exists"
 " autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! highlight PreProc ctermfg=35 guifg=#8ed5e5
 " silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! match Operator /[\<\>\?\:\+\=\|\.\-\&\*,;!]/
 " silent! autocmd BufRead,BufNewFile *.c,*.h,*.hpp,*.hh,*.cpp,*.cc silent! 2match Special /[(){}]/
+
 " disable autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd BufNewFile,BufRead *.h set filetype=c
@@ -158,9 +159,9 @@ let g:__templateDir__ = expand($HOME).'/.nvim/templates'
 if filereadable(g:__templateDir__.'/skeleton.c')
 \ && filereadable(g:__templateDir__.'/skeleton.pl')
 \ && filereadable(g:__templateDir__.'/skeleton.awk')
-	autocmd BufNewFile,BufRead *.c,*.cc,*.cpp if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.c | $delete _
-	autocmd BufNewFile,BufRead *.pl,*.pm if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.pl
-	autocmd BufNewFile,BufRead *.awk if __FileEmpty__() | 0r ~/.nvim/templates/skeleton.awk
+	autocmd BufNewFile,BufRead *.c,*.cc,*.cpp if __FileEmpty__() | 0 read ~/.nvim/templates/skeleton.c
+	autocmd BufNewFile,BufRead *.pl,*.pm if __FileEmpty__() | 0 read ~/.nvim/templates/skeleton.pl
+	autocmd BufNewFile,BufRead *.awk if __FileEmpty__() | 0 read ~/.nvim/templates/skeleton.awk
 endif
 
 autocmd BufWritePost *sxhkdrc !killall sxhkd; nohup sxhkd & rm nohup.out;

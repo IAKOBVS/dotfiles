@@ -9,7 +9,7 @@ Plug 'vim-scripts/LargeFile'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/goyo.vim'
-" Plug 'rhysd/vim-grammarous'
+Plug 'rhysd/vim-grammarous'
 if 0
 	Plug 'bergercookie/asm-lsp'
 	Plug 'OmniSharp/omnisharp-vim'
