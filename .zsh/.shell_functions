@@ -77,13 +77,13 @@ echo >$__LAST_CMD__
 
 touch()
 {
-	__file__=$(realpath "${@##* }" 2>/dev/null)
+	__file__=$(realpath "$(echo $@ | awk '{print $NF}')" 2>/dev/null)
 	/bin/touch "$@"
 }
 
 mkdir()
 {
-	__file__=$(realpath "${@##* }" 2>/dev/null)
+	__file__=$(realpath "$(echo $@ | awk '{print $NF}')" 2>/dev/null)
 	/bin/mkdir "$@"
 }
 
@@ -138,8 +138,8 @@ vimcd()
 		;;
 	'-c')
 		__file__=$(realpath "$3")
-		[ -f "$__file__" ] || return
-		cd "${__file__%/?*}" || return
+		test -f "$__file__" || return
+		cd "$(dirname $__file__)" || return
 		__cmd__=$EDITOR
 		set -- -c "$2"
 		;;
@@ -153,7 +153,7 @@ vimcd()
 			;;
 		*)
 			if [ -f "$__file__" ]; then
-				cd "${__file__%/?*}" || return
+				cd "$(dirname $__file__)" || return
 				__cmd__=$EDITOR
 			elif [ -d "$__file__" ]; then
 				cd "$__file__" || return
