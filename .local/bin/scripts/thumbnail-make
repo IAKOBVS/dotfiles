@@ -5,8 +5,8 @@ res=1920x1080
 text=$1
 name=$2
 opt=$3
-text_output=$(echo $text | sed 's/ /-/g; s/\//-/g')
-name_output=$(echo $name | sed 's/ /-/g; s/\//-/g')
+text_output=$(echo $text | sed 's/ /_/g; s/\//_/g')
+name_output=$(echo $name | sed 's/ /_/g; s/\//_/g')
 if [ $# -ne 3 ]; then
 	echo $usage
 	exit 1
