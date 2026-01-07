@@ -1,2 +1,2 @@
 #!/bin/sh
-gimp-3 $HOME/Pictures/thumbnails/higurashi-thumb-2.xcf
+gimp-3 $HOME/Pictures/c-thumbnails.xcf

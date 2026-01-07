@@ -109,7 +109,7 @@ process(void)
 	DEBUG_PRINT("tmp_dir:%s\n", tmp_dir);
 	/* cd to tmp_dir and open directory */
 	CHK(chdir(tmp_dir) == 0, "");
-	char fname[NAMESZ + S_LEN(FNAME_END) + 1];
+	char fname[S_LEN(FNAME_START) + NAMESZ + S_LEN(FNAME_END) + 1];
 	strcpy(fname, FNAME_START);
 	for (;;) {
 		DIR *dp = opendir(".");
@@ -128,10 +128,11 @@ process(void)
 			DEBUG_PRINT("pid:%s\n", pid);
 			DEBUG_PRINT("fname:%s\n", fname);
 			/* Check if file in /tmp/__GLOBAL_FZFVIM__ a process. */
-			if (access(fname, F_OK) == -1)
-				DEBUG_PRINT("fname_is_process:%s\n", fname);
+			if (access(fname, F_OK) == -1) {
 				/* It is not. Do cleanup. */
 				CHK(unlink(ep->d_name) == 0, "");
+				DEBUG_PRINT("fname_is_process:%s\n", fname);
+			}
 		}
 		CHK(closedir(dp) == 0, "");
 		DEBUG_PRINT("%s\n", "sleeping...");
