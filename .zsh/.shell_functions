@@ -131,31 +131,31 @@ vimcd()
 {
 	case $1 in
 	'')
-		__cmd__=$EDITOR
-		__file__=
+		cmd=$EDITOR
+		file=
 		;;
 	'-c')
-		__file__=$(realpath "$3")
-		test -f "$__file__" || return
-		cd "$(dirname $__file__)" || return
-		__cmd__=$EDITOR
+		file=$(realpath "$3")
+		test -f "$file" || return
+		cd "$(dirname $file)" || return
+		cmd=$EDITOR
 		set -- -c "$2"
 		;;
 	*)
-		__file__=$(realpath "$1")
-		case $__file__ in
+		file=$(realpath "$1")
+		case $file in
 		*.mkv | *.mov | *.mp4 | \
 			*.png | *.jpg | *.jpeg)
 			echo $__LFCD__ >$__LAST_CMD__
-			lfcd "$__file__"
+			lfcd "$file"
 			;;
 		*)
-			if [ -f "$__file__" ]; then
-				cd "$(dirname $__file__)" || return
-				__cmd__=$EDITOR
-			elif [ -d "$__file__" ]; then
-				cd "$__file__" || return
-				__cmd__=lfcd
+			if [ -f "$file" ]; then
+				cd "$(dirname $file)" || return
+				cmd=$EDITOR
+			elif [ -d "$file" ]; then
+				cd "$file" || return
+				cmd=lfcd
 			else
 				echo "$1 is not a file"
 				echo 'touch file? (y/n)'
@@ -164,7 +164,7 @@ vimcd()
 				y | Y) touch "$1" ;;
 				*) return ;;
 				esac
-				__cmd__=$EDITOR
+				cmd=$EDITOR
 			fi
 			shift
 			;;
@@ -172,7 +172,7 @@ vimcd()
 		;;
 	esac
 	echo $__VIMCD__ >$__LAST_CMD__
-	$__cmd__ "$__file__" "$@" &&
+	$cmd "$file" "$@" &&
 		__vim_sel__
 }
 
@@ -202,13 +202,13 @@ grepvim()
 {
 	# shellcheck disable=SC2164
 	cd "$1" 2>/dev/null
-	__grepped__=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' " \
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' " \
 		--bind "change:reload:rg $__RG_ARGS__ {q} || true" \
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
-	if [ "$__grepped__" ]; then
-		vimcd -c ":$(echo "$__grepped__" | cut -d: -f2)" "${__grepped__%%:*}"
+	if [ "$grepped" ]; then
+		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
 	else
 		__last_cmd__
 	fi
