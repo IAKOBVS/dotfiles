@@ -204,8 +204,6 @@ grepvim()
 	cd "$1" 2>/dev/null
 	__grepped__=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' " \
 		--bind "change:reload:rg $__RG_ARGS__ {q} || true" \
-		--bind "alt-j:preview-up,alt-k:preview-down" \
-		--bind "alt-h:backward-char,alt-l:forward-char" \
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
