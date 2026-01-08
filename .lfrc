@@ -1,4 +1,5 @@
 # Luke's lf settings
+# Depends on lf 30.1 (breaks on newer versions)
 # Note on Image Previews
 # For those wanting image previews, like this system, there are four steps to
 # set it up. These are done automatically for LARBS users, but I will state
