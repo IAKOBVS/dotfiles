@@ -7,6 +7,7 @@ getBranch() {
     git rev-parse --abbrev-ref HEAD 2> /dev/null
 }
 
+# cleanup unused tmp files
 if command -v pgrep >/dev/null; then
 	(test -z "$(pgrep 'fzfvim-cleanup')" >/dev/null && fzfvim-cleanup &)
 else
