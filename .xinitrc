@@ -22,7 +22,7 @@ dwmblocks-fast &
 # Terminal
 $TERMINAL &
 #shellcheck disable=SC2164
-(cd /tmp; nohup "$HOME"/.local/bin/scripts/remaps & rm nohup.out &)
+(cd /tmp; nohup "$HOME"/.local/bin/scripts/remaps && rm nohup.out &)
 # GPU fan speed control
 sudo "$HOME"/c/nvspeed/nvspeed &
 # CPU fan speed control (managed by systemd)
@@ -41,7 +41,9 @@ dunst &
 # qbittorrent &
 { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
-fzfvim-cleanup &
+
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+([ -f "$HISTFILE" ] && uniq -u "$HISTFILE" > "$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)
 
 while :; do
 	ssh-agent dwm

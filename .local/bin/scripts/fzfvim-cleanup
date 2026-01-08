@@ -6,7 +6,7 @@ else
 	tmpdir=$__GLOBAL_FZFVIM__
 	if [ ! "$__GLOBAL_FZFVIM__" ] || ! cd "$tmpdir"; then
 		echo "$tmpdir dir not found"
-		return
+		exit 1
 	fi
 	pids=$(ps -o pid=)
 	for file in $(echo __*__*); do
