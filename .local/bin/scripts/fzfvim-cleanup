@@ -8,14 +8,11 @@ else
 		echo "$tmpdir dir not found"
 		return
 	fi
-	while :; do
-		pids=$(ps -o pid=)
-		for file in $(echo __*__*); do
-			case $pids in
-			*"${file##*__}"*) ;;
-			*) rm -f "$file" ;;
-			esac
-		done
-		sleep 900
+	pids=$(ps -o pid=)
+	for file in $(echo __*__*); do
+		case $pids in
+		*"${file##*__}"*) ;;
+		*) rm -f "$file" ;;
+		esac
 	done
 fi

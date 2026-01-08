@@ -63,12 +63,12 @@
 
 #define SLEEP_TIME (900)
 
-#define CHK(cond, string)                                     \
-	do {                                                  \
-		if (!(cond)) {                                \
+#define CHK(cond, string)                                                \
+	do {                                                             \
+		if (!(cond)) {                                           \
 			err(TMP_DIR_ENV "/err", string, strlen(string)); \
-			assert(0);                            \
-		}                                             \
+			assert(0);                                       \
+		}                                                        \
 	} while (0)
 
 char *
@@ -111,33 +111,30 @@ process(void)
 	CHK(chdir(tmp_dir) == 0, "");
 	char fname[S_LEN(FNAME_START) + NAMESZ + S_LEN(FNAME_END) + 1];
 	strcpy(fname, FNAME_START);
-	for (;;) {
-		DIR *dp = opendir(".");
-		assert(dp);
-		struct dirent *ep;
-		/* Loop over files in /tmp/__GLOBAL_FZFVIM__ */
-		while ((ep = readdir(dp))) {
-			if (unlikely(*(ep->d_name) == '.')
-			    || (unlikely(*(ep->d_name) != '_') && unlikely(*(ep->d_name + 1) != '_')))
-				continue;
-			const char *pid = strstr(ep->d_name + 2, "__");
-			if (unlikely(pid == NULL))
-				continue;
-			pid += 2;
-			strcpy(fname + S_LEN(FNAME_START), pid);
-			DEBUG_PRINT("pid:%s\n", pid);
-			DEBUG_PRINT("fname:%s\n", fname);
-			/* Check if file in /tmp/__GLOBAL_FZFVIM__ a process. */
-			if (access(fname, F_OK) == -1) {
-				/* It is not. Do cleanup. */
-				CHK(unlink(ep->d_name) == 0, "");
-				DEBUG_PRINT("fname_is_process:%s\n", fname);
-			}
+	DIR *dp = opendir(".");
+	assert(dp);
+	struct dirent *ep;
+	/* Loop over files in /tmp/__GLOBAL_FZFVIM__ */
+	while ((ep = readdir(dp))) {
+		if (unlikely(*(ep->d_name) == '.')
+		    || (unlikely(*(ep->d_name) != '_') && unlikely(*(ep->d_name + 1) != '_')))
+			continue;
+		const char *pid = strstr(ep->d_name + 2, "__");
+		if (unlikely(pid == NULL))
+			continue;
+		pid += 2;
+		strcpy(fname + S_LEN(FNAME_START), pid);
+		DEBUG_PRINT("pid:%s\n", pid);
+		DEBUG_PRINT("fname:%s\n", fname);
+		/* Check if file in /tmp/__GLOBAL_FZFVIM__ a process. */
+		if (access(fname, F_OK) == -1) {
+			/* It is not. Do cleanup. */
+			CHK(unlink(ep->d_name) == 0, "");
+			DEBUG_PRINT("fname_is_process:%s\n", fname);
 		}
-		CHK(closedir(dp) == 0, "");
-		DEBUG_PRINT("%s\n", "sleeping...");
-		sleep(SLEEP_TIME);
 	}
+	CHK(closedir(dp) == 0, "");
+	DEBUG_PRINT("%s\n", "sleeping...");
 }
 
 int
