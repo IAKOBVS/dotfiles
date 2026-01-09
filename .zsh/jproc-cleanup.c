@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. */
 
-#define DEBUG 1
+#define DEBUG 0
 
 #include <dirent.h>
 #include <unistd.h>
@@ -119,6 +119,7 @@ err(const char *tmpdir, const char *err_string, unsigned int err_string_len)
 	assert(chdir(tmpdir) == 0);
 	assert(write(STDERR_FILENO, buf, (size_t)(p - buf)) == (p - buf));
 	exit(EXIT_FAILURE);
+	(void)errorfile;
 }
 
 #define ISDIGIT(x) (((x) > '0' - 1) && (x) < '9' + 1)

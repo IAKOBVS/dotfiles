@@ -131,7 +131,7 @@ lfcd()
 	lf -last-dir-path="$dir" "$@" $JPROC_REDIRECT_STDERR && vim_sel
 	dir=$(cat $JPROC_LF_DIR)
 	# (/bin/rm -f $JPROC_LF_DIR $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR &)
-	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
+	[ -d "$dir" ] && cd "$dir" || return
 }
 
 # Open vim and cd to the last directory.

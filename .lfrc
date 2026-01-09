@@ -29,26 +29,27 @@ cmd quitclear ${{
 	# ([ -f $JPROC_VIM_PROG ] && /bin/rm -f $JPROC_VIM_PROG >/dev/null 2>/dev/null &)
 	# ([ -f $JPROC_VIM_ARG ] && /bin/rm -f $JPROC_VIM_ARG >/dev/null 2>/dev/null &)
 	# ([ -f $JPROC_CMD_LAST] && /bin/rm -f $JPROC_CMD_LAST >/dev/null 2>/dev/null &)
+	[ -f $JPROC_LF_DIR ] && echo "$PWD" >"$JPROC_LF_DIR"
 	lf -remote "send $id quit"
 }}
 
 cmd fzfvim ${{
-	echo $JPROC_FZF >$JPROC_VIM_PROG
-	echo $PWD >$JPROC_VIM_ARG
-	# (echo $JPROC_LFCD >$JPROC_CMD_LAST &)
-	# (echo $PWD >$JPROC_VIM_LAST_FILE &)
-	echo $JPROC_LFCD >$JPROC_CMD_LAST
-	echo $PWD >$JPROC_VIM_LAST_FILE
+	[ -f $JPROC_FZF ] && echo "$JPROC_FZF" >"$JPROC_VIM_PROG"
+	[ -f $JPROC_VIM_ARG ] && echo "$PWD" >"$JPROC_VIM_ARG"
+	# [ -f $JPROC_LFCD ] && (echo $JPROC_LFCD >$JPROC_CMD_LAST &)
+	# [ -f $JPROC_VIM_LAST_FILE ] && (echo $PWD >$JPROC_VIM_LAST_FILE &)
+	[ -f $JPROC_CMD_LAST ] && echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
+	[ -f $JPROC_VIM_LAST_FILE ] && echo "$PWD" >"$JPROC_VIM_LAST_FILE"
 	lf -remote "send $id quit"
 }}
 
 cmd grepvim ${{
-	echo $JPROC_GREPVIM >$JPROC_VIM_PROG
-	echo $PWD >$JPROC_VIM_ARG
-	# (echo $JPROC_LFCD >$JPROC_CMD_LAST &)
-	# (echo $PWD >$JPROC_VIM_LAST_FILE &)
-	echo $JPROC_LFCD >$JPROC_CMD_LAST
-	echo $PWD >$JPROC_VIM_LAST_FILE
+	[ -f $JPROC_GREPVIM ] && echo $JPROC_GREPVIM >$JPROC_VIM_PROG
+	[ -f $JPROC_VIM_ARG ] && echo $PWD >$JPROC_VIM_ARG
+	# [ -f $JPROC_CMD_LAST ] && (echo $JPROC_LFCD >$JPROC_CMD_LAST &)
+	# [ -f $JPROC_VIM_LAST_FILE ] && (echo $PWD >$JPROC_VIM_LAST_FILE &)
+	[ -f $JPROC_CMD_LAST ] && echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
+	[ -f $JPROC_VIM_LAST_FILE ] && echo "$PWD" >"$JPROC_VIM_LAST_FILE"
 	lf -remote "send $id quit"
 }}
 
