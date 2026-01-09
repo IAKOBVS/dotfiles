@@ -1,22 +1,34 @@
 nnoremap ;nv :source $HOME/.nvim/init.vim<CR>
 
-"  disable mosue
+"  disable mouse
 set mouse=
 " set mouse=a
 
 " autocd
 autocmd BufNewFile,BufEnter * silent! lcd %:p:h
 " autoupdate zsh aliases
-autocmd BufWritePost *zsh*alias* silent! !__update_vim_aliases__ &
-" autocmd BufWritePost *.shell_functions*,.z* silent! !__recompile_zsh_scripts__ &
+" autocmd BufWritePost *zsh*alias* silent! !update_vim_aliases &
+" autocmd BufWritePost *.shell_functions*,.z* silent! !recompile_zsh_scripts &
 " cleanup fzfvim temp variables
-silent autocmd BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | silent! execute '!/bin/rm -f $__VIM_PROG__ & /bin/rm -f $__VIM_ARG__ & echo %:p >$__VIM_LAST_FILE__ &' | endif
+silent autocmd BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | silent! execute '!/bin/rm -f $JPROC_VIM_PROG & /bin/rm -f $JPROC_VIM_ARG & echo %:p >$JPROC_VIM_FILE_LAST &' | endif
 
 " execute cmd after vim exits
 function ExitCmd(dir, prog, arg)
-	silent! execute '!echo '.a:dir.' >$__LF_DIR__; echo '.a:prog.'>$__VIM_PROG__; echo '.a:arg.' >$__VIM_ARG__'
+	silent! execute '!echo '.a:dir.' >$JPROC_LF_DIR; echo '.a:prog.'>$JPROC_VIM_PROG; echo '.a:arg.' >$JPROC_VIM_ARG'
 	xit
 endfunction
+
+nnoremap <space>l :call ExitCmd('%:p:h', '$JPROC_LFCD', '%:p')<CR>
+nnoremap <space>o :call ExitCmd('%:p:h', '$JPROC_LFCD', '%:p')<CR>
+
+nnoremap <C-f> :call ExitCmd('%:p:h', '$JPROC_FZF', '%:p:h')<CR>
+nnoremap <C-h> :call ExitCmd('$HOME', '$JPROC_FZF', '$HOME')<CR>
+
+nnoremap <space>f :call ExitCmd('%:p:h', '$JPROC_FZFLIVE', '%:p:h')<CR>
+nnoremap <space>h :call ExitCmd('$HOME', '$JPROC_FZFLIVEHOME', '$HOME')<CR>
+
+nnoremap <space>r :call ExitCmd('%:p:h', '$JPROC_GREPVIM', '%:p:h')<CR>
+nnoremap <space>c :call ExitCmd('%:p', '$JPROC_GREPVIM', '--max-depth=1')<CR>
 
 function SearchReplace(visual)
 	call inputsave()
@@ -37,18 +49,6 @@ nnoremap <space>s :call SearchReplace(0)<CR>
 
 nnoremap <leader>c :!tcc -run %:p<CR>
 nnoremap ;cc :!gcc -O2 %:p; ./a.out<CR>
-
-nnoremap <space>l :call ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
-nnoremap <space>o :call ExitCmd('%:p:h', '$__LFCD__', '%:p')<CR>
-
-nnoremap <C-f> :call ExitCmd('%:p:h', '$__FZF__', '%:p:h')<CR>
-nnoremap <C-h> :call ExitCmd('$HOME', '$__FZF__', '$HOME')<CR>
-
-nnoremap <space>f :call ExitCmd('%:p:h', '$__FZFLIVE__', '%:p:h')<CR>
-nnoremap <space>h :call ExitCmd('$HOME', '$__FZFLIVEHOME__', '$HOME')<CR>
-
-nnoremap <space>r :call ExitCmd('%:p:h', '$__GREPVIM__', '%:p:h')<CR>
-nnoremap <space>c :call ExitCmd('%:p', '$__GREPVIM__', '--max-depth=1')<CR>
 
 " open cwd in new terminal
 nnoremap <space>t :!exec $TERMINAL &<CR><CR>
@@ -85,7 +85,7 @@ nnoremap Q, F<xf>xh
 nnoremap q. q,
 nnoremap Q. Q,
 
-nnoremap q- lbdEi__<Esc>hpl
+nnoremap q- lbdEi<Esc>hpl
 nnoremap Q- F_xf_xh
 nnoremap q_ q-
 nnoremap Q_ Q-

@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. */
 
-#define DEBUG 0
+#define DEBUG 1
 
 #include <dirent.h>
 #include <unistd.h>
@@ -30,6 +30,18 @@
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <limits.h>
+
+#ifdef __GLIBC_PREREQ
+#	define JSTR_GLIBC_PREREQ(maj, min) __GLIBC_PREREQ(maj, min)
+#elif defined __GLIBC__
+#	define JSTR_GLIBC_PREREQ(maj, min) ((__GLIBC__ << 16) + __GLIBC_MINOR__ >= ((maj) << 16) + (min))
+#endif
+
+#if (defined __GLIBC__ && JSTR_GLIBC_PREREQ(2, 10) && (_POSIX_C_SOURCE - 0) >= 200809L) \
+|| defined _GNU_SOURCE
+#	define HAVE_STPCPY 1
+#endif
 
 #ifdef __glibc_has_builtin
 #	define JSTR_HAS_BUILTIN(name) __glibc_has_builtin(name)
@@ -54,21 +66,25 @@
 
 #define S_LEN(s) (sizeof(s) - (1))
 
-#define NAMESZ (sizeof(size_t) * 8)
+#define PIDLEN (sizeof(size_t) * 8)
 #define LINESZ 1024
 
-#define TMP_DIR_ENV "/tmp/__GLOBAL_FZFVIM__"
+#define TMPDIR_ENV  "JPROC_DIR"
 #define FNAME_START "/proc/"
 #define FNAME_END   "/status"
 
 #define SLEEP_TIME (900)
 
-#define CHK(cond, string)                                                \
-	do {                                                             \
-		if (!(cond)) {                                           \
-			err(TMP_DIR_ENV "/err", string, strlen(string)); \
-			assert(0);                                       \
-		}                                                        \
+#ifndef NAME_MAX
+#	define NAME_MAX 256
+#endif
+
+#define CHK(cond, string)                                    \
+	do {                                                 \
+		if (!(cond)) {                               \
+			err("/err", string, strlen(string)); \
+			assert(0);                           \
+		}                                            \
 	} while (0)
 
 char *
@@ -79,62 +95,100 @@ xstpcpy_len(char *dst, const char *src, size_t n)
 	return dst;
 }
 
+char *
+xstpcpy(char *d, const char *s)
+{
+#if HAVE_STPCPY
+	return stpcpy(d, s);
+#else
+	return xstpcpy_len(d, s, strlen(s));
+#endif
+}
+
 void
-err(const char *errorfile, const char *err_string, unsigned int err_string_len)
+err(const char *tmpdir, const char *err_string, unsigned int err_string_len)
 {
 	char *err = strerror(errno);
-	DEBUG_PRINT("%s:%s:%s\n", errorfile, err, err_string);
+	const char *errorfile = "stderr";
+	DEBUG_PRINT("%s:%s:%s:%s\n", tmpdir, errorfile, err, err_string);
 	unsigned int err_len = strlen(err);
 	char buf[4096];
 	char *p = xstpcpy_len(buf, err, err_len);
 	p = xstpcpy_len(p, err_string, err_string_len);
 	*p = '\0';
-	int fd = open(errorfile, O_APPEND | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	assert(fd != -1);
-	assert(write(fd, buf, (size_t)(p - buf)) == (p - buf));
-	fd = close(fd);
-	assert(fd != -1);
+	assert(chdir(tmpdir) == 0);
+	assert(write(STDERR_FILENO, buf, (size_t)(p - buf)) == (p - buf));
 	exit(EXIT_FAILURE);
+}
+
+#define ISDIGIT(x) (((x) > '0' - 1) && (x) < '9' + 1)
+
+char *
+aredigits_p(const char *s)
+{
+	for (; ISDIGIT(*s); ++s) {}
+	return *s == '\0' ? (char *)s : NULL;
+}
+
+int
+rm_rf(const char *dir, size_t dir_len)
+{
+	char path[PIDLEN * 8 + NAME_MAX];
+	/* Construct [pid] */
+	char *path_p = xstpcpy_len(path, dir, dir_len);
+	/* Construct [pid]/ */
+	path_p = xstpcpy_len(path_p, "/", S_LEN("/"));
+	DIR *dp = opendir(dir);
+	CHK(dp, "");
+	struct dirent *ep;
+	while ((ep = readdir(dp))) {
+		if (*(ep->d_name) == '.')
+			continue;
+		/* Construct [pid]/[file] */
+		strcpy(path_p, ep->d_name);
+		DEBUG_PRINT("path_to_file_remove:%s\n", path);
+		CHK(unlink(path) == 0, "");
+	}
+	CHK(closedir(dp) == 0, "");
+	return 0;
 }
 
 void
 process(void)
 {
-	DEBUG_PRINT("err_file:%s\n", TMP_DIR_ENV "/err");
-	/* Require tmp_dir */
-	const char *tmp_dir = TMP_DIR_ENV;
-	assert(tmp_dir);
+	/* Require tmpdir */
+	const char *tmpdir = getenv(TMPDIR_ENV);
+	assert(tmpdir);
 	/* Require /proc/ */
 	CHK(access(FNAME_START, F_OK) == 0, "");
-	DEBUG_PRINT("tmp_dir:%s\n", tmp_dir);
-	/* cd to tmp_dir and open directory */
-	CHK(chdir(tmp_dir) == 0, "");
-	char fname[S_LEN(FNAME_START) + NAMESZ + S_LEN(FNAME_END) + 1];
-	strcpy(fname, FNAME_START);
+	DEBUG_PRINT("tmpdir:%s\n", tmpdir);
+	/* cd to tmpdir and open directory */
+	CHK(chdir(tmpdir) == 0, "");
+	char fname[S_LEN(FNAME_START) + PIDLEN + S_LEN(FNAME_END) + 1];
+	char *fname_pid = xstpcpy_len(fname, FNAME_START, S_LEN(FNAME_START));
 	DIR *dp = opendir(".");
 	assert(dp);
 	struct dirent *ep;
-	/* Loop over files in /tmp/__GLOBAL_FZFVIM__ */
+	char *d_namep;
+	/* Loop over files in /tmp/$JPROC_DIR */
 	while ((ep = readdir(dp))) {
-		if (unlikely(*(ep->d_name) == '.')
-		    || (unlikely(*(ep->d_name) != '_') && unlikely(*(ep->d_name + 1) != '_')))
+		/* Only go over /tmp/$JPROC_DIR/[pid] */
+		d_namep = aredigits_p(ep->d_name);
+		if (d_namep == NULL)
 			continue;
-		const char *pid = strstr(ep->d_name + 2, "__");
-		if (unlikely(pid == NULL))
-			continue;
-		pid += 2;
-		strcpy(fname + S_LEN(FNAME_START), pid);
-		DEBUG_PRINT("pid:%s\n", pid);
+		xstpcpy_len(fname_pid, ep->d_name, (size_t)(d_namep - ep->d_name));
+		DEBUG_PRINT("pid:%s\n", ep->d_name);
 		DEBUG_PRINT("fname:%s\n", fname);
-		/* Check if file in /tmp/__GLOBAL_FZFVIM__ a process. */
+		/* Check /proc/[pid] if file in /tmp/JPROC_DIR/[pid] a process. */
 		if (access(fname, F_OK) == -1) {
-			/* It is not. Do cleanup. */
-			CHK(unlink(ep->d_name) == 0, "");
 			DEBUG_PRINT("fname_is_process:%s\n", fname);
+			rm_rf(ep->d_name, (size_t)(d_namep - ep->d_name));
+			DEBUG_PRINT("dir_to_remove:%s\n", ep->d_name);
+			/* If not, remove /tmp/JPROC_DIR/[pid]. */
+			CHK(rmdir(ep->d_name) == 0, "");
 		}
 	}
 	CHK(closedir(dp) == 0, "");
-	DEBUG_PRINT("%s\n", "sleeping...");
 }
 
 int

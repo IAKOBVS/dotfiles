@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+CFILE=jproc-cleanup.c
+BIN=jproc-cleanup-bin
+DST=$HOME/.local/bin/scripts
+mkdir -p $DST
+cc "$CFILE" -O2 -o "$BIN" -Wpedantic -pedantic -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wunused -Wwrite-strings
+echo "cc "$CFILE" -O2 -o "$BIN""
+cp -f "$BIN" $DST
+echo "cp -f "$BIN" $DST"

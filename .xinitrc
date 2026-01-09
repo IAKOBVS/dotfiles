@@ -22,7 +22,7 @@ dwmblocks-fast &
 # Terminal
 $TERMINAL &
 #shellcheck disable=SC2164
-(cd /tmp; nohup "$HOME"/.local/bin/scripts/remaps && rm nohup.out &)
+# (cd /tmp; nohup "$HOME"/.local/bin/scripts/remaps && rm nohup.out &)
 # GPU fan speed control
 sudo "$HOME"/c/nvspeed/nvspeed &
 # CPU fan speed control (managed by systemd)

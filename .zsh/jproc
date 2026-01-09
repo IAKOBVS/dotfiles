@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
 # SPDX-License-Identifier: MIT */
 # Copyright (c) 2026 James Tirta Halim <tirtajames45 at gmail dot com>
 # This file is part of IAKOBVS/dotfiles.
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,96 +34,104 @@
 # a temporary file, whose value will be read in the future to determine
 # which command to execute and directory into which to cd.
 #
-# The tmp files will be temporarily cleaned up by fzfvim-cleanup by checking
+# The tmp files will be temporarily cleaned up by jproc-cleanup by checking
 # if the PIDs, which are embedded into the file name, exist, removing the
 # tmp files whose PIDs do not.
 
 # Available CPU cores.
-__NPROC__=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
-export __NPROC__
+export JPROC_NPROC=$(nproc 2$JPROC_REDIRECT_STDOUT || sysctl -n hw.logicalcpu 2$JPROC_REDIRECT_STDOUT || getconf _NPROCESSORS_ONLN 2$JPROC_REDIRECT_STDOUT)
 
-# Temporary files here will be cleaned up periodically by fzfvim-cleanup.
-export __GLOBAL_FZFVIM__=/tmp/__GLOBAL_FZFVIM__
+# Default args for rg.
+JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M"
+
+# Temporary files here will be cleaned up periodically by jproc-cleanup.
+export JPROC_DIR=/tmp/jproc-private
+export JPROC_DIR_PID=$JPROC_DIR/$$
 
 # Template for tmp files
-export __VIM_PROG__=$__GLOBAL_FZFVIM__/__VIM_PROG__$$
-export __VIM_ARG__=$__GLOBAL_FZFVIM__/__VIM_ARG__$$
-export __LF_DIR__=$__GLOBAL_FZFVIM__/__LF_DIR__$$
-export __VIM_LAST_FILE__=$__GLOBAL_FZFVIM__/__VIM_LAST_FILE__$$
-export __LAST_CMD__=$__GLOBAL_FZFVIM__/__LAST_CMD__$$
-
+export JPROC_VIM_PROG=$JPROC_DIR_PID/vim_prog
+export JPROC_VIM_ARG=$JPROC_DIR_PID/vim_arg
+export JPROC_VIM_FILE_LAST=$JPROC_DIR_PID/vim_file_last
+export JPROC_LF_DIR=$JPROC_DIR_PID/lf_dir
+export JPROC_CMD_LAST=$JPROC_DIR_PID/cmd_last
 
 # TODO: maybe make a more human readable format like
 # /proc/ since performance doesn't matter here
 
 # Export the commands to support.
-export __VIMCD__=1
-export __LFCD__=2
-export __FZF__=3
-export __FZFLIVE__=4
-export __FZFLIVEHOME__=5
-export __FZFHOMELIVE__=5
-export __GREPVIM__=6
+export JPROC_VIMCD=1
+export JPROC_LFCD=2
+export JPROC_FZF=3
+export JPROC_FZFLIVE=4
+export JPROC_FZFLIVEHOME=5
+export JPROC_GREPVIM=6
 
-# Create tmp file.
-/bin/mkdir -p $__GLOBAL_FZFVIM__ 
-echo >$__VIM_PROG__ 
-echo >$__VIM_ARG__ 
-echo >$__LF_DIR__ 
-echo >$__VIM_LAST_FILE__ 
-echo >$__LAST_CMD__ 
+# Initialize tmp file.
+/bin/mkdir -p $JPROC_DIR
+/bin/mkdir -p $JPROC_DIR_PID
+echo >$JPROC_VIM_PROG
+echo >$JPROC_VIM_ARG
+echo >$JPROC_LF_DIR
+echo >$JPROC_VIM_FILE_LAST
+echo >$JPROC_CMD_LAST
+
+JPROC_REDIRECT_STDOUT=''
+JPROC_REDIRECT_STDERR=''
+# JPROC_REDIRECT_STDOUT='>/dev/null'
+# JPROC_REDIRECT_STDERR='2>/dev/null'
 
 touch()
 {
-	__file__=$(realpath "$(echo $@ | awk '{print $NF}')" 2>/dev/null)
+	file=$(realpath "$(echo $@ | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
 	/bin/touch "$@"
 }
 
 mkdir()
 {
-	__file__=$(realpath "$(echo $@ | awk '{print $NF}')" 2>/dev/null)
+	file=$(realpath "$(echo $@ | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
 	/bin/mkdir "$@"
 }
 
 # Select program to call based on the value in the tmp file.
-__vim_sel__()
+vim_sel()
 {
-	[ ! -f $__VIM_PROG__ ] 2>/dev/null && return
-	__prog__=$(<$__VIM_PROG__)
-	if [ ! -f $__VIM_ARG__ ] 2>/dev/null; then
-		__arg__=''
+	[ ! -f $JPROC_VIM_PROG ] $JPROC_REDIRECT_STDERR && return
+	prog=$(cat $JPROC_VIM_PROG)
+	if [ ! -f $JPROC_VIM_ARG ] $JPROC_REDIRECT_STDERR; then
+		arg=''
 	else
-		__arg__=$(<$__VIM_ARG__)
+		arg=$(cat $JPROC_VIM_ARG)
 	fi
-	/bin/rm -f $__VIM_ARG__ $__VIM_PROG__ >/dev/null 2>/dev/null
-	case $__prog__ in
-	"$__VIMCD__") vimcd "$__arg__" ;;
-	"$__LFCD__") lfcd "$__arg__" ;;
-	"$__FZF__") fzflive "$__arg__" ;;
-	"$__FZFLIVE__") fzflive "$__arg__" ;;
-	"$__FZFLIVEHOME__") fzflive "$__arg__" ;;
-	"$__GREPVIM__") grepvim "$__arg__" ;;
+	/bin/rm -f $JPROC_VIM_ARG $JPROC_VIM_PROG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
+	case $prog in
+	"$JPROC_VIMCD") vimcd "$arg" ;;
+	"$JPROC_LFCD") lfcd "$arg" ;;
+	"$JPROC_FZF") fzflive "$arg" ;;
+	"$JPROC_FZFLIVE") fzflive "$arg" ;;
+	"$JPROC_FZFLIVEHOME") fzflive "$arg" ;;
+	"$JPROC_GREPVIM") grepvim "$arg" ;;
 	esac
 }
 
 # Get the last command.
-__last_cmd__()
+last_cmd()
 {
-	[ -f $__LAST_CMD__ ] || return
-	case $(<$__LAST_CMD__) in
-	"$__VIMCD__") vimcd "$(<$__VIM_LAST_FILE__)" ;;
-	"$__LFCD__") lfcd "$(<$__VIM_LAST_FILE__)" ;;
+	[ -f $JPROC_CMD_LAST ] || return
+	case $(cat $JPROC_CMD_LAST) in
+	"$JPROC_VIMCD") vimcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
+	"$JPROC_LFCD") lfcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
 	esac
 }
 
 # Open lf and cd to the last directory.
 lfcd()
 {
-	echo >$__LAST_CMD__
-	lf -last-dir-path="$__LF_DIR__" "$@" 2>/dev/null && __vim_sel__
-	__dir__=$(<$__LF_DIR__)
-	# (/bin/rm -f $__LF_DIR__ >/dev/null 2>/dev/null &)
-	[ -d "$__dir__" ] && [ "$__dir__" != "$(pwd)" ] && cd "$__dir__" || return
+	echo >$JPROC_CMD_LAST
+	dir=$(cat $JPROC_LF_DIR)
+	lf -last-dir-path="$dir" "$@" $JPROC_REDIRECT_STDERR && vim_sel
+	dir=$(cat $JPROC_LF_DIR)
+	# (/bin/rm -f $JPROC_LF_DIR $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR &)
+	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
 }
 
 # Open vim and cd to the last directory.
@@ -136,7 +144,7 @@ vimcd()
 		;;
 	'-c')
 		file=$(realpath "$3")
-		test -f "$file" || return
+		[ -f "$file" ] || return
 		cd "$(dirname $file)" || return
 		cmd=$EDITOR
 		set -- -c "$2"
@@ -146,7 +154,7 @@ vimcd()
 		case $file in
 		*.mkv | *.mov | *.mp4 | \
 			*.png | *.jpg | *.jpeg)
-			echo $__LFCD__ >$__LAST_CMD__
+			echo $JPROC_LFCD >$JPROC_CMD_LAST
 			lfcd "$file"
 			;;
 		*)
@@ -171,15 +179,15 @@ vimcd()
 		esac
 		;;
 	esac
-	echo $__VIMCD__ >$__LAST_CMD__
+	echo $JPROC_VIMCD >$JPROC_CMD_LAST
 	$cmd "$file" "$@" &&
-		__vim_sel__
+		vim_sel
 }
 
 fzfbase()
 {
 	if [ ! "$1" ]; then
-		__last_cmd__
+		last_cmd
 	elif [ -f "$1" ]; then
 		vimcd "$1"
 	else
@@ -190,26 +198,23 @@ fzfbase()
 fzflive()
 {
 	# shellcheck disable=SC2164
-	cd "$1" 2>/dev/null
+	cd "$1" $JPROC_REDIRECT_STDERR
 	fzfbase "$(find . -type f ! -path '*.git*' ! -path '*.o' ! -path '*node_modules*' | fzf --preview "bat --style=numbers --color=always {1}")"
 }
-
-# Default args for rg.
-__RG_ARGS__="-j $__NPROC__ --color=always --no-heading -n --max-filesize 1M"
 
 # Grep and open vim.
 grepvim()
 {
 	# shellcheck disable=SC2164
-	cd "$1" 2>/dev/null
-	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $__RG_ARGS__ '' " \
-		--bind "change:reload:rg $__RG_ARGS__ {q} || true" \
+	cd "$1" $JPROC_REDIRECT_STDERR
+	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $JPROC_RG_ARGS '' " \
+		--bind "change:reload:rg $JPROC_RG_ARGS {q} || true" \
 		--ansi --disabled \
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	if [ "$grepped" ]; then
 		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
 	else
-		__last_cmd__
+		last_cmd
 	fi
 }
