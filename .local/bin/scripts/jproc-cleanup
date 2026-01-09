@@ -1,18 +1,23 @@
 #!/bin/sh
-if [ $(uname) = 'Linux' ]; then
-	# the C program from ~/.zsh/jproc-cleanup.c uses /proc/[pid] which depends on Linux
+
+set -eu
+
+if [ $(uname) = 'Linux' ] && 0; then
+	# ~/.zsh/jproc-cleanup.c uses /proc/[pid] which depends on Linux
 	jproc-cleanup-bin
 else
-	tmpdir=$__GLOBAL_FZFVIM__
-	if [ ! "$__GLOBAL_FZFVIM__" ] || ! cd "$tmpdir"; then
-		echo "$tmpdir dir not found"
+	if [ ! "$JPROC_DIR" ] || [ -z "$JPROC_DIR" ] || ! [ -d "$JPROC_DIR" ] || ! cd "$JPROC_DIR"; then
+		echo "$JPROC_DIR dir not found"
 		exit 1
 	fi
-	pids=$(ps -o pid=)
-	for file in $(echo __*__*); do
-		case $pids in
-		*"${file##*__}"*) ;;
-		*) rm -f "$file" ;;
-		esac
+	# open $JPROC_DIR/[pid]
+	for pid in $(echo [0-9]*); do
+		if [ -d $pid ]; then
+			# remove if inactive pid
+			if kill -0 "$pid" >/dev/null 2>/dev/null; then
+				rm $pid/[0-9A-Za-z]*
+				rmdir "$pid"
+			fi
+		fi
 	done
 fi
