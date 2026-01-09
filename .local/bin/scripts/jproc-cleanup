@@ -2,10 +2,18 @@
 
 set -eu
 
+# Do not execute if running
+if command -v pgrep >/dev/null 2>/dev/null; then
+	test -z "$(pgrep 'jproc-cleanup')" >/dev/null || exit
+else
+	test -z "$(ps -ef | awk '{ if ($8 ~ /jproc-cleanup/) {exist=1; exit; } } END { print exist; }')" $JPROC_REDIRECT_STDOUT || exit
+fi
+
+# C implementation uses procfs
 if [ $(uname) = 'Linux' ]; then
-	# ~/.zsh/jproc-cleanup.c uses /proc/[pid] which depends on Linux
 	jproc-cleanup-bin
 else
+	# Portable POSIX version
 	if [ ! "$JPROC_DIR" ] || [ -z "$JPROC_DIR" ] || ! [ -d "$JPROC_DIR" ] || ! cd "$JPROC_DIR"; then
 		echo "$JPROC_DIR dir not found"
 		exit 1

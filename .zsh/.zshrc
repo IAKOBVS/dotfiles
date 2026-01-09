@@ -3,12 +3,7 @@
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
 . $HOME/.zsh/jproc 2>/dev/null
 
-# cleanup unused tmp files
-if command -v pgrep >/dev/null 2>/dev/null; then
-	(test -z "$(pgrep 'jproc-cleanup')" >/dev/null && jproc-cleanup &)
-else
-	(test -z "$(ps -ef | awk '{ if ($8 ~ /jproc-cleanup/) {exist=1; exit; } } END { print exist; }')" $JPROC_REDIRECT_STDOUT && jproc-cleanup &)
-fi
+(jproc-cleanup &)
 
 getBranch() {
     git rev-parse --abbrev-ref HEAD 2> /dev/null
