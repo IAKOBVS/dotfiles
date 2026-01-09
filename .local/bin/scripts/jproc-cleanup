@@ -1,7 +1,7 @@
 #!/bin/sh
 if [ $(uname) = 'Linux' ]; then
-	# the C program from ~/.zsh/fzfvim-cleanup.c uses /proc/[pid] which depends on Linux
-	fzfvim-cleanup-bin
+	# the C program from ~/.zsh/jproc-cleanup.c uses /proc/[pid] which depends on Linux
+	jproc-cleanup-bin
 else
 	tmpdir=$__GLOBAL_FZFVIM__
 	if [ ! "$__GLOBAL_FZFVIM__" ] || ! cd "$tmpdir"; then
