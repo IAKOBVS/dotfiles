@@ -2,7 +2,7 @@
 
 set -eu
 
-if [ $(uname) = 'Linux' ] && 0; then
+if [ $(uname) = 'Linux' ]; then
 	# ~/.zsh/jproc-cleanup.c uses /proc/[pid] which depends on Linux
 	jproc-cleanup-bin
 else
