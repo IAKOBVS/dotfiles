@@ -39,7 +39,7 @@
 # tmp files whose PIDs do not.
 
 # Available CPU cores.
-export JPROC_NPROC=$(nproc 2$JPROC_REDIRECT_STDOUT || sysctl -n hw.logicalcpu 2$JPROC_REDIRECT_STDOUT || getconf _NPROCESSORS_ONLN 2$JPROC_REDIRECT_STDOUT)
+export JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 
 # Default args for rg.
 JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M"
