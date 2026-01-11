@@ -18,21 +18,21 @@ xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
 # Compositor for transparency
 picom -b --config "$HOME"/.config/picom.conf &
 # Statusbar
-dwmblocks-fast &
+nice -n 19 dwmblocks-fast &
 # Terminal
 $TERMINAL &
 #shellcheck disable=SC2164
 # (cd /tmp; nohup "$HOME"/.local/bin/scripts/remaps && rm nohup.out &)
 # GPU fan speed control
-sudo "$HOME"/c/nvspeed/nvspeed &
+sudo nice -n 19 "$HOME"/c/nvspeed/nvspeed &
 # CPU fan speed control (managed by systemd)
 # sudo fan2go &
 # Nvidia overclocking
 # sudo nvidia-smi -pl 150 &
 # Hide mouse cursor
-unclutter &
+nice -n 19 unclutter &
 # Notification
-dunst &
+nice -n 19 dunst &
 # Xresources
 # xrdb "$HOME"/.Xresources &
 
@@ -40,10 +40,11 @@ dunst &
 # jamesdsp -t &
 # qbittorrent &
 { bluetoothctl & sleep 2 && killall bluetoothctl; } &
-paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
+nice -n 19 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
+sudo renice -n 19 -p $(pgrep fan2go) &
 
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
-([ -f "$HISTFILE" ] && uniq -u "$HISTFILE" > "$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)
+([ -f "$HISTFILE" ] && nice -n 19 uniq -u "$HISTFILE" > "$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)
 
 while :; do
 	ssh-agent dwm
