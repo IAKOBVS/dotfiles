@@ -46,6 +46,9 @@ sudo renice -n 19 -p $(pgrep fan2go) &
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 ([ -f "$HISTFILE" ] && nice -n 19 uniq -u "$HISTFILE" > "$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)
 
+# Put this in Steam Launch Options
+# __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 %command% -sdlaudiodriver pulse
+
 while :; do
 	ssh-agent dwm
 done
