@@ -1,11 +1,3 @@
 #!/bin/sh
 APPID=570
-killall picom
-killall dwmblocks-fast
-killall dunst
-killall unclutter
 steam steam://run/"$APPID"
-picom -b &
-nice -n 19 dwmblocks-fast &
-nice -n 19 dunst &
-nice -n 19 unclutter &
