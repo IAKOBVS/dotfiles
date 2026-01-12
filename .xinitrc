@@ -39,7 +39,7 @@ nice -n 19 dunst &
 # checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 # jamesdsp -t &
 # qbittorrent &
-{ bluetoothctl & sleep 2 && killall bluetoothctl; } &
+# { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 nice -n 19 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
 sudo renice -n 19 -p $(pgrep fan2go) &
 

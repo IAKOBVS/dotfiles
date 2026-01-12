@@ -1,1 +1,284 @@
-/etc/fan2go/fan2go.yaml
+# The path of the database file
+dbPath: "/etc/fan2go/fan2go.db"
+
+# Allow the fan initialization sequence to run in parallel for all configured fans
+runFanInitializationInParallel: true
+# The maximum difference between consecutive RPM measurements to
+# consider a fan speed "settled"
+# Note: This parameter is only used for initial analysis of fan curve
+#       and has no effect during normal operation
+maxRpmDiffForSettledFan: 10
+
+# The rate to poll temperature sensors at
+tempSensorPollingRate: 200ms
+# The number of temp sensor values to keep in a rolling window array
+tempRollingWindowSize: 10
+
+# The rate to poll fan RPM input sensors at
+rpmPollingRate: 1s
+# The number of rpm sensor values to keep in a rolling window array
+rpmRollingWindowSize: 10
+
+# The rate to update fan speed targets at
+controllerAdjustmentTickRate: 200ms
+
+# A list of fans to control
+fans:
+  - id: cpu
+    hwmon:
+      platform: nct6791-isa-0
+      index: 1
+    neverStop: true
+    curve: cpu_curve_lowest
+    minPwm: 30
+    startPwm: 30
+    maxPwm: 255
+
+  - id: not_cpu
+    hwmon:
+      platform: nct6791-isa-0
+      index: 2
+    neverStop: true
+    curve: case_max_curve_lower
+    minPwm: 30
+    startPwm: 30
+    maxPwm: 255
+
+  - id: bottom_n_exhaust
+    hwmon:
+      platform: nct6791-isa-0
+      index: 4
+    neverStop: true
+    curve: case_max_curve_lower
+    minPwm: 30
+    startPwm: 30
+    maxPwm: 255
+
+  - id: top
+    hwmon:
+      platform: nct6791-isa-0
+      index: 5
+    neverStop: true
+    curve: case_max_curve_lower
+    minPwm: 30
+    startPwm: 30
+    maxPwm: 255
+
+# A list of sensors to monitor
+sensors:
+  # A user defined ID, which is used to reference
+  # a sensor in a curve configuration (see below)
+  - id: cpu_package
+    # The type of sensor configuration
+    hwmon:
+      # The controller platform as displayed by `fan2go detect`, f.ex.:
+      # "nouveau", "coretemp" or "it8620" etc.
+      platform: coretemp-isa-0
+      # The index of this sensor as displayed by `fan2go detect`
+      index: 1
+
+  - id: cpu_core0
+    hwmon:
+      platform: coretemp-isa-0
+      index: 2
+
+  - id: cpu_core1
+    hwmon:
+      platform: coretemp-isa-0
+      index: 3
+
+  - id: cpu_core2
+    hwmon:
+      platform: coretemp-isa-0
+      index: 4
+
+  - id: cpu_core3
+    hwmon:
+      platform: coretemp-isa-0
+      index: 5
+
+  - id: cpu_core4
+    hwmon:
+      platform: coretemp-isa-0
+      index: 6
+
+  - id: cpu_core5
+    hwmon:
+      platform: coretemp-isa-0
+      index: 7
+
+  # - id: mainboard
+  #   hwmon:
+  #     platform: it8620
+  #     index: 3
+
+  # - id: sata_ssd
+  #   hwmon:
+  #     platform: acpitz
+  #     index: 1
+
+# A list of control curves which can be utilized by fans
+# or other curves
+curves:
+  # A user defined ID, which is used to reference
+  # a curve in a fan configuration (see above)
+  - id: cpu_curve
+    # The type of curve configuration, one of: linear | function
+    linear:
+      # The sensor ID to use as a temperature input
+      sensor: cpu_package
+      # Steps to define a section-wise defined speed curve function
+      steps:
+        # Sensor value -> Speed (0-255)
+        - 40: 0
+        - 50: 100
+        - 60: 178
+        - 75: 255
+
+  - id: cpu_curve_lower
+    linear:
+      sensor: cpu_package
+      steps:
+        - 45: 0
+        - 60: 90
+        - 70: 178
+        - 80: 255
+
+  - id: cpu_curve_lowest
+    linear:
+      sensor: cpu_package
+      steps:
+        - 45: 0
+        - 60: 70
+        - 70: 158
+        - 80: 255
+
+#   - id: gpu_curve
+#     linear:
+#       sensor: gpu_package
+#       steps:
+#         - 40: 0
+#         - 50: 100
+#         - 60: 178
+#         - 75: 255
+
+  # - id: gpu_curve_lower
+  #   linear:
+  #     sensor: gpu_package
+  #     steps:
+  #       - 50: 0
+  #       - 60: 100
+  #       - 70: 178
+  #       - 80: 255
+
+  - id: cpu_core0_curve
+    linear:
+      sensor: cpu_core0
+      steps:
+        - 40: 0
+        - 50: 100
+        - 60: 110
+        - 75: 255
+
+  - id: cpu_core1_curve
+    linear:
+      sensor: cpu_core1
+      steps:
+        - 40: 0
+        - 50: 100
+        - 60: 110
+        - 75: 255
+
+  - id: cpu_core2_curve
+    linear:
+      sensor: cpu_core2
+      steps:
+        - 40: 0
+        - 50: 100
+        - 60: 110
+        - 75: 255
+
+  - id: cpu_core3_curve
+    linear:
+      sensor: cpu_core3
+      steps:
+        - 40: 0
+        - 50: 100
+        - 60: 110
+        - 75: 255
+
+  - id: cpu_core4_curve
+    linear:
+      sensor: cpu_core4
+      steps:
+        - 40: 0
+        - 50: 100
+        - 60: 110
+        - 75: 255
+
+  - id: cpu_core5_curve
+    linear:
+      sensor: cpu_core5
+      steps:
+        - 40: 0
+        - 50: 100
+        - 60: 110
+        - 75: 255
+
+# - id: mainboard_curve
+#   linear:
+#     sensor: mainboard
+#     # Sensor input value at which the curve is at minimum speed
+#     min: 40
+#     # Sensor input value at which the curve is at maximum speed
+#     max: 80
+
+# - id: ssd_curve
+#   linear:
+#     sensor: sata_ssd
+#     min: 40
+#     max: 70
+
+  - id: case_max_curve
+    function:
+      # Type of aggregation function to use, on of: minimum | maximum | average
+      type: maximum
+      # A list of curve IDs to use
+      curves:
+        - cpu_curve
+        # - gpu_curve
+        # - mainboard_curve
+        # - ssd_curve
+
+  - id: case_max_curve_lower
+    function:
+      type: maximum
+      curves:
+        - cpu_curve_lowest
+        # - gpu_curve_lower
+
+  - id: core_case_max_curve
+    function:
+      type: maximum
+      curves:
+        - cpu_core0_curve
+        - cpu_core1_curve
+        - cpu_core2_curve
+        - cpu_core3_curve
+        - cpu_core4_curve
+        - cpu_core5_curve
+        # - gpu_curve
+
+statistics:
+  # Whether to enable the prometheus exporter or not
+  enabled: false
+  # The port to expose the exporter on
+  port: 9000
+
+api:
+  # Whether to enable the API or not
+  enabled: false
+  # The host to listen for connections
+  host: localhost
+  # The port to listen for connections
+  port: 9001
