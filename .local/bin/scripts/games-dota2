@@ -1,0 +1,5 @@
+#!/bin/sh
+APPID=570
+killall dwmblocks-fast
+steam steam://run/"$APPID"
+dwmblocks-fast
