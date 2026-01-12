@@ -1,5 +1,7 @@
 #!/bin/sh
 APPID=570
+killall picom
 killall dwmblocks-fast
 steam steam://run/"$APPID"
-dwmblocks-fast
+picom -b &
+dwmblocks-fast &
