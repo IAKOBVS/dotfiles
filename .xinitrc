@@ -42,7 +42,7 @@ nice -n 19 dunst &
 # qbittorrent &
 # { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 nice -n 19 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
-sudo renice -n 19 -p $(pgrep fan2go) &
+sudo renice 19 -p $(pgrep fan2go) &
 
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 ([ -f "$HISTFILE" ] && nice -n 19 uniq -u "$HISTFILE" > "$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)

@@ -1,5 +1,68 @@
 #!/bin/sh
-# steam_path="$HOME/.local/share/Steam/steamapps"
-steam_path="/opt/Steam/steamapps"
-gameid=$(awk -F '"' '{ if ($0 ~ "appid") id = $4; else if ($0 ~ "name") printf("%s\t%s\n", $4, id); }' "$steam_path"/*.acf | dmenu -l 30 | cut -f2)
-[ "$gameid" ] && killall picom && steam steam://rungameid/"$gameid"
+
+# Copyright (c) 2023-2026 James Tirta Halim <tirtajames45 at gmail dot com>
+# This file is part of IAKOBVS/dotfiles.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE. */
+
+# Run a steam game with dmenu
+
+gameid=$(
+	# Get the names and gameids from the .acf file.
+	# format of acf file:
+	# "key"	"value"
+	awk '
+	{
+		# remove quotes
+		gsub(/"/, "");
+		# remove spaces
+		gsub(/ {1,}/, " ");
+		gsub(/ /, "-");
+		# Parse appid.
+		if (/appid/) {
+			id = $2;
+		# Parse game name.
+		} else if (/name/ && !/Proton/ && !/Steam-Linux-Runtime/) {
+			name = $2;
+			name = tolower(name);
+			printf("%s\t%s\n", name, id);
+		}
+	}' /opt/Steam/steamapps/*.acf $HOME/.local/share/Steam/steamapps/*.acf |
+		# Prettify the columns.
+		column -t |
+		# Open dmenu.
+		dmenu -l 30 |
+		# Output the gameid.
+		awk '{print $NF}'
+)
+
+# Do nothing if no game is selected.
+[ -n "$gameid" ] || exit
+
+# Set the nice of steamwebhelper to 19,
+# so the CPU can focus on the game.
+gaming-kill
+steam steam://rungameid/"$gameid" &
+
+# Set the nice of steamwebhelper to 19,
+# so the CPU can focus on the game.
+sleep 5
+for pids in $(pgrep steamwebhelper); do
+	sudo renice 19 -p "$pids"
+done
