@@ -1,13 +1,11 @@
 #!/bin/sh
 
-set -eu
+set -u
 
-# Do not execute if running
-if command -v pgrep >/dev/null 2>/dev/null; then
-	test -z "$(pgrep 'jproc-cleanup')" >/dev/null || exit
-else
-	test -z "$(ps -ef | awk '{ if ($8 ~ /jproc-cleanup/) {exist=1; exit; } } END { print exist; }')" $JPROC_REDIRECT_STDOUT || exit
-fi
+CMD='jproc-cleanup'
+
+# Do not execute if already running
+ps -e -o comm | grep -qF "$CMD" && exit
 
 # C implementation uses procfs
 if [ $(uname) = 'Linux' ]; then
@@ -15,17 +13,15 @@ if [ $(uname) = 'Linux' ]; then
 else
 	# Portable POSIX version
 	if [ ! "$JPROC_DIR" ] || [ -z "$JPROC_DIR" ] || ! [ -d "$JPROC_DIR" ] || ! cd "$JPROC_DIR"; then
-		echo "$JPROC_DIR dir not found"
+		echo "$CMD:$JPROC_DIR dir not found."
 		exit 1
 	fi
 	# open $JPROC_DIR/[pid]
 	for pid in $(echo [0-9]*); do
-		if [ -d $pid ]; then
-			# remove if inactive pid
-			if kill -0 "$pid" >/dev/null 2>/dev/null; then
-				rm $pid/[0-9A-Za-z]*
-				rmdir "$pid"
-			fi
+		# remove if inactive pid
+		if [ -d $pid ] && kill -0 "$pid" >/dev/null 2>/dev/null; then
+			rm $pid/[0-9A-Za-z]*
+			rmdir "$pid"
 		fi
 	done
 fi

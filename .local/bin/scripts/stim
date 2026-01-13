@@ -1,5 +1,5 @@
 #!/bin/sh
 # steam_path="$HOME/.local/share/Steam/steamapps"
 steam_path="/opt/Steam/steamapps"
-gameid=$(awk -F '"' '{ if ($0 ~ "appid") id = $4; else if ($0 ~ "name") printf("%s\t%s\n", $4, id); }' "$steam_path"/*.acf | fzf -d'\t' -n 1 | cut -f2)
+gameid=$(awk -F '"' '{ if ($0 ~ "appid") id = $4; else if ($0 ~ "name") printf("%s\t%s\n", $4, id); }' "$steam_path"/*.acf | dmenu -l 30 | cut -f2)
 [ "$gameid" ] && killall picom && steam steam://rungameid/"$gameid"

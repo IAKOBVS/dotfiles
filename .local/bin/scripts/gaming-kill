@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -u
+
+killall picom
+killall dunst
+killall unclutter
+killall dwmblocks-fast

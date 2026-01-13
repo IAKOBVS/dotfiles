@@ -3,7 +3,7 @@
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
 . $HOME/.zsh/jproc 2>/dev/null
 
-(jproc-cleanup &)
+(nice -n 19 jproc-cleanup &)
 
 getBranch() {
     git rev-parse --abbrev-ref HEAD 2> /dev/null
@@ -69,7 +69,7 @@ bindkey -s '^f' 'fzflive $PWD\n'
 # bindkey -s '^e' 'fzfexact\n'
 bindkey -s '^o' 'lfcd\n'
 bindkey -s '^r' 'grepvim\n'
-(pgrep xcape > /dev/null || remaps > /dev/null &)
+(ps -e -o comm | grep -qF "$CMD" || remaps > /dev/null &)
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=0
 

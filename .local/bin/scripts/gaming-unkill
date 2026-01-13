@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -u
+
+CMD='picom'
+
+# Do not execute if picom already running
+ps -e -o comm | grep -qF "$CMD" && exit
+
+gaming-kill
+picom -b &
+nice -n 19 dunst &
+nice -n 19 unclutter &
+nice -n 19 dwmblocks-fast &
