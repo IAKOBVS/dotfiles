@@ -41,7 +41,19 @@
 # Available CPU cores.
 JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 # Default args for rg.
-JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M"
+JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M \
+		-g '!*.git*' \
+		-g '!*.o' \
+		-g '!*.png' \
+		-g '!*.jpg' \
+		-g '!*.jpeg' \
+		-g '!*.mov' \
+		-g '!*.virtualenv*' \
+		-g '!*.o' \
+		-g '!*.cargo*' \
+		-g '!*.pass*' \
+		-g '!*.key*' \
+		-g '!*node_modules*'"
 
 # Temporary files here will be cleaned up periodically by jproc-cleanup.
 export JPROC_DIR=/tmp/jproc-private
@@ -198,7 +210,20 @@ fzflive()
 {
 	# shellcheck disable=SC2164
 	cd "$1" $JPROC_REDIRECT_STDERR
-	fzfbase "$(find . -type f ! -path '*.git*' ! -path '*.o' ! -path '*node_modules*' | fzf --preview "bat --style=numbers --color=always {1}")"
+	fzfbase "$(find . -type f \
+		! -path '*.git*' \
+		! -path '*.o' \
+		! -path '*.png' \
+		! -path '*.jpg' \
+		! -path '*.jpeg' \
+		! -path '*.mov' \
+		! -path '*.virtualenv*' \
+		! -path '*.o' \
+		! -path '*.cargo*' \
+		! -path '*.pass*' \
+		! -path '*.key*' \
+		! -path '*node_modules*' |
+		fzf --preview "bat --style=numbers --color=always {1}")"
 }
 
 # Grep and open vim.

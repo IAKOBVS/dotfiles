@@ -9,15 +9,16 @@ export GTK_THEME=Adwaita:dark
 export QT_STYLE_OVERRIDE=adwaita-dark
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export FZF_DEFAULT_COMMAND="find \
-		! -path '*png' \
-		! -path '*jpg' \
-		! -path '*jpeg' \
-		! -path '*mov' \
-		! -path '*vscode*' \
-		! -path '*git*'\
-		! -path '*.virtualenv*'\
-		! -path '*.rev*'\
-		! -path '*.o'\
-		! -path '*.cargo*'\
-		! -path '*.pass*'\
+		! -path '*.git*' \
+		! -path '*.o' \
+		! -path '*.png' \
+		! -path '*.jpg' \
+		! -path '*.jpeg' \
+		! -path '*.mov' \
+		! -path '*.virtualenv*' \
+		! -path '*.o' \
+		! -path '*.cargo*' \
+		! -path '*.pass*' \
+		! -path '*.key*' \
+		! -path '*node_modules*' \
 		! -path '*.key*'"

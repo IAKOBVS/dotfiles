@@ -14,7 +14,8 @@ fi
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 # Set wallpaper
-xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
+# xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
+feh --bg-scale /home/james/.local/share/wallpaper/bg.png &
 # Compositor for transparency
 picom -b &
 # Statusbar
@@ -48,6 +49,9 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Put this in Steam Launch Options
 # __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 %command% -sdlaudiodriver pulse
+
+# Set sxiv image background
+xrdb .Xresources &
 
 while :; do
 	ssh-agent dwm
