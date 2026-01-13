@@ -1,2 +1,2 @@
 #!/bin/sh
-mpv "https://www.youtube.com/playlist?list=PL2Fh_KNlXwBGCipNEZgan__rIP3Lt8GAZ" --no-video --shuffle --really-quiet --loop-playlist=inf
+mpv "https://www.youtube.com/playlist?list=PL2Fh_KNlXwBGCipNEZgan__rIP3Lt8GAZ" --no-video --shuffle --really-quiet --loop-playlist=inf --volume=50
