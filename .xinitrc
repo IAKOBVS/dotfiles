@@ -54,5 +54,5 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 xrdb .Xresources &
 
 while :; do
-	ssh-agent dwm
+	dwm
 done
