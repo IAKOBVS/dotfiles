@@ -16,7 +16,7 @@ export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 # Set wallpaper
 xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
 # Compositor for transparency
-picom -b --config "$HOME"/.config/picom.conf &
+picom -b &
 # Statusbar
 nice -n 19 dwmblocks-fast &
 # Terminal

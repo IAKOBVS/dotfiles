@@ -1,5 +1,5 @@
 #!/bin/sh
-if ps -A | grep -F obs -q; then
+if ps -e -o comm | grep -qF obs; then
 	killall picom
 	obs &
 	sleep 1 && picom -b
