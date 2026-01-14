@@ -80,3 +80,7 @@ cd ..
 # Autosuggestions
 # pacman -S zsh
 # pacman -S zsh-autosuggestions
+
+# git
+# use personal access token
+# git config --global credential.helper store
