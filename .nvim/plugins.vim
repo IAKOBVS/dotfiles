@@ -16,6 +16,33 @@ if 0
 endif
 call plug#end()
 
+" coc.nvim Extensions
+" Use ":CocInstall <coc-extension>"
+
+" coc-clangd
+" coc-vimlsp
+" coc-snippets
+" coc-pairs
+" coc-lists
+" coc-json
+" coc-highlight
+" coc-eslint
+" coc-diagnostic
+" coc-vimtex
+" coc-tsserver
+" coc-sh
+" coc-perl
+" coc-java
+
+" Unused
+" coc-flutter
+" coc-flutter-tools
+" coc-lua
+" coc-prettier
+" coc-rust-analyzer
+" coc-omnisharp
+" coc-pylsp
+
 let g:LargeFile = 10 
 
 vnoremap ff :Tabularize /\\$<CR>
