@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -eu
+
+# Set variables
+SRC_DIR=$HOME/.local/share/src
+LF_DIR=$HOME/.config/lf
+REPOS_LINK='https://github.com/iakobvs'
+
+# Mkdir SRC_DIR
+mkdir -p $HOME/.local
+mkdir -p $HOME/.local/share
+mkdir -p $HOME/.local/share/src
+
+# Symlink configs
+mkdir -p "$LF_CONFIG"
+ln -s $HOME/.lfrc "$LF_DIR/lfrc"
+ln -s $HOME/.lfrc-icons "$LF_DIR/icons"
+
+# Clone my repos
+cd "$SRC_DIR"
+git clone "$REPOS_LINK/dwm"
+git clone "$REPOS_LINK/dwmblocks-fast"
+git clone "$REPOS_LINK/st"
+git clone "$REPOS_LINK/lf"
