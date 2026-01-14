@@ -1,0 +1,5 @@
+#!/bin/sh
+LF_CONFIG=$HOME/.config/lf
+mkdir -p "$LF_CONFIG"
+ln -s $HOME/.lfrc "$LF_CONFIG/lfrc"
+ln -s $HOME/.lfrc-icons "$LF_CONFIG/icons"
