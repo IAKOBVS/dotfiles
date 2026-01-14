@@ -1,5 +1,6 @@
 #!/bin/sh
 rm() { echo $@; /bin/rm -vI $@; }
+fu() { git commit -a -m "$1" && git push origin; }
 alias \
 mv='mv -iv' \
 fin='. fin' \
@@ -9,7 +10,6 @@ gw='rgrep' \
 rs='res4thum' \
 z='zathura' \
 g='git' \
-fu='git commit -a -m "$1" && git push origin' \
 zr='zaread' \
 pv='pavucontrol' \
 i='sxiv' \

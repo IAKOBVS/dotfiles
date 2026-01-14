@@ -10,6 +10,6 @@ xset r rate 300 50
 setxkbmap -option caps:swapescape
 # # When caps lock is pressed only once, treat it as escape.
 killall xcape 2>/dev/null
-nice -n 19 xcape -e 'Super_L=Escape'
+nice -n 19 xcape -e 'Super_L=Escape' &
 # # Turn off caps lock if on since there is no longer a key for it.
 xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock

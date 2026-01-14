@@ -22,8 +22,8 @@ picom -b &
 nice -n 19 dwmblocks-fast &
 # Terminal
 $TERMINAL &
-#shellcheck disable=SC2164
-# (cd /tmp; nohup "$HOME"/.local/bin/scripts/remaps && rm nohup.out &)
+# change esc with caps lock
+remaps
 # GPU fan speed control
 sudo nice -n 19 "$HOME"/c/nvspeed/nvspeed &
 # CPU fan speed control (managed by systemd)
