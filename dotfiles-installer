@@ -2,6 +2,8 @@
 
 set -eu
 
+SYSTEM_INSTALL_CMD='pacman -S'
+
 # Set variables
 SRC_DIR=$HOME/.local/share/src
 LF_DIR=$HOME/.config/lf
@@ -53,6 +55,7 @@ cd ..
 
 # lf
 cd lf
+$SYSTEM_INSTALL_CMD go
 CGO_ENABLED=0 go install -ldflags="-s -w"
 cd ..
 
