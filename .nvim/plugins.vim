@@ -18,6 +18,7 @@ call plug#end()
 
 " coc.nvim Extensions
 " Use ":CocInstall <coc-extension>"
+" pacman -S nodejs npm
 
 " coc-clangd
 " coc-vimlsp
