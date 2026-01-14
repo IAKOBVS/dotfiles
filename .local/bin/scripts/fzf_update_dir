@@ -1,5 +1,5 @@
 #!/bin/sh
-[ "$1" ] || return
+[ "$1" ] || exit
 set -- "$(realpath "$1")"
 case $1 in
 /home/*) grep -q -F "$1" /tmp/__fzfhome__ || echo "$1" >>/tmp/__fzfhome__ & ;;

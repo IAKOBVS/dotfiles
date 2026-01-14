@@ -71,5 +71,12 @@ $SYSTEM_INSTALL_CMD go
 CGO_ENABLED=0 go install -ldflags="-s -w"
 cd ..
 
+# image previews
+# yay -S ctpv bat poppler source-highlight ueberzug
+# image viewer
+# sxiv
+
+
 # Autosuggestions
+# pacman -S zsh
 # pacman -S zsh-autosuggestions

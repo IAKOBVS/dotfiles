@@ -22,7 +22,6 @@ setopt interactive_comments
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
-mkdir -p "$HISTFILE" 2>/dev/null
 
 # Basic auto/tab complete:
 autoload -U compinit

@@ -5,7 +5,7 @@ case $1 in
 *)
 	echo $usage
 	echo 'Not an image file!'
-	return 1
+	exit 1
 	;;
 esac
 scale=$2
@@ -36,7 +36,7 @@ elif [ $2 -le 64 ]; then
 else
 	echo $usage
 	echo 'Illegal number used! Use 1, 2, 3, 4, 16, 32, or 64 instead.'
-	return 1
+	exit 1
 fi
 scale=4
 upscaler=realesrgan-x4plus-anime

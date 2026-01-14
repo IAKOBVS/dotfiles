@@ -3,7 +3,7 @@ case $1 in
 *.mp4 | *.mov | *.mkv) ;;
 *)
 	echo 'Not a .mp4, .mov, or .mkv file!'
-	return 1
+	exit 1
 	;;
 esac
 out=${1%.*}
