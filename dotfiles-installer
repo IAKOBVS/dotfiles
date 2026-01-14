@@ -29,3 +29,6 @@ cd dwm && make && sudo make install && cd ..
 cd dwmblocks-fast && make && sudo make install && cd ..
 cd st && make && sudo make install && cd ..
 cd lf && CGO_ENABLED=0 go install -ldflags="-s -w" && cd ..
+
+# Autosuggestions
+# pacman -S zsh-autosuggestions
