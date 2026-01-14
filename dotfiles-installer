@@ -5,6 +5,9 @@ set -eu
 # Set variables
 SRC_DIR=$HOME/.local/share/src
 LF_DIR=$HOME/.config/lf
+VIM_DIR=$HOME
+NVIM_DIR=$HOME/.config/nvim
+NVIM_NEW_DIR=$HOME/.nvim
 REPOS_LINK='https://github.com/iakobvs'
 
 # Mkdir SRC_DIR
@@ -16,6 +19,11 @@ mkdir -p $HOME/.local/share/src
 mkdir -p "$LF_DIR"
 ln -s $HOME/.lfrc "$LF_DIR/lfrc"
 ln -s $HOME/.lfrc-icons "$LF_DIR/icons"
+
+# Add nvim cofiguration
+echo "source $NVIM_NEW_DIR/init.vim" >> "$NVIM_DIR/init.vim"
+# Add vim configuration
+echo "source $NVIM_NEW_DIR/init.vim" >> "$VIM_DIR/.vimrc"
 
 # Clone my repos
 cd "$SRC_DIR"
