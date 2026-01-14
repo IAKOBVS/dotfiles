@@ -36,6 +36,9 @@ echo "source $NVIM_NEW_DIR/init.vim" >> "$VIM_DIR/.vimrc"
 # coc.nvim: https://github.com/neoclide/coc.nvim
 # $SYSTEM_INSTALL_CMD npm nodejs
 
+# For rebinding esc with caps
+# pacman -S xorg-xset xcape
+
 # Clone my repos
 cd "$SRC_DIR"
 git clone "$REPOS_LINK/dwm"
