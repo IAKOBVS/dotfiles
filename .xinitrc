@@ -54,6 +54,9 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 # Set sxiv image background
 xrdb .Xresources &
 
+# turn off webcam
+sudo modprobe -r uvcvideo
+
 while :; do
 	dwm
 done

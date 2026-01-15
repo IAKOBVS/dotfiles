@@ -1,0 +1,4 @@
+#!/bin/sh
+sudo modprobe -r uvcvideo
+gst-play-1.0 /usr/share/sounds/freedesktop/stereo/device-removed.oga
+notify-send "📷 webcam is turned off! 🔴"

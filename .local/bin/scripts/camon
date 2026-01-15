@@ -1,0 +1,4 @@
+#!/bin/sh
+sudo modprobe uvcvideo
+gst-play-1.0 /usr/share/sounds/freedesktop/stereo/device-added.oga
+notify-send "📸 webcam is turned on! 🟢"
