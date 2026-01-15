@@ -2,7 +2,7 @@
 
 set -u
 
-killall picom
+killall "$COMPOSITOR"
 killall dunst
 killall unclutter
 killall dwmblocks-fast

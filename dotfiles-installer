@@ -72,7 +72,7 @@ CGO_ENABLED=0 go install -ldflags="-s -w"
 cd ..
 
 # image previews
-# yay -S ctpv bat poppler source-highlight ueberzug
+# yay -S ctpv bat poppler source-highlight ueberzugpp
 # image viewer
 # sxiv
 

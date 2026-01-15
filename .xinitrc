@@ -12,12 +12,13 @@ fi
 
 # Don't remove steam cache
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+COMPOSITOR=fastcompmgr
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
 feh --bg-scale /home/james/.local/share/wallpaper/bg.png &
 # Compositor for transparency
-picom -b &
+$COMPOSITOR &
 # Statusbar
 nice -n 19 dwmblocks-fast &
 # Terminal

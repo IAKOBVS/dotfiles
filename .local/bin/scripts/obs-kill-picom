@@ -1,6 +1,6 @@
 #!/bin/sh
 if ps -e -o comm | grep -qF obs; then
-	killall picom
+	killall $COMPOSITOR
 	obs &
-	sleep 1 && picom -b
+	(sleep 1 && $COMPOSITOR &)
 fi
