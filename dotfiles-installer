@@ -44,6 +44,7 @@ cd "$SRC_DIR"
 git clone "$REPOS_LINK/dwm"
 git clone "$REPOS_LINK/dwmblocks-fast"
 git clone "$REPOS_LINK/st"
+# The latest lf breaks current lfcd scripts. This is using the r30.1 version.
 git clone "$REPOS_LINK/lf"
 
 # Install programs
