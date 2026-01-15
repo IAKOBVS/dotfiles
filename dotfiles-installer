@@ -71,7 +71,7 @@ $SYSTEM_INSTALL_CMD go
 CGO_ENABLED=0 go install -ldflags="-s -w"
 cd ..
 
-# image previews
+# lf image previews
 # yay -S ctpv bat poppler ueberzugpp
 # image viewer
 # sxiv
