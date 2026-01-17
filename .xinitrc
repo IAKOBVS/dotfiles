@@ -12,39 +12,55 @@ fi
 
 # Don't remove steam cache
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
-COMPOSITOR=fastcompmgr
+
+# Set compositor for terminal transparency
+export COMPOSITOR=xcompmgr
+$COMPOSITOR &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
 feh --bg-scale /home/james/.local/share/wallpaper/bg.png &
-# Compositor for transparency
-$COMPOSITOR &
+
+# turn off webcam
+sudo modprobe -r uvcvideo
+
 # Statusbar
 nice -n 19 dwmblocks-fast &
+
 # Terminal
 $TERMINAL &
+
 # change esc with caps lock
 remaps
+
 # GPU fan speed control
 sudo nice -n 19 "$HOME"/c/nvspeed/nvspeed &
+
 # CPU fan speed control (managed by systemd)
 # sudo fan2go &
+
 # Nvidia overclocking
 # sudo nvidia-smi -pl 150 &
+
 # Hide mouse cursor
 nice -n 19 unclutter &
+
 # Notification
 nice -n 19 dunst &
-# Xresources
-# xrdb "$HOME"/.Xresources &
 
 # checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 # jamesdsp -t &
-# qbittorrent &
+
+# Warm up bluetooth
 # { bluetoothctl & sleep 2 && killall bluetoothctl; } &
+
+# Cache installed packages
 nice -n 19 paru -Sl | cut -f 2 -d ' ' > "$HOME"/.cache/paru/__list_of_packages__ &
+
+# Cpu fan controller
 sudo renice 19 -p $(pgrep fan2go) &
 
+# Only save unique commands in zsh history
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 ([ -f "$HISTFILE" ] && nice -n 19 uniq -u "$HISTFILE" > "$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)
 
@@ -53,9 +69,6 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Set sxiv image background
 xrdb .Xresources &
-
-# turn off webcam
-sudo modprobe -r uvcvideo
 
 while :; do
 	dwm

@@ -8,7 +8,7 @@ CMD=$COMPOSITOR
 ps -e -o comm | grep -qF "$CMD" && exit
 
 gaming-kill
-$COMPOSITOR &
+# $COMPOSITOR &
 nice -n 19 dunst &
 nice -n 19 unclutter &
 nice -n 19 dwmblocks-fast &
