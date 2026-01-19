@@ -3,5 +3,5 @@ SIG_AUDIO=10
 i=$1
 [ -z $1 ] && i=1
 pamixer -i "$i"
-gst-play-1.0 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+gst-play-1.0 -q /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 pkill -RTMIN+"$SIG_AUDIO" dwmblocks-fast
