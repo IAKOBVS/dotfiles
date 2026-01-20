@@ -1,15 +1,29 @@
 #!/bin/sh
 if [ "$(uname -s)" = Linux ]; then
 	du -shc -- * 2>/dev/null | sort -h | less
-	exit
 else
-	toGb=$((1024 * 1024))
-	du -s -- * 2>/dev/null |
-		sort -n |
-		awk -v fmt=$toGb \
-			'BEGIN { total = 0 } \
-		{ total += $1; \
-		printf "%.1fG %s\n", $1/fmt, $2 } \
-	END { printf("%.1fG total", total/fmt) }' |
-		less
+du -sk -- * 2>/dev/null | sort -n |
+	awk 'BEGIN {
+			total = 0;
+			kb = 1024;
+			mb = kb * kb;
+			gb = mb * kb;
+		}
+		{
+			size = $1;
+			name = $2;
+			size *= 1024;
+			total += size;
+			if (kb > size)
+				printf(fmt "%.1fB %s\n", size, name);
+			else if (mb > size)
+				printf(fmt "%.1fK %s\n", size/kb, name);
+			else if (gb > size)
+				printf(fmt "%.1fM %s\n", size/mb, name);
+			else
+				printf(fmt "%.1fG %s\n", size/gb, name);
+		}
+		END {
+			printf("%.1fG total", total/gb);
+		}' | less
 fi
