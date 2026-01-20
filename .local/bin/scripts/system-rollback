@@ -1,0 +1,36 @@
+#!/bin/sh
+
+if [ "$(id -u)" -ne 0 ]; then
+	echo "Need to run as root for pacman and changing mirrorlist!"
+	exit 1
+fi
+
+# https://www.rdeeson.com/weblog/176/how-to-rollback-a-system-update-on-arch-linux
+
+y=$(date '+%Y')
+m=$(date '+%m')
+d=$(date '+%d')
+
+# Rollback to 1 week earlier.
+# Last week.
+if [ $d -gt 7 ]; then
+	d=$((d - 7))
+# Last month.
+else
+	d=$((28 - 7))
+	if [ $m -gt 1 ]; then
+		m=$((m - 1))
+	else
+		# If month is January, go to last month in the last year
+		y=$((y - 1))
+		m=12
+	fi
+fi
+
+sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+# point mirrorlist to the archive specifying date to rollback to
+sudo echo "Server=https://archive.archlinux.org/repos/$y/$m/$d/\$repo/os/\$arch" >/etc/pacman.d/mirrorlist
+# do a full system upgrade (double 'y' refreshes your package database, double 'u' allows pacman to downgrade packages)
+sudo pacman -Syyuu
+sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-system-rollback
+sudo mv /etc/pacman.d/mirrorlist.bak /etc/pacman.d/mirrorlist
