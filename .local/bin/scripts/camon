@@ -1,6 +1,7 @@
 #!/bin/sh
 sudo modprobe uvcvideo
 gst-play-1.0 -q /usr/share/sounds/freedesktop/stereo/device-added.oga
+dunstctl close
 notify-send "📸 webcam is turned on! 🟢"
 SIG_WEBCAM=6
 pkill -RTMIN+"$SIG_WEBCAM" dwmblocks-fast

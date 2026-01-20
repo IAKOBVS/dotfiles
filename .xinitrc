@@ -43,7 +43,7 @@ sudo nice -n 19 "$HOME"/c/nvspeed/nvspeed &
 # sudo nvidia-smi -pl 150 &
 
 # Hide mouse cursor
-nice -n 19 unclutter &
+nice -n 19 unclutter --no-timeout --hide-on-key-press &
 
 # Notification
 nice -n 19 dunst &

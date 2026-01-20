@@ -4,9 +4,6 @@ set -u
 
 CMD='jproc-cleanup'
 
-# # Do not execute if already running
-[ $(ps -e -o comm | grep -cF "$CMD") -gt 2 ] && exit
-
 # C implementation uses procfs
 if [ $(uname) = 'Linux' ]; then
 	jproc-cleanup-bin

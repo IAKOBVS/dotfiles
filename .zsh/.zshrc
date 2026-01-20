@@ -3,7 +3,7 @@
 . $HOME/.zsh/.zsh_aliases 2>/dev/null
 . $HOME/.zsh/jproc 2>/dev/null
 
-(nice -n 19 jproc-cleanup &)
+[ $(ps -e -o comm | grep -cF "jproc-cleanup") -le 2 ] && (nice -n 19 jproc-cleanup &)
 
 getBranch() {
     git rev-parse --abbrev-ref HEAD 2> /dev/null
