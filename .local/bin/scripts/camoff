@@ -3,5 +3,5 @@ sudo modprobe -r uvcvideo
 gst-play-1.0 -q /usr/share/sounds/freedesktop/stereo/device-removed.oga
 dunstctl close
 notify-send "📷 webcam is turned off! 🔴"
-SIG_WEBCAM=6
+SIG_WEBCAM=4
 pkill -RTMIN+"$SIG_WEBCAM" dwmblocks-fast

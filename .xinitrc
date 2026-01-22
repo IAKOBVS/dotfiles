@@ -19,7 +19,7 @@ $COMPOSITOR &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
-feh --bg-scale /home/james/.local/share/wallpaper/bg.png &
+feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
 
 # turn off webcam
 sudo modprobe -r uvcvideo

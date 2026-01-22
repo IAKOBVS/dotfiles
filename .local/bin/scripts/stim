@@ -57,8 +57,8 @@ gameid=$(
 
 # Set the nice of steamwebhelper to 19,
 # so the CPU can focus on the game.
-gaming-kill
 steam steam://rungameid/"$gameid" &
+gaming-kill
 
 # Set the nice of steamwebhelper to 19,
 # so the CPU can focus on the game.

@@ -1,0 +1,2 @@
+#!/bin/sh
+cd $HOME/.local/src/dwmblocks-fast && ./reload

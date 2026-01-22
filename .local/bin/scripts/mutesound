@@ -1,2 +1,2 @@
 #!/bin/sh
-pamixer -t
+dwmblocks-fast-audio-mute
