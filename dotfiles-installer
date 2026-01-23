@@ -91,3 +91,6 @@ cd ..
 # git
 # use personal access token
 # git config --global credential.helper store
+
+# Qt dark
+# pacman -S kvantum

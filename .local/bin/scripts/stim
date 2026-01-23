@@ -38,7 +38,7 @@ gameid=$(
 		if (/appid/) {
 			id = $2;
 		# Parse game name.
-		} else if (/name/ && !/Proton/ && !/Steam-Linux-Runtime/) {
+		} else if (/name/ && !/Proton/ && !/[Ss]team/) {
 			name = $2;
 			name = tolower(name);
 			printf("%s\t%s\n", name, id);
@@ -55,15 +55,13 @@ gameid=$(
 # Do nothing if no game is selected.
 [ -n "$gameid" ] || exit
 
-# Set the nice of steamwebhelper to 19,
-# so the CPU can focus on the game.
 steam steam://rungameid/"$gameid" &
-gaming-kill
-sudo renice 19 -p $(pgrep dunst)
-sudo renice 19 -p $(pgrep unclutter)
-sudo renice 19 -p $(pgrep dwmblocks-fast)
 
+# Kill background processes
+gaming-kill
+# Set the nice of background processes to 19,
+sudo renice 19 -p $(ps -e -o comm | awk '/dunst/ || /unclutter/ || /dwmblocks-fast/')
+# Wait until steamwebhelper launches
+sleep 10
 # Set the nice of steamwebhelper to 19,
-# so the CPU can focus on the game.
-sleep 5
-sudo renice 19 -p $(pgrep steamwebhelper)
+sudo renice 19 -p $(echo "$proc" | grep -F steamwebhelper)
