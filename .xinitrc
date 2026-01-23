@@ -24,9 +24,6 @@ feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
 # turn off webcam
 sudo modprobe -r uvcvideo
 
-# Statusbar
-nice -n 19 dwmblocks-fast &
-
 # Terminal
 $TERMINAL &
 
@@ -34,7 +31,7 @@ $TERMINAL &
 remaps
 
 # GPU fan speed control
-sudo nice -n 19 "$HOME"/c/nvspeed/nvspeed &
+sudo nice -n 19 "$HOME/c/nvspeed/nvspeed" &
 
 # CPU fan speed control (managed by systemd)
 # sudo fan2go &
@@ -68,7 +65,12 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 # __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 %command% -sdlaudiodriver pulse
 
 # Set sxiv image background
-xrdb .Xresources &
+xrdb $HOME/.Xresources &
+
+while :; do
+	# Statusbar
+	nice -n 19 dwmblocks-fast
+done &
 
 while :; do
 	dwm
