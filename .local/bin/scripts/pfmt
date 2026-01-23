@@ -1,30 +1,28 @@
 #!/bin/sh
 for file in "$@"; do
-	{
-		#shellcheck disable=SC2005
-		case $(head -n1 "$file") in
-		# -vmll, --variable-maximum-line-length
-		# --bt=n, --brace-tightness
-		# --bbt=n, --block-brace-tightness
-		# -b, --backup-and-modify-in-place
-		# -pt, --paren-tightness
-		# -cb, --cuddled-blocks
-		# -et, --entab-leading-whitespace
-		# -l=n, --maximum-line-length
-		# -fbl, --freeze-blank-lines
-		# -nsfs, --no-space-for-semicolon
-		# -pbp, --perl-best-practices
-		# -nbbb, --noblanks-before-blocks
-		# -lbl=n, --long-block-line-count
-		# -nbbc, --no-blanks-before-comments
-		# -sfp, --space-function-paren
-		# -kpit=n, --keyword-paren-inner-tightness
-		\#!*bin*perl*)
-			echo "$(perltidy "$file" -vmll -bt=2 -bbt=2 -pt=2 -cb -et=4 -nsfs -nbbb -lbl=0 -nbbc -kpit=2 -l=180)" >"$file"
-			rm "$file"
-			mv "$file.tdy" "$file"
-			;;
-		esac
-	} &
+	#shellcheck disable=SC2005
+	case $(head -n1 "$file") in
+	# -vmll, --variable-maximum-line-length
+	# --bt=n, --brace-tightness
+	# --bbt=n, --block-brace-tightness
+	# -b, --backup-and-modify-in-place
+	# -pt, --paren-tightness
+	# -cb, --cuddled-blocks
+	# -et, --entab-leading-whitespace
+	# -l=n, --maximum-line-length
+	# -fbl, --freeze-blank-lines
+	# -nsfs, --no-space-for-semicolon
+	# -pbp, --perl-best-practices
+	# -nbbb, --noblanks-before-blocks
+	# -lbl=n, --long-block-line-count
+	# -nbbc, --no-blanks-before-comments
+	# -sfp, --space-function-paren
+	# -kpit=n, --keyword-paren-inner-tightness
+	\#!*bin*perl*)
+		echo "$(perltidy "$file" -vmll -bt=2 -bbt=2 -pt=2 -cb -et=4 -nsfs -nbbb -lbl=0 -nbbc -kpit=2 -l=180)" >"$file"
+		rm "$file"
+		mv "$file.tdy" "$file"
+		;;
+	esac &
 done
 wait

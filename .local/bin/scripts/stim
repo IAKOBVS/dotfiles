@@ -66,6 +66,4 @@ sudo renice 19 -p $(pgrep dwmblocks-fast)
 # Set the nice of steamwebhelper to 19,
 # so the CPU can focus on the game.
 sleep 5
-for pids in $(pgrep steamwebhelper); do
-	sudo renice 19 -p "$pids"
-done
+sudo renice 19 -p $(pgrep steamwebhelper)

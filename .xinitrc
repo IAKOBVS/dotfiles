@@ -24,6 +24,9 @@ feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
 # turn off webcam
 sudo modprobe -r uvcvideo
 
+# Statusbar
+nice -n 19 dwmblocks-fast &
+
 # Terminal
 $TERMINAL &
 
@@ -67,9 +70,6 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 # Set sxiv image background
 xrdb .Xresources &
 
-# Statusbar
-nice -n 19 dwmblocks-fast &
-
-# while :; do
+while :; do
 	dwm
-# done
+done
