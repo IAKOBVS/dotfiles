@@ -59,6 +59,9 @@ gameid=$(
 # so the CPU can focus on the game.
 steam steam://rungameid/"$gameid" &
 gaming-kill
+sudo renice 19 -p $(pgrep dunst)
+sudo renice 19 -p $(pgrep unclutter)
+sudo renice 19 -p $(pgrep dwmblocks-fast)
 
 # Set the nice of steamwebhelper to 19,
 # so the CPU can focus on the game.

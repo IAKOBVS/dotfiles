@@ -1,2 +1,2 @@
 #!/bin/sh
-pamixer --list-sources | grep -F 'RODE' | cut -d' ' -f1
+pamixer --list-sources | awk '/input/ && /[Mm]icrophone/ {print $1; exit}'
