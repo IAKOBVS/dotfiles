@@ -1,3 +1,3 @@
 #!/bin/sh
 set -- $(grep -v '^#' $HOME/.local/share/alias/sites | dmenu -l 30 | cut -d' ' -f1)
-[ $1 ] && $BROWSER $1
+[ $1 ] && echo $1 | xclip -sel c

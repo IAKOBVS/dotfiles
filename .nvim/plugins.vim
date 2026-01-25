@@ -6,7 +6,7 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'bkad/CamelCaseMotion'
 " Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/goyo.vim'
 Plug 'rhysd/vim-grammarous'
@@ -14,6 +14,7 @@ if 0
 	Plug 'bergercookie/asm-lsp'
 	Plug 'OmniSharp/omnisharp-vim'
 endif
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 call plug#end()
 
 " coc.nvim Extensions
@@ -72,6 +73,7 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 noremap <silent> gd <Plug>(coc-definition)
 noremap <silent> gi <Plug>(coc-implementation)
 noremap <silent> gr <Plug>(coc-references)
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 nnoremap ;coc :CocConfig<CR>
 
 if 0
@@ -82,9 +84,9 @@ if 0
 endif
 
 " accept completion
-nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
-nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
-nnoremap <space>a :ALEToggle<CR>
+" nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
+" nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
+" nnoremap <space>a :ALEToggle<CR>
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
@@ -102,6 +104,8 @@ let g:__my_gcc_flags__ = '-Wall -Wpedantic -pedantic -Wextra -Wuninitialized -Ws
 let g:ale_c_cc_options = '-std=c99 ' . g:__my_gcc_flags__
 let g:ale_cpp_cc_options = '-std=c++17 ' . g:__my_gcc_flags__
 let g:ale_c_clangtidy_checks = [
+	\ '-*',
+	\ 'cppcoreguidelines-*',
 	\ '-clang-diagnostic-error',
 	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
 	\ '-clang-analyzer-security.insecureAPI.strcpy'

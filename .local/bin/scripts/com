@@ -2,7 +2,7 @@
 file=$1
 cd "$(dirname "$file")" || exit 1
 flags='-Wpedantic -pedantic -Wall -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wunused -Wwrite-strings'
-sanitizer='-fsanitize=address'
+# sanitizer='-fsanitize=address'
 analyzer="-fanalyzer $sanitizer -g"
 shift
 vg=
