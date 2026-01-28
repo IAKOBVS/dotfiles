@@ -59,9 +59,9 @@ steam steam://rungameid/"$gameid" &
 
 # Kill background processes
 gaming-kill
-# Set the nice of background processes to 19,
-sudo renice 19 -p $(ps -e -o comm | awk '/dunst/ || /unclutter/ || /dwmblocks-fast/')
+# Set the nice of steamwebhelper to 19,
+renice 19 -p $(ps -e -o comm --no-headers | grep -F steamwebhelper)
 # Wait until steamwebhelper launches
 sleep 10
 # Set the nice of steamwebhelper to 19,
-sudo renice 19 -p $(echo "$proc" | grep -F steamwebhelper)
+renice 19 -p $(ps -e -o comm --no-headers | grep -F steamwebhelper)

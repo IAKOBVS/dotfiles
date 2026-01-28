@@ -5,8 +5,8 @@ set -u
 [ -n $TERMINAL ] || exit 1
 
 # Exit if terminal already running
-ps -e -o comm | grep -qF -e "$TERMINAL" && exit
+ps -e -o comm --no-headers | grep -qF -e "$TERMINAL" && exit
 # Exit if steam is not running
-ps -e -o comm | grep -qF -e 'steam' || exit
+ps -e -o comm --no-headers | grep -qF -e 'steam' || exit
 
 gaming-kill

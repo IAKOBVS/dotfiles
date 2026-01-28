@@ -43,6 +43,16 @@ fans:
     minPwm: 30
     startPwm: 30
     maxPwm: 255
+    
+  # - id: unknown
+  #   hwmon:
+  #     platform: nct6791-isa-0
+  #     index: 3
+  #   neverStop: true
+  #   curve: case_max_curve_lower
+  #   minPwm: 30
+  #   startPwm: 30
+  #   maxPwm: 255
 
   - id: bottom_n_exhaust
     hwmon:

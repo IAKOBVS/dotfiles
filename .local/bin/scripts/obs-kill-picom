@@ -1,5 +1,5 @@
 #!/bin/sh
-if ps -e -o comm | grep -qF obs; then
+if ps -e -o comm --no-headers | grep -qF obs; then
 	killall $COMPOSITOR
 	obs &
 	(sleep 1 && $COMPOSITOR &)

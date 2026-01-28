@@ -5,7 +5,7 @@ set -u
 CMD=$COMPOSITOR
 
 # Do not execute if $COMPOSITOR already running
-ps -e -o comm | grep -qF "$CMD" && exit
+ps -e -o comm --no-headers | grep -qF "$CMD" && exit
 
 gaming-kill
 $COMPOSITOR &

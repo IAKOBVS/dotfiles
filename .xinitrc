@@ -31,10 +31,14 @@ $TERMINAL &
 remaps
 
 # GPU fan speed control
-sudo nice -n 19 nvspeed &
+sudo nvspeed &
+
+# CPU fan speed control
+sudo cfan &
 
 # CPU fan speed control (managed by systemd)
 # sudo fan2go &
+# sudo renice 19 -p $(pgrep fan2go) &
 
 # Nvidia overclocking
 # sudo nvidia-smi -pl 150 &
@@ -54,8 +58,6 @@ nice -n 19 dunst &
 # Cache installed packages
 nice -n 19 paru -Sl | cut -f 2 -d ' ' >"$HOME"/.cache/paru/__list_of_packages__ &
 
-# Cpu fan controller
-sudo renice 19 -p $(pgrep fan2go) &
 
 # Only save unique commands in zsh history
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
@@ -68,23 +70,29 @@ unset HISTFILE
 # Set sxiv image background
 xrdb $HOME/.Xresources &
 
-{
-	systemctl --user start pipewire.socket
+if ps -e -o comm | grep -q -F 'systemd'; then
 	systemctl --user start pipewire.service
+	systemctl --user start pipewire-pulse.service
 	systemctl --user start wireplumber.service
+else
+	pipewire &
+	pipewire-pulse &
+	wireplumber &
+fi
 
-	# TODO: fix
+{
 	# Statusbar
-	retry=10
+	retry=5
 	while [ $retry -gt 0 ]; do
-		if ps -e -o comm | grep -q -F 'pipewire'; then
-			nice -n 19 dwmblocks-fast
-			break
+		if ps -e -o comm | grep -q -F 'pipewire' && nice -n 19 dwmblocks-fast; then
+			exit
 		fi
 		retry=$((retry - 1))
 		sleep 1
 	done
 	unset retry
+	echo "dwmblocks-fast: can not run program"
+	exit 1 
 } &
 
 while :; do

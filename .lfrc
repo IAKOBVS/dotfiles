@@ -108,9 +108,10 @@ cmd delete ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "delete? (Y\N)"
+	printf "delete? (Y\N) (~/trash)"
 	read ans
-	[ $ans = 'Y' ] && rm -rf -- $fx
+	mkdir -p ~/trash
+	[ $ans = 'Y' ] && mv -- $fx ~/trash
 }}
 
 cmd moveto ${{
