@@ -10,6 +10,12 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
+# CPU fan speed control
+sudo cfan &
+
+# GPU fan speed control
+sudo nvspeed &
+
 # Don't remove steam cache
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
@@ -29,12 +35,6 @@ $TERMINAL &
 
 # change esc with caps lock
 remaps
-
-# GPU fan speed control
-sudo nvspeed &
-
-# CPU fan speed control
-sudo cfan &
 
 # CPU fan speed control (managed by systemd)
 # sudo fan2go &
