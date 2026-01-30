@@ -28,8 +28,8 @@ set cleaner ctpvclear
 cmd quitclear ${{
 	if [ -d "$JPROC_DIR" ]; then
 		echo "$PWD" >"$JPROC_LF_DIR"
-		lf -remote "send $id quit"
 	fi
+	lf -remote "send $id quit"
 }}
 
 cmd jproc_fzfvim ${{

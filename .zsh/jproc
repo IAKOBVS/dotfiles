@@ -69,6 +69,9 @@ export JPROC_CMD_LAST=$JPROC_DIR_PID/cmd_last
 # TODO: maybe make a more human readable format like
 # /proc/ since performance doesn't matter here
 
+# FIXME: when exiting lf, where lf is the first process,
+# it will also kill the terminal
+
 # Export the commands to support.
 export JPROC_VIMCD=1
 export JPROC_LFCD=2
@@ -155,7 +158,7 @@ jproc_internal_fzfbase()
 	if [ ! "$1" ]; then
 		jproc_internal_cmd_last
 	elif [ -f "$1" ]; then
-		jproc_jproc_vimcd "$1"
+		jproc_vimcd "$1"
 	else
 		jproc_lfcd "$1"
 	fi
@@ -242,7 +245,7 @@ jproc_grepvim()
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	if [ "$grepped" ]; then
-		jproc_jproc_vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+		jproc_vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
 	else
 		jproc_internal_cmd_last
 	fi
