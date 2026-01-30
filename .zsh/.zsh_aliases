@@ -5,7 +5,7 @@ alias \
 mv='mv -iv' \
 fin='. fin' \
 fs='. fs' \
-v='vimcd' \
+v='jproc_vimcd' \
 gw='rgrep' \
 rs='res4thum' \
 z='zathura' \
@@ -17,7 +17,7 @@ pm='pulsemixer' \
 ht='htop' \
 sht='sudo htop' \
 ki='killall' \
-l='lfcd' \
+l='jproc_lfcd' \
 pq='paru -Q | fzf' \
 poweroff='sync && sync && killall nvim; systemctl poweroff' \
 reboot='sync && sync && systemctl reboot' \

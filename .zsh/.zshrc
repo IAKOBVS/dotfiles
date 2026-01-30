@@ -65,11 +65,10 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
-bindkey -s '^f' 'fzflive $PWD\n'
+bindkey -s '^f' 'jproc_fzflive $PWD\n'
 # bindkey -s '^e' 'fzfexact\n'
-bindkey -s '^o' 'lfcd\n'
-bindkey -s '^r' 'grepvim\n'
-(ps -e -o comm | grep -qF "$CMD" || remaps > /dev/null &)
+bindkey -s '^o' 'jproc_lfcd\n'
+bindkey -s '^r' 'jproc_grepvim\n'
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=0
 

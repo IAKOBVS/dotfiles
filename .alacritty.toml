@@ -1,3 +1,5 @@
+general.ipc_socket = true
+
 [colors.bright]
 black = "0x4f4f4f"
 blue = "0x5c6bc0"

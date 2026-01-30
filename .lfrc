@@ -26,48 +26,57 @@ set cleaner ctpvclear
 &ctpvquit $id
 
 cmd quitclear ${{
-	# ([ -f $JPROC_VIM_PROG ] && /bin/rm -f $JPROC_VIM_PROG >/dev/null 2>/dev/null &)
-	# ([ -f $JPROC_VIM_ARG ] && /bin/rm -f $JPROC_VIM_ARG >/dev/null 2>/dev/null &)
-	# ([ -f $JPROC_CMD_LAST] && /bin/rm -f $JPROC_CMD_LAST >/dev/null 2>/dev/null &)
-	[ -f $JPROC_LF_DIR ] && echo "$PWD" >"$JPROC_LF_DIR"
-	lf -remote "send $id quit"
+	if [ -f $JPROC_LF_DIR ]; then
+		echo "$PWD" >"$JPROC_LF_DIR"
+		lf -remote "send $id quit"
+	fi
 }}
 
-cmd fzfvim ${{
-	[ -f $JPROC_FZF ] && echo "$JPROC_FZF" >"$JPROC_VIM_PROG"
-	[ -f $JPROC_VIM_ARG ] && echo "$PWD" >"$JPROC_VIM_ARG"
-	# [ -f $JPROC_LFCD ] && (echo $JPROC_LFCD >$JPROC_CMD_LAST &)
-	# [ -f $JPROC_VIM_LAST_FILE ] && (echo $PWD >$JPROC_VIM_LAST_FILE &)
-	[ -f $JPROC_CMD_LAST ] && echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
-	[ -f $JPROC_VIM_LAST_FILE ] && echo "$PWD" >"$JPROC_VIM_LAST_FILE"
-	lf -remote "send $id quit"
+cmd jproc_fzfvim ${{
+	if [ -f "$JPROC_VIM_PROG" ] &&
+	[ -f "$JPROC_VIM_ARG" ] &&
+	[ -f "$JPROC_CMD_LAST" ] &&
+	[ -f "$JPROC_VIM_FILE_LAST" ]; then
+		echo "$JPROC_FZF" >"$JPROC_VIM_PROG"
+		echo "$PWD" >"$JPROC_VIM_ARG"
+		echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
+		echo "$PWD" >"$JPROC_VIM_FILE_LAST"
+		lf -remote "send $id quit"
+	fi
 }}
 
-cmd grepvim ${{
-	[ -f $JPROC_GREPVIM ] && echo $JPROC_GREPVIM >$JPROC_VIM_PROG
-	[ -f $JPROC_VIM_ARG ] && echo $PWD >$JPROC_VIM_ARG
-	# [ -f $JPROC_CMD_LAST ] && (echo $JPROC_LFCD >$JPROC_CMD_LAST &)
-	# [ -f $JPROC_VIM_LAST_FILE ] && (echo $PWD >$JPROC_VIM_LAST_FILE &)
-	[ -f $JPROC_CMD_LAST ] && echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
-	[ -f $JPROC_VIM_LAST_FILE ] && echo "$PWD" >"$JPROC_VIM_LAST_FILE"
-	lf -remote "send $id quit"
+cmd jproc_grepvim ${{
+	if [ -f "$JPROC_VIM_PROG" ] &&
+	[ -f "$JPROC_VIM_ARG" ] &&
+	[ -f "$JPROC_CMD_LAST" ] &&
+	[ -f "$JPROC_VIM_FILE_LAST" ]; then
+		echo "$JPROC_GREPVIM" >"$JPROC_VIM_PROG"
+		echo "$PWD" >"$JPROC_VIM_ARG"
+		echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
+		echo "$PWD" >"$JPROC_VIM_FILE_LAST"
+		lf -remote "send $id quit"
+	fi
 }}
 
 cmd open ${{
 	case $f in
 	*.ts|*.js|*.lua|*.java|*.cs)
-		echo $JPROC_VIMCD >$JPROC_VIM_PROG
-		echo "$fx" >$JPROC_VIM_ARG
-		lf -remote "send $id quit"
+		if [ -f "$JPROC_VIM_PROG" ] && [ -f "$JPROC_VIM_ARG" ]; then
+			echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
+			echo "$fx" >"$JPROC_VIM_ARG"
+			lf -remote "send $id quit"
+		fi
 		;;
 	*)
 		case $(file --mime-type "$(readlink -f $f)" -b) in
 		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
 		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
 		text/*|application/json|inode/x-empty|application/x-subrip)
-			echo $JPROC_VIMCD >$JPROC_VIM_PROG
-			echo "$fx" >$JPROC_VIM_ARG
-			lf -remote "send $id quit"
+			if [ -f "$JPROC_VIM_PROG" ] && [ -f "$JPROC_VIM_ARG" ]; then
+				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
+				echo "$fx" >"$JPROC_VIM_ARG"
+				lf -remote "send $id quit"
+			fi
 			;;
 		image/x-xcf) gimp $fx ;;
 		image/svg+xml) display -- $f ;;
@@ -77,9 +86,11 @@ cmd open ${{
 		video/*) mpv --really-quiet $fx ;;
 		application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
 		application/pgp-encrypted)
-			echo $JPROC_VIMCD >$JPROC_VIM_PROG
-			echo "$fx" >$JPROC_VIM_ARG
-			lf -remote "send $id quit"
+			if [ -f "$JPROC_VIM_PROG" ] && [ -f "$JPROC_VIM_ARG" ]; then
+				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
+				echo "$fx" >"$JPROC_VIM_ARG"
+				lf -remote "send $id quit"
+			fi
 			;;
 		application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
 		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
@@ -190,8 +201,8 @@ cmd mvsub ${{
 cmd setbg "$1"
 cmd bulkrename $vidir
 # Bindings
-map <c-f> fzfvim
-map <c-r> grepvim
+map <c-f> jproc_fzfvim
+map <c-r> jproc_grepvim
 # map <c-f> $lf -remote "send $id select \"$(fzfdef)\""
 # map J $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzfp)"
 # map gh

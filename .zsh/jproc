@@ -56,7 +56,7 @@ JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M 
 		-g '!*node_modules*'"
 
 # Temporary files here will be cleaned up periodically by jproc-cleanup.
-export JPROC_DIR=/tmp/jproc-private
+export JPROC_DIR=/tmp/jproc
 export JPROC_DIR_PID=$JPROC_DIR/$$
 
 # Template for tmp files.
@@ -104,7 +104,7 @@ mkdir()
 }
 
 # Select program to call based on the value in the tmp file.
-vim_sel()
+jproc_internal_vim_sel()
 {
 	[ ! -f $JPROC_VIM_PROG ] $JPROC_REDIRECT_STDERR && return
 	prog=$(cat $JPROC_VIM_PROG)
@@ -116,37 +116,48 @@ vim_sel()
 	/bin/rm -f $JPROC_VIM_ARG $JPROC_VIM_PROG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
 	case $prog in
 	"$JPROC_VIMCD") vimcd "$arg" ;;
-	"$JPROC_LFCD") lfcd "$arg" ;;
-	"$JPROC_FZF") fzflive "$arg" ;;
-	"$JPROC_FZFLIVE") fzflive "$arg" ;;
-	"$JPROC_FZFLIVEHOME") fzflive "$arg" ;;
-	"$JPROC_GREPVIM") grepvim "$arg" ;;
+	"$JPROC_LFCD") jproc_lfcd "$arg" ;;
+	"$JPROC_FZF") jproc_fzflive "$arg" ;;
+	"$JPROC_FZFLIVE") jproc_fzflive "$arg" ;;
+	"$JPROC_FZFLIVEHOME") jproc_fzflive "$arg" ;;
+	"$JPROC_GREPVIM") jproc_grepvim "$arg" ;;
 	esac
 }
 
 # Get the last command.
-last_cmd()
+jproc_internal_cmd_last()
 {
 	[ -f $JPROC_CMD_LAST ] || return
 	case $(cat $JPROC_CMD_LAST) in
 	"$JPROC_VIMCD") vimcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
-	"$JPROC_LFCD") lfcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
+	"$JPROC_LFCD") jproc_lfcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
 	esac
 }
 
 # Open lf and cd to the last directory.
-lfcd()
+jproc_lfcd()
 {
 	echo >$JPROC_CMD_LAST
 	dir=$(cat $JPROC_LF_DIR)
-	lf -last-dir-path="$dir" "$@" $JPROC_REDIRECT_STDERR && vim_sel
+	lf -last-dir-path="$dir" "$@" $JPROC_REDIRECT_STDERR && jproc_internal_vim_sel
 	dir=$(cat $JPROC_LF_DIR)
 	# (/bin/rm -f $JPROC_LF_DIR $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR &)
 	[ -d "$dir" ] && cd "$dir" || return
 }
 
+jproc_internal_fzfbase()
+{
+	if [ ! "$1" ]; then
+		jproc_internal_cmd_last
+	elif [ -f "$1" ]; then
+		jproc_vimcd "$1"
+	else
+		jproc_lfcd "$1"
+	fi
+}
+
 # Open vim and cd to the last directory.
-vimcd()
+jproc_vimcd()
 {
 	case $1 in
 	'')
@@ -166,7 +177,7 @@ vimcd()
 		*.mkv | *.mov | *.mp4 | \
 			*.png | *.jpg | *.jpeg)
 			echo $JPROC_LFCD >$JPROC_CMD_LAST
-			lfcd "$file"
+			jproc_lfcd "$file"
 			;;
 		*)
 			if [ -f "$file" ]; then
@@ -174,7 +185,7 @@ vimcd()
 				cmd=$EDITOR
 			elif [ -d "$file" ]; then
 				cd "$file" || return
-				cmd=lfcd
+				cmd=jproc_lfcd
 			else
 				echo "$1 is not a file"
 				echo 'touch file? (y/n)'
@@ -192,25 +203,14 @@ vimcd()
 	esac
 	echo $JPROC_VIMCD >$JPROC_CMD_LAST
 	$cmd "$file" "$@" &&
-		vim_sel
+		jproc_internal_vim_sel
 }
 
-fzfbase()
-{
-	if [ ! "$1" ]; then
-		last_cmd
-	elif [ -f "$1" ]; then
-		vimcd "$1"
-	else
-		lfcd "$1"
-	fi
-}
-
-fzflive()
+jproc_fzflive()
 {
 	# shellcheck disable=SC2164
 	cd "$1" $JPROC_REDIRECT_STDERR
-	fzfbase "$(find . -type f \
+	jproc_internal_fzfbase "$(find . -type f \
 		! -path '*.git*' \
 		! -path '*.o' \
 		! -path '*.png' \
@@ -227,7 +227,7 @@ fzflive()
 }
 
 # Grep and open vim.
-grepvim()
+jproc_grepvim()
 {
 	# shellcheck disable=SC2164
 	cd "$1" $JPROC_REDIRECT_STDERR
@@ -237,8 +237,8 @@ grepvim()
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	if [ "$grepped" ]; then
-		vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+		jproc_vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
 	else
-		last_cmd
+		jproc_internal_cmd_last
 	fi
 }
