@@ -115,12 +115,16 @@ jproc_internal_vim_sel()
 	fi
 	/bin/rm -f $JPROC_VIM_ARG $JPROC_VIM_PROG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
 	case $prog in
-	"$JPROC_VIMCD") vimcd "$arg" ;;
+	"$JPROC_VIMCD") jproc_vimcd "$arg" ;;
 	"$JPROC_LFCD") jproc_lfcd "$arg" ;;
 	"$JPROC_FZF") jproc_fzflive "$arg" ;;
 	"$JPROC_FZFLIVE") jproc_fzflive "$arg" ;;
 	"$JPROC_FZFLIVEHOME") jproc_fzflive "$arg" ;;
 	"$JPROC_GREPVIM") jproc_grepvim "$arg" ;;
+	*)
+		echo "jproc: illegal command: $prog $arg"
+		exit 1
+		;;
 	esac
 }
 
@@ -128,8 +132,9 @@ jproc_internal_vim_sel()
 jproc_internal_cmd_last()
 {
 	[ -f $JPROC_CMD_LAST ] || return
-	case $(cat $JPROC_CMD_LAST) in
-	"$JPROC_VIMCD") vimcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
+	prog=$(cat $JPROC_CMD_LAST)
+	case $prog in
+	"$JPROC_VIMCD") jproc_vimcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
 	"$JPROC_LFCD") jproc_lfcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
 	esac
 }
@@ -150,7 +155,7 @@ jproc_internal_fzfbase()
 	if [ ! "$1" ]; then
 		jproc_internal_cmd_last
 	elif [ -f "$1" ]; then
-		jproc_vimcd "$1"
+		jproc_jproc_vimcd "$1"
 	else
 		jproc_lfcd "$1"
 	fi
@@ -237,7 +242,7 @@ jproc_grepvim()
 		--preview-window 'down:20%:+{2}' \
 		--preview 'bat --style=numbers --color=always --highlight-line {2} {1}')
 	if [ "$grepped" ]; then
-		jproc_vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
+		jproc_jproc_vimcd -c ":$(echo "$grepped" | cut -d: -f2)" "${grepped%%:*}"
 	else
 		jproc_internal_cmd_last
 	fi

@@ -26,17 +26,14 @@ set cleaner ctpvclear
 &ctpvquit $id
 
 cmd quitclear ${{
-	if [ -f $JPROC_LF_DIR ]; then
+	if [ -f "$JPROC_DIR" ]; then
 		echo "$PWD" >"$JPROC_LF_DIR"
 		lf -remote "send $id quit"
 	fi
 }}
 
 cmd jproc_fzfvim ${{
-	if [ -f "$JPROC_VIM_PROG" ] &&
-	[ -f "$JPROC_VIM_ARG" ] &&
-	[ -f "$JPROC_CMD_LAST" ] &&
-	[ -f "$JPROC_VIM_FILE_LAST" ]; then
+	if [ -f "$JPROC_DIR" ]; then
 		echo "$JPROC_FZF" >"$JPROC_VIM_PROG"
 		echo "$PWD" >"$JPROC_VIM_ARG"
 		echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
@@ -46,10 +43,7 @@ cmd jproc_fzfvim ${{
 }}
 
 cmd jproc_grepvim ${{
-	if [ -f "$JPROC_VIM_PROG" ] &&
-	[ -f "$JPROC_VIM_ARG" ] &&
-	[ -f "$JPROC_CMD_LAST" ] &&
-	[ -f "$JPROC_VIM_FILE_LAST" ]; then
+	if [ -f "$JPROC_DIR" ]; then
 		echo "$JPROC_GREPVIM" >"$JPROC_VIM_PROG"
 		echo "$PWD" >"$JPROC_VIM_ARG"
 		echo "$JPROC_LFCD" >"$JPROC_CMD_LAST"
@@ -61,7 +55,7 @@ cmd jproc_grepvim ${{
 cmd open ${{
 	case $f in
 	*.ts|*.js|*.lua|*.java|*.cs)
-		if [ -f "$JPROC_VIM_PROG" ] && [ -f "$JPROC_VIM_ARG" ]; then
+		if [ -f "$JPROC_DIR" ]; then
 			echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
 			echo "$fx" >"$JPROC_VIM_ARG"
 			lf -remote "send $id quit"
@@ -72,7 +66,7 @@ cmd open ${{
 		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
 		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
 		text/*|application/json|inode/x-empty|application/x-subrip)
-			if [ -f "$JPROC_VIM_PROG" ] && [ -f "$JPROC_VIM_ARG" ]; then
+			if [ -f "$JPROC_DIR" ]; then
 				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
 				echo "$fx" >"$JPROC_VIM_ARG"
 				lf -remote "send $id quit"
@@ -86,7 +80,7 @@ cmd open ${{
 		video/*) mpv --really-quiet $fx ;;
 		application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
 		application/pgp-encrypted)
-			if [ -f "$JPROC_VIM_PROG" ] && [ -f "$JPROC_VIM_ARG" ]; then
+			if [ -f "$JPROC_DIR" ]; then
 				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
 				echo "$fx" >"$JPROC_VIM_ARG"
 				lf -remote "send $id quit"
