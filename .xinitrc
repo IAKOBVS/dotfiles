@@ -36,10 +36,6 @@ $TERMINAL &
 # change esc with caps lock
 remaps
 
-# CPU fan speed control (managed by systemd)
-# sudo fan2go &
-# sudo renice 19 -p $(pgrep fan2go) &
-
 # Nvidia overclocking
 # sudo nvidia-smi -pl 150 &
 
