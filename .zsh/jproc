@@ -124,10 +124,6 @@ jproc_internal_vim_sel()
 	"$JPROC_FZFLIVE") jproc_fzflive "$arg" ;;
 	"$JPROC_FZFLIVEHOME") jproc_fzflive "$arg" ;;
 	"$JPROC_GREPVIM") jproc_grepvim "$arg" ;;
-	*)
-		echo "jproc: illegal command: $prog $arg"
-		exit 1
-		;;
 	esac
 }
 
@@ -149,8 +145,9 @@ jproc_lfcd()
 	dir=$(cat $JPROC_LF_DIR)
 	lf -last-dir-path="$dir" "$@" $JPROC_REDIRECT_STDERR && jproc_internal_vim_sel
 	dir=$(cat $JPROC_LF_DIR)
-	# (/bin/rm -f $JPROC_LF_DIR $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR &)
-	[ -d "$dir" ] && cd "$dir" || return
+	if [ -d "$dir" ]; then
+		cd "$dir"
+	fi
 }
 
 jproc_internal_fzfbase()

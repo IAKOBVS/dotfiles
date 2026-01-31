@@ -20,7 +20,7 @@ sudo nvspeed &
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 # Set compositor for terminal transparency
-export COMPOSITOR=xcompmgr
+export COMPOSITOR=fastcompmgr
 $COMPOSITOR &
 
 # Set wallpaper
