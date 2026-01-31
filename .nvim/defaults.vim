@@ -10,12 +10,15 @@ autocmd BufNewFile,BufEnter * silent! lcd %:p:h
 " autocmd BufWritePost *zsh*alias* silent! !update_vim_aliases &
 " autocmd BufWritePost *.shell_functions*,.z* silent! !recompile_zsh_scripts &
 " cleanup fzfvim temp variables
-silent autocmd BufEnter,BufRead,BufEnter * if filereadable(expand('%:p')) | silent! execute '!'
+silent autocmd BufEnter,BufRead,BufEnter * 
+			\ if filereadable(expand('%:p')) |
+				\ silent! execute '!'
 					\. 'if [ -d $JPROC_DIR ]; then;'
-						\. 'echo >$JPROC_VIM_PROG'
-						\. 'echo >$JPROC_VIM_ARG'
-						\. 'echo %:p >$JPROC_VIM_FILE_LAST'
-					\. 'fi &' | endif
+						\. 'echo >$JPROC_VIM_PROG;'
+						\. 'echo >$JPROC_VIM_ARG;'
+						\. 'echo %:p >$JPROC_VIM_FILE_LAST;'
+					\. 'fi' | 
+			\ endif
 
 " execute cmd after vim exits
 function ExitCmd(dir, prog, arg)

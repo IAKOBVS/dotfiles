@@ -113,7 +113,8 @@ jproc_internal_vim_sel()
 	else
 		arg=$(cat $JPROC_VIM_ARG)
 	fi
-	/bin/rm -f $JPROC_VIM_ARG $JPROC_VIM_PROG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
+	echo >$JPROC_VIM_ARG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
+	echo >$JPROC_VIM_PROG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
 	case $prog in
 	"$JPROC_VIMCD") jproc_vimcd "$arg" ;;
 	"$JPROC_LFCD") jproc_lfcd "$arg" ;;
