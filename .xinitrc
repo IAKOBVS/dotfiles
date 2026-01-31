@@ -91,6 +91,8 @@ fi
 	exit 1 
 } &
 
+rm -rf ~/trash
+
 while :; do
 	dwm
 done
