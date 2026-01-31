@@ -69,9 +69,6 @@ export JPROC_CMD_LAST=$JPROC_DIR_PID/cmd_last
 # TODO: maybe make a more human readable format like
 # /proc/ since performance doesn't matter here
 
-# FIXME: when exiting lf, where lf is the first process,
-# it will also kill the terminal
-
 # Export the commands to support.
 export JPROC_VIMCD=1
 export JPROC_LFCD=2
