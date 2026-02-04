@@ -1,5 +1,4 @@
 #!/bin/sh
-curr_date=$(date '+%I:%M_%p_%d_%m_%Y')
-mkdir -p ~/trash/$curr_date
-mkdir -p ~/trash
-mv $@ ~/trash/$curr_date
+dir=$HOME/trash/$(date '+%d_%m_%y_%T')
+mkdir -p $dir
+mv $@ "$dir"

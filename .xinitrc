@@ -11,10 +11,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # CPU fan speed control
-sudo cfan &
+sudo cfan >/tmp/cfan.log &
 
 # GPU fan speed control
-sudo nvspeed &
+sudo nvspeed >/tmp/nvspeed.log &
 
 # Don't remove steam cache
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
@@ -54,7 +54,6 @@ nice -n 19 dunst &
 # Cache installed packages
 nice -n 19 paru -Sl | cut -f 2 -d ' ' >"$HOME"/.cache/paru/__list_of_packages__ &
 
-
 # Only save unique commands in zsh history
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 ([ -f "$HISTFILE" ] && nice -n 19 uniq -u "$HISTFILE" >"$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)
@@ -80,7 +79,7 @@ fi
 	# Statusbar
 	retry=5
 	while [ $retry -gt 0 ]; do
-		if ps -e -o comm | grep -q -F 'pipewire' && nice -n 19 dwmblocks-fast; then
+		if ps -e -o comm | grep -q -F 'pipewire' && nice -n 19 dwmblocks-fast 2>> /tmp/dwmblocks-fast.log; then
 			exit
 		fi
 		retry=$((retry - 1))
@@ -90,8 +89,6 @@ fi
 	echo "dwmblocks-fast: can not run program"
 	exit 1 
 } &
-
-rm -rf ~/trash
 
 while :; do
 	dwm
