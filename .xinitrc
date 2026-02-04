@@ -11,17 +11,17 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # CPU fan speed control
-sudo cfan >/tmp/cfan.log &
+sudo cfan >>/tmp/cfan.log 2>>/tmp/cfan.log &
 
 # GPU fan speed control
-sudo nvspeed >/tmp/nvspeed.log &
+sudo nvspeed >>/tmp/nvspeed.log 2>>/tmp/nvspeed.log &
 
 # Don't remove steam cache
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 # Set compositor for terminal transparency
 export COMPOSITOR=fastcompmgr
-$COMPOSITOR &
+$COMPOSITOR 2>/tmp/fastcompmgr.log &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
@@ -79,7 +79,7 @@ fi
 	# Statusbar
 	retry=5
 	while [ $retry -gt 0 ]; do
-		if ps -e -o comm | grep -q -F 'pipewire' && nice -n 19 dwmblocks-fast 2>> /tmp/dwmblocks-fast.log; then
+		if ps -e -o comm | grep -q -F 'pipewire' && nice -n 19 dwmblocks-fast >>/tmp/dwmblocks-fast.log 2>> /tmp/dwmblocks-fast.log; then
 			exit
 		fi
 		retry=$((retry - 1))

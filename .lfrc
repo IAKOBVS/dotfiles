@@ -149,7 +149,7 @@ cmd convert2mov ${{
 	printf "%s\n\t" "$fx"
 	printf "convert to mov? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && alacritty -e 2mov $fx &
+	[ $ans = 'Y' ] && "$TERMINAL" -e 2mov $fx &
 }}
 
 cmd upscale4thumbnail ${{
@@ -158,7 +158,7 @@ cmd upscale4thumbnail ${{
 	printf "%s\n\t" "$fx"
 	printf "upscale? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && alacritty -e waifu2xauto-res-multi 4 $fx &
+	[ $ans = 'Y' ] && "$TERMINAL" -e waifu2xauto-res-multi 4 $fx &
 }}
 
 cmd forceupscale ${{
