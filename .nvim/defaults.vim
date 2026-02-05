@@ -67,10 +67,10 @@ nnoremap ;cc :!gcc -O2 %:p; ./a.out<CR>
 nnoremap <space>t :!exec $TERMINAL &<CR><CR>
 
 " jump between paragraphs
-map J }
-map K {
-map <C-j> <C-d>
-map <C-k> <C-u>
+map <tab>j }
+map <tab>k {
+map <M-j> <C-d>
+map <M-k> <C-u>
 
 " copy paste
 vnoremap <C-d> "+y:delete<CR>
@@ -119,7 +119,7 @@ highlight CursorLineNr ctermbg=none guibg=none
 highlight Normal ctermbg=none guibg=none
 highlight EndOfBuffer guibg=none ctermbg=none
 
-filet plugin indent on
+filetype plugin indent on
 set wildmode=longest,full,full
 set maxmempattern=2000000 " use more ram
 set cinoptions+=:0 " disable switch indent
