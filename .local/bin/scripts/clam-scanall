@@ -1,5 +1,0 @@
-#!/bin/sh
-if command -v clamscan; then
-	clamdscan --multiscan --fdpass /home/$USER
-fi
-clamdscan --multiscan --fdpass /

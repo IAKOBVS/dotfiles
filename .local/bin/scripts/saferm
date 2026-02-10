@@ -1,4 +1,5 @@
 #!/bin/sh
 dir=$HOME/trash/$(date '+%d_%m_%y_%T')
+mkdir -p $HOME/trash
 mkdir -p $dir
 mv $@ "$dir"

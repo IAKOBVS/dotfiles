@@ -115,8 +115,10 @@ cmd delete ${{
 	printf "%s\n\t" "$fx"
 	printf "delete? (Y\N) (~/trash)"
 	read ans
-	mkdir -p ~/trash
-	[ $ans = 'Y' ] && mv -- $fx ~/trash
+	dir=$HOME/trash/$(date '+%d_%m_%y_%T')
+	mkdir -p "$HOME"/trash
+	mkdir -p "$dir"
+	[ $ans = 'Y' ] && mv -- $fx "$dir"
 }}
 
 cmd moveto ${{

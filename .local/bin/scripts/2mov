@@ -1,19 +1,19 @@
 #!/bin/sh
-for arg in $@; do
-	case $arg in
-	*.mp4 | *.mov | *.mkv) ;;
-	*)
-		echo 'Not a .mp4, .mov, or .mkv file!'
-		exit 1
-		;;
-	esac
-	out=${1%.*}
-	# ffmpeg -i "$arg" -vcodec mjpeg -q:v 2 -c:a pcm_s16le -f mov "$out"'.mov'
-	n=$(audiotracks "$arg")
-	i=0
-	while [ $i -le "$n" ]; do
-		ffmpeg -i "$arg" -q:a 0 -map 0:a:$i -f wav "$out"'-audio-'"$i"'.wav' &
-		i=$((i + 1))
-	done
-	ffmpeg -i "$arg" -vcodec mjpeg -q:v 2 -an -f mov "$out"'.mov'
+arg=$1
+case $arg in
+*.mp4 | *.mov | *.mkv) ;;
+*)
+	echo 'Not a .mp4, .mov, or .mkv file!'
+	exit 1
+	;;
+esac
+out=${arg%.*}
+# ffmpeg -i "$arg" -vcodec mjpeg -q:v 2 -an -f mov "$out"'.mov'
+ffmpeg -i "$arg" -vcodec mjpeg -q:v 2 -an -f mov "$out"'.mov' &
+n=$(audiotracks "$arg")
+i=0
+while [ $i -le "$n" ]; do
+	ffmpeg -i "$arg" -q:a 0 -map 0:a:$i -f wav "$out"'-audio-'"$i"'.wav' &
+	i=$((i + 1))
 done
+wait

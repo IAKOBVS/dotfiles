@@ -67,10 +67,10 @@ nnoremap ;cc :!gcc -O2 %:p; ./a.out<CR>
 nnoremap <space>t :!exec $TERMINAL &<CR><CR>
 
 " jump between paragraphs
-map <tab>j }
-map <tab>k {
-map <M-j> <C-d>
-map <M-k> <C-u>
+map J }
+map K {
+map <M-d> <C-d>
+map <M-u> <C-u>
 
 " copy paste
 vnoremap <C-d> "+y:delete<CR>

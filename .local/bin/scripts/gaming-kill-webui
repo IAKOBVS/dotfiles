@@ -1,3 +1,2 @@
 #!/bin/sh
-sleep 10
-renice 19 -p $(ps -e -o comm --no-headers | grep -F steamwebhelper)
+renice 19 -p $(ps -e -o comm,pid --no-headers | awk '$1 == "steamwebhelper" {print $2}')
