@@ -1,8 +1,8 @@
 export PATH="$HOME/.local/bin/scripts:$HOME/.local/bin:$PATH"
 export COMPOSITOR=fastcompmgr
-export TERM=st
-export TERMINAL=st
-export TERMINAL_PROG=st
+export TERM=alacritty
+export TERMINAL=alacritty
+export TERMINAL_PROG=alacritty
 export EDITOR=nvim
 export BROWSER=chromium
 export FZF_DEFAULT_OPTS='--height 95% --layout=reverse --bind alt-j:preview-up,alt-k:preview-down --bind alt-h:backward-char,alt-l:forward-char'
