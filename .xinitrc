@@ -90,6 +90,9 @@ fi
 	exit 1 
 } &
 
+discord &
+thunderbird &
+
 while :; do
 	dwm
 done
