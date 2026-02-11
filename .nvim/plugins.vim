@@ -63,10 +63,10 @@ endif
 nnoremap <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nnoremap <silent> <tab>j <Plug>(coc-diagnostic-next)
 " navigate completions
-inoremap <silent><expr> <C-j> coc#pum#visible() ? coc#pum#next(1) :
+inoremap <silent><expr> <M-j> coc#pum#visible() ? coc#pum#next(1) :
 	\ CheckBackspace() ? "\<C-j>" :
 	\ coc#refresh()
-inoremap <expr><C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <expr><M-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 	\ :"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " GoTo code navigation
