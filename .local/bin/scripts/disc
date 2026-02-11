@@ -1,2 +1,0 @@
-#!/bin/sh
-nice -n 19 discord
