@@ -6,7 +6,7 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'bkad/CamelCaseMotion'
 " Plug 'godlygeek/tabular'
 Plug 'vim-scripts/LargeFile'
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/goyo.vim'
 Plug 'rhysd/vim-grammarous'
@@ -84,15 +84,16 @@ if 0
 endif
 
 " accept completion
-" nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
-" nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
-" nnoremap <space>a :ALEToggle<CR>
+nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
+nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
+nnoremap <space>a :ALEToggle<CR>
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 endif
-let g:ale_linters = { 
-\ 'cs': ['mcs'] 
+let g:ale_linters = {
+	\ 'c': ['cc', 'clangtidy'],
+	\ 'cs': ['mcs'] 
 \}
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 0
