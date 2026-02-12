@@ -9,6 +9,6 @@ ps -e -o comm --no-headers | grep -qF "$CMD" && exit
 
 gaming-kill
 $COMPOSITOR &
-nice -n 19 dunst &
-nice -n 19 unclutter &
-nice -n 19 dwmblocks-fast &
+dunst &
+unclutter &
+dwmblocks-fast &

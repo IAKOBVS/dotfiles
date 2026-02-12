@@ -3,6 +3,9 @@
 # Don't run in SSH
 [ "$SSH_CLIENT" ] && return
 
+export COMPOSITOR=fastcompmgr
+export AUR_HELPER=yay
+
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
 		[ -x "$f" ] && . "$f"
@@ -20,7 +23,6 @@ sudo nvspeed >>/tmp/nvspeed.log 2>>/tmp/nvspeed.log &
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 # Set compositor for terminal transparency
-export COMPOSITOR=fastcompmgr
 $COMPOSITOR 2>/tmp/fastcompmgr.log &
 
 # Set wallpaper
@@ -40,10 +42,10 @@ remaps
 # sudo nvidia-smi -pl 150 &
 
 # Hide mouse cursor
-nice -n 19 unclutter --no-timeout --hide-on-key-press &
+unclutter --no-timeout --hide-on-key-press &
 
 # Notification
-nice -n 19 dunst &
+dunst &
 
 # checkaudioport | grep -q -F 'lineout' && pulseaudio-equalizer disable &
 # jamesdsp -t &
@@ -52,7 +54,7 @@ nice -n 19 dunst &
 # { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 
 # Cache installed packages
-nice -n 19 paru -Sl | cut -f 2 -d ' ' >"$HOME"/.cache/paru/__list_of_packages__ &
+nice -n 19 $AUR_HELPER -Sl | cut -f 2 -d ' ' >"$HOME"/.cache/$AUR_HELPER/__list_of_packages__ &
 
 # Only save unique commands in zsh history
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
@@ -79,7 +81,7 @@ fi
 	# Statusbar
 	retry=5
 	while [ $retry -gt 0 ]; do
-		if ps -e -o comm | grep -q -F 'pipewire' && nice -n 19 dwmblocks-fast >>/tmp/dwmblocks-fast.log 2>> /tmp/dwmblocks-fast.log; then
+		if ps -e -o comm | grep -q -F 'pipewire' && dwmblocks-fast >>/tmp/dwmblocks-fast.log 2>> /tmp/dwmblocks-fast.log; then
 			exit
 		fi
 		retry=$((retry - 1))
