@@ -1,3 +1,3 @@
 #!/bin/sh
-MAIL='nice -n 19 thunderbird'
-$MAIL
+MAIL='thunderbird'
+nice -n 19 $MAIL

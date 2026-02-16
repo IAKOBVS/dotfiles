@@ -1,2 +1,2 @@
 #!/bin/sh
-nice -n 19 /bin/discord
+nice -n 19 /bin/discord &

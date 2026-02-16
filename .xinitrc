@@ -5,6 +5,7 @@
 
 export COMPOSITOR=fastcompmgr
 export AUR_HELPER=yay
+export LOG_DIR=$HOME/.cache
 
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
@@ -14,16 +15,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # CPU fan speed control
-sudo cfan >>/tmp/cfan.log 2>>/tmp/cfan.log &
+sudo cfan >>$LOG_DIR/cfan.log 2>>$LOG_DIR/cfan.log &
 
 # GPU fan speed control
-sudo nvspeed >>/tmp/nvspeed.log 2>>/tmp/nvspeed.log &
-
-# Don't remove steam cache
-export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+sudo nvspeed >>$LOG_DIR/nvspeed.log 2>>$LOG_DIR/nvspeed.log &
 
 # Set compositor for terminal transparency
-$COMPOSITOR 2>/tmp/fastcompmgr.log &
+$COMPOSITOR 2>$LOG_DIR/fastcompmgr.log &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
@@ -38,8 +36,8 @@ $TERMINAL &
 # change esc with caps lock
 remaps
 
-# Nvidia overclocking
-# sudo nvidia-smi -pl 150 &
+# Nvidia max out power limit
+sudo nvidia-smi -pl $(nvidia-smi -q -d POWER | awk '/Max Power Limit/ && !/N\/A/ { print $5 }')
 
 # Hide mouse cursor
 unclutter --no-timeout --hide-on-key-press &
@@ -61,9 +59,6 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 ([ -f "$HISTFILE" ] && nice -n 19 uniq -u "$HISTFILE" >"$HISTFILE.bak" && rm "$HISTFILE" && mv "$HISTFILE.bak" "$HISTFILE" &)
 unset HISTFILE
 
-# Put this in Steam Launch Options
-# __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 %command% -sdlaudiodriver pulse
-
 # Set sxiv image background
 xrdb $HOME/.Xresources &
 
@@ -81,7 +76,7 @@ fi
 	# Statusbar
 	retry=5
 	while [ $retry -gt 0 ]; do
-		if ps -e -o comm | grep -q -F 'pipewire' && dwmblocks-fast >>/tmp/dwmblocks-fast.log 2>> /tmp/dwmblocks-fast.log; then
+		if ps -e -o comm | grep -q -F 'pipewire' && dwmblocks-fast >>$LOG_DIR/dwmblocks-fast.log 2>> $LOG_DIR/dwmblocks-fast.log; then
 			exit
 		fi
 		retry=$((retry - 1))
@@ -94,6 +89,7 @@ fi
 
 discord &
 thunderbird &
+nv-tearfree-on
 
 while :; do
 	dwm

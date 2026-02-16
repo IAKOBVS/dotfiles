@@ -91,8 +91,9 @@ endif
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1
 endif
+let g:ale_completion_enabled = 0
 let g:ale_linters = {
-\ 'c': ['cc', 'clangtidy'],
+\ 'c': ['cc'],
 \ 'cs': ['mcs'] 
 \}
 let g:ale_lint_on_enter = 0
