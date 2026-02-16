@@ -9,7 +9,7 @@ export FZF_DEFAULT_OPTS='--height 95% --layout=reverse --bind alt-j:preview-up,a
 export GTK_THEME=Adwaita:dark
 export QT_STYLE_OVERRIDE=kvantum
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
-# export __GL_SHADER_DISK_CACHE_MAX_SIZE=10737418240 # 10 GB steam shader cache
+export __GL_SHADER_DISK_CACHE_MAX_SIZE=10737418240 # 10 GB steam shader cache
 export CUDA_DISABLE_PERF_BOOST=1
 export FZF_DEFAULT_COMMAND="find \
 		! -path '*.git*' \
