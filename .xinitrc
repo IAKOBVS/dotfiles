@@ -76,7 +76,7 @@ fi
 	# Statusbar
 	retry=5
 	while [ $retry -gt 0 ]; do
-		if ps -e -o comm | grep -q -F 'pipewire' && dwmblocks-fast >>$LOG_DIR/dwmblocks-fast.log 2>> $LOG_DIR/dwmblocks-fast.log; then
+		if dwmblocks-fast >>$LOG_DIR/dwmblocks-fast.log 2>> $LOG_DIR/dwmblocks-fast.log; then
 			exit
 		fi
 		retry=$((retry - 1))
