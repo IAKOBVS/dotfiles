@@ -77,6 +77,7 @@ fi
 	retry=5
 	while [ $retry -gt 0 ]; do
 		dwmblocks-fast >>$LOG_DIR/dwmblocks-fast.log 2>> $LOG_DIR/dwmblocks-fast.log && exit
+		# Retry
 		retry=$((retry - 1))
 		sleep 1
 	done
@@ -90,3 +91,5 @@ thunderbird &
 nv-tearfree-on
 
 while :; do
+	dwm
+done
