@@ -3,7 +3,7 @@
 # Don't run in SSH
 [ "$SSH_CLIENT" ] && return
 
-export COMPOSITOR=fastcompmgr
+export COMPOSITOR=picom
 export AUR_HELPER=yay
 export LOG_DIR=$HOME/.cache
 
@@ -21,7 +21,7 @@ sudo cfan >>$LOG_DIR/cfan.log 2>>$LOG_DIR/cfan.log &
 sudo nvspeed >>$LOG_DIR/nvspeed.log 2>>$LOG_DIR/nvspeed.log &
 
 # Set compositor for terminal transparency
-$COMPOSITOR 2>$LOG_DIR/fastcompmgr.log &
+$COMPOSITOR 2>$LOG_DIR/$COMPOSITOR.log &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
@@ -80,7 +80,7 @@ fi
 		# Retry
 		retry=$((retry - 1))
 		sleep 1
-		for pid in $(ps -e -o comm --no-headers | grep -F -e 'dwmblocks-fast'); do
+		for pid in $(ps -e -o pid,comm --no-headers | awk '$2 == "dwmblocks-fast" { print $1; }'); do
 			kill -15 "$pid"
 		done
 	done

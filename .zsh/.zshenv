@@ -1,5 +1,5 @@
 export PATH="$HOME/.local/bin/scripts:$HOME/.local/bin:$PATH"
-export COMPOSITOR=fastcompmgr
+export COMPOSITOR=picom
 export TERM=alacritty
 export TERMINAL=alacritty
 export TERMINAL_PROG=alacritty
