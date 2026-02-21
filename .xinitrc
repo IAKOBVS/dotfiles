@@ -77,12 +77,12 @@ fi
 	retry=5
 	while [ $retry -gt 0 ]; do
 		dwmblocks-fast >>$LOG_DIR/dwmblocks-fast.log 2>> $LOG_DIR/dwmblocks-fast.log && exit
-		for pid in $(ps -e -o comm --no-headers | grep -F -e 'dwmblocks-fast'); do
-			kill -15 "$pid"
-		done
 		# Retry
 		retry=$((retry - 1))
 		sleep 1
+		for pid in $(ps -e -o comm --no-headers | grep -F -e 'dwmblocks-fast'); do
+			kill -15 "$pid"
+		done
 	done
 	unset retry
 	echo "dwmblocks-fast: can not run program"
