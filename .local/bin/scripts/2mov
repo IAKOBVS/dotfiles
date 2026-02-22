@@ -8,8 +8,7 @@ case $arg in
 	;;
 esac
 out=${arg%.*}
-# ffmpeg -i "$arg" -vcodec mjpeg -q:v 2 -an -f mov "$out"'.mov'
-# ffmpeg -i "$arg" -vcodec mjpeg -q:v 2 -an -f mov "$out"'.mov' &
+ffmpeg -i "$arg" -vcodec mjpeg -q:v 2 -an -f mov "$out"'.mov' &
 n=$(audiotracks "$arg")
 i=0
 while [ $i -le "$n" ]; do
