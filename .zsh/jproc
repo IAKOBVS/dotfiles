@@ -172,7 +172,7 @@ jproc_vimcd()
 	'-c')
 		file=$(realpath "$3")
 		[ -f "$file" ] || return
-		cd "$(dirname $file)" || return
+		cd "$(dirname "$file")" || return
 		cmd=$EDITOR
 		set -- -c "$2"
 		;;
@@ -186,7 +186,7 @@ jproc_vimcd()
 			;;
 		*)
 			if [ -f "$file" ]; then
-				cd "$(dirname $file)" || return
+				cd "$(dirname "$file")" || return
 				cmd=$EDITOR
 			elif [ -d "$file" ]; then
 				cd "$file" || return
