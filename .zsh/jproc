@@ -146,7 +146,7 @@ jproc_lfcd()
 	lf -last-dir-path="$dir" "$@" $JPROC_REDIRECT_STDERR && jproc_internal_vim_sel
 	dir=$(cat $JPROC_LF_DIR)
 	if [ -d "$dir" ]; then
-		cd "$dir"
+		cd "$dir" || exit
 	fi
 }
 
