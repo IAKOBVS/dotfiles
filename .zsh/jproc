@@ -93,27 +93,27 @@ JPROC_REDIRECT_STDERR=''
 
 touch()
 {
-	file=$(realpath "$(echo $@ | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
+	file=$(realpath "$(echo "$@" | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
 	/bin/touch "$@"
 }
 
 mkdir()
 {
-	file=$(realpath "$(echo $@ | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
+	file=$(realpath "$(echo "$@" | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
 	/bin/mkdir "$@"
 }
 
 # Select program to call based on the value in the tmp file.
 jproc_internal_vim_sel()
 {
-	[ ! -f $JPROC_VIM_PROG ] $JPROC_REDIRECT_STDERR && return
+	test ! -f $JPROC_VIM_PROG $JPROC_REDIRECT_STDERR && return
 	prog=$(cat $JPROC_VIM_PROG)
-	if [ ! -f $JPROC_VIM_ARG ] $JPROC_REDIRECT_STDERR; then
+	if test ! -f $JPROC_VIM_ARG $JPROC_REDIRECT_STDERR; then
 		arg=''
 	else
 		arg=$(cat $JPROC_VIM_ARG)
 	fi
-	echo >$JPROC_VIM_ARG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
+	echo >$JPROC_VIM_ARG "$JPROC_REDIRECT_STDOUT" $JPROC_REDIRECT_STDERR
 	echo >$JPROC_VIM_PROG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
 	case $prog in
 	"$JPROC_VIMCD") jproc_vimcd "$arg" ;;
@@ -123,6 +123,7 @@ jproc_internal_vim_sel()
 	"$JPROC_FZFLIVEHOME") jproc_fzflive "$arg" ;;
 	"$JPROC_GREPVIM") jproc_grepvim "$arg" ;;
 	esac
+	unset prog
 }
 
 # Get the last command.
@@ -134,6 +135,7 @@ jproc_internal_cmd_last()
 	"$JPROC_VIMCD") jproc_vimcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
 	"$JPROC_LFCD") jproc_lfcd "$(cat $JPROC_VIM_FILE_LAST)" ;;
 	esac
+	unset prog
 }
 
 # Open lf and cd to the last directory.
