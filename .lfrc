@@ -185,13 +185,13 @@ cmd upvid ${{
 	[ $ans = 'Y' ] && setsid -f st -e upvid $fx &
 }}
 
-cmd mvsub ${{
+cmd subgen ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
 	printf "mvsub? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && setsid -f st -e mvsub $fx &
+	[ $ans = 'Y' ] && setsid -f st -e subgen $fx &
 }}
 
 cmd setbg "$1"
@@ -229,7 +229,7 @@ map Y $printf "%s" "$fx" | xclip -selection clipboard
 map m convert2mov
 map u upvid
 map U upscale4thumbnail
-map S mvsub
+map S subgen
 map O opengimp
 map v push :!nvim<space>
 map c push :mv<space>
