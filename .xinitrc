@@ -74,7 +74,7 @@ fi
 
 {
 	# Statusbar
-	retry=5
+	retry=10
 	while [ $retry -gt 0 ]; do
 		nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>> "$LOG_DIR/dwmblocks-fast.log" && exit
 		# Retry
