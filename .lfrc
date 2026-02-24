@@ -189,7 +189,7 @@ cmd subgen ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	printf "%s\n\t" "$fx"
-	printf "mvsub? (Y\N)"
+	printf "generate subtitle? (Y\N)"
 	read ans
 	[ $ans = 'Y' ] && setsid -f st -e subgen $fx &
 }}
