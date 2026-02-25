@@ -1,33 +1,81 @@
 {
-	"codeLens.enable": true,
+	"clangd.disableDiagnostics": false,
 	"clangd.path": "/usr/bin/clangd",
-    "clangd.disableDiagnostics": true,
+	"clangd.fallbackFlags": [
+		"-xc",
+		"--analyze",
+		"-Wall",
+		"-Wextra",
+		"-Wpedantic",
+		"-pedantic",
+		"-pedantic-errors",
+		"-Wuninitialized",
+		"-Wshadow",
+		"-Warray-bounds",
+		"-Wnull-dereference",
+		"-Wunused",
+		"-Wwrite-strings",
+		"-Wsign-conversion",
+		"-Xanalyzer",
+		"-Wundef",
+		"-Wshadow",
+		"-Wconversion",
+		"-Wsign-conversion",
+		"-Wdouble-promotion",
+		"-Wcast-align",
+		"-Wimplicit-fallthrough",
+		"-Wswitch-enum",
+		"-Wformat=2",
+		"-Wnull-dereference",
+		"-Wuninitialized",
+		"-Wconditional-uninitialized",
+		"-Wredundant-decls",
+		"-Wnested-anon-types",
+		"-Wgnu",
+		"-Wstrict-aliasing=2",
+		"-Wstrict-overflow=5",
+		"-Warray-bounds",
+		"-Wvla",
+		"-Walloca",
+		"-Walloc-zero",
+		"-Wno-unused-parameter",
+		"-Wno-implicit-int-conversion",
+		"-Wno-strict-prototypes"
+	],
+	"clangd.arguments": [
+		"--background-index",
+		"--background-index-priority=low",
+		"--clang-tidy",
+		"--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,bugprone-*,performance-*,cert-*,cppcoreguidelines-*"
+	],
+    "perl.enable": false,
+    "perlnavigator.enable": true,
+    "perlnavigator.perlcriticEnabled": true,
+    "perlnavigator.perltidyEnabled": true,
+    "perlnavigator.enableWarnings": true,
 	"languageserver": {
-		"perlnavigator": {
-            "enable": true,
-			"command": "perlnavigator",
-			"args": [
-				"--stdio"
+		           "csharp-ls": {
+			"enable": false,
+			"command": "csharp-ls",
+			"filetypes": [
+				"cs"
 			],
-			"filetypes": ["perl"]
+			"rootPatterns": [
+				"*.csproj",
+				".vim/",
+				".git/",
+				".hg/"
+			]
 		},
-		"perlpls": {
-            "enable": true,
-			"command": "pls",
-			"filetypes": ["perl"]
-		},
-        "awk": {
-            "command": "awk-language-server",
-            "filetypes": ["awk"]
-        },
-        "asm-lsp": {
-            "command": "/home/james/.cargo/bin/asm-lsp",
-            "filetypes": ["asm", "s", "S"]
-        }
+		           "awk": {
+			"command": "awk-language-server",
+			"filetypes": [
+				"awk"
+			]
+		}
 	},
-    "sh.commandPath": "bash-language-server",
-    "prettier.useTabs": true,
-    "prettier.semi": true,
-    "prettier.bracketSameLine": false,
-    "eslint.onIgnoredFiles": "off"
+    "sh.enable": true,
+	"sh.commandPath": "bash-language-server",
+	"eslint.onIgnoredFiles": "off",
+	"snippets.ultisnips.pythonPrompt": false
 }
