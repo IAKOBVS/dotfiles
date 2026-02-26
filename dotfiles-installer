@@ -5,6 +5,8 @@ set -eu
 SYSTEM_INSTALL_CMD='pacman -S'
 SYSTEM_EXTRA_INSTALL_CMD='yay -S'
 
+REPOS_LINK='https://github.com/iakobvs'
+
 # Set variables
 SRC_DIR=$HOME/.local/share/src
 CFG_DIR=$HOME/.config
@@ -12,7 +14,6 @@ LF_DIR=$CFG_DIR/lf
 ALACRITTY_DIR=$CFG_DIR/alacritty
 NVIM_DIR=$CFG_DIR/nvim
 NVIM_NEW_DIR=$HOME/.nvim
-REPOS_LINK='https://github.com/iakobvs'
 
 install_neovim() {
 	$SYSTEM_INSTALL_CMD neovim
