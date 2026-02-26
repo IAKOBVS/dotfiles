@@ -3,95 +3,126 @@
 set -eu
 
 SYSTEM_INSTALL_CMD='pacman -S'
-SYSTEM_INSTALL_EXTRA_CMD='yay -S'
+SYSTEM_EXTRA_INSTALL_CMD='yay -S'
 
 # Set variables
 SRC_DIR=$HOME/.local/share/src
 CFG_DIR=$HOME/.config
 LF_DIR=$CFG_DIR/lf
-VIM_DIR=$HOME
 ALACRITTY_DIR=$CFG_DIR/alacritty
 NVIM_DIR=$CFG_DIR/nvim
 NVIM_NEW_DIR=$HOME/.nvim
 REPOS_LINK='https://github.com/iakobvs'
+
+install_neovim() {
+	$SYSTEM_INSTALL_CMD neovim
+}
+
+install_neovim_plugins() {
+	# Add nvim cofiguration
+	echo "source $NVIM_NEW_DIR/init.vim" >> "$NVIM_DIR/init.vim"
+	# Install VimPlug plugins
+	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	# Install VimPlug plugins
+	nvim -c ':PlugInstall'
+	nvim -c ':PlugUpdate'
+	# Install coc-nvim
+	$SYSTEM_INSTALL_CMD nodejs npm clang
+	# Install coc.nvim plugins
+	nvim -c ':CocInstall coc-clangd coc-pairs coc-lists coc-diagnostic coc-highlight coc-snippets coc-sh'
+	nvim -c ':CocUpdate'
+}
+
+install_zsh() {
+	# Autosuggestions
+	$SYSTEM_INSTALL_CMD zsh
+	chsh -s /bin/zsh
+	# $SYSTEM_INSTALL_CMD zsh-autosuggestions
+}
+
+install_lf() {
+	# lf
+	# The latest lf breaks current lfcd scripts. This is using the r30.1 version.
+	cd "$SRC_DIR"
+	git clone "$REPOS_LINK/lf"
+	cd lf
+	$SYSTEM_INSTALL_CMD go
+	CGO_ENABLED=0 go install -ldflags="-s -w"
+	cd ..
+
+	# lf image previews
+	$SYSTEM_EXTRA_INSTALL_CMD -S ctpv bat poppler ueberzugpp
+
+	# lf configs
+	mkdir -p "$LF_DIR"
+	ln -s "$HOME/.lfrc" "$LF_DIR/lfrc"
+	ln -s "$HOME/.lfrc-icons" "$LF_DIR/icons"
+}
+
+install_dwmblocks_fast() {
+	cd "$SRC_DIR"
+	git clone "$REPOS_LINK/dwmblocks-fast"
+	cd dwmblocks-fast
+	make
+	sudo make install
+	cd ..
+}
+
+install_dwm() {
+	cd "$SRC_DIR"
+	git clone "$REPOS_LINK/dwm"
+	cd dwm
+	make
+	sudo make install
+	cd ..
+}
+
+install_st() {
+	cd "$SRC_DIR"
+	git clone "$REPOS_LINK/st"
+	cd st
+	make
+	sudo make install
+	cd ..
+}
+
+install_darktheme_qt() {
+	$SYSTEM_INSTALL_CMD kvantum
+}
+
+install_git_pass() {
+	$SYSTEM_INSTALL_CMD git
+	# use personal access token
+	# git config --global credential.helper store
+}
+
+install_alacritty() {
+	$SYSTEM_INSTALL_CMD alacritty
+	# Symlink configs
+	mkdir -p "$ALACRITTY_DIR"
+	ln -s "$HOME/.alacritty.toml" "$ALACRITTY_DIR/alacritty.toml"
+}
+
+install_remaps() {
+	# For rebinding esc with caps
+	$SYSTEM_INSTALL_CMD xorg-xset xcape
+}
 
 # Mkdir SRC_DIR
 mkdir -p "$HOME/.local"
 mkdir -p "$HOME/.local/share"
 mkdir -p "$HOME/.local/share/src"
 
-# Symlink configs
-mkdir -p "$LF_DIR"
-ln -s "$HOME/.lfrc" "$LF_DIR/lfrc"
-ln -s "$HOME/.lfrc-icons" "$LF_DIR/icons"
-mkdir -p "$ALACITTY_DIR_DIR"
-ln -s "$HOME/.alacritty.toml" "$ALACRITTY_DIR/alacritty.toml"
-
-# Add nvim cofiguration
-echo "source $NVIM_NEW_DIR/init.vim" >> "$NVIM_DIR/init.vim"
-# Add vim configuration
-echo "source $NVIM_NEW_DIR/init.vim" >> "$VIM_DIR/.vimrc"
-
-# vim-plug: https://github.com/junegunn/vim-plug
-# Vim
-# curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-# Nvim
-# sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-# coc.nvim: https://github.com/neoclide/coc.nvim
-# $SYSTEM_INSTALL_CMD npm nodejs
-
-# For rebinding esc with caps
-# $SYSTEM_INSTALL_CMD xorg-xset xcape
-
-# Clone my repos
-cd "$SRC_DIR"
-git clone "$REPOS_LINK/dwm"
-git clone "$REPOS_LINK/dwmblocks-fast"
-git clone "$REPOS_LINK/st"
-# The latest lf breaks current lfcd scripts. This is using the r30.1 version.
-git clone "$REPOS_LINK/lf"
-
-# Install programs
-# dwm
-cd dwm
-make
-sudo make install
-cd ..
-
-# dwmblocks-fast
-cd dwmblocks-fast
-make
-sudo make install
-cd ..
-
-# st
-cd st
-make
-sudo make install
-cd ..
-
-# lf
-cd lf
-$SYSTEM_INSTALL_CMD go
-CGO_ENABLED=0 go install -ldflags="-s -w"
-cd ..
-
-# lf image previews
-# $SYSTEM_INSTALL_EXTRA_CMD ctpv bat poppler ueberzugpp
-# image viewer
-# sxiv
+install_neovim
+install_neovim_plugins
+install_zsh
+# install_lf
+# install_st
+# install_dwm
+# install_dwmblocks_fast
+# install_alacritty
+# install_darktheme_qt
+# install_remaps
 
 # pdf viewer
 # zathura-pdf-mupdf
-
-# Autosuggestions
-# $SYSTEM_INSTALL_CMD zsh
-# $SYSTEM_INSTALL_CMD zsh-autosuggestions
-
-# git
-# use personal access token
-# git config --global credential.helper store
-
-# Qt dark
-# $SYSTEM_INSTALL_CMD kvantum
