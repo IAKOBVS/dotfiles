@@ -78,12 +78,12 @@ fi
 	retry=10
 	while [ $retry -gt 0 ]; do
 		nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>> "$LOG_DIR/dwmblocks-fast.log" && exit
-		# Retry
-		retry=$((retry - 1))
-		sleep 1
 		for pid in $(ps -e -o pid,comm --no-headers | awk '$2 == "dwmblocks-fast" { print $1; }'); do
 			kill -15 "$pid"
 		done
+		# Retry
+		retry=$((retry - 1))
+		sleep 1
 	done
 	unset retry
 	echo "dwmblocks-fast: can not run program"
