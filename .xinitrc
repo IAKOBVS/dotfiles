@@ -25,7 +25,8 @@ $COMPOSITOR 2>"$LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
-feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
+# feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
+feh --bg-fill /home/james/Downloads/wallpaper-hd-1080.png &
 
 # turn off webcam
 sudo modprobe -r uvcvideo
@@ -52,7 +53,7 @@ dunst &
 # { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 
 # Cache installed packages
-nice -n 19 $AUR_HELPER -Sl | cut -f 2 -d ' ' >"$HOME"/.cache/$AUR_HELPER/__list_of_packages__ &
+nice -n 19 $AUR_HELPER -Sl | cut -f 2 -d ' ' >"$HOME/.cache/$AUR_HELPER/__list_of_packages__" &
 
 # Only save unique commands in zsh history
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"

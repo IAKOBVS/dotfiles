@@ -15,16 +15,16 @@ NVIM_NEW_DIR=$HOME/.nvim
 REPOS_LINK='https://github.com/iakobvs'
 
 # Mkdir SRC_DIR
-mkdir -p $HOME/.local
-mkdir -p $HOME/.local/share
-mkdir -p $HOME/.local/share/src
+mkdir -p "$HOME/.local"
+mkdir -p "$HOME/.local/share"
+mkdir -p "$HOME/.local/share/src"
 
 # Symlink configs
 mkdir -p "$LF_DIR"
-ln -s $HOME/.lfrc "$LF_DIR/lfrc"
-ln -s $HOME/.lfrc-icons "$LF_DIR/icons"
+ln -s "$HOME/.lfrc" "$LF_DIR/lfrc"
+ln -s "$HOME/.lfrc-icons" "$LF_DIR/icons"
 mkdir -p "$ALACITTY_DIR_DIR"
-ln -s $HOME/.alacritty.toml "$ALACRITTY_DIR/alacritty.toml"
+ln -s "$HOME/.alacritty.toml" "$ALACRITTY_DIR/alacritty.toml"
 
 # Add nvim cofiguration
 echo "source $NVIM_NEW_DIR/init.vim" >> "$NVIM_DIR/init.vim"
@@ -41,7 +41,7 @@ echo "source $NVIM_NEW_DIR/init.vim" >> "$VIM_DIR/.vimrc"
 # $SYSTEM_INSTALL_CMD npm nodejs
 
 # For rebinding esc with caps
-# pacman -S xorg-xset xcape
+# $SYSTEM_INSTALL_CMD xorg-xset xcape
 
 # Clone my repos
 cd "$SRC_DIR"
@@ -85,12 +85,12 @@ cd ..
 # zathura-pdf-mupdf
 
 # Autosuggestions
-# pacman -S zsh
-# pacman -S zsh-autosuggestions
+# $SYSTEM_INSTALL_CMD zsh
+# $SYSTEM_INSTALL_CMD zsh-autosuggestions
 
 # git
 # use personal access token
 # git config --global credential.helper store
 
 # Qt dark
-# pacman -S kvantum
+# $SYSTEM_INSTALL_CMD kvantum
