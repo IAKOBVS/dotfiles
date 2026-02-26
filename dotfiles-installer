@@ -19,6 +19,8 @@ install_neovim() {
 }
 
 install_neovim_plugins() {
+	mkdir -p "$NVIM_DIR"
+	mkdir -p "$NVIM_NEW_DIR"
 	# Add nvim cofiguration
 	echo "source $NVIM_NEW_DIR/init.vim" >> "$NVIM_DIR/init.vim"
 	# Install VimPlug plugins
