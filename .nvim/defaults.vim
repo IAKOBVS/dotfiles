@@ -69,8 +69,8 @@ nnoremap <space>t :!exec $TERMINAL &<CR><CR>
 " jump between paragraphs
 map J }
 map K {
-map <M-d> <C-d>
-map <M-u> <C-u>
+map <M-k> <C-u>
+map <M-j> <C-d>
 
 " copy paste
 vnoremap <C-d> "+y:delete<CR>
