@@ -1,52 +1,61 @@
 #!/bin/sh
-usage='usage: ./waifu2xauto <image> <scale>'
-case $1 in
+image=$1
+scale=$2
+
+USAGE="usage: $(basename "$0") <image> <scale>"
+if [ -z "$UPSCALER" ]; then
+	UPSCALER=realesrgan-x4plus-anime
+fi
+
+case $image in
 *.png | *.jpg | *.jpeg | *.webp) ;;
 *)
-	echo "$usage"
+	echo "$USAGE"
 	echo 'Not an image file!'
 	exit 1
 	;;
 esac
-scale=$2
 
-#waifu2x is blurry
-if [ "$scale" -le 3 ]; then
-	scale=4
-fi
-
-denoise=$3
-if [ -z "$denoise" ]; then
-	out=${1%.*}-hd-$scale'x.png'
-	denoise=1
-else
-	out=${1%.*}-hd-$scale'x'-n$denoise'.png'
-fi
-if [ "$scale" -le 3 ]; then
-	waifu2x-ncnn-vulkan -i "$1" -o "$out" -s 2 -n "$denoise" -v
-	exit
-elif [ "$2" -le 4 ]; then
+if [ "$scale" -le 4 ]; then
 	n=0
-elif [ "$2" -le 16 ]; then
+	scale=4
+elif [ "$scale" -le 16 ]; then
 	n=1
-elif [ "$2" -le 32 ]; then
+	scale=$((scale * scale))
+elif [ "$scale" -le 32 ]; then
 	n=2
-elif [ "$2" -le 64 ]; then
+	scale=$((scale * scale * scale))
+elif [ "$scale" -le 64 ]; then
 	n=3
+	scale=$((scale * scale * scale * scale))
 else
-	echo "$usage"
+	echo "$USAGE"
 	echo 'Illegal number used! Use 1, 2, 3, 4, 16, 32, or 64 instead.'
 	exit 1
 fi
-scale=4
-upscaler=realesrgan-x4plus-anime
+
+out=${1%.*}-hd-${scale}x.png
+
 upscale()
 {
-	realesrgan-ncnn-vulkan -i "$1" -o "$out" -s "$scale" -n "$upscaler" -v
+	realesrgan-ncnn-vulkan -i "$image" -o "$out" -s 4 -n "$UPSCALER" -v
 }
-upscale "$1"
+
+upscale "$image"
+
 i=0
 while [ $i -lt $n ]; do
 	upscale "$out"
 	i=$((i = i + 1))
 done
+
+if [ ! -z "$RESIZE" ]; then
+	if [ ! -z "$RESIZE_RES" ]; then
+		RESIZE_RES=2400
+	fi
+	resolution=$(identify -ping "$out" | awk '{print $3}' | sed 's/x.*//')
+	if [ "$resolution" -gt "$RESIZE_RES" ]; then
+		res "$out" "$RESIZE_RES" 
+		rm "$out"
+	fi
+fi
