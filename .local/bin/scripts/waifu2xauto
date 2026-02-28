@@ -4,6 +4,10 @@ scale=$2
 out=${image%.*}-hd-${scale}x.png
 USAGE="usage: $(basename "$0") <image> <scale>"
 
+if [ -z "$UPSCALER" ]; then
+	UPSCALER=realesrgan-x4plus-anime
+fi
+
 upscale()
 {
 	realesrgan-ncnn-vulkan -i "$1" -o "$out" -s 4 -n "$UPSCALER" -v
@@ -22,10 +26,6 @@ resize()
 		fi
 	fi
 }
-
-if [ -z "$UPSCALER" ]; then
-	UPSCALER=realesrgan-x4plus-anime
-fi
 
 case $image in
 *.png | *.jpg | *.jpeg | *.webp) ;;
