@@ -2,7 +2,7 @@
 image=$1
 scale=$2
 out=${image%.*}-hd-${scale}x.png
-USAGE="usage: $(basename "$0") <image> <scale>"
+USAGE="usage: $(basename "$0") <image> <scale>."
 
 if [ -z "$UPSCALER" ]; then
 	UPSCALER=realesrgan-x4plus-anime
