@@ -1,8 +1,28 @@
 #!/bin/sh
 image=$1
 scale=$2
-out=${image%.*}-hd-${scale}x.png
 USAGE="usage: $(basename "$0") <image> <scale>."
+
+scale_get()
+{
+	if [ "$scale" -le 4 ]; then
+		n=0
+		scale=4
+	elif [ "$scale" -le 16 ]; then
+		n=1
+		scale=$((scale * scale))
+	elif [ "$scale" -le 32 ]; then
+		n=2
+		scale=$((scale * scale * scale))
+	elif [ "$scale" -le 64 ]; then
+		n=3
+		scale=$((scale * scale * scale * scale))
+	else
+		echo "$USAGE"
+		echo 'Illegal number used! Use 1, 2, 3, 4, 16, 32, or 64 instead.'
+		exit 1
+	fi
+}
 
 if [ -z "$UPSCALER" ]; then
 	UPSCALER=realesrgan-x4plus-anime
@@ -21,7 +41,7 @@ resize()
 			RESIZE_RES=2400
 		fi
 		if [ "$resolution" -gt "$RESIZE_RES" ]; then
-			res "$out" "$RESIZE_RES" 
+			res "$out" "$RESIZE_RES"
 			rm "$out"
 		fi
 	fi
@@ -36,23 +56,7 @@ case $image in
 	;;
 esac
 
-if [ "$scale" -le 4 ]; then
-	n=0
-	scale=4
-elif [ "$scale" -le 16 ]; then
-	n=1
-	scale=$((scale * scale))
-elif [ "$scale" -le 32 ]; then
-	n=2
-	scale=$((scale * scale * scale))
-elif [ "$scale" -le 64 ]; then
-	n=3
-	scale=$((scale * scale * scale * scale))
-else
-	echo "$USAGE"
-	echo 'Illegal number used! Use 1, 2, 3, 4, 16, 32, or 64 instead.'
-	exit 1
-fi
+out=${image%.*}-hd-${scale}x.png
 
 upscale "$image"
 
