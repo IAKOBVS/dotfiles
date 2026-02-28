@@ -1,8 +1,28 @@
 #!/bin/sh
 image=$1
 scale=$2
-
+out=${image%.*}-hd-${scale}x.png
 USAGE="usage: $(basename "$0") <image> <scale>"
+
+upscale()
+{
+	realesrgan-ncnn-vulkan -i "$1" -o "$out" -s 4 -n "$UPSCALER" -v
+}
+
+resize()
+{
+	resolution=$(identify -ping "$out" | awk '{print $3}' | sed 's/x.*//')
+	if [ ! -z "$RESIZE" ]; then
+		if [ ! -z "$RESIZE_RES" ]; then
+			RESIZE_RES=2400
+		fi
+		if [ "$resolution" -gt "$RESIZE_RES" ]; then
+			res "$out" "$RESIZE_RES" 
+			rm "$out"
+		fi
+	fi
+}
+
 if [ -z "$UPSCALER" ]; then
 	UPSCALER=realesrgan-x4plus-anime
 fi
@@ -34,28 +54,11 @@ else
 	exit 1
 fi
 
-out=${1%.*}-hd-${scale}x.png
-
-upscale()
-{
-	realesrgan-ncnn-vulkan -i "$image" -o "$out" -s 4 -n "$UPSCALER" -v
-}
-
 upscale "$image"
 
-i=0
-while [ $i -lt $n ]; do
+while [ "$n" -gt 0 ]; do
 	upscale "$out"
-	i=$((i = i + 1))
+	n=$((n - 1))
 done
 
-if [ ! -z "$RESIZE" ]; then
-	if [ ! -z "$RESIZE_RES" ]; then
-		RESIZE_RES=2400
-	fi
-	resolution=$(identify -ping "$out" | awk '{print $3}' | sed 's/x.*//')
-	if [ "$resolution" -gt "$RESIZE_RES" ]; then
-		res "$out" "$RESIZE_RES" 
-		rm "$out"
-	fi
-fi
+resize
