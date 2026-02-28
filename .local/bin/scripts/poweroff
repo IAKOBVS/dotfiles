@@ -1,2 +1,2 @@
 #!/bin/sh
-sync && sync && kill -15 -1 && systemctl poweroff
+sync && sync && systemctl poweroff
