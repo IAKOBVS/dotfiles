@@ -1,3 +1,3 @@
 #!/bin/sh
-systemctl start vmware-networks.service
+sudo systemctl start vmware-networks.service
 vmware

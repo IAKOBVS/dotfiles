@@ -1,2 +1,2 @@
 #!/bin/sh
-nice -n 19 brave
+nice -n 19 brave --disable-gpu
