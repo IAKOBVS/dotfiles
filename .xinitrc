@@ -63,32 +63,7 @@ unset HISTFILE
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
 
-if ps -e -o comm | grep -q -F 'systemd'; then
-	systemctl --user start pipewire.service
-	systemctl --user start pipewire-pulse.service
-	systemctl --user start wireplumber.service
-else
-	pipewire &
-	pipewire-pulse &
-	wireplumber &
-fi
-
-{
-	# Statusbar
-	retry=10
-	while [ $retry -gt 0 ]; do
-		nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>> "$LOG_DIR/dwmblocks-fast.log"
-		for pid in $(ps -e -o pid,comm --no-headers | awk '$2 == "dwmblocks-fast" { print $1; }'); do
-			kill -15 "$pid"
-		done
-		# Retry
-		retry=$((retry - 1))
-		sleep 1
-	done
-	unset retry
-	echo "dwmblocks-fast: can not run program"
-	exit 1 
-} &
+nice -n 19 dwmblocks-fast >>"$log_file" 2>>"$log_file" &
 
 discord &
 thunderbird &
