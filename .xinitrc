@@ -63,7 +63,7 @@ unset HISTFILE
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
 
-nice -n 19 dwmblocks-fast >>"$log_file" 2>>"$log_file" &
+nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>>"$LOG_DIR/dwmblocks-fast.log" &
 
 discord &
 thunderbird &
