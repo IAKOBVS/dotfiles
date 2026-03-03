@@ -25,8 +25,8 @@ $COMPOSITOR 2>>"$LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
-# feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
-feh --bg-fill /home/james/Downloads/wallpaper-hd-1080.png &
+feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
+# feh --bg-fill /home/james/Downloads/wallpaper-hd-1080.png &
 
 # turn off webcam
 sudo modprobe -r uvcvideo
@@ -77,7 +77,7 @@ fi
 	# Statusbar
 	retry=10
 	while [ $retry -gt 0 ]; do
-		nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>> "$LOG_DIR/dwmblocks-fast.log" && exit
+		nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>> "$LOG_DIR/dwmblocks-fast.log"
 		for pid in $(ps -e -o pid,comm --no-headers | awk '$2 == "dwmblocks-fast" { print $1; }'); do
 			kill -15 "$pid"
 		done

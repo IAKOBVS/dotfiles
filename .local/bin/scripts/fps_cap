@@ -1,0 +1,8 @@
+#!/bin/sh
+fps=$1
+cfg=$HOME/.config/MangoHud/MangoHud.conf
+if [ -z "$fps" ]; then
+	fps=0
+fi
+mv "$cfg" "$cfg.bak" &&
+	sed "s/\(fps_limit\)=[0-9]*/\1=$1/g" "$cfg.bak" > "$cfg"
