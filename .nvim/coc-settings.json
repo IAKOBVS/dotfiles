@@ -33,8 +33,6 @@
 		"-Wredundant-decls",
 		"-Wnested-anon-types",
 		"-Wgnu",
-		"-Wstrict-aliasing=2",
-		"-Wstrict-overflow=5",
 		"-Warray-bounds",
 		"-Wvla",
 		"-Walloca",
