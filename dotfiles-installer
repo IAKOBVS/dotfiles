@@ -71,6 +71,10 @@ install_lf() {
 
 	# lf image previews
 	$SYSTEM_EXTRA_INSTALL_CMD -S ctpv bat poppler ueberzugpp
+	# $SYSTEM_INSTALL_CMD file
+	# git clone https://github.com/NikitaIvanovV/ctpv
+	# make
+	# sudo make install
 
 	# lf configs
 	mkdir -p "$LF_DIR"
