@@ -38,7 +38,7 @@ $TERMINAL &
 remaps
 
 # Nvidia max out power limit
-sudo nvidia-smi -pl "$(nvidia-smi -q -d POWER | awk '/Max Power Limit/ && !/N\/A/ { print $5 }')"
+sudo nvidia-smi -pl "$(nvidia-smi -q -d POWER | awk '/Max Power Limit/ && !/N\/A/ { print; exit; }' | sed 's/^.*:[ \t]*\([0-9.]*\).*$/\1/')"
 
 # Hide mouse cursor
 unclutter --no-timeout --hide-on-key-press &
@@ -53,7 +53,7 @@ dunst &
 # { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 
 # Cache installed packages
-nice -n 19 $AUR_HELPER -Sl | cut -f 2 -d ' ' >"$HOME/.cache/$AUR_HELPER/__list_of_packages__" &
+(nice -n 19 $AUR_HELPER -Sl | cut -f 2 -d ' ' >"$HOME/.cache/$AUR_HELPER/__list_of_packages__" &)
 
 # Only save unique commands in zsh history
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
