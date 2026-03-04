@@ -16,10 +16,12 @@ NVIM_DIR=$CFG_DIR/nvim
 NVIM_NEW_DIR=$HOME/.nvim
 
 install_neovim() {
+	echo 'Installing neovim...'
 	$SYSTEM_INSTALL_CMD neovim
 }
 
 install_neovim_plugins() {
+	echo 'Installing neovim plugins...'
 	mkdir -p "$NVIM_DIR"
 	mkdir -p "$NVIM_NEW_DIR"
 	# Add nvim cofiguration
@@ -42,6 +44,7 @@ install_neovim_plugins() {
 }
 
 install_zsh() {
+	echo 'Installing zsh...'
 	# Autosuggestions
 	$SYSTEM_INSTALL_CMD zsh
 	chsh -s /bin/zsh
