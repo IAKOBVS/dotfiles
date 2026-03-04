@@ -36,6 +36,8 @@
 #	define JSTR_GLIBC_PREREQ(maj, min) __GLIBC_PREREQ(maj, min)
 #elif defined __GLIBC__
 #	define JSTR_GLIBC_PREREQ(maj, min) ((__GLIBC__ << 16) + __GLIBC_MINOR__ >= ((maj) << 16) + (min))
+#else
+#	define JSTR_GLIBC_PREREQ(maj, min) 0
 #endif
 
 #if (defined __GLIBC__ && JSTR_GLIBC_PREREQ(2, 10) && (_POSIX_C_SOURCE - 0) >= 200809L) \

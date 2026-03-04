@@ -65,7 +65,8 @@ install_lf() {
 	git clone "$REPOS_LINK/lf"
 	cd lf
 	$SYSTEM_INSTALL_CMD go
-	CGO_ENABLED=0 go install -ldflags="-s -w"
+	CGO_ENABLED=0 go build -ldflags="-s -w"
+	sudo cp ./lf /usr/local/bin/lf
 	cd ..
 
 	# lf image previews

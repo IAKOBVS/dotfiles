@@ -1,5 +1,7 @@
 nnoremap ;nv :source $HOME/.nvim/init.vim<CR>
 
+set showtabline=2
+
 "  disable mouse
 set mouse=
 " set mouse=a
