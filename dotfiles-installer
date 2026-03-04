@@ -46,6 +46,13 @@ install_zsh() {
 	$SYSTEM_INSTALL_CMD zsh
 	chsh -s /bin/zsh
 	$SYSTEM_INSTALL_CMD zsh-autosuggestions zsh-syntax-highlighting
+	# Manual
+	# cd $HOME/.local/src
+	# git clone https://github.com/zsh-users/zsh-autosuggestions
+	# git clone https://github.com/zsh-users/zsh-syntax-highlighting
+	# echo ". $PWD/zsh-autosuggestions/zsh-autosuggestions.zsh 2>> /dev/null" >> $HOME/.zshrc
+	# echo ". $PWD/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>> /dev/null" >> $HOME/.zshrc
+	# cd -
 }
 
 install_lf() {
