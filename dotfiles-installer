@@ -32,6 +32,10 @@ install_neovim_plugins() {
 	nvim -c ':PlugUpdate'
 	# Install coc-nvim
 	$SYSTEM_INSTALL_CMD nodejs npm clang
+	# Install coc-clang
+	$SYSTEM_INSTALL_CMD clang
+	# Install coc-sh
+	$SYSTEM_INSTALL_CMD bash-language-server shellcheck
 	# Install coc.nvim plugins
 	nvim -c ':CocInstall coc-clangd coc-pairs coc-lists coc-diagnostic coc-highlight coc-snippets coc-sh'
 	nvim -c ':CocUpdate'

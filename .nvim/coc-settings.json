@@ -74,6 +74,7 @@
 			]
 		}
 	},
+    "bashIde.enableSourceErrorDiagnostics": true,
     "sh.enable": true,
 	"sh.commandPath": "bash-language-server",
 	"eslint.onIgnoredFiles": "off",
