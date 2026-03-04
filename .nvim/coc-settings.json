@@ -17,7 +17,6 @@
 		"-Wunused",
 		"-Wwrite-strings",
 		"-Wsign-conversion",
-		"-Xanalyzer",
 		"-Wundef",
 		"-Wshadow",
 		"-Wconversion",
