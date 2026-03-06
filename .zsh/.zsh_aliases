@@ -76,4 +76,6 @@ pac='sudo pacman -Syu' \
 skr="cd $HOME/Pictures/Screenshots/mpv-screenshots" \
 bu="cd $HOME/books" \
 mi="cd $HOME/books/Mythology" \
-mk='make -j6'
+mk='make -j6' \
+his="history | fzf | xclip -sel c" \
+hisa="cat $HOME/.cache/zsh/history | fzf | xclip -sel c"
