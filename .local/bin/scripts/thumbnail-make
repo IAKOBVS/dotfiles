@@ -1,18 +1,18 @@
 #!/bin/sh
-usage="$(basename $0): <text> <title>"
+usage="$(basename "$0"): <text> <title>"
 font=/usr/share/fonts/TTF/Montserrat-SemiBold.ttf
 res=1920x1080
 text=$1
 name=$2
 opt_style=$3
 opt_gravity=$4
-text_output=$(echo $text | sed 's/ /_/g; s/\//_/g')
-name_output=$(echo $name | sed 's/ /_/g; s/\//_/g')
+text_output=$(echo "$text" | sed 's/ /_/g; s/\//_/g')
+name_output=$(echo "$name" | sed 's/ /_/g; s/\//_/g')
 if [ $# -lt 2 ]; then
-	echo $usage
+	echo "$usage"
 	exit 1
 fi
-if [ $opt_style -gt 1 ]; then
+if [ "$opt_style" -gt 1 ]; then
 	opt_style=caption
 else
 	opt_style=label
@@ -24,5 +24,5 @@ elif [ "$opt_gravity" = 'right' ]; then
 else
 	opt_gravity=center
 fi
-echo "magick -size "$res" -background black -fill white -font "$font" -gravity "$opt_gravity" $opt_style:"$text" "$name_output-$text_output.png""
+echo "magick -size $res -background black -fill white -font $font -gravity $opt_gravity $opt_style:$text $name_output-$text_output.png"
 magick -size "$res" -background black -fill white -font "$font" -gravity "$opt_gravity" "$opt_style:$text" "$name_output-$text_output.png"
