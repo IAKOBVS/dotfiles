@@ -1,13 +1,14 @@
 #!/bin/sh
-gethour() {
-	LC_TIME="C.UTF-8" date | awk '{ gsub(/:.*/, ""); print $4 }'
+gethour()
+{
+	LC_TIME="C.UTF-8" date | awk '{ gsub(/:[:0-9]*/, ""); print $4 }'
 }
-curr_hour=$(gethour)
-if [ $curr_hour -lt 16];
-then
-	light-mode
-	sleep $(((16 - $(gethour)) * 3600))
-	auto-dark-mode
-else
-	dark-mode
-fi
+while :; do
+	if [ "$(gethour)" -lt 16 ]; then
+		light-mode
+		sleep $(((16 - $(gethour)) * 3600))
+	else
+		dark-mode
+		exit
+	fi
+done
