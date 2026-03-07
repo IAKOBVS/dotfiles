@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2023-2026 James Tirta Halim <tirtajames45 at gmail dot com>
+# Copyright (c) 2026 James Tirta Halim <tirtajames45 at gmail dot com>
 # This file is part of IAKOBVS/dotfiles.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -43,7 +43,7 @@ gameid=$(
 			name = tolower(name);
 			printf("%s\t%s\n", name, id);
 		}
-	}' /opt/Steam/steamapps/*.acf $HOME/.local/share/Steam/steamapps/*.acf |
+	}' /opt/Steam/steamapps/*.acf "$HOME"/.local/share/Steam/steamapps/*.acf |
 		# Prettify the columns.
 		column -t |
 		# Open dmenu.

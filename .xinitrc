@@ -63,9 +63,9 @@ unset HISTFILE
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
 
-systemctl --user start pipewire
-systemctl --user start pipewire-pulse
-systemctl --user start wireplumber
+# systemctl --user start pipewire
+# systemctl --user start pipewire-pulse
+# systemctl --user start wireplumber
 
 nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>>"$LOG_DIR/dwmblocks-fast.log" &
 
