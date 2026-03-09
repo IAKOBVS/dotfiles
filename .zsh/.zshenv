@@ -8,9 +8,7 @@ export BROWSER=chromium
 export FZF_DEFAULT_OPTS='--height 95% --layout=reverse --bind alt-j:preview-up,alt-k:preview-down,alt-h:backward-char,alt-l:forward-char,alt-u:up,alt-d:down'
 export GTK_THEME=Adwaita:dark
 export QT_STYLE_OVERRIDE=kvantum
-export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
-export __GL_SHADER_DISK_CACHE_MAX_SIZE=10737418240 # 10 GB steam shader cache
-export CUDA_DISABLE_PERF_BOOST=1
+export MAKEFLAGS="-j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)"
 export FZF_DEFAULT_COMMAND="find \
 		! -path '*.git*' \
 		! -path '*.o' \
@@ -25,3 +23,6 @@ export FZF_DEFAULT_COMMAND="find \
 		! -path '*.key*' \
 		! -path '*node_modules*' \
 		! -path '*.key*'"
+export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+export __GL_SHADER_DISK_CACHE_MAX_SIZE=10737418240 # 10 GB steam shader cache
+export CUDA_DISABLE_PERF_BOOST=1
