@@ -1,2 +1,2 @@
 #!/bin/sh
-ALSA_CONFIG_PATH=$HOME/.asound-resolve.conf /opt/resolve/bin/resolve
+/opt/resolve/bin/resolve

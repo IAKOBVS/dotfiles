@@ -1,81 +1,80 @@
 #!/bin/sh
 rm() { echo $@; /bin/rm -vI $@; }
 fu() { git commit -a -m "$1" && git push origin; }
-alias \
-mv='mv -iv' \
-fin='. fin' \
-fs='. fs' \
-v='jproc_vimcd' \
-gw='rgrep' \
-rs='res4thum' \
-z='zathura' \
-g='git' \
-zr='zaread' \
-pv='pavucontrol' \
-i='sxiv' \
-pm='pulsemixer' \
-ht='htop' \
-sht='sudo htop' \
-ki='killall' \
-l='jproc_lfcd' \
-pq='yay -Q | fzf' \
-sp='sync && sync && systemctl suspend' \
-prs="cat $HOME/.cache/yay/__list_of_packages__ | fzf --multi --ansi --preview 'yay -Qi {1}'" \
-par='yay --needed -S' \
-pars='resolve-update; yay --needed -Syu; remaps' \
-prq='yay -Q | fzf' \
-pacman='sudo pacman' \
-systl='sudo systemctl' \
-sv='sudo v' \
-c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME' \
-cu='c add $(realpath $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh $HOME/.config/alacritty $HOME/.config/lf) && c commit -a -m new && c push --force' \
-cpl='c pull' \
-gl='cd $HOME/.local/src/glibc' \
-gls='cd $HOME/.local/src/glibc-strstr-avx2' \
-glm='cd $HOME/.local/src/glibc-memmem-avx2' \
-bs='cd $HOME/.local/src/freebsd-src/lib/libc' \
-mu='cd $HOME/.local/src/musl/src' \
-vd='v $HOME/.local/src/dwm/config.h' \
-vdw='v $HOME/.local/src/dwmblocks-fast/dwmblocks-fast.c' \
-vsl='v $HOME/.local/src/slstatus/config.h' \
-vlf='v $HOME/.lfrc' \
-vs='v $HOME/.local/src/st/config.h' \
-vmpv='v $HOME/.config/mpv/mpv.conf' \
-xi='v $HOME/.xinitrc' \
-zs='v $HOME/.zsh/.zshrc' \
-va='v $HOME/.zsh/.zsh_aliases' \
-vp='v $HOME/.config/picom.conf' \
-vvim='v $HOME/.nvim/defaults.vim' \
-zf='v $HOME/.zsh/jproc' \
-vsi='v $HOME/.local/share/alias/sites' \
-vb='v $HOME/.zsh/.bashrc' \
-tor='jproc_lfcd $HOME/Downloads/torrent' \
-rec='jproc_lfcd ~/Videos/Recordings' \
-vid='jproc_lfcd ~/Videos' \
-dt='cd /tmp' \
-sr='cd $HOME/.local/bin/scripts' \
-cl='cd $HOME/.local/src' \
-cs='cd $HOME/.zsh' \
-sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"' \
-slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &' \
-dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &' \
-sf='v /etc/fan2go/fan2go.yaml' \
-dfh="df -h | head -n1; df -h | /bin/grep -e /$ -e /home -e /tmp" \
-update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg' \
-upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'" \
-yt='yt-dlp --embed-metadata -i' \
-yta='yt -x -f bestaudio/bestub' \
-ls='ls -hN --color=auto --group-directories-first' \
-grep='grep --color=auto' \
-diff='diff --color=auto' \
-hi='highlight --out-format=ansi' \
-ip='ip -color=auto' \
-kdb='killall dwmblocks' \
-info='info --vi-keys' \
-pac='sudo pacman -Syu' \
-skr="cd $HOME/Pictures/Screenshots/mpv-screenshots" \
-bu="cd $HOME/books" \
-mi="cd $HOME/books/Mythology" \
-mk='make -j6' \
-his="history | fzf | xclip -sel c" \
-hisa="cat $HOME/.cache/zsh/history | fzf | xclip -sel c"
+alias mv='mv -iv'
+alias fin='. fin'
+alias fs='. fs'
+alias v='jproc_vimcd'
+alias gw='rgrep'
+alias rs='res4thum'
+alias z='zathura'
+alias g='git'
+alias zr='zaread'
+alias pv='pavucontrol'
+alias i='sxiv'
+alias pm='pulsemixer'
+alias ht='htop'
+alias sht='sudo htop'
+alias ki='killall'
+alias l='jproc_lfcd'
+alias pq='yay -Q | fzf'
+alias sp='sync && sync && systemctl suspend'
+alias prs="cat $HOME/.cache/yay/__list_of_packages__ | fzf --multi --ansi --preview 'yay -Qi {1}'"
+alias par='yay --needed -S'
+alias pars='resolve-update; yay --needed -Syu; remaps'
+alias prq='yay -Q | fzf'
+alias pacman='sudo pacman'
+alias systl='sudo systemctl'
+alias sv='sudo v'
+alias c='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias cu='c add $(realpath $HOME/.local/bin/scripts $HOME/.nvim $HOME/.zsh $HOME/.config/alacritty $HOME/.config/lf) && c commit -a -m new && c push --force'
+alias cpl='c pull'
+alias gl='cd $HOME/.local/src/glibc'
+alias gls='cd $HOME/.local/src/glibc-strstr-avx2'
+alias glm='cd $HOME/.local/src/glibc-memmem-avx2'
+alias bs='cd $HOME/.local/src/freebsd-src/lib/libc'
+alias mu='cd $HOME/.local/src/musl/src'
+alias vd='v $HOME/.local/src/dwm/config.h'
+alias vdw='v $HOME/.local/src/dwmblocks-fast/dwmblocks-fast.c'
+alias vsl='v $HOME/.local/src/slstatus/config.h'
+alias vlf='v $HOME/.lfrc'
+alias vs='v $HOME/.local/src/st/config.h'
+alias vmpv='v $HOME/.config/mpv/mpv.conf'
+alias xi='v $HOME/.xinitrc'
+alias zs='v $HOME/.zsh/.zshrc'
+alias va='v $HOME/.zsh/.zsh_aliases'
+alias vp='v $HOME/.config/picom.conf'
+alias vvim='v $HOME/.nvim/defaults.vim'
+alias zf='v $HOME/.zsh/jproc'
+alias vsi='v $HOME/.local/share/alias/sites'
+alias vb='v $HOME/.zsh/.bashrc'
+alias tor='jproc_lfcd $HOME/Downloads/torrent'
+alias rec='jproc_lfcd ~/Videos/Recordings'
+alias vid='jproc_lfcd ~/Videos'
+alias dt='cd /tmp'
+alias sr='cd $HOME/.local/bin/scripts'
+alias cl='cd $HOME/.local/src'
+alias cs='cd $HOME/.zsh'
+alias sen='watch -n1 "tempnfan ; echo '' ; nvidia-smi"'
+alias slt='killall slstatus && nohup slstatus > /dev/null 2>&1 &'
+alias dwt='killall dwmblocks && nohup dwmblocks > /dev/null 2>&1 &'
+alias sf='v /etc/fan2go/fan2go.yaml'
+alias dfh="df -h | head -n1; df -h | /bin/grep -e /$ -e /home -e /tmp"
+alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias upvim="$EDITOR -c ':PlugUpdate' -c ':CocUpdate'"
+alias yt='yt-dlp --embed-metadata -i'
+alias yta='yt -x -f bestaudio/bestub'
+alias ls='ls -hN --color=auto --group-directories-first'
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias hi='highlight --out-format=ansi'
+alias ip='ip -color=auto'
+alias kdb='killall dwmblocks'
+alias info='info --vi-keys'
+alias pac='sudo pacman -Syu'
+alias skr="cd $HOME/Pictures/Screenshots/mpv-screenshots"
+alias bu="cd $HOME/books"
+alias mi="cd $HOME/books/Mythology"
+alias mk='make -j6'
+alias his="history | fzf | xclip -sel c"
+alias hisa="cat $HOME/.cache/zsh/history | fzf | xclip -sel c"
