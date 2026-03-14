@@ -3,16 +3,19 @@
 # Don't run in SSH
 [ "$SSH_CLIENT" ] && return
 
-export COMPOSITOR=picom
-export AUR_HELPER=yay
-export LOG_DIR="$HOME/.cache"
-
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
 		[ -x "$f" ] && . "$f"
 	done
 	unset f
 fi
+
+export COMPOSITOR=picom
+export AUR_HELPER=yay
+export LOG_DIR="$HOME/.cache"
+
+# Sync time with ntp
+ntpd -g -q &
 
 # CPU fan speed control
 sudo cfan >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log" &
@@ -32,7 +35,7 @@ feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
 sudo modprobe -r uvcvideo
 
 # Terminal
-$TERMINAL &
+$TERMINAL -e system-upgrade &
 
 # change esc with caps lock
 remaps
@@ -62,10 +65,6 @@ unset HISTFILE
 
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
-
-systemctl --user start pipewire
-systemctl --user start pipewire-pulse
-systemctl --user start wireplumber
 
 nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>>"$LOG_DIR/dwmblocks-fast.log" &
 

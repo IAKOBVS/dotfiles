@@ -1,0 +1,4 @@
+#!/bin/sh
+resolve-update
+yay --needed -Syu
+remaps

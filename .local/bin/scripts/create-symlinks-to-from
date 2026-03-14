@@ -1,7 +1,0 @@
-#!/bin/sh
-out=$1
-shift
-for file in $@; do
-	ln -s "$PWD/$file" "$out"
-	echo ln -s "$PWD/$file" "$out"
-done
