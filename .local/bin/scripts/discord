@@ -1,2 +1,4 @@
 #!/bin/sh
 nice -n 19 /bin/discord &
+sleep 5
+renice 19 -p $(ps -e -o comm,pid --no-headers | awk '/[Dd]iscord/" {print $2}')

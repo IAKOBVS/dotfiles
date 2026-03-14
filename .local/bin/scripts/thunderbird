@@ -1,2 +1,4 @@
 #!/bin/sh
 nice -n 19 /bin/thunderbird &
+sleep 5
+renice 19 -p $(ps -e -o comm,pid --no-headers | awk '/[Tt]hunderbird/" {print $2}')

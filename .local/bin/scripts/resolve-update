@@ -1,5 +1,5 @@
 #!/bin/sh
-LOCK=/tmp/.update-resolve
+LOCK=/tmp/davinci-resolve-update.lock
 if [ ! -f $LOCK ]; then
 	touch "$LOCK"
 	"$HOME/.local/src/Davinci-Resolve-Updater/update-resolve.sh"
