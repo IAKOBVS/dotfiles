@@ -35,7 +35,7 @@ feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
 sudo modprobe -r uvcvideo
 
 # Terminal
-$TERMINAL -e system-upgrade &
+$TERMINAL &
 
 # change esc with caps lock
 remaps
