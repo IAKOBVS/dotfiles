@@ -17,6 +17,9 @@ export LOG_DIR="$HOME/.cache"
 # Sync time with ntp
 sudo ntpd -g -q &
 
+# Turn off wifi
+nmcli radio wifi off &
+
 # CPU fan speed control
 sudo cfan >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log" &
 
