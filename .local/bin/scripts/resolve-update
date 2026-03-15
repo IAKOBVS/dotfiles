@@ -6,6 +6,8 @@ UPDATER="$HOME/.local/src/Davinci-Resolve-Updater/update-resolve.sh"
 # When to update
 next_update_file=$HOME/.cache/resolve-update
 
+[ -f "$next_update_file" ] || echo $update_interval > "$next_update_file"
+
 LOCK=/tmp/resolve-update.lock
 [ -f $LOCK ] && exit
 touch "$LOCK"
