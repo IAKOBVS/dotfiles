@@ -1,6 +1,18 @@
 #!/bin/sh
-LOCK=/tmp/davinci-resolve-update.lock
-if [ ! -f $LOCK ]; then
-	touch "$LOCK"
+LOCK=/tmp/resolve-update.lock
+[ -f $LOCK ] && exit
+touch "$LOCK"
+
+UPDATER=$HOME/.cache/resolve-update
+next_update=$(cat "$UPDATER")
+update_interval=7
+# Need to update
+if [ "$next_update" -le 0 ]; then
+	interval=$update_interval
 	"$HOME/.local/src/Davinci-Resolve-Updater/update-resolve.sh"
+# No need to update
+else
+	interval=$((interval - 1))
 fi
+# Update interval
+echo "$interval" >"$UPDATER"

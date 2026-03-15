@@ -8,7 +8,7 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/LargeFile'
 " Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 " Plug 'rhysd/vim-grammarous'
 if 0
 	Plug 'bergercookie/asm-lsp'

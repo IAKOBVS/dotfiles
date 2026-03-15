@@ -15,7 +15,7 @@ export AUR_HELPER=yay
 export LOG_DIR="$HOME/.cache"
 
 # Sync time with ntp
-ntpd -g -q &
+sudo ntpd -g -q &
 
 # CPU fan speed control
 sudo cfan >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log" &
