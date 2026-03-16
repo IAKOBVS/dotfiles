@@ -1,5 +1,0 @@
-#!/bin/sh
-T0=$(sudo cat /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj)
-sleep 1
-T1=$(sudo cat /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj)
-awk -v t1=$T1 -v t0=$T0 'BEGIN { printf "%.2f\n", (t1 - t0) / 1000000 }'
