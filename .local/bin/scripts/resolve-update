@@ -10,16 +10,16 @@ next_update_file=$HOME/.cache/resolve-update
 
 LOCK=/tmp/resolve-update.lock
 [ -f $LOCK ] && exit
-touch "$LOCK"
 
 next_update=$(cat "$next_update_file")
 # Need to update
 if [ "$next_update" -le 0 ]; then
 	interval=$update_interval
-	"$UPDATER"	
+	"$UPDATER" && touch "$LOCK"
 # No need to update
 else
 	interval=$((interval - 1))
+	touch "$LOCK"
 fi
 # Update interval
 echo "$interval" >"$next_update_file"
