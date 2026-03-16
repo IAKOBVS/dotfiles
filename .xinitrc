@@ -17,6 +17,11 @@ export LOG_DIR="$HOME/.cache"
 # Sync time with ntp
 sudo ntpd -g -q &
 
+{
+	sleep 60
+	timedatectl set-ntp false
+} &
+
 # Turn off wifi
 nmcli radio wifi off &
 
