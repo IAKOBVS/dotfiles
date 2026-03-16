@@ -15,11 +15,9 @@ export AUR_HELPER=yay
 export LOG_DIR="$HOME/.cache"
 
 # Sync time with ntp
-sudo ntpd -g -q &
-
 {
 	sleep 60
-	timedatectl set-ntp false
+	sudo timedatectl set-ntp false
 } &
 
 # Turn off wifi
