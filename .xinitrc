@@ -12,13 +12,10 @@ fi
 
 export COMPOSITOR=picom
 export AUR_HELPER=yay
-export LOG_DIR="$HOME/.cache"
+LOG_DIR="$HOME/.cache"
 
 # Sync time with ntp
-{
-	sleep 60
-	sudo timedatectl set-ntp false
-} &
+sudo ntpd -g -q &
 
 # Turn off wifi
 nmcli radio wifi off &

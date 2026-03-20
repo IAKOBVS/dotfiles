@@ -1,3 +1,4 @@
 #!/bin/sh
+LOG_DIR="$HOME/.cache"
 sudo killall cfan
-sudo cfan --medium
+sudo cfan --medium >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log"
