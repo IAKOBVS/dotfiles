@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -eu
+
+SCRIPT=$HOME/.local/bin/scripts
+NICERRC=$HOME/.nicerrc
+
+run()
+{
+	while read -r proc nice; do
+		if ! command -v "$proc" >/dev/null; then
+			echo "Can't find the real path to $proc"
+			exit 1
+		fi
+		if [ "$nice" -lt -20 ] || [ "$nice" -gt 19 ]; then
+			echo "Nice value ($nice) must be within -20 to 19"
+			exit 1
+		fi
+		if [ ! -d "$SCRIPT" ]; then
+			echo "$SCRIPT is an invalid scripts directory"
+			exit 1
+		fi
+		file="$SCRIPT/$proc"
+		if [ -f "$file" ]; then
+			echo "$file already exists"
+			continue
+		fi
+		proc_path=$(command -v "$proc")
+		echo '#!/bin/sh' >"$file"
+		echo "nice -n $nice $proc_path \$@" >>"$file"
+		chmod +x "$file"
+		echo "Set default value for $proc as $nice"
+	done
+}
+
+if [ -s "$NICERRC" ]; then
+	run <"$NICERRC"
+else
+	run
+fi
