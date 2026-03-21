@@ -1,2 +1,2 @@
 #!/bin/sh
-renice 19 -p $(ps -e -o comm,pid --no-headers | awk '$1 == "steamwebhelper" {print $2}')
+renice 19 -p $(ps -e -o comm,pid --no-headers | awk '/steamwebhelper/ || /chrome_crashpad/ {print $2}')

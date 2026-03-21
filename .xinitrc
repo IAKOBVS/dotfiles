@@ -69,12 +69,12 @@ unset HISTFILE
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
 
-nice -n 19 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>>"$LOG_DIR/dwmblocks-fast.log" &
+dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>>"$LOG_DIR/dwmblocks-fast.log" &
 
 discord &
 thunderbird &
 nv-tearfree-on
 
 while :; do
-	dwm
+	dwm >>$LOG_DIR/dwm.log 2>>$LOG_DIR/dwm.log
 done
