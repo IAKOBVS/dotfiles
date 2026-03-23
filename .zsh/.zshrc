@@ -66,16 +66,15 @@ bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 bindkey -s '^f' 'jproc_fzflive $PWD\n'
-# bindkey -s '^e' 'fzfexact\n'
 bindkey -s '^o' 'jproc_lfcd\n'
 bindkey -s '^r' 'jproc_grepvim\n'
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-ZSH_AUTOSUGGEST_MANUAL_REBIND=0
+# ZSH_AUTOSUGGEST_MANUAL_REBIND=0
 
-. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
-bindkey '^L' autosuggest-accept
+# . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+# bindkey '^L' autosuggest-accept
 
-# Load syntax highlighting; should be last.
-. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh 2>/dev/null
+# # Load syntax highlighting; should be last.
+# . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh 2>/dev/null

@@ -61,13 +61,8 @@ JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M 
 export JPROC_DIR=/tmp/jproc
 export JPROC_DIR_PID=$JPROC_DIR/$$
 
-set -- \
-	$JPROC_DIR \
-	$JPROC_DIR_PID
-
-/bin/mkdir -p $@
-
-set -- $jproc_internal_argv
+/bin/mkdir -p $JPROC_DIR
+/bin/mkdir -p $JPROC_DIR_PID
 
 # Template for tmp files.
 export JPROC_VIM_PROG=$JPROC_DIR_PID/vim_prog
