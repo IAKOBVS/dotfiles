@@ -1,0 +1,2 @@
+#!/bin/sh
+getcompilecommands > compile_commands.json

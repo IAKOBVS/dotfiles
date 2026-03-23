@@ -1,0 +1,40 @@
+#!/bin/sh
+file=compile_commands.txt
+if [ ! -f $file ]; then
+	make clean >/dev/null
+	make | grep '^cc' | grep '\.c$' > $file
+fi
+lines=$(cat $file)
+
+process() {
+	last=$(echo "$1" | awk '{print $NF}')
+	line=$(echo "$1" | awk '{--NF; print; }')
+	IFS=$OLDIFS
+	echo '{'
+	echo "\"directory\": \"$PWD\","
+	echo '"arguments": ['
+	for word in $1; do
+		echo "\"$word\","
+	done
+	echo "\"$last\""
+	echo '],'
+	printf '"file": "%s"\n' "$last"
+	printf '}'
+	IFS='
+	'
+}
+
+last_line=$(echo "$lines" | tail -n1)
+lines=$(echo "$lines" | head -n -1)
+
+OLDIFS=$IFS
+IFS='
+'
+echo '['
+for line in $lines; do
+	process "$line"
+	echo ','
+done
+process "$last_line"
+echo
+echo ']'

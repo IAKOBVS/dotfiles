@@ -61,7 +61,7 @@ dunst &
 # Warm up bluetooth
 # { bluetoothctl & sleep 2 && killall bluetoothctl; } &
 
-# Cache installed packages
+# Cache packages
 (nice -n 19 $AUR_HELPER -Sl | cut -f 2 -d ' ' >"$HOME/.cache/$AUR_HELPER/__list_of_packages__" &)
 
 # Only save unique commands in zsh history
@@ -79,5 +79,5 @@ thunderbird &
 nv-tearfree-on
 
 while :; do
-	dwm >>$LOG_DIR/dwm.log 2>>$LOG_DIR/dwm.log
+	dwm >>"$LOG_DIR/dwm.log" 2>>"$LOG_DIR/dwm.log"
 done
