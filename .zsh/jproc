@@ -38,6 +38,8 @@
 # if the PIDs, which are embedded into the file name, exist, removing the
 # tmp files whose PIDs do not.
 
+jproc_internal_argv=$@
+
 # Available CPU cores.
 JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 # Default args for rg.
@@ -59,12 +61,33 @@ JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M 
 export JPROC_DIR=/tmp/jproc
 export JPROC_DIR_PID=$JPROC_DIR/$$
 
+set -- \
+	$JPROC_DIR \
+	$JPROC_DIR_PID
+
+/bin/mkdir -p $@
+
+set -- $jproc_internal_argv
+
 # Template for tmp files.
 export JPROC_VIM_PROG=$JPROC_DIR_PID/vim_prog
 export JPROC_VIM_ARG=$JPROC_DIR_PID/vim_arg
 export JPROC_VIM_FILE_LAST=$JPROC_DIR_PID/vim_file_last
 export JPROC_LF_DIR=$JPROC_DIR_PID/lf_dir
 export JPROC_CMD_LAST=$JPROC_DIR_PID/cmd_last
+
+set -- \
+	$JPROC_VIM_PROG \
+	$JPROC_VIM_ARG \
+	$JPROC_VIM_FILE_LAST \
+	$JPROC_LF_DIR \
+	$JPROC_CMD_LAST
+
+for file in $@; do
+	echo >"$file"
+done
+
+set -- $jproc_internal_argv
 
 # TODO: maybe make a more human readable format like
 # /proc/ since performance doesn't matter here
@@ -77,44 +100,30 @@ export JPROC_FZFLIVE=4
 export JPROC_FZFLIVEHOME=5
 export JPROC_GREPVIM=6
 
-# Initialize tmp file.
-/bin/mkdir -p $JPROC_DIR
-/bin/mkdir -p $JPROC_DIR_PID
-echo >$JPROC_VIM_PROG
-echo >$JPROC_VIM_ARG
-echo >$JPROC_LF_DIR
-echo >$JPROC_VIM_FILE_LAST
-echo >$JPROC_CMD_LAST
-
-JPROC_REDIRECT_STDOUT=''
-JPROC_REDIRECT_STDERR=''
-# JPROC_REDIRECT_STDOUT='>/dev/null'
-# JPROC_REDIRECT_STDERR='2>/dev/null'
-
 touch()
 {
-	file=$(realpath "$(echo "$@" | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
+	file=$(realpath "$(echo "$@" | awk '{print $NF}')")
 	/bin/touch "$@"
 }
 
 mkdir()
 {
-	file=$(realpath "$(echo "$@" | awk '{print $NF}')" $JPROC_REDIRECT_STDERR)
+	file=$(realpath "$(echo "$@" | awk '{print $NF}')")
 	/bin/mkdir "$@"
 }
 
 # Select program to call based on the value in the tmp file.
 jproc_internal_vim_sel()
 {
-	test ! -f $JPROC_VIM_PROG $JPROC_REDIRECT_STDERR && return
+	test ! -f $JPROC_VIM_PROG && return
 	prog=$(cat $JPROC_VIM_PROG)
-	if test ! -f $JPROC_VIM_ARG $JPROC_REDIRECT_STDERR; then
+	if test ! -f $JPROC_VIM_ARG; then
 		arg=''
 	else
 		arg=$(cat $JPROC_VIM_ARG)
 	fi
-	echo >$JPROC_VIM_ARG "$JPROC_REDIRECT_STDOUT" $JPROC_REDIRECT_STDERR
-	echo >$JPROC_VIM_PROG $JPROC_REDIRECT_STDOUT $JPROC_REDIRECT_STDERR
+	echo >$JPROC_VIM_ARG
+	echo >$JPROC_VIM_PROG
 	case $prog in
 	"$JPROC_VIMCD") jproc_vimcd "$arg" ;;
 	"$JPROC_LFCD") jproc_lfcd "$arg" ;;
@@ -143,10 +152,10 @@ jproc_lfcd()
 {
 	echo >$JPROC_CMD_LAST
 	dir=$(cat $JPROC_LF_DIR)
-	lf -last-dir-path="$dir" "$@" $JPROC_REDIRECT_STDERR && jproc_internal_vim_sel
-	dir=$(cat $JPROC_LF_DIR)
-	if [ -d "$dir" ]; then
-		cd "$dir" || exit
+	lf -last-dir-path="$dir" "$@" && jproc_internal_vim_sel
+	last_dir=$(cat $JPROC_LF_DIR)
+	if [ -d "$last_dir" ]; then
+		cd "$last_dir" || exit
 	fi
 }
 
@@ -214,7 +223,7 @@ jproc_vimcd()
 jproc_fzflive()
 {
 	# shellcheck disable=SC2164
-	cd "$1" $JPROC_REDIRECT_STDERR
+	cd "$1"
 	jproc_internal_fzfbase "$(find . -type f \
 		! -path '*.git*' \
 		! -path '*.o' \
@@ -235,7 +244,7 @@ jproc_fzflive()
 jproc_grepvim()
 {
 	# shellcheck disable=SC2164
-	cd "$1" $JPROC_REDIRECT_STDERR
+	cd "$1"
 	grepped=$(fzf -d: -n 2.. --bind "start:reload:rg $JPROC_RG_ARGS '' " \
 		--bind "change:reload:rg $JPROC_RG_ARGS {q} || true" \
 		--ansi --disabled \
