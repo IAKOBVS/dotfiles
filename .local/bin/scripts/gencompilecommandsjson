@@ -1,2 +1,7 @@
 #!/bin/sh
-getcompilecommands > compile_commands.json
+echo 'Running make clean and writing to compile_commmands.json. Are you sure? (Y/n)'
+read -r ok
+if [ "$ok" != 'Y' ]; then
+	exit
+fi
+echo 'Y' | getcompilecommands > compile_commands.json

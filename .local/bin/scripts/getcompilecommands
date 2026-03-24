@@ -1,4 +1,9 @@
 #!/bin/sh
+echo 'Running make clean. Are you sure? (Y/n)'
+read -r ok
+if [ "$ok" != 'Y' ]; then
+	exit
+fi
 make clean >/dev/null
 lines=$(make | grep '^cc' | grep '\.c$')
 
