@@ -30,7 +30,7 @@ sudo cfan >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log" &
 sudo nvspeed >>"$LOG_DIR/nvspeed.log" 2>>"$LOG_DIR/nvspeed.log" &
 
 # Set compositor for terminal transparency
-$COMPOSITOR 2>>"$LOG_DIR/$COMPOSITOR.log" &
+$COMPOSITOR >>"$LOG_DIR/$COMPOSITOR.log" 2>>"$LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
