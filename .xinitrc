@@ -15,7 +15,7 @@ export AUR_HELPER=yay
 LOG_DIR="$HOME/.cache"
 
 # Trim SSD
-# sudo fstrim -av >>"$LOG_DIR/fstrim.log" 2>>"$LOG_DIR/fstrim.log" &
+sudo fstrim -av >>"$LOG_DIR/fstrim.log" 2>>"$LOG_DIR/fstrim.log" &
 
 # Sync time with ntp
 # sudo ntpd -g -q &

@@ -1,25 +1,12 @@
 #!/bin/sh
+
 # Check for updates weekly
 update_interval=7
 # Updater script
 UPDATER="$HOME/.local/src/Davinci-Resolve-Updater/update-resolve.sh"
-# When to update
-next_update_file=$HOME/.cache/resolve-update
-
-[ -f "$next_update_file" ] || echo $update_interval > "$next_update_file"
-
 LOCK=/tmp/resolve-update.lock
+
+[ $(($(date +%d) % update_interval)) -ne 0 ] && exit
 [ -f $LOCK ] && exit
 
-next_update=$(cat "$next_update_file")
-# Need to update
-if [ "$next_update" -le 0 ]; then
-	interval=$update_interval
-	"$UPDATER" && touch "$LOCK"
-# No need to update
-else
-	interval=$((interval - 1))
-	touch "$LOCK"
-fi
-# Update interval
-echo "$interval" >"$next_update_file"
+"$UPDATER" && touch "$LOCK"
