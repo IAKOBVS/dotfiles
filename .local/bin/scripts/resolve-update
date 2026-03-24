@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Check for updates weekly
-update_interval=7
+UPDATE_INTERVAL=7
 # Updater script
 UPDATER="$HOME/.local/src/Davinci-Resolve-Updater/update-resolve.sh"
 LOCK=/tmp/resolve-update.lock
 
-[ $(($(date +%d) % update_interval)) -ne 0 ] && exit
+[ $(($(date +%d) % UPDATE_INTERVAL)) -ne 0 ] && exit
 [ -f $LOCK ] && exit
 
 "$UPDATER" && touch "$LOCK"
