@@ -1,4 +1,7 @@
 #!/bin/sh
+
+set -e
+
 PROG=$1
 TIME=$2
 if [ -z "$TIME" ]; then
@@ -7,4 +10,5 @@ fi
 cd /tmp || exit
 sudo perf record -g -p "$(pgrep "$PROG" | head -n1)" -- sleep "$TIME" &&
 	sudo perf report
+rm perf.data
 cd - || exit
