@@ -15,21 +15,27 @@ export AUR_HELPER=yay
 LOG_DIR="$HOME/.cache"
 
 # Trim SSD
+rm "$LOG_DIR/fstrim.log"
 sudo fstrim -av >>"$LOG_DIR/fstrim.log" 2>>"$LOG_DIR/fstrim.log" &
 
 # Sync time with ntp
-# sudo ntpd -g -q &
+{
+	sudo ntpd -g -q && sudo hwclock --systohc
+} &
 
 # Turn off wifi
 nmcli radio wifi off &
 
 # CPU fan speed control
+rm "$LOG_DIR/cfan.log"
 sudo cfan >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log" &
 
 # GPU fan speed control
+rm "$LOG_DIR/nvspeed.log"
 sudo nvspeed >>"$LOG_DIR/nvspeed.log" 2>>"$LOG_DIR/nvspeed.log" &
 
 # Set compositor for terminal transparency
+rm "$LOG_DIR/$COMPOSITOR.log"
 $COMPOSITOR >>"$LOG_DIR/$COMPOSITOR.log" 2>>"$LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
@@ -75,12 +81,29 @@ fi &
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
 
+rm "$LOG_DIR/dwmblocks-fast.log"
 dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>>"$LOG_DIR/dwmblocks-fast.log" &
 
 discord &
 thunderbird &
 nv-tearfree-on &
 
+# Cache file size
+ionice -c 3 nice -n 19 du -shc $HOME/* &
+
+# Defragment
+{
+	set -eu
+	for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
+		if [ "$(sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}')" -gt 30 ]; then
+			rm "$LOG_DIR/e4defrag.log"
+			ionice -c 3 nice -n 19 sudo e4defrag "$partition" >>"$LOG_DIR/e4defrag.log" 2>>"$LOG_DIR/e4defrag.log"
+		fi
+	done
+	unset partition
+} &
+
 while :; do
+	rm "$LOG_DIR/dwm.log"
 	dwm >>"$LOG_DIR/dwm.log" 2>>"$LOG_DIR/dwm.log"
 done

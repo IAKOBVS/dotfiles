@@ -5,7 +5,7 @@ export TERMINAL=alacritty
 export TERMINAL_PROG=alacritty
 export EDITOR=nvim
 export BROWSER=chromium
-export FZF_DEFAULT_OPTS='--height 95% --layout=reverse --bind alt-j:preview-up,alt-k:preview-down,alt-h:backward-char,alt-l:forward-char,alt-u:up,alt-d:down'
+export FZF_DEFAULT_OPTS='--height 95% --layout=reverse --bind alt-J:preview-up,alt-K:preview-down,alt-H:backward-char,alt-L:forward-char,alt-U:up,alt-D:down'
 export GTK_THEME=Adwaita:dark
 export QT_STYLE_OVERRIDE=kvantum
 export MAKEFLAGS="-j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)"
