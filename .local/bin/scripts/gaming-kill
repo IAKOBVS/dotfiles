@@ -6,4 +6,4 @@ killall "$COMPOSITOR"
 killall dunst
 killall unclutter
 killall dwmblocks-fast
-# nv-tearfree-off
+nv-tearfree-off

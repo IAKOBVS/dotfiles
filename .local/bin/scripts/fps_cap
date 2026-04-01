@@ -5,4 +5,4 @@ if [ -z "$fps" ]; then
 	fps=0
 fi
 mv "$cfg" "$cfg.bak" &&
-	sed "s/\(fps_limit\)=[0-9]*/\1=$1/g" "$cfg.bak" > "$cfg"
+	sed "s/\(fps_limit\)=[0-9]*/\1=$1/g; s/#[ \t]*no_display/no_display/" "$cfg.bak" > "$cfg"

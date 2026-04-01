@@ -1,2 +1,3 @@
 #!/bin/sh
+#shellcheck disable=SC2068
 nice -n 19 /bin/unclutter $@

@@ -12,11 +12,11 @@ fi
 
 export COMPOSITOR=picom
 export AUR_HELPER=yay
-LOG_DIR="$HOME/.cache"
+XINITRC_LOG_DIR="$HOME/.cache"
 
 # Trim SSD
-rm "$LOG_DIR/fstrim.log"
-sudo fstrim -av >>"$LOG_DIR/fstrim.log" 2>>"$LOG_DIR/fstrim.log" &
+rm "$XINITRC_LOG_DIR/fstrim.log"
+sudo fstrim -av >>"$XINITRC_LOG_DIR/fstrim.log" 2>>"$XINITRC_LOG_DIR/fstrim.log" &
 
 # Sync time with ntp
 {
@@ -27,16 +27,16 @@ sudo fstrim -av >>"$LOG_DIR/fstrim.log" 2>>"$LOG_DIR/fstrim.log" &
 nmcli radio wifi off &
 
 # CPU fan speed control
-rm "$LOG_DIR/cfan.log"
-sudo cfan >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log" &
+rm "$XINITRC_LOG_DIR/cfan.log"
+sudo cfan >>"$XINITRC_LOG_DIR/cfan.log" 2>>"$XINITRC_LOG_DIR/cfan.log" &
 
 # GPU fan speed control
-rm "$LOG_DIR/nvspeed.log"
-sudo nvspeed >>"$LOG_DIR/nvspeed.log" 2>>"$LOG_DIR/nvspeed.log" &
+rm "$XINITRC_LOG_DIR/nvspeed.log"
+sudo nvspeed >>"$XINITRC_LOG_DIR/nvspeed.log" 2>>"$XINITRC_LOG_DIR/nvspeed.log" &
 
 # Set compositor for terminal transparency
-rm "$LOG_DIR/$COMPOSITOR.log"
-$COMPOSITOR >>"$LOG_DIR/$COMPOSITOR.log" 2>>"$LOG_DIR/$COMPOSITOR.log" &
+rm "$XINITRC_LOG_DIR/$COMPOSITOR.log"
+$COMPOSITOR >>"$XINITRC_LOG_DIR/$COMPOSITOR.log" 2>>"$XINITRC_LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
@@ -54,6 +54,8 @@ remaps &
 
 # Nvidia max out power limit
 sudo nvidia-smi -pl "$(nvidia-smi -q -d POWER | awk '/Max Power Limit/ && !/N\/A/ { print; exit; }' | sed 's/^.*:[ \t]*\([0-9.]*\).*$/\1/')" &
+# Nvidia max out target temperature
+sudo nvidia-smi -gtt "$(nvidia-smi -q -d TEMPERATURE | awk '/GPU Slowdown Temp/ {print $(NF-1)}')" &
 
 # Hide mouse cursor
 unclutter --no-timeout --hide-on-key-press &
@@ -81,8 +83,8 @@ fi &
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
 
-rm "$LOG_DIR/dwmblocks-fast.log"
-dwmblocks-fast >>"$LOG_DIR/dwmblocks-fast.log" 2>>"$LOG_DIR/dwmblocks-fast.log" &
+rm "$XINITRC_LOG_DIR/dwmblocks-fast.log"
+dwmblocks-fast >>"$XINITRC_LOG_DIR/dwmblocks-fast.log" 2>>"$XINITRC_LOG_DIR/dwmblocks-fast.log" &
 
 discord &
 thunderbird &
@@ -96,14 +98,14 @@ ionice -c 3 nice -n 19 du -shc $HOME/* &
 	set -eu
 	for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
 		if [ "$(sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}')" -gt 30 ]; then
-			rm "$LOG_DIR/e4defrag.log"
-			ionice -c 3 nice -n 19 sudo e4defrag "$partition" >>"$LOG_DIR/e4defrag.log" 2>>"$LOG_DIR/e4defrag.log"
+			rm "$XINITRC_LOG_DIR/e4defrag.log"
+			ionice -c 3 nice -n 19 sudo e4defrag "$partition" >>"$XINITRC_LOG_DIR/e4defrag.log" 2>>"$XINITRC_LOG_DIR/e4defrag.log"
 		fi
 	done
 	unset partition
 } &
 
 while :; do
-	rm "$LOG_DIR/dwm.log"
-	dwm >>"$LOG_DIR/dwm.log" 2>>"$LOG_DIR/dwm.log"
+	rm "$XINITRC_LOG_DIR/dwm.log"
+	dwm >>"$XINITRC_LOG_DIR/dwm.log" 2>>"$XINITRC_LOG_DIR/dwm.log"
 done
