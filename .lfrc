@@ -24,6 +24,9 @@ set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
+set info size
+# cmd on-select calcdirsize
+set dircounts
 
 cmd quitclear ${{
 	if [ -d "$JPROC_DIR" ]; then

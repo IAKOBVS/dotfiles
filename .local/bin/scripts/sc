@@ -1,3 +1,2 @@
 #!/bin/sh
-mkdir -p /tmp/screenshots
 scrot -e 'xclip -sel clipboard -t image/png -i $f' --select --line mode=edge -q 100 "$HOME/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png"
