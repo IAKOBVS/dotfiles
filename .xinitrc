@@ -55,7 +55,7 @@ remaps &
 # Nvidia max out power limit
 sudo nvidia-smi -pl "$(nvidia-smi -q -d POWER | awk '/Max Power Limit/ && !/N\/A/ { print; exit; }' | sed 's/^.*:[ \t]*\([0-9.]*\).*$/\1/')" &
 # Nvidia max out target temperature
-sudo nvidia-smi -gtt "$(nvidia-smi -q -d TEMPERATURE | awk '/GPU Slowdown Temp/ {print $(NF-1)}')" &
+# sudo nvidia-smi -gtt "$(nvidia-smi -q -d TEMPERATURE | awk '/GPU Slowdown Temp/ {print $(NF-1)}')" &
 
 # Hide mouse cursor
 unclutter --no-timeout --hide-on-key-press &
