@@ -1,8 +1,8 @@
 #!/bin/sh
 if [ "$(uname -s)" = Linux ]; then
-	du -shc -- * 2>/dev/null | sort -h | less
+	du -shc -- * .* 2>/dev/null | sort -h | less
 else
-du -sk -- * 2>/dev/null | sort -n |
+du -sk -- * .* 2>/dev/null | sort -n |
 	awk 'BEGIN {
 			total = 0;
 			kb = 1024;
