@@ -1,7 +1,8 @@
 #!/bin/sh
 lsblk "$(echo $2 | sed 's/of=//')"
 while true; do
-	read -p "Are you sure? (Y/n)" yn
+	echo "Are you sure? (Y/n)"
+	read -r yn
 	case $yn in
 	[Y]*)
 		dd $@
