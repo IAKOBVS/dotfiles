@@ -1,0 +1,2 @@
+#!/bin/sh
+less $HOME/.local/share/Steam/logs/console_log.txt

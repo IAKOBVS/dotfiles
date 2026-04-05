@@ -46,15 +46,6 @@ JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getcon
 JPROC_RG_ARGS="-j $JPROC_NPROC --color=always --no-heading -n --max-filesize 1M \
 		-g '!*.git*' \
 		-g '!*.o' \
-		-g '!*.png' \
-		-g '!*.jpg' \
-		-g '!*.jpeg' \
-		-g '!*.mov' \
-		-g '!*.virtualenv*' \
-		-g '!*.o' \
-		-g '!*.cargo*' \
-		-g '!*.pass*' \
-		-g '!*.key*' \
 		-g '!*node_modules*'"
 
 # Temporary files here will be cleaned up periodically by jproc-cleanup.
