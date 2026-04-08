@@ -7,6 +7,6 @@ UPDATER="$HOME/.local/src/Davinci-Resolve-Updater/update-resolve.sh"
 LOCK=/tmp/resolve-update.lock
 
 [ -f $LOCK ] && exit
-[ $(($(date +%d) % UPDATE_INTERVAL)) -ne 0 ] && exit
+[ $(($(date +%-d) % UPDATE_INTERVAL)) -ne 0 ] && exit
 
 "$UPDATER" && touch "$LOCK"
