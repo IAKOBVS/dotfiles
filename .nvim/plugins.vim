@@ -57,7 +57,7 @@ function! CheckBackspace() abort
 	return !col || getline('.')[col - 1]	=~# '\s'
 endfunction
 if has('statusline')
-	se statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 endif
 " navigate errors
 nnoremap <silent> <tab>k <Plug>(coc-diagnostic-prev)

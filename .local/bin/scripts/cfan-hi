@@ -1,4 +1,2 @@
 #!/bin/sh
-LOG_DIR="$HOME/.cache"
-sudo killall cfan
-sudo cfan --high >>"$LOG_DIR/cfan.log" 2>>"$LOG_DIR/cfan.log"
+dwmblocks-fast-cfan-high
