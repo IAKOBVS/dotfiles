@@ -56,9 +56,9 @@ function! CheckBackspace() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]	=~# '\s'
 endfunction
-if has('statusline')
-	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-endif
+" if has('statusline')
+" 	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" endif
 " navigate errors
 nnoremap <silent> <tab>k <Plug>(coc-diagnostic-prev)
 nnoremap <silent> <tab>j <Plug>(coc-diagnostic-next)
