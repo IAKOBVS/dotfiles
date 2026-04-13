@@ -41,7 +41,7 @@
 jproc_internal_argv=$@
 
 # Available CPU cores.
-JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
+JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null || echo '1')
 # Default args for rg.
 JPROC_RG_ARGS="--color=always --no-heading -n --max-filesize 1M \
 		-g '!*.git*' \

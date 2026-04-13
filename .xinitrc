@@ -91,7 +91,7 @@ thunderbird &
 nv-tearfree-on &
 
 # Cache file size
-ionice -c 3 nice -n 19 du -shc $HOME/* &
+# ionice -c 3 nice -n 19 du -shc $HOME/* &
 
 # Defragment
 {
@@ -102,6 +102,7 @@ ionice -c 3 nice -n 19 du -shc $HOME/* &
 			ionice -c 3 nice -n 19 sudo e4defrag "$partition" >>"$XINITRC_LOG_DIR/e4defrag.log" 2>>"$XINITRC_LOG_DIR/e4defrag.log"
 		fi
 	done
+	echo 3 | sudo tee /proc/sys/vm/drop_caches
 	unset partition
 } &
 
