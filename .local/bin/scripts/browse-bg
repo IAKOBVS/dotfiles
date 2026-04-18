@@ -1,2 +1,4 @@
 #!/bin/sh
-nice -n 19 brave
+nice -n 19 brave &
+sleep 10
+renice -n 19 $(ps -e -o comm --no-headers | grep -qF -e 'brave' -e 'chrome')
