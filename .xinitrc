@@ -14,6 +14,10 @@ export COMPOSITOR=picom
 export AUR_HELPER=yay
 XINITRC_LOG_DIR="$HOME/.cache"
 
+# Optimize kernel scheduler
+rm "$XINITRC_LOG_DIR/scx_lavd.log"
+sudo scx_lavd >>"$XINITRC_LOG_DIR/scx_lavd.log" 2>>"$XINITRC_LOG_DIR/scx_lavd.log" &
+
 # Trim SSD
 rm "$XINITRC_LOG_DIR/fstrim.log"
 sudo fstrim -av >>"$XINITRC_LOG_DIR/fstrim.log" 2>>"$XINITRC_LOG_DIR/fstrim.log" &
