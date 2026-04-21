@@ -1,0 +1,6 @@
+#!/bin/sh
+nice=$1
+proc=$2
+pid=$(pgrep -o "$proc")
+pids=$(pstree -p "$pid" | sed 's/[^(]*(\([0-9]\{1,\}\))/\1 /g')
+echo "$pids" | xargs renice -n "$nice" -p
