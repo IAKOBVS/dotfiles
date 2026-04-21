@@ -1,4 +1,6 @@
 #!/bin/sh
 nice -n 19 /bin/discord &
 sleep 10 
-renice 19 -p $(ps -e -o comm,pid --no-headers | awk '/[Dd]iscord/ || /chrome_crashpad/ {print $2}')
+rrenice Discord
+rrenice discord
+rrenice chrome
