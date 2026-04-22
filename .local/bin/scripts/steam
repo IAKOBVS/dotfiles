@@ -1,0 +1,4 @@
+#!/bin/sh
+/bin/steam $@ &
+sleep 5
+gaming-kill-webui

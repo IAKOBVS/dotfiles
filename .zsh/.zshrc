@@ -69,7 +69,7 @@ bindkey -s '^f' 'jproc_fzflive $PWD\n'
 bindkey -s '^o' 'jproc_lfcd\n'
 bindkey -s '^r' 'jproc_grepvim\n'
 
-export _JAVA_AWT_WM_NONREPARENTING=1
+# export _JAVA_AWT_WM_NONREPARENTING=1
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=0
 

@@ -59,7 +59,3 @@ steam steam://rungameid/"$gameid" &
 
 # Kill background processes
 gaming-kill
-# Wait until steamwebhelper launches
-sleep 5
-# Set the nice of steamwebhelper to 19,
-gaming-kill-webui
