@@ -102,7 +102,6 @@ nv-tearfree-on &
 	set -eu
 	for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
 		if [ "$(sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}')" -gt 30 ]; then
-			rm "$XINITRC_LOG_DIR/e4defrag.log"
 			nice -n 19 ionice -c 3 sudo e4defrag "$partition" >>"$XINITRC_LOG_DIR/e4defrag.log" 2>>"$XINITRC_LOG_DIR/e4defrag.log"
 		fi
 	done
