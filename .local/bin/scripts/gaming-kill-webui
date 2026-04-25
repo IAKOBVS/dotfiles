@@ -1,3 +1,4 @@
 #!/bin/sh
 rrenice 19 steamwebhelper
 rrenice 19 chrome
+killall lf
