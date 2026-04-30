@@ -15,9 +15,6 @@ foreach (glob('*')) {
 	# inside brackets
 	s/\[[^\]]*\]//g;
 
-	# leading spaces
-	s/^\.\/\s*([^[:space:]])/\1/;
-
 	# inside parens
 	s/\(\d*\)//g; # contains num
 	s/\([^\)]*1080[^\)]*\)//g; # contains resolution
@@ -42,6 +39,9 @@ foreach (glob('*')) {
 
 	# season2 -> season 2
 	s/eason([\d])/eason\ \1/g;
+
+	# leading spaces
+	s/^\.\/\s*([^[:space:]])/\1/;
 
 	print "$_\n";
 	push @old, $old;
