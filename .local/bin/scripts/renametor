@@ -1,2 +1,3 @@
 #!/bin/sh
-find . -type f -o -type d | grep '^\./[^/]\{1,\}$' | perl renametor.pl
+# find . -type f -o -type d | grep '^\./[^/]\{1,\}$' | renametor.awk
+renametor.pl
