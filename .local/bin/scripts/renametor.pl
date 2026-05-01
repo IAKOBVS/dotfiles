@@ -43,6 +43,9 @@ foreach (glob('*')) {
 	# leading spaces
 	s/^\.\/\s*([^[:space:]])/\1/;
 
+	# replace spaces with underscores
+	s/ /_/g;
+
 	print "$_\n";
 	push @old, $old;
 	push @new, $_;

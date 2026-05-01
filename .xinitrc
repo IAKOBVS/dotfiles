@@ -48,7 +48,7 @@ feh --bg-fill /home/james/.local/share/wallpaper/bg.png &
 # feh --bg-fill /home/james/Downloads/wallpaper-hd-1080.png &
 
 # turn off webcam
-sudo modprobe -r uvcvideo &
+# sudo modprobe -r uvcvideo &
 
 # Terminal
 $TERMINAL &
@@ -106,7 +106,7 @@ nv-tearfree-on &
 			nice -n 19 ionice -c 3 sudo e4defrag "$partition" >>"$XINITRC_LOG_DIR/e4defrag.log" 2>>"$XINITRC_LOG_DIR/e4defrag.log"
 		fi
 	done
-	echo 3 | sudo tee /proc/sys/vm/drop_caches
+	# echo 3 | sudo tee /proc/sys/vm/drop_caches
 	unset partition
 } &
 
