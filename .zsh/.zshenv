@@ -4,6 +4,7 @@ export TERM=alacritty
 export TERMINAL=alacritty
 export TERMINAL_PROG=alacritty
 export EDITOR=nvim
+export SUDO_EDITOR=nvim
 export BROWSER=chromium
 export FZF_DEFAULT_OPTS='--height 95% --layout=reverse --bind alt-J:preview-up,alt-K:preview-down,alt-H:backward-char,alt-L:forward-char,alt-U:up,alt-D:down'
 export GTK_THEME=Adwaita:dark
