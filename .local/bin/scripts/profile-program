@@ -8,6 +8,6 @@ if [ -z "$TIME" ]; then
 	TIME=5
 fi
 RECORD=$(sudo mktemp)
-sudo perf record -o "$RECORD" -g -p "$(pgrep "$PROG" | head -n1)" -- sleep "$TIME" &&
-	sudo perf report -i "$RECORD"
-sudo rm "$RECORD"
+perf record -o "$RECORD" -g -p "$(pgrep "$PROG" | head -n1)" -- sleep "$TIME" &&
+	perf report -i "$RECORD"
+rm "$RECORD"

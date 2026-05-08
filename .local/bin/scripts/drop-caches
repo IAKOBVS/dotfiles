@@ -1,2 +1,2 @@
 #!/bin/sh
-echo 3 | sudo tee /proc/sys/vm/drop_caches
+echo 3 | tee /proc/sys/vm/drop_caches

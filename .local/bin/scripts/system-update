@@ -1,4 +1,4 @@
 #!/bin/sh
 resolve-update
-sudo pacman -Syu
+sudo pacman -Syu --needed
 remaps
