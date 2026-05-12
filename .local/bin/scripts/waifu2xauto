@@ -56,6 +56,8 @@ case $image in
 	;;
 esac
 
+scale_get
+
 out=${image%.*}-hd-${scale}x.png
 
 upscale "$image"

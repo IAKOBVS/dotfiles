@@ -1,2 +1,2 @@
 #!/bin/sh
-RESIZE=1 RESIZE_RES=2400 waifu2xauto
+RESIZE=1 RESIZE_RES=2400 waifu2xauto $@

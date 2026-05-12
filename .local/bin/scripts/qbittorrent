@@ -1,2 +1,3 @@
 #!/bin/sh
 nice -n 19 /bin/qbittorrent
+rrenice 19 qbittorrent

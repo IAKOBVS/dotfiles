@@ -1,4 +1,5 @@
 #!/bin/sh
 rrenice 19 steamwebhelper
 rrenice 19 chrome
+rrenice 19 gameoverlayui
 killall lf

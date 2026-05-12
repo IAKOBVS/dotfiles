@@ -14,6 +14,14 @@ export COMPOSITOR=picom
 export AUR_HELPER=yay
 XINITRC_LOG_DIR="$HOME/.cache"
 
+# CPU fan speed control
+rm "$XINITRC_LOG_DIR/cfan.log"
+sudo cfan >>"$XINITRC_LOG_DIR/cfan.log" 2>>"$XINITRC_LOG_DIR/cfan.log" &
+
+# GPU fan speed control
+rm "$XINITRC_LOG_DIR/nvspeed.log"
+sudo nvspeed >>"$XINITRC_LOG_DIR/nvspeed.log" 2>>"$XINITRC_LOG_DIR/nvspeed.log" &
+
 # Optimize kernel scheduler
 rm "$XINITRC_LOG_DIR/scx_lavd.log"
 sudo scx_lavd >>"$XINITRC_LOG_DIR/scx_lavd.log" 2>>"$XINITRC_LOG_DIR/scx_lavd.log" &
@@ -29,14 +37,6 @@ sudo fstrim -av >>"$XINITRC_LOG_DIR/fstrim.log" 2>>"$XINITRC_LOG_DIR/fstrim.log"
 
 # Turn off wifi
 nmcli radio wifi off &
-
-# CPU fan speed control
-rm "$XINITRC_LOG_DIR/cfan.log"
-sudo cfan >>"$XINITRC_LOG_DIR/cfan.log" 2>>"$XINITRC_LOG_DIR/cfan.log" &
-
-# GPU fan speed control
-rm "$XINITRC_LOG_DIR/nvspeed.log"
-sudo nvspeed >>"$XINITRC_LOG_DIR/nvspeed.log" 2>>"$XINITRC_LOG_DIR/nvspeed.log" &
 
 # Set compositor for terminal transparency
 rm "$XINITRC_LOG_DIR/$COMPOSITOR.log"
@@ -109,6 +109,9 @@ nv-tearfree-on &
 	sudo drop-caches
 	unset partition
 } &
+
+mv "$XINITRC_LOG_DIR/yay/__list_of_packages__" "$XINITRC_LOG_DIR/yay/__list_of_packages__.bak"
+yay -Q > "$XINITRC_LOG_DIR/yay/__list_of_packages__" &
 
 while :; do
 	rm "$XINITRC_LOG_DIR/dwm.log"
