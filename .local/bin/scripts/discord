@@ -1,6 +1,6 @@
 #!/bin/sh
 nice -n 19 /bin/discord &
-sleep 10
+sleep 5
 rrenice 19 Discord
 rrenice 19 discord
 rrenice 19 chrome
