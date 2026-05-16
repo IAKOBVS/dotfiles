@@ -62,7 +62,7 @@ sudo nvidia-smi -pl "$(nvidia-smi -q -d POWER | awk '/Max Power Limit/ && !/N\/A
 # sudo nvidia-smi -gtt "$(nvidia-smi -q -d TEMPERATURE | awk '/GPU Slowdown Temp/ {print $(NF-1)}')" &
 
 # Hide mouse cursor
-unclutter --no-timeout --hide-on-key-press &
+unclutter --hide-on-key-press &
 
 # Notification
 dunst &
