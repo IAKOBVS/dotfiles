@@ -1,2 +1,2 @@
-#!/usr/bin/dash
+#!/bin/sh
 sensors | grep -F -e 'Package' -e 'Core' -e 'fan' -e 'pwm'

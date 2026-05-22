@@ -43,6 +43,11 @@ foreach (glob('*')) {
 	# leading spaces
 	s/^\.\/\s*([^[:space:]])/\1/;
 
+	# opening
+	s/^\ *//; # space
+	s/^_*//; # underscore
+	s/^\-*//; # dash
+
 	# replace spaces with underscores
 	s/ /_/g;
 

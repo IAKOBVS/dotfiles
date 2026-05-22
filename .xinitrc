@@ -98,17 +98,20 @@ nv-tearfree-on &
 # nice -n 19 ionice -c 3 du -shc $HOME/* &
 
 # Defragment
-{
+(
 	rm "$XINITRC_LOG_DIR/e4defrag.log"
 	set -eu
+	SCORE_FILE="$XINITRC_LOG_DIR/e4defrag-score.log"
 	for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
-		if [ "$(sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}')" -gt 30 ]; then
+		sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}' > "$SCORE_FILE"
+		if [ "$(cat "$SCORE_FILE")" -gt 30 ]; then
 			nice -n 19 ionice -c 3 sudo e4defrag "$partition" >>"$XINITRC_LOG_DIR/e4defrag.log" 2>>"$XINITRC_LOG_DIR/e4defrag.log"
 		fi
 	done
 	sudo drop-caches
 	unset partition
-} &
+	unset SCORE_FILE
+) &
 
 mv "$XINITRC_LOG_DIR/yay/__list_of_packages__" "$XINITRC_LOG_DIR/yay/__list_of_packages__.bak"
 yay -Q > "$XINITRC_LOG_DIR/yay/__list_of_packages__" &
