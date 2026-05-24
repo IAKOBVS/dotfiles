@@ -106,9 +106,9 @@ nv-tearfree-on &
 		sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}' > "$SCORE_FILE"
 		if [ "$(cat "$SCORE_FILE")" -gt 30 ]; then
 			nice -n 19 ionice -c 3 sudo e4defrag "$partition" >>"$XINITRC_LOG_DIR/e4defrag.log" 2>>"$XINITRC_LOG_DIR/e4defrag.log"
+			sudo drop-caches
 		fi
 	done
-	sudo drop-caches
 	unset partition
 	unset SCORE_FILE
 ) &
