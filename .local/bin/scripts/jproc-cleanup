@@ -1,5 +1,7 @@
 #!/bin/sh
 
+renice -n 19 -p $$ >>/dev/null 2>/dev/null
+
 set -u
 
 CMD='jproc-cleanup'
