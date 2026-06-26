@@ -1,0 +1,2 @@
+#!/bin/sh
+$HOME/node_modules/@github/copilot-linux-x64/copilot --screen-reader $@

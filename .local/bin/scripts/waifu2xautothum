@@ -1,3 +1,57 @@
 #!/bin/sh
-waifu2xauto $@
-res $(echo $1 | sed 's/\(\.[^.]*\)$/-hd\1/') 1280
+# waifu2xautothum - Upscale image and create 1280px thumbnail
+# Usage: waifu2xautothum <image> <scale>
+
+usage()
+{
+	cat <<EOF
+Usage: $(basename "$0") <image> <scale>
+
+Upscale an image and create a 1280px wide thumbnail.
+
+Arguments:
+  image    Input image file (png, jpg, jpeg, webp)
+  scale    Target scale factor: 1-4, 16, 32, 64
+
+This script runs waifu2xauto then resizes the output to 1280px width.
+
+Scale logic:
+  1-4   -> 4x (1 pass)
+  5-16  -> 16x (2 passes)
+  17-32 -> 64x (3 passes)
+  33-64 -> 256x (4 passes)
+
+Environment variables:
+  UPSCALER    Model name (default: realesrgan-x4plus-anime)
+  RESIZE=1    Enable auto-resize if width > RESIZE_RES
+  RESIZE_RES  Max width before resize (default: 2400)
+
+Output: <input>-hd-<scale>x-thumb.png (always PNG)
+
+Example:
+  $(basename "$0") image.png 4
+  $(basename "$0") photo.jpg 16
+EOF
+}
+
+if [ $# -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	usage
+	exit 0
+fi
+
+image="$1"
+scale="$2"
+
+waifu2xauto "$image" "$scale"
+
+# Determine the scale used by waifu2xauto
+case "$scale" in
+[1-4]) final_scale=4 ;;
+[5-9] | 1[0-6]) final_scale=16 ;;
+1[7-9] | 2[0-9] | 3[0-2]) final_scale=64 ;;
+3[3-9] | 4[0-9] | 5[0-9] | 6[0-4]) final_scale=256 ;;
+esac
+
+out="${image%.*}-hd-${final_scale}x.png"
+res "$out" 1280
+mv "$out" "${image%.*}-hd-${final_scale}x-thumb.png"

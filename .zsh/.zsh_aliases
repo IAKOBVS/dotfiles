@@ -79,3 +79,4 @@ alias mi="cd $HOME/books/Mythology"
 alias mk='make -j6'
 alias his="history | fzf | xclip -sel c"
 alias hisa="cat $HOME/.cache/zsh/history | fzf | xclip -sel c"
+alias sd='terminal-pwd'

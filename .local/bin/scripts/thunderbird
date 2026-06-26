@@ -1,5 +1,4 @@
 #!/bin/sh
 nice -n 19 /bin/thunderbird &
 sleep 5
-rrenice 19 Thunderbird
-rrenice 19 thunderbird
+rrenice 19 hunderbird

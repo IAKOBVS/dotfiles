@@ -17,3 +17,7 @@
 # unset __conda_setup
 # <<< conda initialize <<<
 
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/james/.local/bin:$PATH"

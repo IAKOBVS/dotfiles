@@ -1,6 +1,45 @@
 #!/bin/sh
-scale=$1
+# waifu2xauto-norm-res-multi - Batch upscale with realesrgan-x4plus and resize
+# Usage: waifu2xauto-norm-res-multi <scale> <file1> <file2> ...
+
+usage()
+{
+	cat <<EOF
+Usage: $(basename "$0") <scale> <file1> [file2...]
+
+Batch upscale multiple images using realesrgan-x4plus model with auto-resize.
+
+Arguments:
+  scale    Target scale factor: 1-4, 16, 32, 64
+  fileN    Input image files (png, jpg, jpeg, webp)
+
+This script sets UPSCALER=realesrgan-x4plus and calls waifu2xauto-norm-res.
+
+Scale logic:
+  1-4   -> 4x (1 pass)
+  5-16  -> 16x (2 passes)
+  17-32 -> 64x (3 passes)
+  33-64 -> 256x (4 passes)
+
+Environment variables:
+  RESIZE_RES  Override max width (default: 2400)
+
+Output: <input>-hd-<scale>x.png for each file
+
+Example:
+  $(basename "$0") 4 *.png
+  RESIZE_RES=1920 $(basename "$0") 16 photo1.jpg photo2.jpg
+EOF
+}
+
+if [ $# -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	usage
+	exit 0
+fi
+
+scale="$1"
 shift
-for file in $@; do
+
+for file in "$@"; do
 	waifu2xauto-norm-res "$file" "$scale"
 done

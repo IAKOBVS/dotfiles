@@ -1,0 +1,11 @@
+#!/bin/sh
+
+TERMINAL=${TERMINAL:-alacritty}
+
+case "$TERMINAL" in
+	alacritty|foot|gnome-terminal|xterm) nohup "$TERMINAL" --working-directory "$PWD" >/dev/null 2>&1 & ;;
+	kitty)                               nohup "$TERMINAL" --directory "$PWD" >/dev/null 2>&1 & ;;
+	konsole)                             nohup "$TERMINAL" --workdir "$PWD" >/dev/null 2>&1 & ;;
+	urxvt|rxvt)                          nohup "$TERMINAL" -cd "$PWD" >/dev/null 2>&1 & ;;
+	*)                                   nohup "$TERMINAL" >/dev/null 2>&1 & ;;
+esac

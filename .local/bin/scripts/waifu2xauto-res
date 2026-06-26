@@ -1,2 +1,41 @@
 #!/bin/sh
-RESIZE=1 RESIZE_RES=2400 waifu2xauto $@
+# waifu2xauto-res - Upscale image and resize if width > 2400px
+# Usage: waifu2xauto-res <image> <scale>
+
+usage()
+{
+	cat <<EOF
+Usage: $(basename "$0") <image> <scale>
+
+Upscale an image and auto-resize if width exceeds 2400px.
+
+Arguments:
+  image    Input image file (png, jpg, jpeg, webp)
+  scale    Target scale factor: 1-4, 16, 32, 64
+
+This script sets RESIZE=1 and RESIZE_RES=2400 before calling waifu2xauto.
+
+Scale logic:
+  1-4   -> 4x (1 pass)
+  5-16  -> 16x (2 passes)
+  17-32 -> 64x (3 passes)
+  33-64 -> 256x (4 passes)
+
+Environment variables:
+  UPSCALER    Model name (default: realesrgan-x4plus-anime)
+  RESIZE_RES  Override max width (default: 2400)
+
+Output: <input>-hd-<scale>x.png (always PNG)
+
+Example:
+  $(basename "$0") large_image.png 4
+  RESIZE_RES=1920 $(basename "$0") photo.jpg 16
+EOF
+}
+
+if [ $# -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	usage
+	exit 0
+fi
+
+RESIZE=1 RESIZE_RES=2400 waifu2xauto "$@"

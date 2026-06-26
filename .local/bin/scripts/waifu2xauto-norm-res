@@ -1,2 +1,40 @@
 #!/bin/sh
-UPSCALER=realesrgan-x4plus waifu2xauto-res $@
+# waifu2xauto-norm-res - Upscale with realesrgan-x4plus model and resize
+# Usage: waifu2xauto-norm-res <image> <scale>
+
+usage()
+{
+	cat <<EOF
+Usage: $(basename "$0") <image> <scale>
+
+Upscale an image using realesrgan-x4plus model and auto-resize if width > 2400px.
+
+Arguments:
+  image    Input image file (png, jpg, jpeg, webp)
+  scale    Target scale factor: 1-4, 16, 32, 64
+
+This script sets UPSCALER=realesrgan-x4plus and calls waifu2xauto-res.
+
+Scale logic:
+  1-4   -> 4x (1 pass)
+  5-16  -> 16x (2 passes)
+  17-32 -> 64x (3 passes)
+  33-64 -> 256x (4 passes)
+
+Environment variables:
+  RESIZE_RES  Override max width (default: 2400)
+
+Output: <input>-hd-<scale>x.png (always PNG)
+
+Example:
+  $(basename "$0") photo.png 4
+  RESIZE_RES=1920 $(basename "$0") image.jpg 16
+EOF
+}
+
+if [ $# -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	usage
+	exit 0
+fi
+
+UPSCALER=realesrgan-x4plus waifu2xauto-res "$@"

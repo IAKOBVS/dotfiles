@@ -1,70 +1,122 @@
 #!/bin/sh
-image=$1
-scale=$2
-USAGE="usage: $(basename "$0") <image> <scale>."
+# waifu2xauto - Upscale a single image using realesrgan-ncnn-vulkan
+# Usage: waifu2xauto <image> <scale>
+# Scale: 1-4, 16, 32, 64
 
-scale_get()
+usage()
 {
-	if [ "$scale" -le 4 ]; then
-		n=0
-		scale=4
-	elif [ "$scale" -le 16 ]; then
-		n=1
-		scale=$((scale * scale))
-	elif [ "$scale" -le 32 ]; then
-		n=2
-		scale=$((scale * scale * scale))
-	elif [ "$scale" -le 64 ]; then
-		n=3
-		scale=$((scale * scale * scale * scale))
-	else
-		echo "$USAGE"
-		echo 'Illegal number used! Use 1, 2, 3, 4, 16, 32, or 64 instead.'
-		exit 1
-	fi
+	cat <<EOF
+Usage: $(basename "$0") <image> <scale>
+
+Upscale an image using realesrgan-ncnn-vulkan.
+
+Arguments:
+  image    Input image file (png, jpg, jpeg, webp)
+  scale    Target scale factor: 1-4, 16, 32, 64
+
+Scale logic:
+  1-4   -> 4x (1 pass)
+  5-16  -> 16x (2 passes)
+  17-32 -> 64x (3 passes)
+  33-64 -> 256x (4 passes)
+
+Environment variables:
+  UPSCALER    Model name (default: realesrgan-x4plus-anime)
+  RESIZE=1    Enable auto-resize if width > RESIZE_RES
+  RESIZE_RES  Max width before resize (default: 2400)
+
+Output: <input>-hd-<scale>x.png (always PNG)
+
+Examples:
+  $(basename "$0") image.png 4
+  $(basename "$0") photo.jpg 16
+  UPSCALER=realesrgan-x4plus $(basename "$0") art.webp 2
+EOF
 }
 
-if [ -z "$UPSCALER" ]; then
-	UPSCALER=realesrgan-x4plus-anime
+image="$1"
+scale="$2"
+
+# Show help if no arguments or help requested
+if [ $# -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	usage
+	exit 0
 fi
 
+USAGE="usage: $(basename "$0") <image> <scale>"
+
+# Validate input image
+case "$image" in
+*.png | *.jpg | *.jpeg | *.webp) ;;
+*)
+	echo "$USAGE"
+	echo "Error: Not an image file! Supported: png, jpg, jpeg, webp"
+	exit 1
+	;;
+esac
+
+# Default model
+: "${UPSCALER:=realesrgan-x4plus-anime}"
+
+# Determine number of 4x passes needed for target scale
+# 1-4   -> 1 pass (4x)
+# 5-16  -> 2 passes (16x)
+# 17-32 -> 3 passes (64x)
+# 33-64 -> 4 passes (256x)
+case "$scale" in
+[1-4])
+	passes=1
+	final_scale=4
+	;;
+[5-9] | 1[0-6])
+	passes=2
+	final_scale=16
+	;;
+1[7-9] | 2[0-9] | 3[0-2])
+	passes=3
+	final_scale=64
+	;;
+3[3-9] | 4[0-9] | 5[0-9] | 6[0-4])
+	passes=4
+	final_scale=256
+	;;
+*)
+	echo "$USAGE"
+	echo "Error: Invalid scale. Use 1-4, 16, 32, or 64."
+	exit 1
+	;;
+esac
+
+# Output filename
+out="${image%.*}-hd-${final_scale}x.png"
+
+# Upscale function
 upscale()
 {
 	realesrgan-ncnn-vulkan -i "$1" -o "$out" -s 4 -n "$UPSCALER" -v
 }
 
+# Optional resize if width exceeds threshold
 resize()
 {
+	[ -z "$RESIZE" ] && return
+	: "${RESIZE_RES:=2400}"
+
 	resolution=$(identify -ping "$out" | awk '{print $3}' | sed 's/x.*//')
-	if [ ! -z "$RESIZE" ]; then
-		if [ ! -z "$RESIZE_RES" ]; then
-			RESIZE_RES=2400
-		fi
-		if [ "$resolution" -gt "$RESIZE_RES" ]; then
-			res "$out" "$RESIZE_RES"
-			rm "$out"
-		fi
+	if [ "$resolution" -gt "$RESIZE_RES" ]; then
+		res "$out" "$RESIZE_RES"
+		rm "$out"
 	fi
 }
 
-case $image in
-*.png | *.jpg | *.jpeg | *.webp) ;;
-*)
-	echo "$USAGE"
-	echo 'Not an image file!'
-	exit 1
-	;;
-esac
-
-scale_get
-
-out=${image%.*}-hd-${scale}x.png
-
+# Initial upscale
 upscale "$image"
 
-while [ "$n" -gt 0 ]; do
+# Additional passes for higher scales
+pass=$((passes - 1))
+while [ "$pass" -gt 0 ]; do
 	upscale "$out"
-	n=$((n - 1))
+	pass=$((pass - 1))
 done
 
 resize

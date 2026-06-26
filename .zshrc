@@ -6,3 +6,7 @@
 # PERL_MB_OPT="--install_base \"/home/james/perl5\""; export PERL_MB_OPT;
 # PERL_MM_OPT="INSTALL_BASE=/home/james/perl5"; export PERL_MM_OPT;
 # [ -f /opt/miniforge/etc/profile.d/conda.sh ] && source /opt/miniforge/etc/profile.d/conda.sh
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/james/.local/bin:$PATH"

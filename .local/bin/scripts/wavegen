@@ -1,0 +1,2 @@
+#!/bin/sh
+ffmpeg -i "$1" -filter_complex "[0:a]showwaves=split_channels=1:mode=p2p:colors=white:s=1920x1080:draw=scale,format=yuva444p10le[v]" -map '[v]' -c:v prores_ks -profile:v 4 -pix_fmt yuva444p10le -an "$1".mov

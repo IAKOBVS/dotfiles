@@ -8,13 +8,14 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/LargeFile'
 " Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/goyo.vim'
+" Plug 'mfussenegger/nvim-jdtls'
 " Plug 'rhysd/vim-grammarous'
 if 0
 	Plug 'bergercookie/asm-lsp'
 	Plug 'OmniSharp/omnisharp-vim'
 endif
-" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 call plug#end()
 
 " coc.nvim Extensions

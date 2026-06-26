@@ -48,6 +48,7 @@
 	],
 
     "perl.enable": false,
+    "perlnavigator.serverPath": "/home/james/.local/src/PerlNavigator/server/out/server.js",
     "perlnavigator.enable": true,
     "perlnavigator.perlcriticEnabled": true,
     "perlnavigator.perltidyEnabled": true,

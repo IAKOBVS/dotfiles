@@ -5,4 +5,72 @@ $PROG $1 --language English --task transcribe --max_words 1 --refine --output $1
 sed -i 's/<font [^>]*>//g; s/<\/font>//g; s/\([A-Za-z]\)[.,-?]/\1/g' $1.srt
 # align first word to start
 sed -i '0,/00:00:[0-9]*,[0-9]*/{s/00:00:[0-9]*,[0-9]*/00:00:00,000/}' $1.srt
-aegisub $1.srt
+
+# Automate: stretch each word to next word's start (remove gaps)
+python3 - "$1.srt" << 'PYEOF'
+import sys
+import re
+
+def parse_time(t):
+	"""Parse SRT time format HH:MM:SS,mmm to milliseconds"""
+	h, m, s = t.split(':')
+	s, ms = s.split(',')
+	return int(h) * 3600000 + int(m) * 60000 + int(s) * 1000 + int(ms)
+
+def format_time(ms):
+	"""Format milliseconds to SRT time format HH:MM:SS,mmm"""
+	h = ms // 3600000
+	ms %= 3600000
+	m = ms // 60000
+	ms %= 60000
+	s = ms // 1000
+	ms %= 1000
+	return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+
+if len(sys.argv) < 2:
+	sys.exit(1)
+
+with open(sys.argv[1], 'r') as f:
+	content = f.read()
+
+# Split into blocks (separated by blank lines)
+blocks = content.strip().split('\n\n')
+entries = []
+
+for block in blocks:
+	lines = block.strip().split('\n')
+	if len(lines) < 3:
+		continue
+	# lines[0] = index, lines[1] = timestamp, lines[2:] = text
+	time_line = lines[1]
+	match = re.match(r'(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})', time_line)
+	if match:
+		start, end = match.groups()
+		text = '\n'.join(lines[2:])
+		entries.append({
+			'index': lines[0],
+			'start': start,
+			'end': end,
+			'text': text,
+			'start_ms': parse_time(start),
+			'end_ms': parse_time(end)
+		})
+
+# Stretch each word to next word's start
+for i in range(len(entries) - 1):
+	entries[i]['end'] = entries[i + 1]['start']
+	entries[i]['end_ms'] = entries[i + 1]['start_ms']
+
+# Rebuild output
+output_lines = []
+for e in entries:
+	output_lines.append(e['index'])
+	output_lines.append(f"{e['start']} --> {e['end']}")
+	output_lines.append(e['text'])
+	output_lines.append('')
+
+with open(sys.argv[1], 'w') as f:
+	f.write('\n'.join(output_lines))
+PYEOF
+
+# aegisub $1.srt
