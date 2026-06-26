@@ -1,2 +1,3 @@
 #!/bin/sh
-/opt/resolve/bin/resolve
+LOG=$HOME/.cache/davinci-resolve.log
+/opt/resolve/bin/resolve $@ >> "$LOG" 2>> "$LOG"
