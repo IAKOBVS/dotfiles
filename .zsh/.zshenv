@@ -1,5 +1,5 @@
 export PATH="$HOME/.local/bin/scripts:$HOME/.local/bin:$PATH"
-export COMPOSITOR=picom
+export COMPOSITOR=xcompmgr
 export TERM=alacritty
 export TERMINAL=alacritty
 export TERMINAL_PROG=alacritty
@@ -27,3 +27,4 @@ export FZF_DEFAULT_COMMAND="find \
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE_MAX_SIZE=10737418240 # 10 GB steam shader cache
 export CUDA_DISABLE_PERF_BOOST=1
+export NO_AT_BRIDGE=1

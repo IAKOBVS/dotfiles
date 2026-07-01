@@ -1,0 +1,11 @@
+#!/bin/sh
+# TODO: create real server, output format (constant offsets)
+# for avoiding mutex lock overhead in multiple nvml instances
+#
+# perhaps do the same for cpu stats? to avoid kernel overhead of recalculatiung stats?
+#
+# 1234567890123456789 123456789123456789 1234567890123456789 1234567890123456789
+# temperature (deg)   utilization (%)    vram (gb)           power (watt)
+OUT=/tmp/nvml.csv
+mkfifo "$OUT"
+stdbuf -oL nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,memory.used,power.draw --format=csv,noheader,nounits -l 1 > "$OUT"

@@ -1,0 +1,15 @@
+#!/bin/sh
+LOG_DIR=$HOME/.local/state/rclone
+mkdir -p "$LOG_DIR"
+rclone mount gdrive: $HOME/gdrive \
+  --vfs-cache-mode full \
+  --vfs-cache-max-age 24h \
+  --dir-cache-time 24h \
+  --attr-timeout 1h \
+  --buffer-size 64M \
+  --vfs-read-ahead 128M \
+  --tpslimit 10 \
+  --tpslimit-burst 10 \
+  --poll-interval 10s \
+  --log-file $LOG_DIR/rclone.log \
+  --daemon \

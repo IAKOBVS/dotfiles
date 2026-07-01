@@ -10,18 +10,18 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
-export UEBERZUG_LOG_FILE="$HOME/.cache/ueberzugpp"
-export COMPOSITOR=picom
+export COMPOSITOR=xcompmgr
 export AUR_HELPER=yay
 XINITRC_LOG_DIR="$HOME/.cache"
-
-# CPU fan speed control
-rm "$XINITRC_LOG_DIR/cfan.log"
-sudo cfan >>"$XINITRC_LOG_DIR/cfan.log" 2>>"$XINITRC_LOG_DIR/cfan.log" &
+export UEBERZUG_LOG_FILE="$XINITRC_LOG_DIR"/ueberzug.log
 
 # GPU fan speed control
 rm "$XINITRC_LOG_DIR/nvspeed.log"
 sudo nvspeed >>"$XINITRC_LOG_DIR/nvspeed.log" 2>>"$XINITRC_LOG_DIR/nvspeed.log" &
+
+# CPU fan speed control
+rm "$XINITRC_LOG_DIR/cfan.log"
+sudo cfan >>"$XINITRC_LOG_DIR/cfan.log" 2>>"$XINITRC_LOG_DIR/cfan.log" &
 
 # Optimize kernel scheduler
 rm "$XINITRC_LOG_DIR/scx_lavd.log"
@@ -36,7 +36,7 @@ nmcli radio wifi off &
 
 # Set compositor for terminal transparency
 rm "$XINITRC_LOG_DIR/$COMPOSITOR.log"
-$COMPOSITOR >>"$XINITRC_LOG_DIR/$COMPOSITOR.log" 2>>"$XINITRC_LOG_DIR/$COMPOSITOR.log" &
+$COMPOSITOR -n >>"$XINITRC_LOG_DIR/$COMPOSITOR.log" 2>>"$XINITRC_LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &

@@ -1,21 +1,21 @@
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-" Plug 'vim-airline/vim-airline'
-" Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'bkad/CamelCaseMotion'
-" Plug 'godlygeek/tabular'
-Plug 'vim-scripts/LargeFile'
-" Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'junegunn/goyo.vim'
-" Plug 'mfussenegger/nvim-jdtls'
-" Plug 'rhysd/vim-grammarous'
+Plug 'vim-scripts/LargeFile'
+Plug 'bkad/CamelCaseMotion'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 if 0
+	Plug 'vim-airline/vim-airline'
+	Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+	Plug 'godlygeek/tabular'
+	Plug 'dense-analysis/ale'
+	Plug 'junegunn/goyo.vim'
+	Plug 'mfussenegger/nvim-jdtls'
+	Plug 'rhysd/vim-grammarous'
 	Plug 'bergercookie/asm-lsp'
 	Plug 'OmniSharp/omnisharp-vim'
 endif
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 call plug#end()
 
 " coc.nvim Extensions
@@ -82,12 +82,11 @@ if 0
 	autocmd FileType perl nnoremap <leader>f :silent! CocEnable<CR> :silent! CocStart<CR>
 	autocmd BufNewFile,BufEnter *.js,*.ts,*.html,*.css silent! nnoremap <leader>f :CocCommand prettier.formatFile<CR>
 	autocmd BufNewFile,BufEnter *.js,*.ts,*.html,*.css silent! :ALEDisable<CR>
+	" accept completion
+	nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
+	nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
+	nnoremap <space>a :ALEToggle<CR>
 endif
-
-" accept completion
-" nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
-" nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
-" nnoremap <space>a :ALEToggle<CR>
 
 if has('nvim-0.6')
 	let g:ale_use_neovim_diagnostics_api = 1

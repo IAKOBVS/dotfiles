@@ -55,6 +55,7 @@ cmd jproc_grepvim ${{
 	fi
 }}
 
+
 cmd open ${{
 	case $f in
 	*.ts|*.js|*.lua|*.java|*.cs)
@@ -66,8 +67,8 @@ cmd open ${{
 		;;
 	*)
 		case $(file --mime-type "$(readlink -f $f)" -b) in
-		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
-		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx;;
+		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) exec localc $fx ;;
+		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) exec zathura $fx ;;
 		text/*|application/json|inode/x-empty|application/x-subrip)
 			if [ -d "$JPROC_DIR" ]; then
 				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
@@ -75,13 +76,12 @@ cmd open ${{
 				lf -remote "send $id quit"
 			fi
 			;;
-		image/x-xcf) gimp $fx ;;
-		image/svg+xml) display -- $f ;;
-		image/*) sxiv $fx
-			;;
-		audio/*|video/x-ms-asf) mpv --really-quiet --audio-display=no $f ;;
-		video/*) mpv --really-quiet $fx ;;
-		application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+		image/x-xcf) exec gimp $fx ;;
+		image/svg+xml) exec display -- $f ;;
+		image/*) exec sxiv $fx ;;
+		audio/*|video/x-ms-asf) exec mpv --really-quiet --audio-display=no $f ;;
+		video/*) exec mpv --really-quiet $fx ;;
+		application/pdf|application/vnd.djvu|application/epub*) exec zathura $fx ;;
 		application/pgp-encrypted)
 			if [ -d "$JPROC_DIR" ]; then
 				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
@@ -89,18 +89,19 @@ cmd open ${{
 				lf -remote "send $id quit"
 			fi
 			;;
-		application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
-		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
-		application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
-		application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
-		application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
-		application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
+		application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) exec lowriter $fx ;;
+		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) exec localc $fx ;;
+		application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) exec loimpress $fx ;;
+		application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) exec lodraw $fx ;;
+		application/vnd.oasis.opendocument.formula) exec lomath $fx ;;
+		application/vnd.oasis.opendocument.database) exec lobase $fx ;;
 		*)
-			for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+			for f in $fx; do exec $OPENER $f; done ;;
 		esac
 		;;
-    esac
+	esac
 }}
+
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
 
 cmd extract ${{

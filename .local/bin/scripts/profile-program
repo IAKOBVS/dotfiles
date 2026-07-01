@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROG=${1:?"Error: Process name argument is required"}
-TIME=${2:-5}
+TIME=${2:-10}
 
 RECORD=$(sudo mktemp)
 
@@ -12,8 +12,8 @@ cleanup() {
 }
 trap cleanup EXIT
 
-# Fetch PID safely without triggering SIGPIPE
-PID=$(pgrep "$PROG" | head -n 1)
+# Fetch only the first matching PID without breaking the pipe
+PID=$(pgrep -o "$PROG" || true)
 
 if [ -z "$PID" ]; then
 	echo "Error: Process '$PROG' not found." >&2
@@ -21,4 +21,4 @@ if [ -z "$PID" ]; then
 fi
 
 sudo perf record -o "$RECORD" -g -p "$PID" -- sleep "$TIME"
-sudo perf report -i "$RECORD"
+sudo perf report --sort overhead,symbol -i "$RECORD"

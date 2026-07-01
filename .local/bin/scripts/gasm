@@ -5,5 +5,5 @@ case $file in
 *.c) compiler=gcc ;;
 *) exit 1 ;;
 esac
-$compiler "$file" -S $@
+$compiler "$file" -S -O2 -march=native -g -fverbose-asm $@
 $TERMINAL -e nvim "${file%.*}".s &
