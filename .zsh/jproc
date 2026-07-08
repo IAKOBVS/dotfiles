@@ -38,8 +38,6 @@
 # if the PIDs, which are embedded into the file name, exist, removing the
 # tmp files whose PIDs do not.
 
-jproc_internal_argv=$@
-
 # Available CPU cores.
 JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null || echo '1')
 # Default args for rg.
@@ -62,18 +60,11 @@ export JPROC_VIM_FILE_LAST=$JPROC_DIR_PID/vim_file_last
 export JPROC_LF_DIR=$JPROC_DIR_PID/lf_dir
 export JPROC_CMD_LAST=$JPROC_DIR_PID/cmd_last
 
-set -- \
-	$JPROC_VIM_PROG \
-	$JPROC_VIM_ARG \
-	$JPROC_VIM_FILE_LAST \
-	$JPROC_LF_DIR \
-	$JPROC_CMD_LAST
-
-for file in $@; do
-	echo >"$file"
-done
-
-set -- $jproc_internal_argv
+echo >"$JPROC_VIM_PROG"
+echo >"$JPROC_VIM_ARG"
+echo >"$JPROC_VIM_FILE_LAST"
+echo >"$JPROC_LF_DIR"
+echo >"$JPROC_CMD_LAST"
 
 # TODO: maybe make a more human readable format like
 # /proc/ since performance doesn't matter here
@@ -208,22 +199,21 @@ jproc_vimcd()
 
 jproc_fzflive()
 {
-	# shellcheck disable=SC2164
-	cd "$1"
-	jproc_internal_fzfbase "$(find . -type f \
-		! -path '*.git*' \
-		! -path '*.o' \
-		! -path '*.png' \
-		! -path '*.jpg' \
-		! -path '*.jpeg' \
-		! -path '*.mov' \
+	target=$(realpath "$1" 2>/dev/null) || return
+	[ -d "$target" ] || target=$(dirname "$target" 2>/dev/null)
+	cd "$target" || return
+	file=$(find . -type f \
 		! -path '*.virtualenv*' \
-		! -path '*.o' \
 		! -path '*.cargo*' \
 		! -path '*.pass*' \
 		! -path '*.key*' \
-		! -path '*node_modules*' |
-		fzf --preview "bat --style=numbers --color=always {1}")"
+		! -path '*node_modules*' \
+		! -name '*.git*' \
+		! -name '*.o' \
+		! -name '*.tar.*' |
+		fzf --preview "bat --style=numbers --color=always {1}")
+	[ -n "$file" ] || return
+	jproc_internal_fzfbase "$(realpath "$file")"
 }
 
 # Grep and open vim.

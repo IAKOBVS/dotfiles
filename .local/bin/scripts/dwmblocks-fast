@@ -1,2 +1,2 @@
 #!/bin/sh
-nice -n 19 /usr/local/bin/dwmblocks-fast $@
+exec nice -n 19 /usr/local/bin/dwmblocks-fast $@

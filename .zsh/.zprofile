@@ -1,3 +1,6 @@
 #!/bin/sh
-# Statusbar
-startx
+
+# Don't run in SSH
+[ "$SSH_CLIENT" ] && return
+
+exec startx

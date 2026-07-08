@@ -1,7 +1,9 @@
 #!/bin/sh
 LOG_DIR=$HOME/.local/state/rclone
+RCLONE_LOCAL=/mnt/rclone
+
 mkdir -p "$LOG_DIR"
-rclone mount gdrive: $HOME/gdrive \
+rclone mount gdrive: "$RCLONE_LOCAL/gdrive" \
   --vfs-cache-mode full \
   --vfs-cache-max-age 24h \
   --dir-cache-time 24h \
@@ -13,3 +15,6 @@ rclone mount gdrive: $HOME/gdrive \
   --poll-interval 10s \
   --log-file $LOG_DIR/rclone.log \
   --daemon \
+  # -rc \
+  # -rc-addr localhost:5572 \
+  # -rc-no-auth \

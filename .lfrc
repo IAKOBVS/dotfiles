@@ -26,7 +26,7 @@ set cleaner ctpvclear
 &ctpvquit $id
 set info size
 # cmd on-select calcdirsize
-set dircounts
+# set dircounts
 
 cmd quitclear ${{
 	if [ -d "$JPROC_DIR" ]; then
@@ -55,33 +55,75 @@ cmd jproc_grepvim ${{
 	fi
 }}
 
-
+# Define a custom file-opening handler using an asynchronous shell block (${{ ... }})
 cmd open ${{
+	# $f contains the path of the currently hovered file
 	case $f in
-	*.ts|*.js|*.lua|*.java|*.cs)
+	# Match by specific source code extensions ---
+	*.c|*.h)
+		# If the process manager directory exists, hand editing over to Vim/Neovim
 		if [ -d "$JPROC_DIR" ]; then
-			echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
-			echo "$fx" >"$JPROC_VIM_ARG"
-			lf -remote "send $id quit"
+			echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"  # Write target command sequence to pipe
+			echo "$fx" >"$JPROC_VIM_ARG"             # Write selected files ($fx) to argument pipe
+			lf -remote "send $id quit"               # Signal this specific lf window to exit immediately
 		fi
 		;;
 	*)
-		case $(file --mime-type "$(readlink -f $f)" -b) in
-		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) exec localc $fx ;;
-		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) exec zathura $fx ;;
+		type=$(file --mime-type "$(readlink -f $f)" -b)
+		# Fallback to MIME type checking via the 'file' utility ---
+		case "$type" in
+		
+		# Excel Spreadsheets
+		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
+			setsid -f localc $fx
+			;;
+			
+		# Documents, PDFs, PostScripts, and raw binary streams
+		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript)
+			setsid -f zathura $fx
+			;;
+			
+		# Plain text, JSON, empty inodes, and subtitle files
 		text/*|application/json|inode/x-empty|application/x-subrip)
+			# Hand over to Vim/Neovim process pipeline
 			if [ -d "$JPROC_DIR" ]; then
 				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
 				echo "$fx" >"$JPROC_VIM_ARG"
 				lf -remote "send $id quit"
 			fi
 			;;
-		image/x-xcf) exec gimp $fx ;;
-		image/svg+xml) exec display -- $f ;;
-		image/*) exec sxiv $fx ;;
-		audio/*|video/x-ms-asf) exec mpv --really-quiet --audio-display=no $f ;;
-		video/*) exec mpv --really-quiet $fx ;;
-		application/pdf|application/vnd.djvu|application/epub*) exec zathura $fx ;;
+			
+		# GIMP native image projects
+		image/x-xcf)
+			setsid -f gimp $fx
+			;;
+			
+		# SVG vector graphics (explicitly targets singular hovered file $f)
+		image/svg+xml)
+			setsid -f display -- $f
+			;;
+			
+		# General images
+		image/*)
+			setsid -f sxiv $fx
+			;;
+			
+		# Audio files and ASF video wrappers (suppresses the graphical window output)
+		audio/*|video/x-ms-asf)
+			setsid -f mpv --really-quiet --audio-display=no $f >/dev/null 2>&1
+			;;
+			
+		# Standard video files
+		video/*)
+			setsid -f mpv --really-quiet $fx >/dev/null 2>&1
+			;;
+			
+		# Secondary/redundant document rule matching for PDFs and Epubs
+		application/pdf|application/vnd.djvu|application/epub*)
+			setsid -f zathura $fx >/dev/null 2>&1
+			;;
+			
+		# Encrypted files (decrypt and view inside the Vim/Neovim workflow)
 		application/pgp-encrypted)
 			if [ -d "$JPROC_DIR" ]; then
 				echo "$JPROC_VIMCD" >"$JPROC_VIM_PROG"
@@ -89,17 +131,46 @@ cmd open ${{
 				lf -remote "send $id quit"
 			fi
 			;;
-		application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) exec lowriter $fx ;;
-		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) exec localc $fx ;;
-		application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) exec loimpress $fx ;;
-		application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) exec lodraw $fx ;;
-		application/vnd.oasis.opendocument.formula) exec lomath $fx ;;
-		application/vnd.oasis.opendocument.database) exec lobase $fx ;;
+			
+		# LibreOffice Word Processors (.docx / .odt)
+		application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text)
+			setsid -f lowriter $fx >/dev/null 2>&1
+			;;
+			
+		# Secondary LibreOffice Spreadsheet rules (.xlsx, .ods, templates)
+		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template)
+			setsid -f localc $fx >/dev/null 2>&1
+			;;
+			
+		# LibreOffice Presentations (.pptx / .odp)
+		application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint)
+			setsid -f loimpress $fx >/dev/null 2>&1
+			;;
+			
+		# LibreOffice Graphics / Vector software (.odg)
+		application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template)
+			setsid -f lodraw $fx >/dev/null 2>&1
+			;;
+			
+		# LibreOffice Math formulas
+		application/vnd.oasis.opendocument.formula)
+			setsid -f lomath $fx >/dev/null 2>&1
+			;;
+			
+		# LibreOffice Database management (.odb)
+		application/vnd.oasis.opendocument.database)
+			setsid -f lobase $fx >/dev/null 2>&1
+			;;
+			
+		# If no MIME types match, iterate over all selections ($fx) and run via default system $OPENER
 		*)
-			for f in $fx; do exec $OPENER $f; done ;;
+			for f in $fx; do
+				setsid -f $OPENER $f >/dev/null 2>&1;
+			done
+			;;
 		esac
 		;;
-	esac
+    esac
 }}
 
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
@@ -110,7 +181,7 @@ cmd extract ${{
 	printf "%s\n\t" "$fx"
 	printf "extract? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && aunpack $fx
+	[ "$ans" = 'Y' ] && aunpack $fx
 }}
 
 cmd delete ${{
@@ -122,7 +193,7 @@ cmd delete ${{
 	dir=$HOME/trash/$(date '+%d_%m_%y_%T')
 	mkdir -p "$HOME"/trash
 	mkdir -p "$dir"
-	[ $ans = 'Y' ] && mv -- $fx "$dir"
+	[ "$ans" = 'Y' ] && mv -- $fx "$dir"
 }}
 
 cmd moveto ${{
@@ -155,7 +226,7 @@ cmd convert2mov ${{
 	printf "%s\n\t" "$fx"
 	printf "convert to mov? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && "$TERMINAL" -e 2mov $fx &
+	[ "$ans" = 'Y' ] && "$TERMINAL" -e 2mov $fx &
 }}
 
 cmd upscale4thumbnail ${{
@@ -164,7 +235,7 @@ cmd upscale4thumbnail ${{
 	printf "%s\n\t" "$fx"
 	printf "upscale? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && "$TERMINAL" -e waifu2xauto-res-multi 4 $fx &
+	[ "$ans" = 'Y' ] && "$TERMINAL" -e waifu2xauto-res-multi 4 $fx &
 }}
 
 cmd forceupscale ${{
@@ -173,7 +244,7 @@ cmd forceupscale ${{
 	printf "%s\n\t" "$fx"
 	printf "force upscale? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && alacritty -e waifu2xauto-res 4 $fx &
+	[ "$ans" = 'Y' ] && alacritty -e waifu2xauto-res 4 $fx &
 }}
 
 cmd opengimp ${{
@@ -186,7 +257,7 @@ cmd upvid ${{
 	printf "%s\n\t" "$fx"
 	printf "upscale video(s)? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && setsid -f st -e upvid $fx &
+	[ "$ans" = 'Y' ] && setsid -f st -e upvid $fx &
 }}
 
 cmd subgen ${{
@@ -195,7 +266,7 @@ cmd subgen ${{
 	printf "%s\n\t" "$fx"
 	printf "generate subtitle? (Y\N)"
 	read ans
-	[ $ans = 'Y' ] && setsid -f st -e subgen $fx &
+	[ "$ans" = 'Y' ] && setsid -f st -e subgen $fx &
 }}
 
 cmd setbg "$1"

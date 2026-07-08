@@ -1,3 +1,3 @@
 #!/bin/sh
-set -- "$(find "$HOME/.local/bin/scripts/" "$HOME/.local/src/IAKOBVS/" -type f ! -path '*.git*' ! -path '*.vscode*' ! -path '*node_modules*' ! -name '*.o' | fzfpreview)"
+set -- "$(find "$HOME/.local/bin/scripts/" "$HOME/.local/src/iakobvs-workspace/" -type f ! -path '*.git*' ! -path '*.vscode*' ! -path '*node_modules*' ! -name '*.o' ! -name '*.tar.*' | fzfpreview)"
 [ "$1" ] && v "$1"

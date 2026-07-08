@@ -1,4 +1,4 @@
 #!/bin/sh
 killall node
-killall neovim
+killall nvim
 sync && sync && systemctl poweroff

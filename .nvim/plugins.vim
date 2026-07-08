@@ -139,3 +139,8 @@ if 0
 endif
 
 autocmd Filetype c setlocal commentstring=/\*%s\*/
+
+augroup CocPoweroffHandler
+  autocmd!
+  autocmd VimLeave * call coc#rpc#stop()
+augroup END

@@ -13,7 +13,7 @@ cleanup() {
 trap cleanup EXIT
 
 # Fetch only the first matching PID without breaking the pipe
-PID=$(pgrep -o "$PROG" || true)
+PID=$(echo "$PROG" || true)
 
 if [ -z "$PID" ]; then
 	echo "Error: Process '$PROG' not found." >&2

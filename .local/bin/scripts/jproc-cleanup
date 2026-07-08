@@ -16,10 +16,11 @@ else
 		exit 1
 	fi
 	# open $JPROC_DIR/[pid]
-	for pid in $(echo [0-9]*); do
+	for pid in [0-9]*; do
+		[ -e "$pid" ] || continue
 		# remove if inactive pid
-		if [ -d $pid ] && kill -0 "$pid" >/dev/null 2>/dev/null; then
-			rm $pid/[0-9A-Za-z]*
+		if [ -d "$pid" ] && ! kill -0 "$pid" >/dev/null 2>/dev/null; then
+			rm "$pid"/[0-9A-Za-z]*
 			rmdir "$pid"
 		fi
 	done

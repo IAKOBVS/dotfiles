@@ -15,27 +15,32 @@ export AUR_HELPER=yay
 XINITRC_LOG_DIR="$HOME/.cache"
 export UEBERZUG_LOG_FILE="$XINITRC_LOG_DIR"/ueberzug.log
 
+# Sync
+if [ -d "$HOME/.local/src/iakobvs-workspace/iakobvs-workspace-archive" ]; then
+	cd "$HOME/.local/src/iakobvs-workspace" && ./sync
+fi
+
 # GPU fan speed control
-rm "$XINITRC_LOG_DIR/nvspeed.log"
+mv "$XINITRC_LOG_DIR/nvspeed.log" "$XINITRC_LOG_DIR/nvspeed.log.bak"
 sudo nvspeed >>"$XINITRC_LOG_DIR/nvspeed.log" 2>>"$XINITRC_LOG_DIR/nvspeed.log" &
 
 # CPU fan speed control
-rm "$XINITRC_LOG_DIR/cfan.log"
+mv "$XINITRC_LOG_DIR/cfan.log" "$XINITRC_LOG_DIR/cfan.log.bak"
 sudo cfan >>"$XINITRC_LOG_DIR/cfan.log" 2>>"$XINITRC_LOG_DIR/cfan.log" &
 
 # Optimize kernel scheduler
-rm "$XINITRC_LOG_DIR/scx_lavd.log"
+mv "$XINITRC_LOG_DIR/scx_lavd.log" "$XINITRC_LOG_DIR/scx_lavd.log.bak"
 sudo scx_lavd >>"$XINITRC_LOG_DIR/scx_lavd.log" 2>>"$XINITRC_LOG_DIR/scx_lavd.log" &
 
 # Trim SSD
-rm "$XINITRC_LOG_DIR/fstrim.log"
+mv "$XINITRC_LOG_DIR/fstrim.log" "$XINITRC_LOG_DIR/fstrim.log.bak"
 sudo fstrim -av >>"$XINITRC_LOG_DIR/fstrim.log" 2>>"$XINITRC_LOG_DIR/fstrim.log" &
 
 # Turn off wifi
 nmcli radio wifi off &
 
 # Set compositor for terminal transparency
-rm "$XINITRC_LOG_DIR/$COMPOSITOR.log"
+mv "$XINITRC_LOG_DIR/$COMPOSITOR.log" "$XINITRC_LOG_DIR/$COMPOSITOR.log.bak"
 $COMPOSITOR -n >>"$XINITRC_LOG_DIR/$COMPOSITOR.log" 2>>"$XINITRC_LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
@@ -86,8 +91,8 @@ xrdb "$HOME/.Xresources" &
 {
 	# Sync time with ntp
 	sudo ntpd -g -q && sudo hwclock --systohc
-	rm "$XINITRC_LOG_DIR/dwmblocks-fast.log"
-	dwmblocks-fast >>"$XINITRC_LOG_DIR/dwmblocks-fast.log" 2>>"$XINITRC_LOG_DIR/dwmblocks-fast.log"
+	mv "$XINITRC_LOG_DIR/dwmblocks-fast.log" "$XINITRC_LOG_DIR/dwmblocks-fast.log.bak"
+	exec dwmblocks-fast >>"$XINITRC_LOG_DIR/dwmblocks-fast.log" 2>>"$XINITRC_LOG_DIR/dwmblocks-fast.log"
 } &
 
 
@@ -122,7 +127,6 @@ nv-tearfree-on &
 mv "$XINITRC_LOG_DIR/$AUR_HELPER/__list_of_packages__" "$XINITRC_LOG_DIR/$AUR_HELPER/__list_of_packages__.bak"
 $AUR_HELPER -Q > "$XINITRC_LOG_DIR/$AUR_HELPER/__list_of_packages__" &
 
-while :; do
-	rm "$XINITRC_LOG_DIR/dwm.log"
-	dwm >>"$XINITRC_LOG_DIR/dwm.log" 2>>"$XINITRC_LOG_DIR/dwm.log"
-done
+mv "$XINITRC_LOG_DIR/dwm.log" "$XINITRC_LOG_DIR/dwm.log.bak"
+# exec ssh-agent /usr/local/bin/dwm.bak >>"$XINITRC_LOG_DIR/dwm.log" 2>>"$XINITRC_LOG_DIR/dwm.log"
+exec ssh-agent /home/james/.local/src/iakobvs-workspace/dwm/dwm >>"$XINITRC_LOG_DIR"/dwm.new.log 2>>"$XINITRC_LOG_DIR/dwm.new.log"
