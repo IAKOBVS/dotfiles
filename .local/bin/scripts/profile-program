@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROG=${1:?"Error: Process name argument is required"}
-TIME=${2:-10}
+TIME=${2:-20}
 
 RECORD=$(sudo mktemp)
 

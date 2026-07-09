@@ -10,10 +10,15 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
-export COMPOSITOR=xcompmgr
+log_rotate() {
+	file=$1
+	mv "$file" "$file".bak
+}
+
+LOG_DIR="$HOME/.cache"
+export COMPOSITOR=picom
 export AUR_HELPER=yay
-XINITRC_LOG_DIR="$HOME/.cache"
-export UEBERZUG_LOG_FILE="$XINITRC_LOG_DIR"/ueberzug.log
+export UEBERZUG_LOG_FILE="$LOG_DIR"/ueberzug.log
 
 # Sync
 if [ -d "$HOME/.local/src/iakobvs-workspace/iakobvs-workspace-archive" ]; then
@@ -21,27 +26,28 @@ if [ -d "$HOME/.local/src/iakobvs-workspace/iakobvs-workspace-archive" ]; then
 fi
 
 # GPU fan speed control
-mv "$XINITRC_LOG_DIR/nvspeed.log" "$XINITRC_LOG_DIR/nvspeed.log.bak"
-sudo nvspeed >>"$XINITRC_LOG_DIR/nvspeed.log" 2>>"$XINITRC_LOG_DIR/nvspeed.log" &
+log_rotate "$LOG_DIR/nvspeed.log"
+sudo nvspeed >"$LOG_DIR/nvspeed.log" 2>&1 &
 
 # CPU fan speed control
-mv "$XINITRC_LOG_DIR/cfan.log" "$XINITRC_LOG_DIR/cfan.log.bak"
-sudo cfan >>"$XINITRC_LOG_DIR/cfan.log" 2>>"$XINITRC_LOG_DIR/cfan.log" &
+log_rotate "$LOG_DIR/cfan.log"
+sudo cfan >"$LOG_DIR/cfan.log" 2>&1 &
 
 # Optimize kernel scheduler
-mv "$XINITRC_LOG_DIR/scx_lavd.log" "$XINITRC_LOG_DIR/scx_lavd.log.bak"
-sudo scx_lavd >>"$XINITRC_LOG_DIR/scx_lavd.log" 2>>"$XINITRC_LOG_DIR/scx_lavd.log" &
+log_rotate "$LOG_DIR/scx_lavd.log"
+sudo scx_lavd >"$LOG_DIR/scx_lavd.log" 2>&1 &
 
 # Trim SSD
-mv "$XINITRC_LOG_DIR/fstrim.log" "$XINITRC_LOG_DIR/fstrim.log.bak"
-sudo fstrim -av >>"$XINITRC_LOG_DIR/fstrim.log" 2>>"$XINITRC_LOG_DIR/fstrim.log" &
+log_rotate "$LOG_DIR/fstrim.log"
+sudo fstrim -av >"$LOG_DIR/fstrim.log" 2>&1 &
 
 # Turn off wifi
 nmcli radio wifi off &
 
 # Set compositor for terminal transparency
-mv "$XINITRC_LOG_DIR/$COMPOSITOR.log" "$XINITRC_LOG_DIR/$COMPOSITOR.log.bak"
-$COMPOSITOR -n >>"$XINITRC_LOG_DIR/$COMPOSITOR.log" 2>>"$XINITRC_LOG_DIR/$COMPOSITOR.log" &
+log_rotate "$LOG_DIR/$COMPOSITOR.log"
+# $COMPOSITOR -n >"$LOG_DIR/$COMPOSITOR.log" 2>>"$LOG_DIR/$COMPOSITOR.log" &
+$COMPOSITOR -b >"$LOG_DIR/$COMPOSITOR.log" 2>>"$LOG_DIR/$COMPOSITOR.log" &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
@@ -91,8 +97,8 @@ xrdb "$HOME/.Xresources" &
 {
 	# Sync time with ntp
 	sudo ntpd -g -q && sudo hwclock --systohc
-	mv "$XINITRC_LOG_DIR/dwmblocks-fast.log" "$XINITRC_LOG_DIR/dwmblocks-fast.log.bak"
-	exec dwmblocks-fast >>"$XINITRC_LOG_DIR/dwmblocks-fast.log" 2>>"$XINITRC_LOG_DIR/dwmblocks-fast.log"
+	mv "$LOG_DIR/dwmblocks-fast.log" "$LOG_DIR/dwmblocks-fast.log.bak"
+	exec dwmblocks-fast >"$LOG_DIR/dwmblocks-fast.log" 2>&1 
 } &
 
 
@@ -110,13 +116,13 @@ nv-tearfree-on &
 
 # Defragment
 (
-	rm "$XINITRC_LOG_DIR/e4defrag.log"
+	rm "$LOG_DIR/e4defrag.log"
 	set -eu
-	SCORE_FILE="$XINITRC_LOG_DIR/e4defrag-score.log"
+	SCORE_FILE="$LOG_DIR/e4defrag-score.log"
 	for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
 		nice -n 19 ionice -c 3 sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}' > "$SCORE_FILE"
 		if [ "$(cat "$SCORE_FILE")" -gt 30 ]; then
-			nice -n 19 ionice -c 3 sudo e4defrag "$partition" >>"$XINITRC_LOG_DIR/e4defrag.log" 2>>"$XINITRC_LOG_DIR/e4defrag.log"
+			nice -n 19 ionice -c 3 sudo e4defrag "$partition" >"$LOG_DIR/e4defrag.log" 2>&1
 			sudo drop-caches
 		fi
 	done
@@ -124,9 +130,9 @@ nv-tearfree-on &
 	unset SCORE_FILE
 ) &
 
-mv "$XINITRC_LOG_DIR/$AUR_HELPER/__list_of_packages__" "$XINITRC_LOG_DIR/$AUR_HELPER/__list_of_packages__.bak"
-$AUR_HELPER -Q > "$XINITRC_LOG_DIR/$AUR_HELPER/__list_of_packages__" &
+log_rotate "$LOG_DIR/$AUR_HELPER/__list_of_packages__"
+$AUR_HELPER -Q > "$LOG_DIR/$AUR_HELPER/__list_of_packages__" &
 
-mv "$XINITRC_LOG_DIR/dwm.log" "$XINITRC_LOG_DIR/dwm.log.bak"
-# exec ssh-agent /usr/local/bin/dwm.bak >>"$XINITRC_LOG_DIR/dwm.log" 2>>"$XINITRC_LOG_DIR/dwm.log"
-exec ssh-agent /home/james/.local/src/iakobvs-workspace/dwm/dwm >>"$XINITRC_LOG_DIR"/dwm.new.log 2>>"$XINITRC_LOG_DIR/dwm.new.log"
+# exec ssh-agent /usr/local/bin/dwm.bak >"$LOG_DIR/dwm.log" 2>&1
+log_rotate "$LOG_DIR/dwm.log"
+exec ssh-agent dwm >"$LOG_DIR"/dwm.log 2>&1
