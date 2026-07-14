@@ -10,44 +10,33 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
-log_rotate() {
-	file=$1
-	mv "$file" "$file".bak
-}
-
-LOG_DIR="$HOME/.cache"
+LOG_DIR='/tmp'
 export COMPOSITOR=picom
 export AUR_HELPER=yay
-export UEBERZUG_LOG_FILE="$LOG_DIR"/ueberzug.log
+export UEBERZUG_LOG_FILE="$LOG_DIR/ueberzug.log"
 
 # Sync
 if [ -d "$HOME/.local/src/iakobvs-workspace/iakobvs-workspace-archive" ]; then
 	cd "$HOME/.local/src/iakobvs-workspace" && ./sync
-fi
+fi &
 
 # GPU fan speed control
-log_rotate "$LOG_DIR/nvspeed.log"
 sudo nvspeed >"$LOG_DIR/nvspeed.log" 2>&1 &
 
 # CPU fan speed control
-log_rotate "$LOG_DIR/cfan.log"
 sudo cfan >"$LOG_DIR/cfan.log" 2>&1 &
 
 # Optimize kernel scheduler
-log_rotate "$LOG_DIR/scx_lavd.log"
 sudo scx_lavd >"$LOG_DIR/scx_lavd.log" 2>&1 &
 
 # Trim SSD
-log_rotate "$LOG_DIR/fstrim.log"
 sudo fstrim -av >"$LOG_DIR/fstrim.log" 2>&1 &
 
 # Turn off wifi
 nmcli radio wifi off &
 
 # Set compositor for terminal transparency
-log_rotate "$LOG_DIR/$COMPOSITOR.log"
-# $COMPOSITOR -n >"$LOG_DIR/$COMPOSITOR.log" 2>>"$LOG_DIR/$COMPOSITOR.log" &
-$COMPOSITOR -b >"$LOG_DIR/$COMPOSITOR.log" 2>>"$LOG_DIR/$COMPOSITOR.log" &
+$COMPOSITOR -b >"$LOG_DIR/$COMPOSITOR.log" 2>&1 &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
@@ -106,6 +95,9 @@ discord &
 thunderbird &
 nv-tearfree-on &
 
+# Clean up old pacman packages
+nice -n 19 ionice -c 3 paccache -r &
+
 ([ -d "$HOME/.cache/lf" ] && rm -rf "$HOME/.cache/lf"
 [ -d "$HOME/.cache/ctpv" ] && rm -rf "$HOME/.cache/ctpv"
 [ -d "$HOME/.cache/ueberzugpp" ] && rm -rf "$HOME/.cache/ueberzugpp")
@@ -114,25 +106,25 @@ nv-tearfree-on &
 # Cache file size
 # nice -n 19 ionice -c 3 du -shc $HOME/* &
 
-# Defragment
+# Defragment every 7 days
 (
-	rm "$LOG_DIR/e4defrag.log"
-	set -eu
-	SCORE_FILE="$LOG_DIR/e4defrag-score.log"
-	for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
-		nice -n 19 ionice -c 3 sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}' > "$SCORE_FILE"
-		if [ "$(cat "$SCORE_FILE")" -gt 30 ]; then
-			nice -n 19 ionice -c 3 sudo e4defrag "$partition" >"$LOG_DIR/e4defrag.log" 2>&1
-			sudo drop-caches
-		fi
-	done
-	unset partition
-	unset SCORE_FILE
+	UPDATE_INTERVAL=7
+	if [ $(($(date +%-d) % UPDATE_INTERVAL)) -eq 0 ]; then
+		set -eu
+		SCORE_FILE="$LOG_DIR/e4defrag-score.log"
+		for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
+			nice -n 19 ionice -c 3 sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}' > "$SCORE_FILE"
+			if [ "$(cat "$SCORE_FILE")" -gt 30 ]; then
+				nice -n 19 ionice -c 3 sudo e4defrag "$partition" >"$LOG_DIR/e4defrag.log" 2>&1
+				sudo drop-caches
+			fi
+		done
+		unset partition
+		unset SCORE_FILE
+	fi
 ) &
 
-log_rotate "$LOG_DIR/$AUR_HELPER/__list_of_packages__"
 $AUR_HELPER -Q > "$LOG_DIR/$AUR_HELPER/__list_of_packages__" &
 
 # exec ssh-agent /usr/local/bin/dwm.bak >"$LOG_DIR/dwm.log" 2>&1
-log_rotate "$LOG_DIR/dwm.log"
-exec ssh-agent dwm >"$LOG_DIR"/dwm.log 2>&1
+exec ssh-agent dwm >"$LOG_DIR/dwm.log" 2>&1
