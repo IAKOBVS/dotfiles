@@ -113,7 +113,7 @@ nice -n 19 ionice -c 3 paccache -r &
 		set -eu
 		SCORE_FILE="$LOG_DIR/e4defrag-score.log"
 		for partition in $(lsblk -rno MOUNTPOINT,FSTYPE,ROTA | awk '$2=="ext4" && $3=="1" {print $1}'); do
-			nice -n 19 ionice -c 3 sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}' > "$SCORE_FILE"
+			nice -n 19 ionice -c 3 sudo e4defrag -c "$partition" | awk '/Fragmentation score/ {print $3}' >"$SCORE_FILE" 2>&1
 			if [ "$(cat "$SCORE_FILE")" -gt 30 ]; then
 				nice -n 19 ionice -c 3 sudo e4defrag "$partition" >"$LOG_DIR/e4defrag.log" 2>&1
 				sudo drop-caches
