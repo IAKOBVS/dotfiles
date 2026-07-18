@@ -1,2 +1,2 @@
 #!/bin/sh
-watch -n5 tail ~/.local/share/Steam/logs/shader_log.txt
+watch -n2 tail ~/.local/share/Steam/logs/shader_log.txt
