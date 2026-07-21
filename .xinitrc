@@ -127,4 +127,4 @@ nice -n 19 ionice -c 3 paccache -r &
 $AUR_HELPER -Q > "$LOG_DIR/$AUR_HELPER/__list_of_packages__" &
 
 # exec ssh-agent /usr/local/bin/dwm.bak >"$LOG_DIR/dwm.log" 2>&1
-exec ssh-agent dwm >"$LOG_DIR/dwm.log" 2>&1
+exec ssh-agent dwm 2>"$LOG_DIR/dwm.log"
