@@ -1,5 +1,13 @@
 #!/bin/sh
-rrenice 19 steamwebhelper
-rrenice 19 chrome
-rrenice 19 gameoverlayui
+progs='
+steamwebhelper
+chrome
+brave
+gameoverlayui
+alacritty
+mpv
+'
+for p in $progs; do
+	rrenice 19 $p
+done
 killall lf

@@ -72,17 +72,14 @@ cmd open ${{
 		type=$(file --mime-type "$(readlink -f $f)" -b)
 		# Fallback to MIME type checking via the 'file' utility ---
 		case "$type" in
-		
 		# Excel Spreadsheets
 		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
 			setsid -f localc $fx
 			;;
-			
 		# Documents, PDFs, PostScripts, and raw binary streams
 		image/vnd.djvu|application/pdf|application/octet-stream|application/postscript)
 			setsid -f zathura $fx
 			;;
-			
 		# Plain text, JSON, empty inodes, and subtitle files
 		text/*|application/json|inode/x-empty|application/x-subrip)
 			# Hand over to Vim/Neovim process pipeline
@@ -92,37 +89,30 @@ cmd open ${{
 				lf -remote "send $id quit"
 			fi
 			;;
-			
 		# GIMP native image projects
 		image/x-xcf)
 			setsid -f gimp $fx
 			;;
-			
 		# SVG vector graphics (explicitly targets singular hovered file $f)
 		image/svg+xml)
 			setsid -f display -- $f
 			;;
-			
 		# General images
 		image/*)
 			setsid -f sxiv $fx
 			;;
-			
 		# Audio files and ASF video wrappers (suppresses the graphical window output)
 		audio/*|video/x-ms-asf)
 			setsid -f mpv --really-quiet --audio-display=no $f >/dev/null 2>&1
 			;;
-			
 		# Standard video files
 		video/*)
 			setsid -f mpv --really-quiet $fx >/dev/null 2>&1
 			;;
-			
 		# Secondary/redundant document rule matching for PDFs and Epubs
 		application/pdf|application/vnd.djvu|application/epub*)
 			setsid -f zathura $fx >/dev/null 2>&1
 			;;
-			
 		# Encrypted files (decrypt and view inside the Vim/Neovim workflow)
 		application/pgp-encrypted)
 			if [ -d "$JPROC_DIR" ]; then
@@ -131,37 +121,30 @@ cmd open ${{
 				lf -remote "send $id quit"
 			fi
 			;;
-			
 		# LibreOffice Word Processors (.docx / .odt)
 		application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text)
 			setsid -f lowriter $fx >/dev/null 2>&1
 			;;
-			
 		# Secondary LibreOffice Spreadsheet rules (.xlsx, .ods, templates)
 		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template)
 			setsid -f localc $fx >/dev/null 2>&1
 			;;
-			
 		# LibreOffice Presentations (.pptx / .odp)
 		application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint)
 			setsid -f loimpress $fx >/dev/null 2>&1
 			;;
-			
 		# LibreOffice Graphics / Vector software (.odg)
 		application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template)
 			setsid -f lodraw $fx >/dev/null 2>&1
 			;;
-			
 		# LibreOffice Math formulas
 		application/vnd.oasis.opendocument.formula)
 			setsid -f lomath $fx >/dev/null 2>&1
 			;;
-			
 		# LibreOffice Database management (.odb)
 		application/vnd.oasis.opendocument.database)
 			setsid -f lobase $fx >/dev/null 2>&1
 			;;
-			
 		# If no MIME types match, iterate over all selections ($fx) and run via default system $OPENER
 		*)
 			for f in $fx; do

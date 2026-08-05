@@ -1,4 +1,11 @@
 #!/bin/sh
-killall node
-killall nvim
-sync && sync && systemctl poweroff
+procs='node nvim python'
+for p in $procs; do
+	killall -15 "$p"
+done
+sleep 1
+for p in $procs; do
+	killall -9 "$p"
+done
+sync; sync; sync;
+systemctl poweroff

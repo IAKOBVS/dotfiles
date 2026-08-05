@@ -86,36 +86,33 @@ if 0
 	nnoremap <silent> <tab>k <Plug>(ale_previous_wrap)
 	nnoremap <silent> <tab>j <Plug>(ale_next_wrap)
 	nnoremap <space>a :ALEToggle<CR>
-endif
+	if has('nvim-0.6')
+		let g:ale_use_neovim_diagnostics_api = 1
+	endif
 
-if has('nvim-0.6')
-	let g:ale_use_neovim_diagnostics_api = 1
-endif
-let g:ale_completion_enabled = 0
-let g:ale_linters = {
-\ 'c': ['cc'],
-\ 'cs': ['mcs'] 
-\}
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 0
-let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_text_changed = 1
-let g:ale_c_cc_executable = 'gcc'
-let g:ale_cpp_cc_executable = 'g++'
-let g:__my_gcc_flags__ = '-Wall -Wpedantic -pedantic -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wunused -Wwrite-strings -fanalyzer -Wsign-conversion'
-let g:ale_c_cc_options = '-std=c99 ' . g:__my_gcc_flags__
-let g:ale_cpp_cc_options = '-std=c++17 ' . g:__my_gcc_flags__
-let g:ale_c_clangtidy_checks = [
-	\ '-*',
-	\ 'cppcoreguidelines-*',
-	\ '-clang-diagnostic-error',
-	\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
-	\ '-clang-analyzer-security.insecureAPI.strcpy'
-	\ ]
-let g:ale_cpp_clangtidy_checks = g:ale_c_clangtidy_checks
-let g:ale_javascript_eslint_executable = 0
-
-if 0
+	let g:ale_completion_enabled = 0
+	let g:ale_linters = {
+	\ 'c': ['cc'],
+	\ 'cs': ['mcs'] 
+	\}
+	let g:ale_lint_on_enter = 0
+	let g:ale_lint_on_save = 0
+	let g:ale_lint_on_insert_leave = 0
+	let g:ale_lint_on_text_changed = 1
+	let g:ale_c_cc_executable = 'gcc'
+	let g:ale_cpp_cc_executable = 'g++'
+	let g:__my_gcc_flags__ = '-Wall -Wpedantic -pedantic -Wextra -Wuninitialized -Wshadow -Warray-bounds -Wnull-dereference -Wformat -Wunused -Wwrite-strings -fanalyzer -Wsign-conversion'
+	let g:ale_c_cc_options = '-std=c99 ' . g:__my_gcc_flags__
+	let g:ale_cpp_cc_options = '-std=c++17 ' . g:__my_gcc_flags__
+	let g:ale_c_clangtidy_checks = [
+		\ '-*',
+		\ 'cppcoreguidelines-*',
+		\ '-clang-diagnostic-error',
+		\ '-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling',
+		\ '-clang-analyzer-security.insecureAPI.strcpy'
+		\ ]
+	let g:ale_cpp_clangtidy_checks = g:ale_c_clangtidy_checks
+	let g:ale_javascript_eslint_executable = 0
 	autocmd FileType perl nnoremap <silent> <leader>f :let g:ale_linters = {'perl': ['perl']}<CR>
 endif
 
@@ -144,3 +141,15 @@ augroup CocPoweroffHandler
   autocmd!
   autocmd VimLeave * call coc#rpc#stop()
 augroup END
+
+let g:coc_filetype_map = {
+  \ 'yaml.ansible': 'ansible',
+  \ }
+
+" Automatically set filetype to yaml.ansible for Ansible directories and files
+autocmd BufRead,BufNewFile */playbooks/*.{yml,yaml} set ft=yaml.ansible
+autocmd BufRead,BufNewFile */roles/*/tasks/*.{yml,yaml} set ft=yaml.ansible
+autocmd BufRead,BufNewFile */roles/*/handlers/*.{yml,yaml} set ft=yaml.ansible
+autocmd BufRead,BufNewFile */group_vars/*.{yml,yaml} set ft=yaml.ansible
+autocmd BufRead,BufNewFile */host_vars/*.{yml,yaml} set ft=yaml.ansible
+autocmd BufRead,BufNewFile site.yml,main.yml,playbook.yml set ft=yaml.ansible

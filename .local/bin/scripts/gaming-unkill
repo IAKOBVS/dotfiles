@@ -13,3 +13,18 @@ dunst &
 unclutter &
 dwmblocks-fast &
 nv-tearfree-on
+
+progs='
+steamwebhelper
+chrome
+brave
+gameoverlayui
+alacritty
+st
+mpv
+'
+
+for p in $progs; do
+	rrenice 0 $p
+done
+killall lf

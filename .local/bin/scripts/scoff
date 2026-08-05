@@ -1,2 +1,35 @@
-#!/bin/sh
+#!/bin/bash
+
+# Define processes to kill on lock
+PROGS_TO_KILL=(
+    "picom"
+    "dunst"
+    "unclutter"
+    "dwmblocks-fast"
+)
+
+# Define commands/programs to start on unlock
+PROGS_TO_START=(
+    "picom -b"
+    "nohup dunst &"
+    "nohup unclutter --hide-on-key-press &"
+    "nohup dwmblocks-fast 2>/tmp/dwmblocks-fast.log &"
+)
+
+# --- 1. LOCKING PHASE ---
+
+# Kill target processes (graceful)
+for prog in "${PROGS_TO_KILL[@]}"; do
+    killall -15 "$prog"
+done
+
+# Run locker (MUST remain in foreground to block execution)
 xset dpms force off
+slock
+
+# --- 2. UNLOCKING PHASE ---
+
+# Spawn target processes
+for cmd in "${PROGS_TO_START[@]}"; do
+    eval "$cmd"
+done

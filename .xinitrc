@@ -83,12 +83,11 @@ fi &
 # Set sxiv image background
 xrdb "$HOME/.Xresources" &
 
-{
+(
 	# Sync time with ntp
 	sudo ntpd -g -q && sudo hwclock --systohc
-	mv "$LOG_DIR/dwmblocks-fast.log" "$LOG_DIR/dwmblocks-fast.log.bak"
-	exec dwmblocks-fast >"$LOG_DIR/dwmblocks-fast.log" 2>&1 
-} &
+	dwmblocks-fast 2>"$LOG_DIR/dwmblocks-fast.log" &
+) &
 
 
 discord &
@@ -126,5 +125,8 @@ nice -n 19 ionice -c 3 paccache -r &
 
 $AUR_HELPER -Q > "$LOG_DIR/$AUR_HELPER/__list_of_packages__" &
 
-# exec ssh-agent /usr/local/bin/dwm.bak >"$LOG_DIR/dwm.log" 2>&1
-exec ssh-agent dwm 2>"$LOG_DIR/dwm.log"
+max_failures=20
+while [ "$max_failures" -gt 0 ]; do
+	ssh-agent dwm 2>"$LOG_DIR/dwm.log"
+	max_failures=$((max_failures - 1))
+done

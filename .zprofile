@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 # Added by Antigravity CLI installer
 export PATH="/home/james/.local/bin:$PATH"
 
