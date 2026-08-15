@@ -83,3 +83,5 @@ alias his="history | fzf | xclip -sel c"
 alias hisa="cat $HOME/.cache/zsh/history | fzf | xclip -sel c"
 alias sd='terminal-pwd'
 alias cph="cd $HOME/Music/yt-philosophy"
+alias nu="cd $HOME/.local/src/iakobvs-workspace/nvllvs-script && lf"
+alias fnr='find-and-replace'

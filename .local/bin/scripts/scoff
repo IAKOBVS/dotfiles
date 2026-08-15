@@ -2,18 +2,18 @@
 
 # Define processes to kill on lock
 PROGS_TO_KILL=(
-    "picom"
     "dunst"
     "unclutter"
     "dwmblocks-fast"
+    "picom"
 )
 
 # Define commands/programs to start on unlock
 PROGS_TO_START=(
-    "picom -b"
     "nohup dunst &"
     "nohup unclutter --hide-on-key-press &"
     "nohup dwmblocks-fast 2>/tmp/dwmblocks-fast.log &"
+    "picom -b"
 )
 
 # --- 1. LOCKING PHASE ---

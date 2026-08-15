@@ -11,7 +11,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 LOG_DIR='/tmp'
-export COMPOSITOR=picom
+export COMPOSITOR=fastcompmgr
 export AUR_HELPER=yay
 export UEBERZUG_LOG_FILE="$LOG_DIR/ueberzug.log"
 
@@ -36,7 +36,7 @@ sudo fstrim -av >"$LOG_DIR/fstrim.log" 2>&1 &
 nmcli radio wifi off &
 
 # Set compositor for terminal transparency
-$COMPOSITOR -b >"$LOG_DIR/$COMPOSITOR.log" 2>&1 &
+$COMPOSITOR >"$LOG_DIR/$COMPOSITOR.log" 2>&1 &
 
 # Set wallpaper
 # xwallpaper --maximize /home/james/.local/share/wallpaper/bg.png &
@@ -86,7 +86,7 @@ xrdb "$HOME/.Xresources" &
 (
 	# Sync time with ntp
 	sudo ntpd -g -q && sudo hwclock --systohc
-	dwmblocks-fast 2>"$LOG_DIR/dwmblocks-fast.log" &
+	dwmblocks-fast >"$LOG_DIR/dwmblocks-fast.log" 2>&1 &
 ) &
 
 

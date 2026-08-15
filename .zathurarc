@@ -10,6 +10,7 @@ map g goto top
 set selection-clipboard clipboard
 set recolor true
 set cache-size 100%
+set incremental-search false
 
 # light
 map <F1> focus_inputbar ":set recolor-lightcolor \#fff7d6<Return>"
