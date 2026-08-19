@@ -20,7 +20,7 @@ PROGS_TO_START=(
 
 # Kill target processes (graceful)
 for prog in "${PROGS_TO_KILL[@]}"; do
-    killall -15 "$prog"
+    killall -TERM "$prog"
 done
 
 # Run locker (MUST remain in foreground to block execution)

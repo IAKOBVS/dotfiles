@@ -125,8 +125,7 @@ nice -n 19 ionice -c 3 paccache -r &
 
 $AUR_HELPER -Q > "$LOG_DIR/$AUR_HELPER/__list_of_packages__" &
 
-max_failures=20
-while [ "$max_failures" -gt 0 ]; do
+while :; do
 	ssh-agent dwm 2>"$LOG_DIR/dwm.log"
-	max_failures=$((max_failures - 1))
+	sleep 1
 done
