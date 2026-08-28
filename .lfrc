@@ -1,3 +1,4 @@
+#!/bin/sh
 # Luke's lf settings
 # Depends on lf 30.1 (breaks on newer versions)
 # Note on Image Previews

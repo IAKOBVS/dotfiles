@@ -10,3 +10,6 @@
 
 # Added by Antigravity CLI installer
 export PATH="/home/james/.local/bin:$PATH"
+
+# use system-wide zathura plugins with locally built zathura
+export ZATHURA_PLUGINS_PATH=/usr/lib/zathura

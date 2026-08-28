@@ -44,6 +44,7 @@
 JPROC_NPROC=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null || echo '1')
 # Default args for rg.
 JPROC_RG_ARGS="--color=always --no-heading -n --max-filesize 1M \
+	-j $(("$JPROC_NPROC" * 2)) \
 		-g '!*.git*' \
 		-g '!*.o' \
 		-g '!*node_modules*'"
@@ -51,6 +52,8 @@ JPROC_RG_ARGS="--color=always --no-heading -n --max-filesize 1M \
 # Temporary files here will be cleaned up periodically by jproc-cleanup.
 export JPROC_DIR=/tmp/jproc
 export JPROC_DIR_PID=$JPROC_DIR/$$
+chmod 700 $JPROC_DIR
+chmod 700 $JPROC_DIR_PID
 
 /bin/mkdir -p $JPROC_DIR
 /bin/mkdir -p $JPROC_DIR_PID

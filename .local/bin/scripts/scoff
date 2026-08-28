@@ -5,7 +5,7 @@ PROGS_TO_KILL=(
     "dunst"
     "unclutter"
     "dwmblocks-fast"
-    "picom"
+    "$COMPOSITOR"
 )
 
 # Define commands/programs to start on unlock
@@ -13,7 +13,7 @@ PROGS_TO_START=(
     "nohup dunst &"
     "nohup unclutter --hide-on-key-press &"
     "nohup dwmblocks-fast 2>/tmp/dwmblocks-fast.log &"
-    "picom -b"
+    "$COMPOSITOR"
 )
 
 # --- 1. LOCKING PHASE ---
